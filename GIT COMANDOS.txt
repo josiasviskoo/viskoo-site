@@ -1,0 +1,10 @@
+git add .
+
+git commit -m "Sync"
+
+git push
+
+
+
+
+git add . && git commit -m "Sync" && git push
