@@ -1,0 +1,19 @@
+a pasta do site e toda a estrutura fica em "public_html"
+
+A versão atual está correta.
+Preciso das seguintes atualizações:
+
+- No link do produto "site" reconstrua toda a página de vendas em base das informações do link https://viskoo.com.br/site/.
+
+Antes de implementar:
+1. Liste quais funções/arquivos serão modificados
+2. Liste quais funções dependem das que serão alteradas
+3. Identifique riscos de regressão
+4. Identifique riscos de segurança introduzidos pelas mudanças
+5. Aguarde minha confirmação antes de escrever qualquer código
+
+Regras de desenvolvimento:
+- Modifique APENAS o que foi listado acima
+- Não refatore, renomeie ou reorganize nada além do solicitado
+- Se identificar algo que pode quebrar, me avise antes de prosseguir
+- Mantenha o mesmo padrão de código já existente

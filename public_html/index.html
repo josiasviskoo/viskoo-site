@@ -231,25 +231,25 @@
     <div class="slider-wrap reveal mb-7">
       <div class="slider-track" id="testimonialSlider" style="padding-bottom: var(--space-4); cursor: grab; display: flex; overflow-x: auto; scroll-behavior: smooth;">
         <div class="slide" style="flex: 0 0 320px; padding: 0;">
-          <img src="assets/img/cliente-todo-dia-02.jpg" alt="Resultado Cliente Todo Dia" class="w-full" style="border-radius: var(--r-xl); object-fit: cover; aspect-ratio: 1; cursor: pointer;" onclick="openLightbox(this.src)">
+          <img src="assets/img/cliente-todo-dia-02.jpg" alt="Resultado Cliente Todo Dia" class="w-full" style="border-radius: var(--r-xl); object-fit: cover; aspect-ratio: 1; cursor: pointer;" onclick="openLightbox(0)">
         </div>
         <div class="slide" style="flex: 0 0 320px; padding: 0;">
-          <img src="assets/img/cliente-todo-dia-01.jpg" alt="Resultado Cliente Todo Dia" class="w-full" style="border-radius: var(--r-xl); object-fit: cover; aspect-ratio: 1; cursor: pointer;" onclick="openLightbox(this.src)">
+          <img src="assets/img/cliente-todo-dia-01.jpg" alt="Resultado Cliente Todo Dia" class="w-full" style="border-radius: var(--r-xl); object-fit: cover; aspect-ratio: 1; cursor: pointer;" onclick="openLightbox(1)">
         </div>
         <div class="slide" style="flex: 0 0 320px; padding: 0;">
-          <img src="assets/img/ps02-1.png" alt="Prova Social 1" class="w-full" style="border-radius: var(--r-xl); object-fit: cover; aspect-ratio: 1; cursor: pointer;" onclick="openLightbox(this.src)">
+          <img src="assets/img/ps02-1.png" alt="Prova Social 1" class="w-full" style="border-radius: var(--r-xl); object-fit: cover; aspect-ratio: 1; cursor: pointer;" onclick="openLightbox(2)">
         </div>
         <div class="slide" style="flex: 0 0 320px; padding: 0;">
-          <img src="assets/img/ps04.png" alt="Prova Social 2" class="w-full" style="border-radius: var(--r-xl); object-fit: cover; aspect-ratio: 1; cursor: pointer;" onclick="openLightbox(this.src)">
+          <img src="assets/img/ps04.png" alt="Prova Social 2" class="w-full" style="border-radius: var(--r-xl); object-fit: cover; aspect-ratio: 1; cursor: pointer;" onclick="openLightbox(3)">
         </div>
         <div class="slide" style="flex: 0 0 320px; padding: 0;">
-          <img src="assets/img/ps05.png" alt="Prova Social 3" class="w-full" style="border-radius: var(--r-xl); object-fit: cover; aspect-ratio: 1; cursor: pointer;" onclick="openLightbox(this.src)">
+          <img src="assets/img/ps05.png" alt="Prova Social 3" class="w-full" style="border-radius: var(--r-xl); object-fit: cover; aspect-ratio: 1; cursor: pointer;" onclick="openLightbox(4)">
         </div>
         <div class="slide" style="flex: 0 0 320px; padding: 0;">
-          <img src="assets/img/ps07.png" alt="Prova Social 4" class="w-full" style="border-radius: var(--r-xl); object-fit: cover; aspect-ratio: 1; cursor: pointer;" onclick="openLightbox(this.src)">
+          <img src="assets/img/ps07.png" alt="Prova Social 4" class="w-full" style="border-radius: var(--r-xl); object-fit: cover; aspect-ratio: 1; cursor: pointer;" onclick="openLightbox(5)">
         </div>
         <div class="slide" style="flex: 0 0 320px; padding: 0;">
-          <img src="assets/img/depoimento-marina-resultado.png" alt="Depoimento Marina" class="w-full" style="border-radius: var(--r-xl); object-fit: cover; aspect-ratio: 1; cursor: pointer;" onclick="openLightbox(this.src)">
+          <img src="assets/img/depoimento-marina-resultado.png" alt="Depoimento Marina" class="w-full" style="border-radius: var(--r-xl); object-fit: cover; aspect-ratio: 1; cursor: pointer;" onclick="openLightbox(6)">
         </div>
       </div>
     </div>
@@ -418,7 +418,8 @@
       </div>
     </div>
     <div class="footer-bottom">
-      <p>2026 &copy; Todos os direitos reservados. Viskoo.</p>
+      <p>2026 &copy; Todos os direitos reservados. Viskoo. CNPJ 15676116000112.</p>
+      <a href="produtos/" style="color: var(--text-muted); text-decoration: none; font-size: 13px;">Saiba mais</a>
     </div>
   </div>
 </footer>
@@ -435,12 +436,29 @@
   
   document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
   // Lightbox functionality
-  function openLightbox(src) {
-    document.getElementById('lightbox-img').src = src;
+  const lightboxImages = [
+    'assets/img/cliente-todo-dia-02.jpg',
+    'assets/img/cliente-todo-dia-01.jpg',
+    'assets/img/ps02-1.png',
+    'assets/img/ps04.png',
+    'assets/img/ps05.png',
+    'assets/img/ps07.png',
+    'assets/img/depoimento-marina-resultado.png'
+  ];
+  let lightboxIndex = 0;
+
+  function openLightbox(index) {
+    lightboxIndex = index;
+    document.getElementById('lightbox-img').src = lightboxImages[lightboxIndex];
     document.getElementById('lightbox-overlay').classList.add('open');
   }
   function closeLightbox() {
     document.getElementById('lightbox-overlay').classList.remove('open');
+  }
+  function navigateLightbox(direction, event) {
+    event.stopPropagation();
+    lightboxIndex = (lightboxIndex + direction + lightboxImages.length) % lightboxImages.length;
+    document.getElementById('lightbox-img').src = lightboxImages[lightboxIndex];
   }
   
   // Slider drag functionality
@@ -475,11 +493,13 @@
 </script>
 
 <!-- Lightbox Overlay -->
-<div id="lightbox-overlay" class="modal-overlay" onclick="closeLightbox()" style="position: fixed; inset: 0; background: rgba(0,0,0,0.85); z-index: 9999; display: flex; align-items: center; justify-content: center; opacity: 0; pointer-events: none; transition: opacity 0.3s ease;">
-  <div style="position: relative; max-width: 90vw; max-height: 90vh;">
+<div id="lightbox-overlay" class="modal-overlay" onclick="closeLightbox()" style="position: fixed; inset: 0; background: rgba(0,0,0,0.85); z-index: 9999; display: flex; align-items: center; justify-content: center; transition: opacity 0.3s ease;">
+  <button onclick="navigateLightbox(-1, event)" style="position: absolute; left: var(--space-4); top: 50%; transform: translateY(-50%); width: 44px; height: 44px; border-radius: var(--r-full); border: 1px solid rgba(255,255,255,0.18); background: rgba(0,0,0,0.18); color: #fff; font-size: 28px; line-height: 1; cursor: pointer;">&#8249;</button>
+  <div onclick="event.stopPropagation()" style="position: relative; max-width: 96vw; max-height: 92vh;">
     <button onclick="closeLightbox()" style="position: absolute; top: -40px; right: 0; background: transparent; border: none; color: #fff; font-size: 30px; cursor: pointer;">&times;</button>
-    <img id="lightbox-img" src="" style="max-width: 100%; max-height: 90vh; border-radius: var(--r-md); object-fit: contain;">
+    <img id="lightbox-img" src="" style="max-width: 100%; max-height: 92vh; border-radius: var(--r-md); object-fit: contain;">
   </div>
+  <button onclick="navigateLightbox(1, event)" style="position: absolute; right: var(--space-4); top: 50%; transform: translateY(-50%); width: 44px; height: 44px; border-radius: var(--r-full); border: 1px solid rgba(255,255,255,0.18); background: rgba(0,0,0,0.18); color: #fff; font-size: 28px; line-height: 1; cursor: pointer;">&#8250;</button>
 </div>
 
 </body>
