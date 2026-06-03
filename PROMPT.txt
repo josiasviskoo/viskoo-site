@@ -3,10 +3,7 @@ a pasta do site e toda a estrutura fica em "public_html"
 A versão atual está correta.
 Preciso das seguintes atualizações:
 
-- Na home, abaixo da headline coloque o vídeo VSL https://www.youtube.com/watch?v=gvomh4hkB8k
-- O vídeo VSL fica rodando mudo, apenas com um play sobreposto ao vídeo que está rodando mudo, quando dá o play o vídeo retoma do início, porém com som.
-- O Retângulo do vídeo tem bordas arredondadas e uma leve iluminação  por trás do box do vídeo.
-
+- A página principal do site existem links do quiz, troque os links para o link da pasta quiz html que foi criada.
 
 Antes de implementar:
 1. Liste quais funções/arquivos serão modificados
