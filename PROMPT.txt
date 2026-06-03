@@ -3,7 +3,10 @@ a pasta do site e toda a estrutura fica em "public_html"
 A versão atual está correta.
 Preciso das seguintes atualizações:
 
-- No link do produto "site" reconstrua toda a página de vendas em base das informações do link https://viskoo.com.br/site/.
+- Na home, abaixo da headline coloque o vídeo VSL https://www.youtube.com/watch?v=gvomh4hkB8k
+- O vídeo VSL fica rodando mudo, apenas com um play sobreposto ao vídeo que está rodando mudo, quando dá o play o vídeo retoma do início, porém com som.
+- O Retângulo do vídeo tem bordas arredondadas e uma leve iluminação  por trás do box do vídeo.
+
 
 Antes de implementar:
 1. Liste quais funções/arquivos serão modificados

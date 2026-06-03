@@ -307,6 +307,68 @@ body {
   animation: fadeUp 0.6s var(--ease-out) 0.4s both;
 }
 
+.hero-vsl {
+  position: relative;
+  aspect-ratio: 16/9;
+  max-width: 800px;
+  margin-inline: auto;
+  border-radius: var(--r-xl);
+  overflow: hidden;
+  border: 1px solid rgba(244,131,34,0.22);
+  box-shadow:
+    0 0 42px rgba(244,131,34,0.18),
+    var(--shadow-lg);
+  animation: fadeUp 0.6s var(--ease-out) 0.35s both;
+}
+
+.hero-vsl iframe {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
+.hero-vsl-play {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 100%;
+  border: 0;
+  background: rgba(0,0,0,0.08);
+  cursor: pointer;
+  transition: background var(--duration-fast) var(--ease-out);
+}
+
+.hero-vsl-play:hover {
+  background: rgba(0,0,0,0.18);
+}
+
+.hero-vsl-play span {
+  width: 78px;
+  height: 78px;
+  border-radius: var(--r-full);
+  background: var(--accent);
+  box-shadow: 0 0 32px rgba(244,131,34,0.45);
+  position: relative;
+}
+
+.hero-vsl-play span::before {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 52%;
+  transform: translate(-40%, -50%);
+  border-top: 15px solid transparent;
+  border-bottom: 15px solid transparent;
+  border-left: 22px solid #fff;
+}
+
+.hero-vsl-play.hidden {
+  display: none;
+}
+
 /* =============================================
    SECTION HEADER
    ============================================= */
