@@ -3,9 +3,7 @@ a pasta do site e toda a estrutura fica na "Raiz" e esse site é do Github Pages
 A versão atual está correta.
 Preciso das seguintes atualizações:
 
-- Era pra existir esse recurso, se existir revise porque não está funcionando, vou explicar novamente:
-Crie um recurso de picture-in-picture ativado automaticamente pelo scrool quando não visível, ou seja o vídeo da VSL continua rodando no canto pequeno sobreposto à tela assim que o scrool da tela rolar e o vídeo que está rodando sumir.
-
+- No link do quiz, remova apenas nesse link do quiz: icones de redes sociais com links e whatsapp flutuante, apenas da página quiz.
 
 Antes de implementar:
 1. Liste quais funções/arquivos serão modificados

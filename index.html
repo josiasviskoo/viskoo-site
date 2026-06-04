@@ -518,7 +518,13 @@
 
   function updateHeroVslFloat() {
     if (!heroVslWrap) return;
-    heroVslWrap.classList.toggle('is-floating', heroVslStarted && !heroVslInView);
+    const shouldFloat = heroVslStarted && !heroVslInView;
+    heroVslWrap.classList.toggle('is-floating', shouldFloat);
+    if (shouldFloat && heroVslWrap.parentElement !== document.body) {
+      document.body.appendChild(heroVslWrap);
+    } else if (!shouldFloat && heroVslShell && heroVslWrap.parentElement !== heroVslShell) {
+      heroVslShell.appendChild(heroVslWrap);
+    }
   }
 
   function syncHeroVslState(state) {
