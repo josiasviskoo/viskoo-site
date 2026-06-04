@@ -2,9 +2,11 @@ a pasta do site e toda a estrutura fica na "Raiz" e esse site é do Github Pages
 
 A versão atual está correta.
 Preciso das seguintes atualizações:
+----
 
-Quando o vídeo do PiP VSL quando está no canto da tela coloque a imagem do vídeo em modo cover (preenchimento quadrado).
+Na sessão da aula secreta existe uma imagem, ao clicar na imagem abre em uma nova aba o mesmo link do botão Quero acessar a aula que é o link https://youtu.be/opIfEweGgck
 
+----
 Antes de implementar:
 1. Liste quais funções/arquivos serão modificados
 2. Liste quais funções dependem das que serão alteradas
