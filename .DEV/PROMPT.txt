@@ -3,7 +3,16 @@ a pasta do site e toda a estrutura fica na "Raiz" e esse site é do Github Pages
 A versão atual está correta.
 Preciso das seguintes atualizações:
 
-- O Vídeo VSL possui um PiP (Picture in Picture) quando rola a página depois que deu o play, e quanto está no PiP existe apenas um botão de pause e play ativo. O PiP do vídeo fica sobreposto em toda a página, revise o z-index.
+- Coloque no rodapé do site os icones com os links:
+https://www.instagram.com/agencia.viskoo
+https://www.instagram.com/josias.viskoo.mkt
+https://www.facebook.com/viskoopropaganda
+https://www.youtube.com/@josiasviskoo
+https://www.linkedin.com/company/agenciaviskoo
+https://twitter.com/josiasviskoo
+https://open.spotify.com/playlist/6I8oIGzp3U1qefjOlKxlqy?si=d41f6b4baeab4cd7
+
+
 
 Antes de implementar:
 1. Liste quais funções/arquivos serão modificados
