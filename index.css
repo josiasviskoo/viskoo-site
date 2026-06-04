@@ -323,6 +323,7 @@ body {
 
 .hero.is-vsl-floating {
   overflow: visible;
+  z-index: 10000;
 }
 
 .hero-bg {

@@ -515,6 +515,7 @@
   let heroVslStarted = false;
   let heroVslPlaying = false;
   let heroVslInView = true;
+  let heroVslScrollTicking = false;
 
   function updateHeroVslFloat() {
     if (!heroVslWrap) return;
@@ -522,6 +523,13 @@
     heroVslWrap.classList.toggle('is-floating', shouldFloat);
     const heroSection = heroVslWrap.closest('.hero');
     if (heroSection) heroSection.classList.toggle('is-vsl-floating', shouldFloat);
+  }
+
+  function checkHeroVslVisibility() {
+    if (!heroVslShell) return;
+    const rect = heroVslShell.getBoundingClientRect();
+    heroVslInView = rect.bottom > 0 && rect.top < window.innerHeight && rect.height > 0;
+    updateHeroVslFloat();
   }
 
   function syncHeroVslState(state) {
@@ -615,6 +623,16 @@
       });
     }, { threshold: [0, 0.2] });
     heroVslObserver.observe(heroVslShell);
+    window.addEventListener('scroll', () => {
+      if (heroVslScrollTicking) return;
+      heroVslScrollTicking = true;
+      requestAnimationFrame(() => {
+        checkHeroVslVisibility();
+        heroVslScrollTicking = false;
+      });
+    }, { passive: true });
+    window.addEventListener('resize', checkHeroVslVisibility);
+    checkHeroVslVisibility();
   }
 </script>
 
