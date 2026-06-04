@@ -3,15 +3,8 @@ a pasta do site e toda a estrutura fica na "Raiz" e esse site é do Github Pages
 A versão atual está correta.
 Preciso das seguintes atualizações:
 
-- Coloque no rodapé do site os icones com os links:
-https://www.instagram.com/agencia.viskoo
-https://www.instagram.com/josias.viskoo.mkt
-https://www.facebook.com/viskoopropaganda
-https://www.youtube.com/@josiasviskoo
-https://www.linkedin.com/company/agenciaviskoo
-https://twitter.com/josiasviskoo
-https://open.spotify.com/playlist/6I8oIGzp3U1qefjOlKxlqy?si=d41f6b4baeab4cd7
-
+- Era pra existir esse recurso, se existir revise porque não está funcionando, vou explicar novamente:
+Crie um recurso de picture-in-picture ativado automaticamente pelo scrool quando não visível, ou seja o vídeo da VSL continua rodando no canto pequeno sobreposto à tela assim que o scrool da tela rolar e o vídeo que está rodando sumir.
 
 
 Antes de implementar:

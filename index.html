@@ -530,13 +530,20 @@
     if (heroVslPlay) heroVslPlay.classList.toggle('hidden', heroVslStarted);
     if (heroVslToggle) {
       heroVslToggle.classList.toggle('is-paused', !heroVslPlaying);
-      heroVslToggle.setAttribute('aria-label', 'Pausar vídeo');
+      heroVslToggle.setAttribute('aria-label', heroVslPlaying ? 'Pausar vídeo' : 'Reproduzir vídeo');
     }
     updateHeroVslFloat();
   }
 
   function playHeroVsl() {
     heroVslPendingPlay = true;
+    heroVslStarted = true;
+    heroVslPlaying = true;
+    if (heroVslPlay) heroVslPlay.classList.toggle('hidden', heroVslStarted);
+    if (heroVslToggle) {
+      heroVslToggle.classList.toggle('is-paused', false);
+      heroVslToggle.setAttribute('aria-label', 'Pausar vídeo');
+    }
 
     if (heroVslReady && heroVslPlayer && heroVslPlayer.playVideo) {
       heroVslPlayer.playVideo();
@@ -552,6 +559,10 @@
       heroVslPlayer.pauseVideo();
     }
     heroVslPlaying = false;
+    if (heroVslToggle) {
+      heroVslToggle.classList.toggle('is-paused', true);
+      heroVslToggle.setAttribute('aria-label', 'Reproduzir vídeo');
+    }
     updateHeroVslFloat();
   }
 
@@ -593,7 +604,7 @@
   if (heroVslShell) {
     const heroVslObserver = new IntersectionObserver((entries) => {
       entries.forEach(entry => {
-        heroVslInView = entry.isIntersecting;
+        heroVslInView = entry.isIntersecting && entry.intersectionRatio >= 0.2;
         updateHeroVslFloat();
       });
     }, { threshold: 0.2 });
