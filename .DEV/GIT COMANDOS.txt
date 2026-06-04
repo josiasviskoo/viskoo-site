@@ -1,10 +1,112 @@
-git add .
+ROTINA GIT - VISKOO SITE
 
+Use estes comandos sempre dentro da pasta do projeto:
+
+cd ~/Github/viskoo-site
+
+
+1) ANTES DE COMEÇAR A TRABALHAR
+
+Objetivo: verificar se o computador local está atualizado com o GitHub.
+
+git status
+git fetch origin
+git status -sb
+
+Se aparecer "behind", baixe as atualizações antes de mexer:
+
+git pull --rebase --autostash origin main
+
+Depois confira:
+
+git status -sb
+
+Resultado ideal para começar:
+
+## main...origin/main
+
+
+2) COMANDO RÁPIDO PARA COMEÇAR O DIA
+
+Use quando você ainda não fez alterações locais:
+
+git fetch origin && git pull --rebase origin main && git status -sb
+
+Se você pode ter alterações locais não commitadas, use este:
+
+git fetch origin && git pull --rebase --autostash origin main && git status -sb
+
+
+3) DEPOIS DE FAZER ALTERAÇÕES
+
+Objetivo: salvar localmente e enviar para o GitHub.
+
+git status
+git add -A
 git commit -m "Sync"
-
-git push
-
-
+git pull --rebase --autostash origin main
+git push origin main
 
 
-git add . && git commit -m "Sync" && git push
+4) COMANDO RÁPIDO PARA PUBLICAR
+
+Use depois de revisar as alterações com "git status":
+
+git add -A && git commit -m "Sync" && git pull --rebase --autostash origin main && git push origin main
+
+Se aparecer "nothing to commit", significa que não há alterações novas para salvar.
+Nesse caso, rode apenas:
+
+git pull --rebase --autostash origin main
+git push origin main
+
+
+5) QUANDO O PUSH DER "FETCH FIRST" OU "REJECTED"
+
+Isso acontece quando outro computador enviou alterações para o GitHub antes deste.
+
+Rode:
+
+git fetch origin
+git pull --rebase --autostash origin main
+git push origin main
+
+
+6) QUANDO DER CONFLITO NO PULL/REBASE
+
+O Git vai mostrar quais arquivos precisam de ajuste.
+
+Depois de corrigir os arquivos:
+
+git status
+git add -A
+git rebase --continue
+git push origin main
+
+Se você quiser cancelar o rebase e voltar ao estado anterior:
+
+git rebase --abort
+
+
+7) COMANDOS DE CONFERÊNCIA
+
+Ver branch atual:
+
+git branch --show-current
+
+Ver últimos commits:
+
+git log --oneline -5
+
+Ver diferença entre local e GitHub:
+
+git fetch origin
+git log --oneline --left-right --graph HEAD...origin/main
+
+
+8) REGRAS IMPORTANTES
+
+- Sempre rode os comandos da seção 1 antes de começar a trabalhar em outro computador.
+- Nunca use "git push --force" neste projeto.
+- Se trabalhar em dois computadores, sempre faça pull antes de editar e antes de push.
+- Se tiver dúvida, rode "git status" antes de qualquer comando.

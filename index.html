@@ -70,10 +70,11 @@
     </p>
     
     <div class="hero-vsl mb-6">
-      <iframe id="heroVsl" width="100%" height="100%" src="https://www.youtube.com/embed/XnEmNq6t6LU?si=HwdMZKCs_gSg9cBY" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+      <iframe id="heroVsl" width="100%" height="100%" src="https://www.youtube.com/embed/XnEmNq6t6LU?si=HwdMZKCs_gSg9cBY&enablejsapi=1&playsinline=1" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
       <button class="hero-vsl-play" type="button" aria-label="Assistir VSL com som">
         <span></span>
       </button>
+      <button class="hero-vsl-toggle" type="button" aria-label="Pausar vídeo"></button>
     </div>
     
     <div class="hero-actions mb-6 flex gap-3 justify-center flex-wrap">
@@ -500,13 +501,78 @@
     });
   }
 
+  const heroVslWrap = document.querySelector('.hero-vsl');
   const heroVsl = document.getElementById('heroVsl');
   const heroVslPlay = document.querySelector('.hero-vsl-play');
+  const heroVslToggle = document.querySelector('.hero-vsl-toggle');
+  let heroVslPlayer = null;
+  let heroVslStarted = false;
+  let heroVslPlaying = false;
+  let heroVslInView = true;
+
+  function updateHeroVslFloat() {
+    if (!heroVslWrap) return;
+    heroVslWrap.classList.toggle('is-floating', heroVslStarted && heroVslPlaying && !heroVslInView);
+  }
+
+  function syncHeroVslState(state) {
+    heroVslPlaying = state === 1;
+    if (state === 1) heroVslStarted = true;
+    if (heroVslPlay) heroVslPlay.classList.toggle('hidden', heroVslStarted);
+    if (heroVslToggle) {
+      heroVslToggle.classList.toggle('is-paused', !heroVslPlaying);
+      heroVslToggle.setAttribute('aria-label', heroVslPlaying ? 'Pausar vídeo' : 'Reproduzir vídeo');
+    }
+    updateHeroVslFloat();
+  }
+
+  window.onYouTubeIframeAPIReady = function() {
+    if (!heroVsl) return;
+    heroVslPlayer = new YT.Player('heroVsl', {
+      events: {
+        onStateChange: (event) => syncHeroVslState(event.data)
+      }
+    });
+  };
+
+  if (heroVsl) {
+    const ytApi = document.createElement('script');
+    ytApi.src = 'https://www.youtube.com/iframe_api';
+    document.head.appendChild(ytApi);
+  }
+
   if (heroVsl && heroVslPlay) {
     heroVslPlay.addEventListener('click', () => {
-      heroVsl.src = 'https://www.youtube.com/embed/XnEmNq6t6LU?si=HwdMZKCs_gSg9cBY&autoplay=1';
+      if (heroVslPlayer && heroVslPlayer.playVideo) {
+        heroVslPlayer.playVideo();
+      } else {
+        heroVsl.src = 'https://www.youtube.com/embed/XnEmNq6t6LU?si=HwdMZKCs_gSg9cBY&enablejsapi=1&playsinline=1&autoplay=1';
+      }
+      heroVslStarted = true;
       heroVslPlay.classList.add('hidden');
+      updateHeroVslFloat();
     });
+  }
+
+  if (heroVslToggle) {
+    heroVslToggle.addEventListener('click', () => {
+      if (!heroVslPlayer) return;
+      if (heroVslPlaying) {
+        heroVslPlayer.pauseVideo();
+      } else {
+        heroVslPlayer.playVideo();
+      }
+    });
+  }
+
+  if (heroVslWrap) {
+    const heroVslObserver = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        heroVslInView = entry.isIntersecting;
+        updateHeroVslFloat();
+      });
+    }, { threshold: 0.2 });
+    heroVslObserver.observe(heroVslWrap);
   }
 </script>
 

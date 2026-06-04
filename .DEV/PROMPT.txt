@@ -3,7 +3,7 @@ a pasta do site e toda a estrutura fica na "Raiz" e esse site é do Github Pages
 A versão atual está correta.
 Preciso das seguintes atualizações:
 
-- Corrija todos os links para o whatsapp que você encontrar para o número 5516993438187 em todas as páginas (se houver), em toda a estrutura.
+- Na home existe o vídeo, se der o play no vídeo e eu continuar rolando a página, coloque o vídeo no picture-in-picture dentro da página, deixe o vídeo rodando sobreposto, com opção de pause quando tocar, e play quando tocar novamente.
 
 Antes de implementar:
 1. Liste quais funções/arquivos serão modificados
