@@ -63,7 +63,7 @@
   <div class="hero-noise"></div>
   <div class="hero-content text-center">
     <span class="hero-eyebrow">Marketing em São Carlos</span>
-    <h1 class="hero-title">Se você não sabe de onde vem seu cliente, você não tem marketing.<br><em>Tem sorte.</em></h1>
+    <h1 class="hero-title">_Se você não sabe de onde vem seu cliente, você não tem marketing.<br><em>Tem sorte.</em></h1>
     <p class="hero-sub" style="font-weight:400; color: var(--text-primary);">Saia da tentativa e entre na previsibilidade de vendas.</p>
     <p class="hero-sub t-body t-secondary" style="max-width: 600px; margin: 0 auto var(--space-5);">
       Empresas de São Carlos e região não precisam depender de indicação, “mês bom” ou improviso. Elas podem seguir um plano claro, executável e baseado em dados.<br><br>
@@ -518,17 +518,19 @@
 
   function updateHeroVslFloat() {
     if (!heroVslWrap) return;
-    const shouldFloat = heroVslStarted && !heroVslInView;
+    const shouldFloat = heroVslStarted && heroVslPlaying && !heroVslInView;
     heroVslWrap.classList.toggle('is-floating', shouldFloat);
     const heroSection = heroVslWrap.closest('.hero');
     if (heroSection) heroSection.classList.toggle('is-vsl-floating', shouldFloat);
   }
 
   function syncHeroVslState(state) {
-    heroVslPlaying = state === 1;
-    if (state === 1) {
+    if (state === 1 || state === 3) {
+      heroVslPlaying = true;
       heroVslStarted = true;
       heroVslPendingPlay = false;
+    } else if (state === 0 || state === 2) {
+      heroVslPlaying = false;
     }
     if (heroVslPlay) heroVslPlay.classList.toggle('hidden', heroVslStarted);
     if (heroVslToggle) {
@@ -610,7 +612,7 @@
         heroVslInView = entry.isIntersecting && entry.intersectionRatio >= 0.2;
         updateHeroVslFloat();
       });
-    }, { threshold: 0.2 });
+    }, { threshold: [0, 0.2] });
     heroVslObserver.observe(heroVslShell);
   }
 </script>
