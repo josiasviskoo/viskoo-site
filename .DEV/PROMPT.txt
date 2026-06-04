@@ -17,3 +17,4 @@ Regras de desenvolvimento:
 - Não refatore, renomeie ou reorganize nada além do solicitado
 - Se identificar algo que pode quebrar, me avise antes de prosseguir
 - Mantenha o mesmo padrão de código já existente
+
