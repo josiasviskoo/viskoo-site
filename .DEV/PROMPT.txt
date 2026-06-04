@@ -3,7 +3,11 @@ a pasta do site e toda a estrutura fica na "Raiz" e esse site é do Github Pages
 A versão atual está correta.
 Preciso das seguintes atualizações:
 
-- O vídeo embedado na home do youtube não está rodando, verifique.
+- O link do vídeo no youtube é o https://www.youtube.com/watch?v=XnEmNq6t6LU
+- Abaixo é um código comum que roda componentes iframes, mas não sei se vc fez algo de errado para o vídeo não funcionar:
+<iframe width="560" height="315" src="https://www.youtube.com/embed/XnEmNq6t6LU?si=HwdMZKCs_gSg9cBY" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+
+- Pense que eu quero usar o Github Pages, veja se o vídeo do youtube precisa de algo em especial para rodar.
 
 Antes de implementar:
 1. Liste quais funções/arquivos serão modificados
