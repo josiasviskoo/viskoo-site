@@ -1,3 +1,40 @@
+
+/* Floating WhatsApp */
+.floating-whatsapp {
+  position: fixed;
+  left: var(--space-4);
+  bottom: var(--space-4);
+  z-index: 1100;
+  width: 44px;
+  height: 44px;
+  border-radius: var(--r-full);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(37, 211, 102, 0.14);
+  border: 1px solid rgba(37, 211, 102, 0.34);
+  color: #25d366;
+  font-size: 11px;
+  font-weight: 700;
+  text-decoration: none;
+  letter-spacing: 0;
+  box-shadow: var(--shadow-md);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+}
+.floating-whatsapp:hover {
+  background: rgba(37, 211, 102, 0.22);
+  color: #fff;
+}
+ (max-width: 768px) {
+  .floating-whatsapp {
+    left: var(--space-3);
+    bottom: var(--space-3);
+    width: 40px;
+    height: 40px;
+    font-size: 10px;
+  }
+}
 /* =============================================
    CSS VARIABLES — DESIGN TOKENS
    ============================================= */

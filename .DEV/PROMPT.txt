@@ -3,7 +3,7 @@ a pasta do site e toda a estrutura fica na "Raiz" e esse site é do Github Pages
 A versão atual está correta.
 Preciso das seguintes atualizações:
 
-- Na home existe o vídeo, se der o play no vídeo e eu continuar rolando a página, coloque o vídeo no picture-in-picture dentro da página, deixe o vídeo rodando sobreposto, com opção de pause quando tocar, e play quando tocar novamente.
+- Em todas as páginas de toda a estrutura coloque um whatsapp discreto flutuante no canto da página. (5516993438187)
 
 Antes de implementar:
 1. Liste quais funções/arquivos serão modificados
