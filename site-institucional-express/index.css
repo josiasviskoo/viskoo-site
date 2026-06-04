@@ -1441,7 +1441,21 @@ select.input { appearance: none; cursor: pointer; }
 }
 
 .express-wizard-section {
+  display: none;
   padding-top: var(--space-7);
+}
+
+.express-wizard-active .express-hero,
+.express-wizard-active .express-footer,
+.express-wizard-active .floating-whatsapp {
+  display: none;
+}
+
+.express-wizard-active .express-wizard-section {
+  display: block;
+  min-height: calc(100svh - var(--nav-height));
+  padding-top: var(--space-6);
+  padding-bottom: var(--space-6);
 }
 
 .express-shell {

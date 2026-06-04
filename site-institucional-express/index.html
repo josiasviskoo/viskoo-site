@@ -40,7 +40,7 @@
         Escolha referências, cores, dados principais e logo em uma experiência guiada. Nesta etapa o wizard é apenas visual, sem envio de informações.
       </p>
       <div class="hero-actions flex gap-3 justify-center flex-wrap">
-        <a href="#wizard" class="btn btn-primary btn-lg">Começar briefing</a>
+        <a href="#wizard" class="btn btn-primary btn-lg" onclick="startWizard(event)">Começar briefing</a>
         <a href="../produtos/" class="btn btn-outline btn-lg" style="background: rgba(255,255,255,0.05);">Ver produtos</a>
       </div>
     </div>
@@ -184,7 +184,7 @@
   </section>
 </main>
 
-<footer class="footer">
+<footer class="footer express-footer">
   <div class="container">
     <div class="footer-bottom">
       <p>2026 &copy; Todos os direitos reservados. Viskoo. CNPJ 15676116000112.</p>
@@ -202,6 +202,13 @@
   const wizardProgressBar = document.getElementById('expressProgressBar');
   const prevWizardBtn = document.getElementById('prevWizardBtn');
   const nextWizardBtn = document.getElementById('nextWizardBtn');
+
+  function startWizard(event) {
+    if (event) event.preventDefault();
+    document.body.classList.add('express-wizard-active');
+    showWizardStep(0);
+    document.getElementById('wizard').scrollIntoView({ behavior: 'smooth', block: 'start' });
+  }
 
   function showWizardStep(index) {
     currentWizardStep = Math.max(0, Math.min(index, wizardPanels.length - 1));
@@ -236,6 +243,9 @@
   }
 
   showWizardStep(0);
+  if (window.location.hash === '#wizard') {
+    startWizard();
+  }
 </script>
 </body>
 </html>
