@@ -526,6 +526,15 @@ body {
   animation: none;
 }
 
+.hero-vsl.is-floating iframe {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 177.78%;
+  height: 100%;
+  transform: translate(-50%, -50%);
+}
+
 .hero-vsl.is-floating .hero-vsl-toggle {
   display: flex;
   inset: 0;
