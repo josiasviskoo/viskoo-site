@@ -1,0 +1,21 @@
+a pasta do site e toda a estrutura fica em "public_html"
+
+A versão atual está correta.
+Preciso das seguintes atualizações:
+
+- Vamos reorganizar toda a pasta do github (vou usar o github pages).
+- Crie um novo diretório escrito "Desenvolvimento" e coloque tudo dentro dele.
+- Todo o conteúdo da pasta public_html será movido para a raiz do projeto e a pasta public_html ficará vazia.
+
+Antes de implementar:
+1. Liste quais funções/arquivos serão modificados
+2. Liste quais funções dependem das que serão alteradas
+3. Identifique riscos de regressão
+4. Identifique riscos de segurança introduzidos pelas mudanças
+5. Aguarde minha confirmação antes de escrever qualquer código
+
+Regras de desenvolvimento:
+- Modifique APENAS o que foi listado acima
+- Não refatore, renomeie ou reorganize nada além do solicitado
+- Se identificar algo que pode quebrar, me avise antes de prosseguir
+- Mantenha o mesmo padrão de código já existente

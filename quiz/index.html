@@ -1,0 +1,524 @@
+<!doctype html>
+<html lang="pt-br">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Viskoo Quiz</title>
+  <style>
+    :root{
+      --bg:#ffffff;
+      --fg:#0b0b0c;
+      --muted:#6b7280;
+      --line:#e5e7eb;
+      --orange:#ff6a00;
+      --orange2:#ff8a3d;
+      --shadow: 0 18px 60px rgba(0,0,0,.10);
+      --radius: 18px;
+    }
+    *{box-sizing:border-box}
+    html,body{height:100%}
+    body{
+      margin:0;
+      font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Arial, "Apple Color Emoji","Segoe UI Emoji";
+      background:
+        radial-gradient(1000px 360px at 12% 0%, rgba(255,106,0,.10), transparent 55%),
+        radial-gradient(900px 320px at 88% 12%, rgba(255,106,0,.08), transparent 52%),
+        var(--bg);
+      color:var(--fg);
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      padding:24px 14px;
+    }
+    .card{
+      width:min(820px, 100%);
+      background:rgba(255,255,255,.92);
+      border:1px solid var(--line);
+      border-radius:var(--radius);
+      box-shadow:var(--shadow);
+      overflow:hidden;
+    }
+    .top{
+      padding:22px 22px 16px 22px;
+      border-bottom:1px solid var(--line);
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:12px;
+    }
+    .brand{display:flex;align-items:center;gap:12px;min-width:0;}
+    .mark{
+      width:12px;height:12px;border-radius:999px;background:var(--orange);
+      box-shadow:0 0 0 7px rgba(255,106,0,.12);
+      flex:0 0 12px;
+    }
+    .title{
+      font-weight:900;
+      letter-spacing:-.2px;
+      font-size:14px;
+      white-space:nowrap;
+      overflow:hidden;
+      text-overflow:ellipsis;
+    }
+    .chip{
+      font-size:12px;
+      font-weight:900;
+      color:var(--orange);
+      border:1px solid rgba(255,106,0,.35);
+      padding:8px 12px;
+      border-radius:999px;
+      background:rgba(255,106,0,.06);
+      user-select:none;
+    }
+
+    .main{padding:20px 22px 22px 22px;}
+    .q{margin:0;font-size:20px;line-height:1.25;letter-spacing:-.3px;}
+
+    .opts{margin-top:16px;display:grid;gap:10px;}
+    .opt{
+      display:flex;gap:12px;align-items:flex-start;
+      padding:14px 14px;border-radius:14px;border:1px solid var(--line);
+      background:#fff;cursor:pointer;
+      transition: transform .08s ease, border-color .15s ease, box-shadow .15s ease, background .15s ease;
+      position:relative;
+    }
+    .opt:hover{
+      transform: translateY(-1px);
+      border-color: rgba(255,106,0,.45);
+      box-shadow: 0 12px 26px rgba(0,0,0,.06);
+    }
+    .pill{
+      width:34px;height:34px;border-radius:12px;
+      border:1px solid rgba(255,106,0,.35);
+      background:linear-gradient(180deg, rgba(255,106,0,.10), rgba(255,106,0,.04));
+      display:grid;place-items:center;
+      font-weight:900;color:#111;
+      flex:0 0 34px;
+      transition: background .15s ease, color .15s ease, border-color .15s ease;
+    }
+    .txt{line-height:1.42}
+    .lbl{font-weight:800}
+
+    /* Selected visual feedback (orange) */
+    .opt.picked{
+      background: linear-gradient(90deg, rgba(255,106,0,.14), rgba(255,138,61,.10));
+      border-color: rgba(255,106,0,.75);
+      box-shadow: 0 16px 34px rgba(255,106,0,.12);
+      transform: translateY(-1px);
+    }
+    .opt.picked::after{
+      content:"";
+      position:absolute; inset:-1px;
+      border-radius:14px;
+      border:2px solid rgba(255,106,0,.55);
+      pointer-events:none;
+    }
+    .opt.picked .pill{
+      background: linear-gradient(90deg, var(--orange), var(--orange2));
+      color:#fff;
+      border-color: transparent;
+    }
+
+    .actions{
+      margin-top:18px;
+      padding-top:14px;
+      border-top:1px solid var(--line);
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+      gap:12px;
+    }
+    .btn{
+      border:1px solid var(--line);
+      background:#fff;
+      color:#111;
+      padding:12px 14px;
+      border-radius:14px;
+      cursor:pointer;
+      font-weight:900;
+      transition: transform .08s ease, box-shadow .15s ease, border-color .15s ease;
+      display:inline-flex;
+      align-items:center;
+      gap:10px;
+      user-select:none;
+    }
+    .btn:hover{transform: translateY(-1px); box-shadow: 0 12px 26px rgba(0,0,0,.06); border-color: rgba(255,106,0,.35)}
+    .btn:active{transform: translateY(0px)}
+    .btn.primary{
+      background:linear-gradient(90deg, var(--orange), var(--orange2));
+      color:#fff;
+      border-color: transparent;
+      box-shadow: 0 18px 36px rgba(255,106,0,.16);
+    }
+    .btn.primary[disabled]{opacity:.55;cursor:not-allowed;box-shadow:none;}
+
+    /* Contact form */
+    .grid{margin-top:16px; display:grid; gap:12px;}
+    .field{display:grid; gap:6px;}
+    label{font-size:12px;font-weight:900;letter-spacing:.2px;}
+    input{
+      width:100%;
+      padding:12px 12px;
+      border-radius:14px;
+      border:1px solid var(--line);
+      outline:none;
+      font-size:14px;
+      transition: border-color .15s ease, box-shadow .15s ease;
+    }
+    input:focus{
+      border-color: rgba(255,106,0,.65);
+      box-shadow: 0 0 0 6px rgba(255,106,0,.10);
+    }
+
+    /* Toast */
+    .toast{
+      margin-top:12px;
+      padding:10px 12px;
+      border-radius:14px;
+      border:1px dashed rgba(255,106,0,.55);
+      background:rgba(255,106,0,.06);
+      color:#111;
+      font-size:12px;
+      line-height:1.45;
+      display:none;
+    }
+  </style>
+</head>
+<body>
+  <section class="card" aria-live="polite">
+    <header class="top">
+      <div class="brand">
+        <div class="mark"></div>
+        <div class="title">Viskoo Quiz</div>
+      </div>
+      <div class="chip" id="chip">Responder</div>
+    </header>
+
+    <main class="main">
+      <h1 class="q" id="q"></h1>
+      <div id="screen"></div>
+
+      <div class="actions" id="actions">
+        <button class="btn" id="back" type="button">← Voltar</button>
+        <button class="btn primary" id="finish" type="button" disabled style="display:none;">Finalizar</button>
+      </div>
+
+      <div class="toast" id="toast"></div>
+    </main>
+  </section>
+
+  <script>
+    // =======================
+    // Viskoo Quiz v1.3
+    // - Mantém feedback laranja + auto-avança
+    // - Redireciona para WhatsApp sem envio de e-mail
+    // =======================
+
+    // WhatsApp: usuário informou 16993438187 (DDD 16). wa.me exige DDI.
+    const WHATSAPP_NUMBER = "5516993438187";
+
+    const questions = [
+      { id:"empresa_hoje", q:"Qual melhor descreve sua empresa hoje?", options:[
+        {k:"A", v:"recorrente"},
+        {k:"B", v:"crescimento_instavel"},
+        {k:"C", v:"buscando_previsibilidade"},
+        {k:"D", v:"validando_mercado"},
+      ]},
+      { id:"origem_clientes", q:"Hoje, de onde vêm seus clientes?", options:[
+        {k:"A", v:"indicacao"},
+        {k:"B", v:"mix_indicacao_internet"},
+        {k:"C", v:"anuncios_sem_clareza"},
+        {k:"D", v:"nao_sei"},
+      ]},
+      { id:"investiu_marketing", q:"Você já investiu em marketing pela internet?", options:[
+        {k:"A", v:"investiu_nao_funcionou"},
+        {k:"B", v:"funcionou_temporario"},
+        {k:"C", v:"funciona_sem_entender"},
+        {k:"D", v:"nao_investiu_estruturado"},
+      ]},
+      { id:"prever_vendas", q:"Hoje, você consegue prever suas vendas?", options:[
+        {k:"A", v:"surpresa"},
+        {k:"B", v:"nocao_sem_seguranca"},
+        {k:"C", v:"parcial"},
+        {k:"D", v:"controle"},
+      ]},
+      { id:"sente_dados", q:"Quando você olha dados de marketing, o que sente?", options:[
+        {k:"A", v:"confusao"},
+        {k:"B", v:"muitos_numeros_pouca_decisao"},
+        {k:"C", v:"alguns_indicadores"},
+        {k:"D", v:"decide_com_dados"},
+      ]},
+      { id:"quem_marketing", q:"Hoje, quem cuida do marketing na sua empresa?", options:[
+        {k:"A", v:"eu_mesmo"},
+        {k:"B", v:"interno_sem_metodo"},
+        {k:"C", v:"agencia_sem_previsibilidade"},
+        {k:"D", v:"estrutura_integrada"},
+      ]},
+      { id:"situacao_realidade", q:"Qual dessas situações mais descreve sua realidade hoje?", options:[
+        {k:"A", v:"gastou_sem_entender"},
+        {k:"B", v:"vende_mas_nao_repete"},
+        {k:"C", v:"sem_clareza_escalar"},
+        {k:"D", v:"sem_direcao_decidir"},
+      ]},
+      { id:"plano_claro", q:"Se existisse um plano claro para organizar tudo isso, você:", options:[
+        {k:"A", v:"aplicaria_acompanhamento"},
+        {k:"B", v:"entender_antes"},
+        {k:"C", v:"avaliaria_modelo"},
+        {k:"D", v:"nao_prioridade"},
+      ]},
+      { id:"aberta_investir", q:"Hoje, sua empresa está aberta a investir para estruturar vendas?", options:[
+        {k:"A", v:"sim_estrategico"},
+        {k:"B", v:"sim_cautela"},
+        {k:"C", v:"depende_modelo"},
+        {k:"D", v:"nao_momento"},
+      ]},
+      { id:"frase_pensamento", q:"Qual frase mais representa seu pensamento agora?", options:[
+        {k:"A", v:"parar_tentar_estruturar"},
+        {k:"B", v:"clareza_antes_decidir"},
+        {k:"C", v:"marketing_sem_plano_sorte"},
+        {k:"D", v:"avaliando"},
+      ]},
+      { id:"contato", isContact:true, q:"Por fim, seus dados:" }
+    ];
+
+    // State (apenas em memória)
+    const state = {
+      i: 0,
+      db: {}, // { questionId: {k, v} }
+      contact: { nome:"", email:"", whatsapp:"" },
+      sending: false
+    };
+
+    const elQ = document.getElementById("q");
+    const elScreen = document.getElementById("screen");
+    const btnBack = document.getElementById("back");
+    const btnFinish = document.getElementById("finish");
+    const chip = document.getElementById("chip");
+    const toast = document.getElementById("toast");
+
+    function render(){
+      const q = questions[state.i];
+      elScreen.innerHTML = "";
+      toastHide();
+
+      btnBack.disabled = state.i === 0 || state.sending;
+      btnBack.style.opacity = btnBack.disabled ? ".55" : "1";
+
+      btnFinish.style.display = q.isContact ? "inline-flex" : "none";
+      btnFinish.disabled = state.sending || !isContactValid();
+
+      chip.textContent = q.isContact ? "Finalizar" : "Responder";
+      elQ.textContent = q.q;
+
+      if(q.isContact){
+        renderContact();
+      }else{
+        renderOptions(q);
+      }
+    }
+
+    function renderOptions(q){
+      const wrap = document.createElement("div");
+      wrap.className = "opts";
+
+      q.options.forEach(opt => {
+        const row = document.createElement("div");
+        row.className = "opt";
+        row.setAttribute("role", "button");
+        row.tabIndex = 0;
+
+        const pill = document.createElement("div");
+        pill.className = "pill";
+        pill.textContent = opt.k;
+
+        const txt = document.createElement("div");
+        txt.className = "txt";
+
+        const lbl = document.createElement("div");
+        lbl.className = "lbl";
+        lbl.textContent = prettyLabel(q.id, opt.k);
+
+        txt.appendChild(lbl);
+        row.appendChild(pill);
+        row.appendChild(txt);
+
+        const choose = () => {
+          if(state.sending) return;
+          state.db[q.id] = { k: opt.k, v: opt.v };
+
+          row.classList.add("picked");
+          row.style.pointerEvents = "none";
+          toastShow("Selecionado.");
+
+          setTimeout(() => {
+            state.i = Math.min(questions.length - 1, state.i + 1);
+            render();
+          }, 260);
+        };
+
+        row.addEventListener("click", choose);
+        row.addEventListener("keydown", (e) => {
+          if(e.key === "Enter" || e.key === " "){
+            e.preventDefault();
+            choose();
+          }
+        });
+
+        wrap.appendChild(row);
+      });
+
+      elScreen.appendChild(wrap);
+    }
+
+    function prettyLabel(questionId, key){
+      const map = {
+        empresa_hoje: {
+          A:"Empresa em operação, com vendas recorrentes",
+          B:"Empresa em crescimento, mas instável",
+          C:"Empresa estruturada, buscando previsibilidade",
+          D:"Projeto inicial, ainda validando mercado",
+        },
+        origem_clientes: {
+          A:"Principalmente indicação",
+          B:"Um pouco de indicação e um pouco da internet",
+          C:"Anúncios e canais digitais, mas sem clareza",
+          D:"Não sei exatamente de onde vêm",
+        },
+        investiu_marketing: {
+          A:"Sim, e não funcionou",
+          B:"Sim, funcionou por um tempo",
+          C:"Funciona, mas não sei explicar por quê",
+          D:"Ainda não investi de forma estruturada",
+        },
+        prever_vendas: {
+          A:"Não, cada mês é uma surpresa",
+          B:"Tenho uma noção, mas sem segurança",
+          C:"Consigo prever parcialmente",
+          D:"Sim, tenho clareza e controle",
+        },
+        sente_dados: {
+          A:"Confusão",
+          B:"Muitos números, pouca decisão",
+          C:"Sei alguns indicadores, mas não todos",
+          D:"Uso dados com clareza para decidir",
+        },
+        quem_marketing: {
+          A:"Eu mesmo",
+          B:"Alguém interno, sem método claro",
+          C:"Agência / freelancer, mas sem previsibilidade",
+          D:"Uma estrutura organizada e integrada",
+        },
+        situacao_realidade: {
+          A:"Já gastei e não sei o que deu errado",
+          B:"Até vendo, mas não sei o que repetir",
+          C:"Falta clareza para escalar",
+          D:"Falta direção para decidir",
+        },
+        plano_claro: {
+          A:"Aplicaria com acompanhamento",
+          B:"Gostaria de entender antes de aplicar",
+          C:"Avaliaria se faz sentido para minha empresa",
+          D:"Não seria prioridade agora",
+        },
+        aberta_investir: {
+          A:"Sim, se fizer sentido estratégico",
+          B:"Sim, mas com cautela",
+          C:"Depende do modelo",
+          D:"Não neste momento",
+        },
+        frase_pensamento: {
+          A:"“Preciso parar de tentar e começar a estruturar.”",
+          B:"“Quero clareza antes de tomar decisões maiores.”",
+          C:"“Já entendi que marketing sem plano vira sorte.”",
+          D:"“Ainda estou avaliando.”",
+        }
+      };
+      return (map[questionId] && map[questionId][key]) ? map[questionId][key] : key;
+    }
+
+    function renderContact(){
+      const grid = document.createElement("div");
+      grid.className = "grid";
+      grid.appendChild(field("Nome", "text", "nome", "Ex: João Silva"));
+      grid.appendChild(field("E-mail", "email", "email", "Ex: joao@email.com"));
+      grid.appendChild(field("WhatsApp", "tel", "whatsapp", "Ex: 16 99999-9999"));
+      elScreen.appendChild(grid);
+    }
+
+    function field(labelText, type, key, placeholder){
+      const box = document.createElement("div");
+      box.className = "field";
+
+      const label = document.createElement("label");
+      label.textContent = labelText;
+
+      const input = document.createElement("input");
+      input.type = type;
+      input.placeholder = placeholder;
+      input.value = state.contact[key] || "";
+      input.autocomplete = "on";
+      input.addEventListener("input", () => {
+        state.contact[key] = input.value;
+        btnFinish.disabled = state.sending || !isContactValid();
+      });
+
+      box.appendChild(label);
+      box.appendChild(input);
+      return box;
+    }
+
+    function isContactValid(){
+      return !!(state.contact.nome.trim() && state.contact.email.trim() && state.contact.whatsapp.trim());
+    }
+
+    btnBack.addEventListener("click", () => {
+      if(state.sending) return;
+      state.i = Math.max(0, state.i - 1);
+      render();
+    });
+
+    btnFinish.addEventListener("click", () => {
+      if(btnFinish.disabled) return;
+      finalizeToWhatsApp();
+    });
+
+    function finalizeToWhatsApp(){
+      const code = Object.entries(state.db)
+        .map(([id, a]) => `${id}:${a.k}`)
+        .join(" | ");
+
+      const msg = [
+        "Olá! Completei o Viskoo Quiz.",
+        "",
+        `Nome: ${state.contact.nome}`,
+        `E-mail: ${state.contact.email}`,
+        `WhatsApp: ${state.contact.whatsapp}`,
+        "",
+        "Respostas:",
+        code
+      ].join("\n");
+
+      const url = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(msg)}`;
+      window.location.href = url;
+    }
+
+    // Toast
+    let tmr = null;
+    function toastShow(msg){
+      toast.textContent = msg;
+      toast.style.display = "block";
+      clearTimeout(tmr);
+      tmr = setTimeout(toastHide, 1000);
+    }
+    function toastHide(){ toast.style.display = "none"; }
+
+    // Init
+    render();
+
+    // Teclas (sem mostrar progresso)
+    document.addEventListener("keydown", (e) => {
+      if(e.key === "ArrowLeft" && !btnBack.disabled) btnBack.click();
+    });
+  </script>
+</body>
+</html>
