@@ -63,7 +63,7 @@
   <div class="hero-noise"></div>
   <div class="hero-content text-center">
     <span class="hero-eyebrow">Marketing em São Carlos</span>
-    <h1 class="hero-title">_Se você não sabe de onde vem seu cliente, você não tem marketing.<br><em>Tem sorte.</em></h1>
+    <h1 class="hero-title">Se você não sabe de onde vem seu cliente, você não tem marketing.<br><em>Tem sorte.</em></h1>
     <p class="hero-sub" style="font-weight:400; color: var(--text-primary);">Saia da tentativa e entre na previsibilidade de vendas.</p>
     <p class="hero-sub t-body t-secondary" style="max-width: 600px; margin: 0 auto var(--space-5);">
       Empresas de São Carlos e região não precisam depender de indicação, “mês bom” ou improviso. Elas podem seguir um plano claro, executável e baseado em dados.<br><br>
@@ -520,11 +520,8 @@
     if (!heroVslWrap) return;
     const shouldFloat = heroVslStarted && !heroVslInView;
     heroVslWrap.classList.toggle('is-floating', shouldFloat);
-    if (shouldFloat && heroVslWrap.parentElement !== document.body) {
-      document.body.appendChild(heroVslWrap);
-    } else if (!shouldFloat && heroVslShell && heroVslWrap.parentElement !== heroVslShell) {
-      heroVslShell.appendChild(heroVslWrap);
-    }
+    const heroSection = heroVslWrap.closest('.hero');
+    if (heroSection) heroSection.classList.toggle('is-vsl-floating', shouldFloat);
   }
 
   function syncHeroVslState(state) {

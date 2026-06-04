@@ -321,6 +321,10 @@ body {
   padding: var(--space-10) var(--space-5);
 }
 
+.hero.is-vsl-floating {
+  overflow: visible;
+}
+
 .hero-bg {
   position: absolute;
   inset: 0;
