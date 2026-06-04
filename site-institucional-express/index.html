@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="icon" type="image/svg+xml" href="../assets/img/viskoo-logo-favicon.svg">
+<title>Site Institucional Express | Viskoo</title>
+<meta name="description" content="Wizard visual para briefing de site institucional express: escolha modelo, cores, dados da empresa e envio de logo.">
+<link rel="canonical" href="https://viskoo.com.br/site-institucional-express/">
+<meta property="og:title" content="Site Institucional Express | Viskoo">
+<meta property="og:description" content="Escolha o visual do seu site institucional express em um wizard simples e guiado.">
+<meta property="og:url" content="https://viskoo.com.br/site-institucional-express/">
+<meta property="og:type" content="website">
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"Service","name":"Site institucional express","provider":{"@type":"LocalBusiness","name":"Viskoo","url":"https://viskoo.com.br/"},"serviceType":"Criação de site institucional express"}</script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=SF+Pro+Display:wght@300;400;600;700&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;1,9..40,300&family=DM+Mono:wght@300;400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="index.css">
+</head>
+<body>
+
+<nav class="nav">
+  <div class="nav-inner">
+    <a href="../" class="nav-logo">
+      <img src="assets/img/viskoo-branco.svg" alt="Viskoo Logo" height="24">
+    </a>
+    <ul class="nav-links">
+      <li><a href="../produtos/">Produtos</a></li>
+      <li><a href="https://wa.me/5516993438187" class="nav-cta">Conversar no WhatsApp</a></li>
+    </ul>
+  </div>
+</nav>
+
+<main class="page express-page">
+  <section class="hero express-hero">
+    <div class="hero-bg"></div>
+    <div class="hero-content text-center">
+      <span class="hero-eyebrow">Site institucional express</span>
+      <h1 class="hero-title">Monte o briefing visual do seu site.</h1>
+      <p class="hero-sub t-body t-secondary" style="max-width: 720px; margin: 0 auto var(--space-6);">
+        Escolha referências, cores, dados principais e logo em uma experiência guiada. Nesta etapa o wizard é apenas visual, sem envio de informações.
+      </p>
+      <div class="hero-actions flex gap-3 justify-center flex-wrap">
+        <a href="#wizard" class="btn btn-primary btn-lg">Começar briefing</a>
+        <a href="../produtos/" class="btn btn-outline btn-lg" style="background: rgba(255,255,255,0.05);">Ver produtos</a>
+      </div>
+    </div>
+  </section>
+
+  <section class="section express-wizard-section" id="wizard">
+    <div class="container">
+      <div class="express-shell">
+        <div class="express-timeline" aria-label="Etapas do wizard">
+          <button class="express-step-marker active" type="button" onclick="showWizardStep(0)">
+            <span>1</span>
+            <strong>Modelo</strong>
+          </button>
+          <button class="express-step-marker" type="button" onclick="showWizardStep(1)">
+            <span>2</span>
+            <strong>Cores</strong>
+          </button>
+          <button class="express-step-marker" type="button" onclick="showWizardStep(2)">
+            <span>3</span>
+            <strong>Empresa</strong>
+          </button>
+          <button class="express-step-marker" type="button" onclick="showWizardStep(3)">
+            <span>4</span>
+            <strong>Logo</strong>
+          </button>
+          <button class="express-step-marker" type="button" onclick="showWizardStep(4)">
+            <span>5</span>
+            <strong>Revisão</strong>
+          </button>
+        </div>
+
+        <div class="express-progress" aria-hidden="true">
+          <span id="expressProgressBar"></span>
+        </div>
+
+        <div class="express-card">
+          <section class="express-panel active" data-step="0">
+            <div class="express-panel-grid">
+              <div>
+                <p class="section-label">Etapa 1</p>
+                <h2 class="section-title">Qual modelo mais agrada?</h2>
+                <p class="t-body t-secondary">Selecione uma direção visual para orientar a produção do site institucional express.</p>
+              </div>
+              <div class="express-options">
+                <button class="express-template selected" type="button" onclick="selectWizardOption(this)">
+                  <span class="express-template-preview express-template-a"></span>
+                  <strong>Institucional direto</strong>
+                  <small>Clareza, serviços e chamada para contato.</small>
+                </button>
+                <button class="express-template" type="button" onclick="selectWizardOption(this)">
+                  <span class="express-template-preview express-template-b"></span>
+                  <strong>Premium visual</strong>
+                  <small>Imagem forte, seções amplas e presença de marca.</small>
+                </button>
+                <button class="express-template" type="button" onclick="selectWizardOption(this)">
+                  <span class="express-template-preview express-template-c"></span>
+                  <strong>Comercial objetivo</strong>
+                  <small>Foco em prova, proposta e WhatsApp.</small>
+                </button>
+              </div>
+            </div>
+          </section>
+
+          <section class="express-panel" data-step="1">
+            <div class="express-panel-grid">
+              <div>
+                <p class="section-label">Etapa 2</p>
+                <h2 class="section-title">Cores primárias da marca</h2>
+                <p class="t-body t-secondary">Escolha uma base de cor para guiar botões, destaques e detalhes visuais.</p>
+              </div>
+              <div class="express-colors">
+                <button class="express-swatch selected" type="button" onclick="selectWizardOption(this)" style="--swatch:#f48322;"><span></span>Laranja Viskoo</button>
+                <button class="express-swatch" type="button" onclick="selectWizardOption(this)" style="--swatch:#0a84ff;"><span></span>Azul confiança</button>
+                <button class="express-swatch" type="button" onclick="selectWizardOption(this)" style="--swatch:#30d158;"><span></span>Verde crescimento</button>
+                <button class="express-swatch" type="button" onclick="selectWizardOption(this)" style="--swatch:#bf5af2;"><span></span>Roxo digital</button>
+                <button class="express-swatch" type="button" onclick="selectWizardOption(this)" style="--swatch:#ffd60a;"><span></span>Amarelo energia</button>
+                <button class="express-swatch" type="button" onclick="selectWizardOption(this)" style="--swatch:#ffffff;"><span></span>Preto e branco</button>
+              </div>
+            </div>
+          </section>
+
+          <section class="express-panel" data-step="2">
+            <div class="express-panel-grid">
+              <div>
+                <p class="section-label">Etapa 3</p>
+                <h2 class="section-title">Dados principais</h2>
+                <p class="t-body t-secondary">Campos visuais para nome da empresa e WhatsApp. O envio real será criado em outra etapa.</p>
+              </div>
+              <div class="express-form">
+                <div class="form-group">
+                  <label class="form-label" for="companyName">Nome da empresa</label>
+                  <input class="input" id="companyName" type="text" placeholder="Ex: Clínica Exemplo">
+                </div>
+                <div class="form-group">
+                  <label class="form-label" for="companyWhatsapp">WhatsApp</label>
+                  <input class="input" id="companyWhatsapp" type="tel" placeholder="(16) 99999-9999">
+                </div>
+              </div>
+            </div>
+          </section>
+
+          <section class="express-panel" data-step="3">
+            <div class="express-panel-grid">
+              <div>
+                <p class="section-label">Etapa 4</p>
+                <h2 class="section-title">Envie a logo</h2>
+                <p class="t-body t-secondary">Área visual de upload para representar o envio da marca. A função real de arquivo ainda não está ativa.</p>
+              </div>
+              <label class="drag-area express-upload" for="brandLogo">
+                <span class="drag-icon">+</span>
+                <strong>Arraste ou selecione a logo</strong>
+                <small>PNG, SVG ou JPG em boa qualidade</small>
+                <input id="brandLogo" type="file" accept="image/*" disabled>
+              </label>
+            </div>
+          </section>
+
+          <section class="express-panel" data-step="4">
+            <div class="express-panel-grid">
+              <div>
+                <p class="section-label">Etapa 5</p>
+                <h2 class="section-title">Resumo visual do briefing</h2>
+                <p class="t-body t-secondary">Tela final de design para revisar as escolhas antes da futura etapa de envio.</p>
+              </div>
+              <div class="express-summary">
+                <article class="stat-card"><div class="stat-label">Modelo</div><div class="stat-value">Express</div></article>
+                <article class="stat-card"><div class="stat-label">Cores</div><div class="stat-value">Marca</div></article>
+                <article class="stat-card"><div class="stat-label">Dados</div><div class="stat-value">Empresa</div></article>
+                <article class="stat-card"><div class="stat-label">Logo</div><div class="stat-value">Arquivo</div></article>
+              </div>
+            </div>
+          </section>
+
+          <div class="express-actions">
+            <button class="btn btn-secondary btn-lg" id="prevWizardBtn" type="button" onclick="prevWizardStep()" disabled>Voltar</button>
+            <button class="btn btn-primary btn-lg" id="nextWizardBtn" type="button" onclick="nextWizardStep()">Avançar</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer class="footer">
+  <div class="container">
+    <div class="footer-bottom">
+      <p>2026 &copy; Todos os direitos reservados. Viskoo. CNPJ 15676116000112.</p>
+      <a href="../produtos/" style="color: var(--text-muted); text-decoration: none; font-size: 13px;">Ver produtos</a>
+    </div>
+  </div>
+</footer>
+
+<a href="https://wa.me/5516993438187" class="floating-whatsapp" aria-label="Conversar no WhatsApp"><svg viewBox="0 0 32 32" aria-hidden="true"><path fill="currentColor" d="M16.03 3.2A12.74 12.74 0 0 0 5.2 22.62L3.6 28.8l6.32-1.55A12.72 12.72 0 1 0 16.03 3.2Zm0 2.27a10.45 10.45 0 0 1 8.86 16.01 10.43 10.43 0 0 1-13.83 3.41l-.45-.27-3.75.92.95-3.66-.3-.47A10.46 10.46 0 0 1 16.03 5.47Zm-4.1 4.93c-.24 0-.62.09-.94.44-.32.36-1.24 1.21-1.24 2.95 0 1.73 1.27 3.41 1.44 3.64.18.24 2.45 3.91 6.03 5.32 2.98 1.17 3.59.94 4.23.88.65-.06 2.1-.86 2.4-1.69.29-.83.29-1.54.2-1.69-.09-.14-.32-.23-.68-.41-.35-.17-2.09-1.03-2.42-1.15-.32-.12-.56-.18-.8.18-.23.35-.91 1.15-1.12 1.38-.2.24-.41.27-.76.09-.36-.18-1.5-.55-2.85-1.76-1.05-.94-1.76-2.1-1.97-2.45-.2-.36-.02-.55.16-.72.16-.16.35-.41.53-.62.18-.2.24-.35.36-.59.12-.23.06-.44-.03-.62-.09-.18-.8-1.93-1.09-2.64-.29-.69-.58-.6-.8-.61h-.69Z"/></svg></a>
+
+<script>
+  let currentWizardStep = 0;
+  const wizardPanels = document.querySelectorAll('.express-panel');
+  const wizardMarkers = document.querySelectorAll('.express-step-marker');
+  const wizardProgressBar = document.getElementById('expressProgressBar');
+  const prevWizardBtn = document.getElementById('prevWizardBtn');
+  const nextWizardBtn = document.getElementById('nextWizardBtn');
+
+  function showWizardStep(index) {
+    currentWizardStep = Math.max(0, Math.min(index, wizardPanels.length - 1));
+    wizardPanels.forEach((panel, panelIndex) => {
+      panel.classList.toggle('active', panelIndex === currentWizardStep);
+    });
+    wizardMarkers.forEach((marker, markerIndex) => {
+      marker.classList.toggle('active', markerIndex === currentWizardStep);
+      marker.classList.toggle('complete', markerIndex < currentWizardStep);
+    });
+    wizardProgressBar.style.width = `${((currentWizardStep + 1) / wizardPanels.length) * 100}%`;
+    prevWizardBtn.disabled = currentWizardStep === 0;
+    nextWizardBtn.textContent = currentWizardStep === wizardPanels.length - 1 ? 'Finalizar design' : 'Avançar';
+  }
+
+  function nextWizardStep() {
+    if (currentWizardStep < wizardPanels.length - 1) {
+      showWizardStep(currentWizardStep + 1);
+    }
+  }
+
+  function prevWizardStep() {
+    if (currentWizardStep > 0) {
+      showWizardStep(currentWizardStep - 1);
+    }
+  }
+
+  function selectWizardOption(option) {
+    const group = option.parentElement.querySelectorAll('button');
+    group.forEach((item) => item.classList.remove('selected'));
+    option.classList.add('selected');
+  }
+
+  showWizardStep(0);
+</script>
+</body>
+</html>

@@ -4,8 +4,18 @@ A versão atual está correta.
 Preciso das seguintes atualizações:
 ----
 
-Atualize a página do produto marketing, apenas a pasta marketing relacionada ao produto marketing.
-- Existe uma sessão "Na Web" no link https://site.viskoo.com.br/marketing-lp/ baixe as imagens com qualidade na pasta "img/portfolio-web" e crie uma sessão na página produto marketing com um carrossel e lightbox escrito "Na Web".
+Crie um produto novo na página de produtos, escrito "Site institucional express".
+
+- Essa página é um Wizard, ou seja o cliente acessando esse link de produtos ele pode seguir por algumas etapas até enviar informações para produção (não faça ainda as funções, vamos fazer o design primeiro).
+- Precisa ter uma sessão com modelos que mais agrada.
+- Seção para escolher as cores primárias da marca.
+- Sessão pra escrever o nome da empresa, o whatsapp.
+- Sessão para enviar a logo.
+- Uma tela de cada vez como um wizard real.
+- Seguir o design de acordo com o Design System.
+- Telas suave e animada em cada sessão, passo a passo.
+- Crie uma linha do tempo no topo indicando qual etapa do wizard o usuário está.
+
 ----
 Antes de implementar:
 1. Liste quais funções/arquivos serão modificados
