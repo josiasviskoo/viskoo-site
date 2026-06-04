@@ -523,9 +523,40 @@
     if (state === 1) heroVslStarted = true;
     if (heroVslPlay) heroVslPlay.classList.toggle('hidden', heroVslStarted);
     if (heroVslToggle) {
-      heroVslToggle.classList.toggle('is-paused', !heroVslPlaying);
-      heroVslToggle.setAttribute('aria-label', heroVslPlaying ? 'Pausar vídeo' : 'Reproduzir vídeo');
+      heroVslToggle.setAttribute('aria-label', 'Pausar vídeo');
     }
+    updateHeroVslFloat();
+  }
+
+  function sendHeroVslCommand(command) {
+    if (!heroVsl || !heroVsl.contentWindow) return;
+    heroVsl.contentWindow.postMessage(JSON.stringify({
+      event: 'command',
+      func: command,
+      args: []
+    }), 'https://www.youtube.com');
+  }
+
+  function playHeroVsl() {
+    if (heroVslPlayer && heroVslPlayer.playVideo) {
+      heroVslPlayer.playVideo();
+    } else {
+      heroVsl.src = 'https://www.youtube.com/embed/XnEmNq6t6LU?si=HwdMZKCs_gSg9cBY&enablejsapi=1&playsinline=1&autoplay=1';
+      sendHeroVslCommand('playVideo');
+    }
+    heroVslStarted = true;
+    heroVslPlaying = true;
+    if (heroVslPlay) heroVslPlay.classList.add('hidden');
+    updateHeroVslFloat();
+  }
+
+  function pauseHeroVsl() {
+    if (heroVslPlayer && heroVslPlayer.pauseVideo) {
+      heroVslPlayer.pauseVideo();
+    } else {
+      sendHeroVslCommand('pauseVideo');
+    }
+    heroVslPlaying = false;
     updateHeroVslFloat();
   }
 
@@ -546,25 +577,13 @@
 
   if (heroVsl && heroVslPlay) {
     heroVslPlay.addEventListener('click', () => {
-      if (heroVslPlayer && heroVslPlayer.playVideo) {
-        heroVslPlayer.playVideo();
-      } else {
-        heroVsl.src = 'https://www.youtube.com/embed/XnEmNq6t6LU?si=HwdMZKCs_gSg9cBY&enablejsapi=1&playsinline=1&autoplay=1';
-      }
-      heroVslStarted = true;
-      heroVslPlay.classList.add('hidden');
-      updateHeroVslFloat();
+      playHeroVsl();
     });
   }
 
   if (heroVslToggle) {
     heroVslToggle.addEventListener('click', () => {
-      if (!heroVslPlayer) return;
-      if (heroVslPlaying) {
-        heroVslPlayer.pauseVideo();
-      } else {
-        heroVslPlayer.playVideo();
-      }
+      pauseHeroVsl();
     });
   }
 
