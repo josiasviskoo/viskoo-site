@@ -4,19 +4,7 @@ A versão atual está correta.
 Preciso das seguintes atualizações:
 
 
-
-Revisão e Correção de Recurso: Picture-in-Picture (PiP) Automático no Scroll
-Por favor, revise e isole o script responsável pelo recurso de Picture-in-Picture (PiP) da VSL. O recurso já deveria existir, mas está apresentando falhas ou não está funcionando.
-
-Comportamento Esperado:
-Gatilho: Quando o usuário der o "Play" no vídeo principal e rolar a página para baixo (fazendo com que o player original saia da área visível da tela/viewport).
-Ação Automática: O vídeo deve se reposicionar automaticamente, transformando-se em um player em miniatura quadrada (estilo PiP, pequeno e fixo/floating) em um dos cantos da tela, sobrepondo o conteúdo da página.
-Design do PiP: O vídeo fica em miniatura quadrada no canto da tela, ao tocar ele pausa e ao tocar novamente ele dá o play.
-Reprodução Contínua: É obrigatório que o vídeo não pause ou reinicie durante essa transição. A reprodução da VSL (áudio e vídeo) deve continuar rodando sem interrupções.
-
-Analise o código atual, identifique o erro que está impedindo esse funcionamento e gere a correção.
-
-
+O Recurso de PiP (Picture-in-Picture) ficou perfeito. Crie uma cópia backup do recurso em uma pasta escrito backups-de-scripts e coloque os documentos necessários do PiP nessa pasta, o script atual está perfeito, não modifique o original que está na pasta.
 
 Antes de implementar:
 1. Liste quais funções/arquivos serão modificados

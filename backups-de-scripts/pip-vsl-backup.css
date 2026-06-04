@@ -1,0 +1,153 @@
+/* Backup do CSS do recurso PiP da VSL */
+.hero.is-vsl-floating {
+  overflow: visible;
+  z-index: 10000;
+}
+
+.hero-vsl-shell {
+  aspect-ratio: 16/9;
+  max-width: 800px;
+  margin-inline: auto;
+  animation: fadeUp 0.6s var(--ease-out) 0.35s both;
+}
+
+.hero-vsl-shell.is-floating {
+  transform: none;
+  animation: none;
+}
+
+.hero-vsl {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  border-radius: var(--r-xl);
+  overflow: hidden;
+  border: 1px solid rgba(244,131,34,0.22);
+  box-shadow:
+    0 0 42px rgba(244,131,34,0.18),
+    var(--shadow-lg);
+}
+
+.hero-vsl iframe {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
+.hero-vsl-play {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 100%;
+  border: 0;
+  background: rgba(0,0,0,0.08);
+  cursor: pointer;
+  transition: background var(--duration-fast) var(--ease-out);
+}
+
+.hero-vsl-play:hover {
+  background: rgba(0,0,0,0.18);
+}
+
+.hero-vsl-play span {
+  width: 78px;
+  height: 78px;
+  border-radius: var(--r-full);
+  background: var(--accent);
+  box-shadow: 0 0 32px rgba(244,131,34,0.45);
+  position: relative;
+}
+
+.hero-vsl-play span::before {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 52%;
+  transform: translate(-40%, -50%);
+  border-top: 15px solid transparent;
+  border-bottom: 15px solid transparent;
+  border-left: 22px solid #fff;
+}
+
+.hero-vsl-play.hidden {
+  display: none;
+}
+
+.hero-vsl-toggle {
+  position: absolute;
+  right: var(--space-3);
+  bottom: var(--space-3);
+  display: none;
+  width: 38px;
+  height: 38px;
+  align-items: center;
+  justify-content: center;
+  border-radius: var(--r-full);
+  border: 0;
+  background: rgba(0,0,0,0.58);
+  cursor: pointer;
+  z-index: 2;
+  border: 1px solid rgba(255,255,255,0.2);
+  box-shadow: var(--shadow-md);
+}
+
+.hero-vsl-toggle::before {
+  content: "";
+  width: 12px;
+  height: 16px;
+  border-left: 4px solid #fff;
+  border-right: 4px solid #fff;
+}
+
+.hero-vsl-toggle.is-paused::before {
+  width: 0;
+  height: 0;
+  transform: translateX(2px);
+  border-left: 15px solid #fff;
+  border-top: 10px solid transparent;
+  border-bottom: 10px solid transparent;
+  border-right: 0;
+}
+
+.hero-vsl.is-floating {
+  position: fixed;
+  right: var(--space-5);
+  bottom: var(--space-5);
+  width: min(300px, calc(100vw - 32px));
+  height: min(300px, calc(100vw - 32px));
+  aspect-ratio: 1/1;
+  max-width: none;
+  margin: 0;
+  z-index: 10000;
+  border-radius: var(--r-lg);
+  animation: none;
+}
+
+.hero-vsl.is-floating .hero-vsl-toggle {
+  display: flex;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  border-radius: inherit;
+  background: transparent;
+  border: 0;
+  box-shadow: none;
+  z-index: 3;
+}
+
+.hero-vsl.is-floating .hero-vsl-toggle::before {
+  opacity: 0;
+}
+
+@media (max-width: 768px) {
+  .hero-vsl.is-floating {
+    right: var(--space-3);
+    bottom: var(--space-3);
+    width: min(220px, calc(100vw - 24px));
+    height: min(220px, calc(100vw - 24px));
+    border-radius: var(--r-md);
+  }
+}
