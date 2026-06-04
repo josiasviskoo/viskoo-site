@@ -1,11 +1,9 @@
-a pasta do site e toda a estrutura fica em "public_html"
+a pasta do site e toda a estrutura fica na "Raiz" e esse site é do Github Pages (html)
 
 A versão atual está correta.
 Preciso das seguintes atualizações:
 
-- Vamos reorganizar toda a pasta do github (vou usar o github pages).
-- Crie um novo diretório escrito "Desenvolvimento" e coloque tudo dentro dele.
-- Todo o conteúdo da pasta public_html será movido para a raiz do projeto e a pasta public_html ficará vazia.
+- O vídeo embedado na home do youtube não está rodando, verifique.
 
 Antes de implementar:
 1. Liste quais funções/arquivos serão modificados
