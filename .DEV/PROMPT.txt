@@ -3,7 +3,9 @@ a pasta do site e toda a estrutura fica na "Raiz" e esse site é do Github Pages
 A versão atual está correta.
 Preciso das seguintes atualizações:
 
-- No link do quiz, remova apenas nesse link do quiz: icones de redes sociais com links e whatsapp flutuante, apenas da página quiz.
+- Era pra existir esse recurso, se existir revise porque não está funcionando, vou explicar novamente:
+Crie um recurso de picture-in-picture ativado automaticamente pela rolagem da página quando não visível, o vídeo não para de rodar, depois que deu o play ele não para e automaticamente se reposiciona na tela de forma pequena e quadrada no canto, ou seja o vídeo da VSL continua rodando no canto pequeno sobreposto a página do site.
+
 
 Antes de implementar:
 1. Liste quais funções/arquivos serão modificados
