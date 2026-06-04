@@ -411,6 +411,11 @@ body {
   animation: fadeUp 0.6s var(--ease-out) 0.35s both;
 }
 
+.hero-vsl-shell.is-floating {
+  transform: none;
+  animation: none;
+}
+
 .hero-vsl {
   position: relative;
   width: 100%;

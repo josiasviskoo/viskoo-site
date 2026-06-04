@@ -521,6 +521,7 @@
     if (!heroVslWrap) return;
     const shouldFloat = heroVslStarted && !heroVslInView;
     heroVslWrap.classList.toggle('is-floating', shouldFloat);
+    if (heroVslShell) heroVslShell.classList.toggle('is-floating', shouldFloat);
     const heroSection = heroVslWrap.closest('.hero');
     if (heroSection) heroSection.classList.toggle('is-vsl-floating', shouldFloat);
   }
