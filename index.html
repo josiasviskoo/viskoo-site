@@ -69,12 +69,14 @@
       Eu ajudo empresas a organizarem o marketing em um sistema previsível, onde cada ação tem direção, função e objetivo mensurável.
     </p>
     
-    <div class="hero-vsl mb-6">
-      <iframe id="heroVsl" width="100%" height="100%" src="https://www.youtube.com/embed/XnEmNq6t6LU?si=HwdMZKCs_gSg9cBY&enablejsapi=1&playsinline=1" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
-      <button class="hero-vsl-play" type="button" aria-label="Assistir VSL com som">
-        <span></span>
-      </button>
-      <button class="hero-vsl-toggle" type="button" aria-label="Pausar vídeo"></button>
+    <div class="hero-vsl-shell mb-6">
+      <div class="hero-vsl">
+        <iframe id="heroVsl" width="100%" height="100%" src="https://www.youtube.com/embed/XnEmNq6t6LU?si=HwdMZKCs_gSg9cBY&enablejsapi=1&playsinline=1" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+        <button class="hero-vsl-play" type="button" aria-label="Assistir VSL com som">
+          <span></span>
+        </button>
+        <button class="hero-vsl-toggle" type="button" aria-label="Pausar vídeo"></button>
+      </div>
     </div>
     
     <div class="hero-actions mb-6 flex gap-3 justify-center flex-wrap">
@@ -501,6 +503,7 @@
     });
   }
 
+  const heroVslShell = document.querySelector('.hero-vsl-shell');
   const heroVslWrap = document.querySelector('.hero-vsl');
   const heroVsl = document.getElementById('heroVsl');
   const heroVslPlay = document.querySelector('.hero-vsl-play');
@@ -565,14 +568,14 @@
     });
   }
 
-  if (heroVslWrap) {
+  if (heroVslShell) {
     const heroVslObserver = new IntersectionObserver((entries) => {
       entries.forEach(entry => {
         heroVslInView = entry.isIntersecting;
         updateHeroVslFloat();
       });
     }, { threshold: 0.2 });
-    heroVslObserver.observe(heroVslWrap);
+    heroVslObserver.observe(heroVslShell);
   }
 </script>
 
@@ -586,6 +589,6 @@
   <button onclick="navigateLightbox(1, event)" style="position: absolute; right: var(--space-4); top: 50%; transform: translateY(-50%); width: 44px; height: 44px; border-radius: var(--r-full); border: 1px solid rgba(255,255,255,0.18); background: rgba(0,0,0,0.18); color: #fff; font-size: 28px; line-height: 1; cursor: pointer;">&#8250;</button>
 </div>
 
-<a href="https://wa.me/5516993438187" class="floating-whatsapp" aria-label="Conversar no WhatsApp">WA</a>
+<a href="https://wa.me/5516993438187" class="floating-whatsapp" aria-label="Conversar no WhatsApp"><svg viewBox="0 0 32 32" aria-hidden="true"><path fill="currentColor" d="M16.03 3.2A12.74 12.74 0 0 0 5.2 22.62L3.6 28.8l6.32-1.55A12.72 12.72 0 1 0 16.03 3.2Zm0 2.27a10.45 10.45 0 0 1 8.86 16.01 10.43 10.43 0 0 1-13.83 3.41l-.45-.27-3.75.92.95-3.66-.3-.47A10.46 10.46 0 0 1 16.03 5.47Zm-4.1 4.93c-.24 0-.62.09-.94.44-.32.36-1.24 1.21-1.24 2.95 0 1.73 1.27 3.41 1.44 3.64.18.24 2.45 3.91 6.03 5.32 2.98 1.17 3.59.94 4.23.88.65-.06 2.1-.86 2.4-1.69.29-.83.29-1.54.2-1.69-.09-.14-.32-.23-.68-.41-.35-.17-2.09-1.03-2.42-1.15-.32-.12-.56-.18-.8.18-.23.35-.91 1.15-1.12 1.38-.2.24-.41.27-.76.09-.36-.18-1.5-.55-2.85-1.76-1.05-.94-1.76-2.1-1.97-2.45-.2-.36-.02-.55.16-.72.16-.16.35-.41.53-.62.18-.2.24-.35.36-.59.12-.23.06-.44-.03-.62-.09-.18-.8-1.93-1.09-2.64-.29-.69-.58-.6-.8-.61h-.69Z"/></svg></a>
 </body>
 </html>
