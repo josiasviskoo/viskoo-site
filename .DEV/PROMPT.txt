@@ -4,7 +4,25 @@ A versão atual está correta.
 Preciso das seguintes atualizações:
 ----
 
-Na sessão da aula secreta existe uma imagem, ao clicar na imagem abre em uma nova aba o mesmo link do botão Quero acessar a aula que é o link https://youtu.be/opIfEweGgck
+Atualize a página do produto marketing, apenas a pasta marketing relacionada ao produto marketing.
+- Na pasta assets do marketing existem imagens para ser utilizada na página.
+- Utilize os textos da página https://site.viskoo.com.br/marketing-lp/ como referência.
+- Quando fizer a atualização da página produto marketing não esqueça de falar:
+"Vamos representar no faturamento.
+Esse é o papel do marketing"
+
+"Não importa se você é proprietário de uma pequena, média ou grande empresa, existe uma fórmula comprovada para impulsionar sua escala e desenvolvimento."
+
+"Geração de conteúdo não vende."
+
+Sessão dos "+4 Milhões
+de Reais"
+
+- Traga as provas sociais da página home para a página do produto marketing.
+
+- Na página https://site.viskoo.com.br/marketing-lp/ existe uma sessão escrito "Nas mídias sociais" pegue cada uma das imagem de melhor resolução e coloque na pasta e crie uma sessão na página produto marketing, faça o mesmo com a sessão "Na Web"
+
+
 
 ----
 Antes de implementar:

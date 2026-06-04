@@ -1432,3 +1432,111 @@ select.input { appearance: none; cursor: pointer; }
   opacity: 1;
   transform: translateY(0);
 }
+
+/* Marketing product page */
+.marketing-hero {
+  min-height: 72vh;
+  text-align: left;
+}
+
+.marketing-hero .container {
+  position: relative;
+  z-index: 1;
+}
+
+.marketing-hero-grid,
+.marketing-result-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(320px, 0.9fr);
+  gap: var(--space-8);
+  align-items: center;
+}
+
+.marketing-hero-media,
+.marketing-proof-frame,
+.marketing-image-card {
+  border: 1px solid var(--border);
+  border-radius: var(--r-xl);
+  overflow: hidden;
+  background: var(--bg-surface);
+  box-shadow: var(--shadow-lg);
+}
+
+.marketing-hero-media {
+  max-width: 520px;
+  justify-self: end;
+}
+
+.marketing-hero-media img {
+  display: block;
+}
+
+.marketing-result-band {
+  background:
+    radial-gradient(ellipse 70% 50% at 20% 10%, rgba(244,131,34,0.12), transparent 62%),
+    var(--bg-surface);
+}
+
+.marketing-result-band .section-title {
+  font-size: clamp(48px, 9vw, 112px);
+  line-height: 0.92;
+}
+
+.marketing-proof-frame {
+  padding: var(--space-4);
+}
+
+.marketing-proof-frame img {
+  display: block;
+  border-radius: var(--r-lg);
+}
+
+.marketing-social-grid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: var(--space-4);
+}
+
+.marketing-social-grid img,
+.marketing-image-card img {
+  display: block;
+  object-fit: cover;
+}
+
+.marketing-social-grid img {
+  aspect-ratio: 1;
+  border-radius: var(--r-lg);
+  border: 1px solid var(--border);
+  box-shadow: var(--shadow-md);
+}
+
+.marketing-showcase {
+  background: var(--bg-surface);
+}
+
+.marketing-image-card h3 {
+  padding: var(--space-4);
+}
+
+.marketing-image-card img {
+  aspect-ratio: 4/3;
+}
+
+@media (max-width: 900px) {
+  .marketing-hero {
+    text-align: center;
+  }
+
+  .marketing-hero-grid,
+  .marketing-result-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .marketing-hero-media {
+    justify-self: center;
+  }
+
+  .marketing-social-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
