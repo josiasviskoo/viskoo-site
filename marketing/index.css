@@ -1465,10 +1465,17 @@ select.input { appearance: none; cursor: pointer; }
 .marketing-hero-media {
   max-width: 520px;
   justify-self: end;
+  align-self: end;
+  border: 0;
+  background: transparent;
+  box-shadow: none;
 }
 
 .marketing-hero-media img {
   display: block;
+  object-fit: cover;
+  object-position: center top;
+  aspect-ratio: 4/5;
 }
 
 .marketing-result-band {
@@ -1522,6 +1529,146 @@ select.input { appearance: none; cursor: pointer; }
   aspect-ratio: 4/3;
 }
 
+.marketing-carousel {
+  position: relative;
+}
+
+.marketing-carousel-track {
+  display: flex;
+  gap: var(--space-4);
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  scroll-behavior: smooth;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: none;
+  padding: var(--space-2) 0 var(--space-4);
+}
+
+.marketing-carousel-track::-webkit-scrollbar {
+  display: none;
+}
+
+.marketing-carousel-slide {
+  flex: 0 0 320px;
+  display: block;
+  padding: 0;
+  border: 0;
+  border-radius: var(--r-xl);
+  overflow: hidden;
+  background: var(--bg-surface);
+  cursor: pointer;
+  scroll-snap-align: start;
+  box-shadow: var(--shadow-md);
+}
+
+.marketing-carousel-slide img {
+  display: block;
+  aspect-ratio: 1;
+  object-fit: cover;
+}
+
+.marketing-portfolio-slide {
+  flex-basis: 240px;
+  background: #fff;
+}
+
+.marketing-portfolio-slide img {
+  aspect-ratio: 9/16;
+  object-fit: contain;
+}
+
+.marketing-carousel-btn {
+  position: absolute;
+  top: 50%;
+  z-index: 4;
+  transform: translateY(-50%);
+  width: 44px;
+  height: 44px;
+  border-radius: var(--r-full);
+  border: 1px solid var(--border);
+  background: rgba(0,0,0,0.62);
+  color: var(--text-primary);
+  font-size: 28px;
+  line-height: 1;
+  cursor: pointer;
+  box-shadow: var(--shadow-md);
+}
+
+.marketing-carousel-prev {
+  left: calc(var(--space-5) * -1);
+}
+
+.marketing-carousel-next {
+  right: calc(var(--space-5) * -1);
+}
+
+.marketing-lightbox {
+  position: fixed;
+  inset: 0;
+  z-index: 10000;
+  display: none;
+  align-items: center;
+  justify-content: center;
+  background: rgba(0,0,0,0.88);
+  padding: var(--space-6);
+}
+
+.marketing-lightbox.open {
+  display: flex;
+}
+
+.marketing-lightbox-content {
+  position: relative;
+  max-width: min(92vw, 980px);
+  max-height: 90vh;
+}
+
+.marketing-lightbox-content img {
+  display: block;
+  max-width: 100%;
+  max-height: 90vh;
+  object-fit: contain;
+  border-radius: var(--r-lg);
+  box-shadow: var(--shadow-lg);
+}
+
+.marketing-lightbox-close,
+.marketing-lightbox-nav {
+  position: absolute;
+  border: 1px solid rgba(255,255,255,0.18);
+  background: rgba(0,0,0,0.42);
+  color: #fff;
+  cursor: pointer;
+}
+
+.marketing-lightbox-close {
+  top: -44px;
+  right: 0;
+  width: 36px;
+  height: 36px;
+  border-radius: var(--r-full);
+  font-size: 28px;
+  line-height: 1;
+}
+
+.marketing-lightbox-nav {
+  top: 50%;
+  transform: translateY(-50%);
+  width: 46px;
+  height: 46px;
+  border-radius: var(--r-full);
+  font-size: 30px;
+  line-height: 1;
+}
+
+.marketing-lightbox-prev {
+  left: var(--space-5);
+}
+
+.marketing-lightbox-next {
+  right: var(--space-5);
+}
+
 @media (max-width: 900px) {
   .marketing-hero {
     text-align: center;
@@ -1538,5 +1685,29 @@ select.input { appearance: none; cursor: pointer; }
 
   .marketing-social-grid {
     grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .marketing-carousel-btn {
+    display: none;
+  }
+
+  .marketing-carousel-slide {
+    flex-basis: 78vw;
+  }
+
+  .marketing-portfolio-slide {
+    flex-basis: 64vw;
+  }
+
+  .marketing-lightbox {
+    padding: var(--space-4);
+  }
+
+  .marketing-lightbox-prev {
+    left: var(--space-3);
+  }
+
+  .marketing-lightbox-next {
+    right: var(--space-3);
   }
 }
