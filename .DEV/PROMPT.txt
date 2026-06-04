@@ -3,8 +3,7 @@ a pasta do site e toda a estrutura fica na "Raiz" e esse site é do Github Pages
 A versão atual está correta.
 Preciso das seguintes atualizações:
 
-- Corrija o picture-in-picture da página, deixe ele sempre sobreposto aos outros elementos.
-- No picture-in-ícture coloque apenas um botão de pause, revise a funcionalidade (não está funcionando).
+- Revise tudo que já falamos sobre o PiP. Não está funcionando.
 
 Antes de implementar:
 1. Liste quais funções/arquivos serão modificados

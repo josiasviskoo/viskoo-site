@@ -501,7 +501,7 @@ body {
   aspect-ratio: 16/9;
   max-width: none;
   margin: 0;
-  z-index: 9500;
+  z-index: 10000;
   border-radius: var(--r-lg);
   animation: none;
 }

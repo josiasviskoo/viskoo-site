@@ -509,6 +509,8 @@
   const heroVslPlay = document.querySelector('.hero-vsl-play');
   const heroVslToggle = document.querySelector('.hero-vsl-toggle');
   let heroVslPlayer = null;
+  let heroVslReady = false;
+  let heroVslPendingPlay = false;
   let heroVslStarted = false;
   let heroVslPlaying = false;
   let heroVslInView = true;
@@ -520,7 +522,10 @@
 
   function syncHeroVslState(state) {
     heroVslPlaying = state === 1;
-    if (state === 1) heroVslStarted = true;
+    if (state === 1) {
+      heroVslStarted = true;
+      heroVslPendingPlay = false;
+    }
     if (heroVslPlay) heroVslPlay.classList.toggle('hidden', heroVslStarted);
     if (heroVslToggle) {
       heroVslToggle.setAttribute('aria-label', 'Pausar vídeo');
@@ -528,33 +533,21 @@
     updateHeroVslFloat();
   }
 
-  function sendHeroVslCommand(command) {
-    if (!heroVsl || !heroVsl.contentWindow) return;
-    heroVsl.contentWindow.postMessage(JSON.stringify({
-      event: 'command',
-      func: command,
-      args: []
-    }), 'https://www.youtube.com');
-  }
-
   function playHeroVsl() {
-    if (heroVslPlayer && heroVslPlayer.playVideo) {
+    heroVslPendingPlay = true;
+
+    if (heroVslReady && heroVslPlayer && heroVslPlayer.playVideo) {
       heroVslPlayer.playVideo();
-    } else {
-      heroVsl.src = 'https://www.youtube.com/embed/XnEmNq6t6LU?si=HwdMZKCs_gSg9cBY&enablejsapi=1&playsinline=1&autoplay=1';
-      sendHeroVslCommand('playVideo');
+      heroVslPendingPlay = false;
     }
-    heroVslStarted = true;
-    heroVslPlaying = true;
-    if (heroVslPlay) heroVslPlay.classList.add('hidden');
+
     updateHeroVslFloat();
   }
 
   function pauseHeroVsl() {
-    if (heroVslPlayer && heroVslPlayer.pauseVideo) {
+    heroVslPendingPlay = false;
+    if (heroVslReady && heroVslPlayer && heroVslPlayer.pauseVideo) {
       heroVslPlayer.pauseVideo();
-    } else {
-      sendHeroVslCommand('pauseVideo');
     }
     heroVslPlaying = false;
     updateHeroVslFloat();
@@ -564,6 +557,10 @@
     if (!heroVsl) return;
     heroVslPlayer = new YT.Player('heroVsl', {
       events: {
+        onReady: () => {
+          heroVslReady = true;
+          if (heroVslPendingPlay) playHeroVsl();
+        },
         onStateChange: (event) => syncHeroVslState(event.data)
       }
     });
