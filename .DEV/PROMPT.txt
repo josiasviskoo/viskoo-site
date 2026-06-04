@@ -5,8 +5,7 @@ Preciso das seguintes atualizações:
 ----
 
 Atualize a página do produto marketing, apenas a pasta marketing relacionada ao produto marketing.
-- 
-
+- Existe uma sessão "Na Web" no link https://site.viskoo.com.br/marketing-lp/ baixe as imagens com qualidade na pasta "img/portfolio-web" e crie uma sessão na página produto marketing com um carrossel e lightbox escrito "Na Web".
 ----
 Antes de implementar:
 1. Liste quais funções/arquivos serão modificados

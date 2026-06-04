@@ -1577,6 +1577,16 @@ select.input { appearance: none; cursor: pointer; }
   object-fit: contain;
 }
 
+.marketing-web-slide {
+  flex-basis: 280px;
+  background: #fff;
+}
+
+.marketing-web-slide img {
+  aspect-ratio: 1000/1216;
+  object-fit: cover;
+}
+
 .marketing-carousel-btn {
   position: absolute;
   top: 50%;
@@ -1697,6 +1707,10 @@ select.input { appearance: none; cursor: pointer; }
 
   .marketing-portfolio-slide {
     flex-basis: 64vw;
+  }
+
+  .marketing-web-slide {
+    flex-basis: 72vw;
   }
 
   .marketing-lightbox {
