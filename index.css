@@ -492,6 +492,16 @@ body {
   border-right: 4px solid #fff;
 }
 
+.hero-vsl-toggle.is-paused::before {
+  width: 0;
+  height: 0;
+  transform: translateX(2px);
+  border-left: 15px solid #fff;
+  border-top: 10px solid transparent;
+  border-bottom: 10px solid transparent;
+  border-right: 0;
+}
+
 .hero-vsl.is-floating {
   position: fixed;
   right: var(--space-5);

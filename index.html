@@ -517,7 +517,7 @@
 
   function updateHeroVslFloat() {
     if (!heroVslWrap) return;
-    heroVslWrap.classList.toggle('is-floating', heroVslStarted && heroVslPlaying && !heroVslInView);
+    heroVslWrap.classList.toggle('is-floating', heroVslStarted && !heroVslInView);
   }
 
   function syncHeroVslState(state) {
@@ -528,6 +528,7 @@
     }
     if (heroVslPlay) heroVslPlay.classList.toggle('hidden', heroVslStarted);
     if (heroVslToggle) {
+      heroVslToggle.classList.toggle('is-paused', !heroVslPlaying);
       heroVslToggle.setAttribute('aria-label', 'Pausar vídeo');
     }
     updateHeroVslFloat();
@@ -580,7 +581,11 @@
 
   if (heroVslToggle) {
     heroVslToggle.addEventListener('click', () => {
-      pauseHeroVsl();
+      if (heroVslPlaying) {
+        pauseHeroVsl();
+      } else {
+        playHeroVsl();
+      }
     });
   }
 

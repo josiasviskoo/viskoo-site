@@ -3,7 +3,7 @@ a pasta do site e toda a estrutura fica na "Raiz" e esse site é do Github Pages
 A versão atual está correta.
 Preciso das seguintes atualizações:
 
-- Revise tudo que já falamos sobre o PiP. Não está funcionando.
+- O Vídeo VSL possui um PiP (Picture in Picture) quando rola a página depois que deu o play, e quanto está no PiP existe apenas um botão de pause e play ativo. O PiP do vídeo fica sobreposto em toda a página, revise o z-index.
 
 Antes de implementar:
 1. Liste quais funções/arquivos serão modificados
