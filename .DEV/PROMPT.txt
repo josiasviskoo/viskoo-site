@@ -3,8 +3,19 @@ a pasta do site e toda a estrutura fica na "Raiz" e esse site é do Github Pages
 A versão atual está correta.
 Preciso das seguintes atualizações:
 
-- Era pra existir esse recurso, se existir revise porque não está funcionando, vou explicar novamente:
-Crie um recurso de picture-in-picture ativado automaticamente pela rolagem da página quando não visível, o vídeo não para de rodar, depois que deu o play ele não para e automaticamente se reposiciona na tela de forma pequena e quadrada no canto, ou seja o vídeo da VSL continua rodando no canto pequeno sobreposto a página do site.
+
+
+Revisão e Correção de Recurso: Picture-in-Picture (PiP) Automático no Scroll
+Por favor, revise e isole o script responsável pelo recurso de Picture-in-Picture (PiP) da VSL. O recurso já deveria existir, mas está apresentando falhas ou não está funcionando.
+
+Comportamento Esperado:
+Gatilho: Quando o usuário der o "Play" no vídeo principal e rolar a página para baixo (fazendo com que o player original saia da área visível da tela/viewport).
+Ação Automática: O vídeo deve se reposicionar automaticamente, transformando-se em um player em miniatura quadrada (estilo PiP, pequeno e fixo/floating) em um dos cantos da tela, sobrepondo o conteúdo da página.
+Design do PiP: O vídeo fica em miniatura quadrada no canto da tela, ao tocar ele pausa e ao tocar novamente ele dá o play.
+Reprodução Contínua: É obrigatório que o vídeo não pause ou reinicie durante essa transição. A reprodução da VSL (áudio e vídeo) deve continuar rodando sem interrupções.
+
+Analise o código atual, identifique o erro que está impedindo esse funcionamento e gere a correção.
+
 
 
 Antes de implementar:

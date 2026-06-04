@@ -522,6 +522,18 @@ body {
 
 .hero-vsl.is-floating .hero-vsl-toggle {
   display: flex;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  border-radius: inherit;
+  background: transparent;
+  border: 0;
+  box-shadow: none;
+  z-index: 3;
+}
+
+.hero-vsl.is-floating .hero-vsl-toggle::before {
+  opacity: 0;
 }
 
 @media (max-width: 768px) {
