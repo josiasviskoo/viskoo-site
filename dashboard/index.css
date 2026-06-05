@@ -1422,6 +1422,43 @@ select.input { appearance: none; cursor: pointer; }
 .text-right  { text-align: right; }
 .flex-wrap   { flex-wrap: wrap; }
 
+/* =============================================
+   FAQ / DETAILS
+   ============================================= */
+.faq-item summary::-webkit-details-marker {
+  display: none;
+}
+
+.faq-item summary {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-3);
+  cursor: pointer;
+  transition: color var(--duration-fast) var(--ease-out);
+}
+
+.faq-item summary:hover {
+  color: var(--accent);
+}
+
+.faq-item summary::after {
+  content: '▼';
+  display: inline-block;
+  transition: transform var(--duration-base) var(--ease-out);
+  color: var(--text-secondary);
+  font-size: 12px;
+  flex-shrink: 0;
+}
+
+.faq-item[open] summary::after {
+  transform: rotate(180deg);
+}
+
+.faq-item[open] summary {
+  color: var(--accent);
+}
+
 /* Reveal animations */
 .reveal {
   opacity: 0;
