@@ -1,0 +1,409 @@
+COPY E INSTRUCOES PARA PAGINA DE VENDAS
+PLUGIN VISKOO DASHBOARD
+
+Objetivo da pagina
+Vender uma assinatura do plugin Viskoo Dashboard para donos de agencia, gestores de trafego pago e profissionais de marketing que precisam apresentar resultados para clientes de forma profissional, organizada e com links de acesso controlados.
+
+Posicionamento
+O Viskoo Dashboard e um plugin WordPress para transformar relatorios de trafego pago em dashboards visuais, editaveis e compartilhaveis com clientes por link publico com expiracao.
+
+Modelo comercial sugerido
+Assinatura recorrente com acesso ao plugin, atualizacoes e novas versoes enquanto a assinatura estiver ativa.
+
+Observacao sobre "opensource por assinatura"
+Use a comunicacao com cuidado. Uma forma mais clara e:
+"Codigo aberto para assinantes: enquanto sua assinatura estiver ativa, voce pode baixar, instalar, estudar e utilizar as versoes disponiveis do plugin nos seus projetos, conforme os termos da licenca."
+
+Evite prometer "uso livre sem limites" se os termos comerciais ainda nao estiverem juridicamente definidos.
+
+
+SECAO 1 - HERO
+
+Headline:
+Entregue dashboards profissionais de trafego pago sem depender de planilhas, PDFs ou relatorios confusos.
+
+Subheadline:
+Com o Viskoo Dashboard, agencias e gestores de trafego criam dashboards por cliente, atualizam metricas direto no WordPress e compartilham links publicos com prazo de expiracao.
+
+CTA principal:
+Assinar o Viskoo Dashboard
+
+CTA secundario:
+Ver como funciona
+
+Bullets de apoio:
+- Dashboards individuais por cliente.
+- Links publicos com expiracao.
+- Edicao rapida em modo administrador.
+- Cards de funil, KPIs, performance diaria e top palavras.
+- Instalacao direta no WordPress.
+
+Texto curto de reforco:
+Menos tempo montando relatorio. Mais clareza para mostrar resultado.
+
+
+SECAO 2 - PROBLEMA
+
+Titulo:
+Seu relatorio ainda parece mais trabalhoso do que a propria campanha?
+
+Texto:
+Quem trabalha com trafego pago sabe: o cliente quer entender o que esta acontecendo, mas nem sempre planilhas, prints do gerenciador de anuncios ou PDFs longos ajudam.
+
+O resultado e um ciclo cansativo:
+
+- Voce perde tempo formatando dados.
+- O cliente nao sabe onde olhar.
+- Cada atualizacao vira retrabalho.
+- Links e arquivos se espalham em conversas.
+- A percepcao de valor da sua entrega fica menor do que deveria.
+
+Fechamento:
+O Viskoo Dashboard foi criado para resolver essa parte da operacao: apresentar resultados com clareza, controle e aparencia profissional.
+
+
+SECAO 3 - SOLUCAO
+
+Titulo:
+Um dashboard de trafego pago dentro do seu WordPress.
+
+Texto:
+O Viskoo Dashboard permite criar clientes, cadastrar relatorios e montar uma visualizacao clara dos principais dados de campanha.
+
+Voce edita tudo em modo administrador e compartilha com o cliente um link publico temporario, sem precisar liberar acesso ao painel do WordPress.
+
+Principais recursos:
+
+Clientes:
+Crie uma area para cada cliente e organize seus relatorios em um unico lugar.
+
+Relatorios:
+Cadastre relatorios por periodo, duplique estruturas e mantenha historico de acompanhamento.
+
+Cards de funil:
+Mostre impressoes, alcance, cliques, resultados, investimento, investimento por dia, custo por lead e taxa geral.
+
+KPIs:
+Apresente investimento total e investimento diario em cards simples e diretos.
+
+Performance diaria:
+Exiba conversoes por dia em grafico visual.
+
+Top palavras:
+Organize palavras-chave, cliques, CTR e custo em cards com tabela e grafico.
+
+Links publicos com expiracao:
+Gere links para clientes com validade definida. Quando expiram, deixam de funcionar automaticamente.
+
+Modo administrador:
+Ao acessar logado como administrador, voce edita campos, datas, relatorios e cards direto na dashboard.
+
+
+SECAO 4 - PARA QUEM E
+
+Titulo:
+Feito para quem precisa mostrar resultado com frequencia.
+
+Texto:
+O Viskoo Dashboard foi pensado para profissionais que precisam transformar dados de marketing em uma apresentacao clara para clientes.
+
+Ideal para:
+
+- Donos de agencia de marketing.
+- Gestores de trafego pago.
+- Consultores de performance.
+- Social medias que entregam relatorios de anuncios.
+- Profissionais de marketing que atendem varios clientes.
+- Equipes que querem padronizar a entrega de relatorios.
+
+Nao e apenas sobre deixar bonito. E sobre reduzir atrito, ganhar velocidade e aumentar a percepcao de valor do seu trabalho.
+
+
+SECAO 5 - BENEFICIOS
+
+Titulo:
+O que muda na sua rotina
+
+Beneficio 1:
+Voce entrega uma experiencia mais profissional.
+
+Texto:
+Em vez de enviar arquivos soltos, voce envia um link organizado, visual e direto ao ponto.
+
+Beneficio 2:
+Voce ganha velocidade na atualizacao.
+
+Texto:
+Os dados podem ser editados direto na dashboard em modo administrador, sem reconstruir um relatorio inteiro.
+
+Beneficio 3:
+Voce controla o acesso.
+
+Texto:
+Links publicos podem ter prazo de validade. Isso ajuda a evitar dashboards antigos circulando indefinidamente.
+
+Beneficio 4:
+Voce padroniza sua entrega.
+
+Texto:
+Use a mesma estrutura para varios clientes, mantendo consistencia na comunicacao dos resultados.
+
+Beneficio 5:
+Voce aumenta a percepcao de valor.
+
+Texto:
+Um relatorio bem apresentado ajuda o cliente a entender melhor o trabalho que esta sendo feito.
+
+
+SECAO 6 - COMO FUNCIONA
+
+Titulo:
+Do WordPress para o cliente em poucos passos.
+
+Passo 1:
+Instale o plugin no seu WordPress.
+
+Passo 2:
+Cadastre seus clientes.
+
+Passo 3:
+Crie relatorios por cliente e periodo.
+
+Passo 4:
+Adicione cards de funil, performance e top palavras.
+
+Passo 5:
+Edite os dados em modo administrador.
+
+Passo 6:
+Gere um link publico com expiracao e envie ao cliente.
+
+Texto de apoio:
+O cliente acessa apenas a dashboard. A area administrativa e reservada para quem esta logado com permissao.
+
+
+SECAO 7 - RECURSOS EM DESTAQUE
+
+Titulo:
+Recursos pensados para a rotina de agencia
+
+Cards sugeridos:
+
+Dashboard por cliente
+Organize relatorios individualmente e facilite a gestao da sua carteira.
+
+Links com expiracao
+Compartilhe com seguranca e defina por quantos dias o cliente tera acesso.
+
+Edicao visual
+Atualize campos, datas, cards e indicadores direto na tela.
+
+Duplicacao de relatorios
+Reaproveite estruturas e acelere a criacao de novos periodos.
+
+Cards de funil
+Mostre a evolucao de impressoes ate resultados com taxa geral e custo por lead.
+
+Top palavras
+Apresente dados de palavras-chave com tabela e grafico.
+
+Performance diaria
+Mostre conversoes por dia em um grafico simples e objetivo.
+
+WordPress nativo
+Gerencie tudo dentro do ambiente que muitos profissionais ja utilizam.
+
+
+SECAO 8 - ASSINATURA E ATUALIZACOES
+
+Titulo:
+Assine, baixe e acompanhe as evolucoes do plugin.
+
+Texto:
+O Viskoo Dashboard funciona por assinatura. Enquanto sua assinatura estiver ativa, voce recebe acesso ao plugin e as novas atualizacoes liberadas.
+
+Sempre que uma nova versao estiver disponivel, voce podera baixar e utilizar a atualizacao conforme os termos da sua assinatura.
+
+Texto sobre codigo aberto para assinantes:
+A proposta e oferecer um modelo de codigo aberto para assinantes: voce tem acesso aos arquivos do plugin, pode entender como ele funciona e utilizar as versoes disponiveis nos seus projetos enquanto mantiver sua assinatura ativa.
+
+CTA:
+Quero assinar o Viskoo Dashboard
+
+
+SECAO 9 - PROVA / AUTORIDADE
+
+Titulo:
+Criado a partir de uma necessidade real de apresentacao de resultados.
+
+Texto:
+O Viskoo Dashboard nasce para resolver um problema comum em agencias e operacoes de trafego: transformar metricas em uma entrega que o cliente consiga acessar, entender e valorizar.
+
+Em vez de depender de relatorios manuais, o plugin centraliza a apresentacao dos dados em uma experiencia visual, compartilhavel e controlada.
+
+Sugestoes de prova para inserir quando existirem:
+
+- Prints reais da dashboard.
+- Antes e depois de um relatorio antigo vs. dashboard.
+- Depoimentos de gestores de trafego.
+- Numero de agencias usando.
+- Tempo medio economizado por relatorio.
+- Exemplos de dashboards de clientes ficticios.
+
+
+SECAO 10 - OFERTA
+
+Titulo:
+Comece a entregar relatorios como uma agencia mais profissional.
+
+Texto:
+Com a assinatura do Viskoo Dashboard, voce recebe acesso ao plugin, pode instalar no seu WordPress e usar a estrutura para criar dashboards de clientes, gerar links publicos e acompanhar as atualizacoes futuras.
+
+Inclui:
+
+- Plugin Viskoo Dashboard.
+- Criacao de clientes e relatorios.
+- Dashboard visual com cards editaveis.
+- Links publicos com expiracao.
+- Atualizacoes enquanto a assinatura estiver ativa.
+- Acesso aos arquivos do plugin conforme os termos da assinatura.
+
+CTA principal:
+Assinar agora
+
+Microcopy abaixo do CTA:
+Acesso ao plugin e atualizacoes enquanto sua assinatura estiver ativa.
+
+
+SECAO 11 - GARANTIA / REDUCAO DE RISCO
+
+Titulo:
+Teste na sua propria operacao.
+
+Texto sugerido:
+Se houver garantia comercial, comunicar de forma simples:
+"Voce tem X dias para testar o Viskoo Dashboard. Se nao fizer sentido para sua rotina, solicite o cancelamento conforme nossa politica."
+
+Importante:
+Definir a politica real antes de publicar. Nao prometer garantia sem processo claro.
+
+
+SECAO 12 - FAQ
+
+Pergunta:
+O Viskoo Dashboard e um SaaS?
+
+Resposta:
+Nao exatamente. O Viskoo Dashboard e um plugin para WordPress disponibilizado por assinatura. Voce instala no seu proprio ambiente WordPress e usa para criar dashboards para seus clientes.
+
+Pergunta:
+Preciso dar acesso ao WordPress para meu cliente?
+
+Resposta:
+Nao. O cliente acessa a dashboard por um link publico com token. A edicao fica disponivel apenas para administradores logados.
+
+Pergunta:
+Os links expiram?
+
+Resposta:
+Sim. Voce define a validade do link publico. Links expirados deixam de funcionar e podem ser limpos automaticamente.
+
+Pergunta:
+Posso criar varios clientes?
+
+Resposta:
+Sim. O plugin permite cadastrar clientes e organizar relatorios por cliente.
+
+Pergunta:
+Posso atualizar os dados depois?
+
+Resposta:
+Sim. Em modo administrador, voce pode editar dados da dashboard, como periodo, funis, KPIs, performance e top palavras.
+
+Pergunta:
+O plugin recebe atualizacoes?
+
+Resposta:
+Sim. Enquanto sua assinatura estiver ativa, voce tera acesso as atualizacoes liberadas.
+
+Pergunta:
+O que significa codigo aberto para assinantes?
+
+Resposta:
+Significa que os assinantes tem acesso aos arquivos do plugin e podem utilizar as versoes disponiveis conforme os termos da assinatura. A comunicacao final deve acompanhar a licenca e os termos comerciais definidos.
+
+Pergunta:
+Funciona para qualquer tipo de agencia?
+
+Resposta:
+Ele foi pensado principalmente para agencias, gestores de trafego e profissionais de marketing que apresentam resultados de campanhas pagas para clientes.
+
+
+SECAO 13 - CTA FINAL
+
+Headline:
+Transforme seus relatorios em uma entrega mais clara, visual e profissional.
+
+Texto:
+Pare de gastar energia montando relatorios manuais toda vez que precisa mostrar resultados. Use o Viskoo Dashboard para centralizar a apresentacao, controlar o acesso e entregar uma experiencia melhor para seus clientes.
+
+CTA:
+Assinar o Viskoo Dashboard
+
+Microcopy:
+Plugin WordPress por assinatura, com acesso a atualizacoes enquanto sua assinatura estiver ativa.
+
+
+INSTRUCOES DE CONSTRUCAO DA PAGINA
+
+Tom de voz
+Profissional, direto e voltado para beneficio pratico. Evitar promessas exageradas. Falar com donos de agencia e gestores de trafego que valorizam tempo, clareza e percepcao de valor.
+
+Estilo visual recomendado
+Visual moderno, escuro ou neutro, com destaque em laranja/azul se seguir a identidade atual da dashboard. Usar imagens reais ou mockups da interface do plugin. Evitar uma pagina generica de marketing sem mostrar o produto.
+
+Primeira dobra
+Deve mostrar imediatamente:
+- Nome Viskoo Dashboard.
+- O que e: plugin WordPress para dashboards de trafego pago.
+- Para quem e: agencias, gestores de trafego e profissionais de marketing.
+- CTA de assinatura.
+- Um print/mockup real da dashboard.
+
+Secoes obrigatorias
+1. Hero com proposta clara.
+2. Problema da entrega de relatorios.
+3. Solucao com resumo do plugin.
+4. Recursos principais.
+5. Como funciona.
+6. Modelo de assinatura e atualizacoes.
+7. Provas ou demonstracoes visuais.
+8. Oferta.
+9. FAQ.
+10. CTA final.
+
+Elementos visuais recomendados
+- Screenshot da dashboard em modo cliente.
+- Screenshot da dashboard em modo administrador.
+- Exemplo de modal de gerar link publico.
+- Exemplo de card de funil.
+- Exemplo de top palavras.
+- Exemplo de lista de clientes no admin.
+
+Cuidados juridicos e comerciais
+- Definir claramente os termos da assinatura.
+- Definir se ha limite de sites, clientes ou instalacoes.
+- Definir politica de cancelamento.
+- Definir licenca do codigo.
+- Evitar usar "opensource livre" sem explicar as condicoes.
+- Se a assinatura acabar, deixar claro se o usuario perde acesso a updates, downloads, suporte ou uso futuro.
+
+CTA principal sugerido em toda pagina
+Assinar o Viskoo Dashboard
+
+CTA secundario sugerido
+Ver demonstracao
+
+Promessa central
+Entregar dashboards de trafego pago mais profissionais, claros e controlados, direto no WordPress.
+
