@@ -4,7 +4,9 @@ A versão atual está correta.
 Preciso das seguintes atualizações:
 ----
 
-
+No produto "Hospedagem Web":
+- Analise o link https://site.viskoo.com.br/hospedagem/ e todos os elementos que estão sendo abordados e atualize a página de hospeedagem web.
+- Crie uma nova página, utilize as imagens da página antiga (https://site.viskoo.com.br/hospedagem/).
 
 ----
 Antes de implementar:
