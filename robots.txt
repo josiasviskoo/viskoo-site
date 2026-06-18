@@ -1,4 +1,6 @@
 User-agent: *
 Allow: /
+Disallow: /ata/
+Disallow: /proposta/
 
 Sitemap: https://viskoo.com.br/sitemap.xml
