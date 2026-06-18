@@ -1,0 +1,522 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Viskoo — ATA de Reunião</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg:         #0D0F14;
+    --surface:    #141720;
+    --surface-2:  #1C2030;
+    --border:     #252A3A;
+    --border-2:   #2E3448;
+    --text:       #E8EAF0;
+    --text-2:     #8B92A8;
+    --text-3:     #555E78;
+    --blue:       #5B9CF6;
+    --blue-dim:   #111E38;
+    --blue-border:#1E3060;
+    --green:      #3ECF8E;
+    --green-dim:  #0E2A1E;
+    --red:        #FF4D4D;
+    --red-dim:    #3A1A1A;
+    --orange:     #FF8C42;
+    --yellow:     #F5C842;
+    --accent:     #5B9CF6;
+    --radius:     10px;
+    --radius-sm:  6px;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: 'Inter', sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    line-height: 1.6;
+    min-height: 100vh;
+    padding-bottom: 60px;
+  }
+
+  header {
+    border-bottom: 1px solid var(--border);
+    padding: 20px 24px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    position: sticky;
+    top: 0;
+    background: var(--bg);
+    z-index: 10;
+  }
+
+  .logo { display: flex; align-items: center; gap: 10px; }
+  .logo-mark {
+    width: 32px; height: 32px;
+    background: var(--accent);
+    border-radius: 7px;
+    display: flex; align-items: center; justify-content: center;
+    font-weight: 700; font-size: 14px; color: #fff;
+  }
+  .logo-text { font-size: 15px; font-weight: 600; }
+  .logo-sub  { font-size: 11px; color: var(--text-3); }
+
+  .live-badge {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    color: var(--text-3);
+    background: var(--surface-2);
+    border: 1px solid var(--border);
+    padding: 4px 10px;
+    border-radius: 20px;
+  }
+
+  main {
+    max-width: 680px;
+    margin: 0 auto;
+    padding: 32px 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+
+  .meta-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+  }
+
+  .field-label {
+    font-size: 10px;
+    font-weight: 600;
+    letter-spacing: 1.2px;
+    text-transform: uppercase;
+    color: var(--text-3);
+    margin-bottom: 6px;
+  }
+
+  input[type="text"], textarea, select {
+    width: 100%;
+    background: var(--surface-2);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-sm);
+    color: var(--text);
+    font-family: 'Inter', sans-serif;
+    font-size: 13px;
+    padding: 10px 12px;
+    outline: none;
+    transition: border-color 0.15s;
+    -webkit-appearance: none;
+    appearance: none;
+  }
+
+  input[type="text"]:focus,
+  textarea:focus,
+  select:focus {
+    border-color: var(--accent);
+  }
+
+  input::placeholder, textarea::placeholder {
+    color: var(--text-3);
+  }
+
+  textarea {
+    min-height: 88px;
+    resize: vertical;
+    line-height: 1.6;
+  }
+
+  select {
+    cursor: pointer;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%23555E78' stroke-width='2'%3E%3Cpath d='M6 9l6 6 6-6'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 10px center;
+    padding-right: 30px;
+  }
+
+  select option { background: var(--surface); color: var(--text); }
+
+  .card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    overflow: hidden;
+  }
+
+  .card-header {
+    padding: 14px 18px;
+    border-bottom: 1px solid var(--border);
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .card-dot {
+    width: 6px; height: 6px;
+    border-radius: 50%;
+    background: var(--accent);
+    flex-shrink: 0;
+  }
+
+  .card-dot.green  { background: var(--green); }
+  .card-dot.orange { background: var(--orange); }
+  .card-dot.red    { background: var(--red); }
+
+  .card-title {
+    font-size: 12px;
+    font-weight: 600;
+    color: var(--text);
+  }
+
+  .card-body { padding: 16px 18px; }
+
+  .demand-list { display: flex; flex-direction: column; gap: 8px; }
+
+  .demand-row {
+    display: grid;
+    grid-template-columns: 1fr 130px 34px;
+    gap: 8px;
+    align-items: start;
+  }
+
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    padding: 9px 14px;
+    border-radius: var(--radius-sm);
+    border: 1px solid var(--border-2);
+    background: transparent;
+    color: var(--text-2);
+    font-family: 'Inter', sans-serif;
+    font-size: 12px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.15s;
+  }
+
+  .btn:hover { background: var(--surface-2); color: var(--text); }
+  .btn:active { transform: scale(0.98); }
+
+  .btn-add {
+    width: 100%;
+    margin-top: 10px;
+    border-style: dashed;
+    border-color: var(--border);
+    color: var(--text-3);
+    font-size: 12px;
+  }
+
+  .btn-add:hover { border-color: var(--border-2); color: var(--text-2); }
+
+  .btn-remove {
+    height: 36px;
+    width: 34px;
+    padding: 0;
+    border-color: var(--red-dim);
+    color: var(--red);
+    flex-shrink: 0;
+  }
+
+  .btn-remove:hover { background: var(--red-dim); }
+
+  .actions {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+    margin-top: 8px;
+  }
+
+  .btn-gerar {
+    background: var(--blue-dim);
+    border-color: var(--blue-border);
+    color: var(--blue);
+    font-size: 13px;
+    font-weight: 600;
+    padding: 12px 16px;
+  }
+
+  .btn-gerar:hover { background: #162848; }
+
+  .btn-copiar {
+    font-size: 13px;
+    font-weight: 500;
+    padding: 12px 16px;
+  }
+
+  .output-wrap {
+    display: none;
+    margin-top: 4px;
+  }
+
+  .output-box {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 16px 18px;
+    white-space: pre-wrap;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 12px;
+    color: var(--text-2);
+    line-height: 1.7;
+    max-height: 340px;
+    overflow-y: auto;
+  }
+
+  .copy-confirm {
+    display: none;
+    font-size: 12px;
+    color: var(--green);
+    padding: 8px 0 0;
+    text-align: center;
+  }
+
+  .reset-bar {
+    display: flex;
+    justify-content: flex-end;
+    margin-top: 4px;
+  }
+
+  .btn-reset {
+    font-size: 11px;
+    color: var(--text-3);
+    padding: 6px 10px;
+    border-color: transparent;
+  }
+
+  @media (max-width: 500px) {
+    .meta-grid { grid-template-columns: 1fr; }
+    .demand-row { grid-template-columns: 1fr 100px 34px; }
+    .actions { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="logo">
+    <div class="logo-mark">V</div>
+    <div>
+      <div class="logo-text">Viskoo</div>
+      <div class="logo-sub">ATA de reunião</div>
+    </div>
+  </div>
+  <div class="live-badge" id="live-badge"></div>
+</header>
+
+<main>
+
+  <!-- META -->
+  <div class="meta-grid">
+    <div>
+      <div class="field-label">Cliente</div>
+      <input type="text" id="cliente" placeholder="Ex: Petrus Segurança" autocomplete="off" />
+    </div>
+    <div>
+      <div class="field-label">Tipo de reunião</div>
+      <input type="text" id="tipo" placeholder="Ex: Acompanhamento campanha" autocomplete="off" />
+    </div>
+    <div>
+      <div class="field-label">Participantes</div>
+      <input type="text" id="participantes" placeholder="Ex: Josias, Débora, Stephanie" autocomplete="off" />
+    </div>
+    <div>
+      <div class="field-label">Horário</div>
+      <input type="text" id="horario" placeholder="Ex: 14h00 — 14h30" autocomplete="off" />
+    </div>
+  </div>
+
+  <!-- DISCUTIDO -->
+  <div class="card">
+    <div class="card-header">
+      <div class="card-dot"></div>
+      <div class="card-title">O que foi discutido</div>
+    </div>
+    <div class="card-body">
+      <textarea id="discutido" placeholder="Tópicos abordados, contexto, alinhamentos, dúvidas esclarecidas..."></textarea>
+    </div>
+  </div>
+
+  <!-- DECIDIDO -->
+  <div class="card">
+    <div class="card-header">
+      <div class="card-dot green"></div>
+      <div class="card-title">O que foi decidido</div>
+    </div>
+    <div class="card-body">
+      <textarea id="decidido" placeholder="Decisões tomadas, estratégias confirmadas, aprovações..."></textarea>
+    </div>
+  </div>
+
+  <!-- TAREFAS VISKOO -->
+  <div class="card">
+    <div class="card-header">
+      <div class="card-dot orange"></div>
+      <div class="card-title">Tarefas — Viskoo</div>
+    </div>
+    <div class="card-body">
+      <div class="demand-list" id="demandas-viskoo"></div>
+      <button class="btn btn-add" onclick="addDemanda('viskoo')">+ adicionar tarefa</button>
+    </div>
+  </div>
+
+  <!-- TAREFAS CLIENTE -->
+  <div class="card">
+    <div class="card-header">
+      <div class="card-dot red"></div>
+      <div class="card-title">Tarefas — Cliente</div>
+    </div>
+    <div class="card-body">
+      <div class="demand-list" id="demandas-cliente"></div>
+      <button class="btn btn-add" onclick="addDemanda('cliente')">+ adicionar tarefa</button>
+    </div>
+  </div>
+
+  <!-- PRÓXIMOS PASSOS -->
+  <div class="card">
+    <div class="card-header">
+      <div class="card-dot"></div>
+      <div class="card-title">Próximos passos</div>
+    </div>
+    <div class="card-body">
+      <textarea id="proximos" placeholder="Próxima reunião, prazos importantes, o que esperar nos próximos dias..."></textarea>
+    </div>
+  </div>
+
+  <!-- AÇÕES -->
+  <div class="actions">
+    <button class="btn btn-gerar" onclick="gerarTexto()">↗ gerar para o Claude</button>
+    <button class="btn btn-copiar" onclick="copiarTexto()">copiar texto</button>
+  </div>
+
+  <div class="copy-confirm" id="copy-confirm">✓ copiado — cole no Claude agora</div>
+
+  <div class="output-wrap" id="output-wrap">
+    <div class="output-box" id="output"></div>
+    <div class="reset-bar">
+      <button class="btn btn-reset" onclick="resetForm()">limpar tudo</button>
+    </div>
+  </div>
+
+</main>
+
+<script>
+const prazos = [
+  { val: 'hoje',           emoji: '📊' },
+  { val: 'amanhã',        emoji: '🔥' },
+  { val: 'esta semana',   emoji: '🔥' },
+  { val: 'próxima semana',emoji: '👁️' },
+  { val: 'sem prazo',     emoji: '🌙' },
+];
+
+function addDemanda(tipo) {
+  const container = document.getElementById('demandas-' + tipo);
+  const row = document.createElement('div');
+  row.className = 'demand-row';
+  const opts = prazos.map(p => `<option value="${p.val}">${p.val}</option>`).join('');
+  row.innerHTML = `
+    <input type="text" placeholder="Descreva a tarefa..." autocomplete="off" />
+    <select>${opts}</select>
+    <button class="btn btn-remove" onclick="this.parentElement.remove()" aria-label="remover">✕</button>
+  `;
+  container.appendChild(row);
+  row.querySelector('input').focus();
+}
+
+function getDemandas(tipo) {
+  return Array.from(document.querySelectorAll('#demandas-' + tipo + ' .demand-row'))
+    .map(r => ({ desc: r.querySelector('input').value.trim(), prazo: r.querySelector('select').value }))
+    .filter(d => d.desc);
+}
+
+function getEmoji(prazo) {
+  return (prazos.find(p => p.val === prazo) || { emoji: '🌞' }).emoji;
+}
+
+function gerarTexto() {
+  const cliente      = document.getElementById('cliente').value.trim() || 'Cliente';
+  const tipo         = document.getElementById('tipo').value.trim() || 'Reunião de acompanhamento';
+  const participantes= document.getElementById('participantes').value.trim();
+  const horario      = document.getElementById('horario').value.trim();
+  const discutido    = document.getElementById('discutido').value.trim();
+  const decidido     = document.getElementById('decidido').value.trim();
+  const proximos     = document.getElementById('proximos').value.trim();
+  const demandasV    = getDemandas('viskoo');
+  const demandasC    = getDemandas('cliente');
+
+  const now = new Date().toLocaleDateString('pt-BR', { day: '2-digit', month: '2-digit', year: 'numeric' });
+
+  let txt = `ATA DE REUNIÃO — ${cliente.toUpperCase()}\n`;
+  txt += `Data: ${now}`;
+  if (horario) txt += ` | Horário: ${horario}`;
+  if (participantes) txt += `\nParticipantes: ${participantes}`;
+  txt += `\nTipo: ${tipo}\n`;
+
+  if (discutido) txt += `\n--- O QUE FOI DISCUTIDO ---\n${discutido}\n`;
+  if (decidido)  txt += `\n--- O QUE FOI DECIDIDO ---\n${decidido}\n`;
+
+  if (demandasV.length) {
+    txt += `\n--- TAREFAS — VISKOO ---\n`;
+    demandasV.forEach(d => {
+      txt += `• ${cliente.toUpperCase()} — ${d.desc} ${getEmoji(d.prazo)} (prazo: ${d.prazo})\n`;
+    });
+  }
+
+  if (demandasC.length) {
+    txt += `\n--- TAREFAS — CLIENTE ---\n`;
+    demandasC.forEach(d => txt += `• ${d.desc} (prazo: ${d.prazo})\n`);
+  }
+
+  if (proximos) txt += `\n--- PRÓXIMOS PASSOS ---\n${proximos}\n`;
+
+  txt += `\n---\nCrie as tarefas da Viskoo no Asana no projeto do cliente ${cliente.toUpperCase()}, seguindo o padrão do sistema (emoji no final do nome da tarefa, nome do cliente em maiúsculo).`;
+
+  const out = document.getElementById('output');
+  out.textContent = txt;
+  document.getElementById('output-wrap').style.display = 'block';
+  setTimeout(() => out.scrollIntoView({ behavior: 'smooth', block: 'start' }), 100);
+  return txt;
+}
+
+function copiarTexto() {
+  const texto = gerarTexto();
+  navigator.clipboard.writeText(texto).then(() => {
+    const el = document.getElementById('copy-confirm');
+    el.style.display = 'block';
+    setTimeout(() => el.style.display = 'none', 3000);
+  }).catch(() => {
+    const out = document.getElementById('output');
+    out.select && out.select();
+  });
+}
+
+function resetForm() {
+  ['cliente','tipo','participantes','horario','discutido','decidido','proximos'].forEach(id => {
+    document.getElementById(id).value = '';
+  });
+  document.getElementById('demandas-viskoo').innerHTML = '';
+  document.getElementById('demandas-cliente').innerHTML = '';
+  document.getElementById('output-wrap').style.display = 'none';
+  addDemanda('viskoo');
+  addDemanda('cliente');
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+function tick() {
+  const now = new Date();
+  document.getElementById('live-badge').textContent =
+    now.toLocaleDateString('pt-BR', { weekday: 'short', day: '2-digit', month: '2-digit' }) + ' ' +
+    now.toLocaleTimeString('pt-BR', { hour: '2-digit', minute: '2-digit' });
+}
+tick();
+setInterval(tick, 10000);
+
+addDemanda('viskoo');
+addDemanda('cliente');
+</script>
+
+</body>
+</html>
