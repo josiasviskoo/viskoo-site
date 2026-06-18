@@ -1,0 +1,587 @@
+<!DOCTYPE html>
+<!--
+  ╔══════════════════════════════════════════════════════╗
+  ║  VISKOO — TEMPLATE DE PÁGINA                        ║
+  ║  Copie este arquivo para a pasta do novo produto.   ║
+  ║  Renomeie para index.html e ajuste o conteúdo.      ║
+  ║                                                      ║
+  ║  CSS: sempre importe ../../index.css                 ║
+  ║  (ajuste o caminho conforme a profundidade)          ║
+  ╚══════════════════════════════════════════════════════╝
+-->
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <!-- SEO -->
+  <title>Título da Página — Viskoo</title>
+  <meta name="description" content="Descrição da página para SEO — até 160 caracteres." />
+  <meta name="robots" content="index, follow" />
+  <link rel="canonical" href="https://viskoo.com.br/slug-da-pagina/" />
+
+  <!-- Open Graph -->
+  <meta property="og:title" content="Título da Página — Viskoo" />
+  <meta property="og:description" content="Descrição da página." />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://viskoo.com.br/slug-da-pagina/" />
+  <meta property="og:image" content="https://viskoo.com.br/assets/og-image.jpg" />
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=DM+Mono:ital,wght@0,300;0,400;0,500;1,300&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;1,9..40,300&display=swap" rel="stylesheet" />
+
+  <!-- Design System (ajuste o número de ../ conforme a pasta) -->
+  <link rel="stylesheet" href="../index.css" />
+
+  <!-- CSS específico desta página (opcional) -->
+  <link rel="stylesheet" href="index.css" />
+</head>
+
+<body>
+
+<!-- =============================================
+     NAV — copiar idêntico em todas as páginas
+     ============================================= -->
+<nav class="nav">
+  <div class="nav-inner">
+    <a href="/" class="nav-logo">
+      <!-- Logotipo SVG inline ou <img> -->
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" color="#f48322"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+      Viskoo
+    </a>
+    <ul class="nav-links">
+      <li><a href="/#servicos">Serviços</a></li>
+      <li><a href="/#sobre">Sobre</a></li>
+      <li><a href="/#portfolio">Portfólio</a></li>
+      <li><a href="/#contato" class="nav-cta">Falar com especialista</a></li>
+    </ul>
+  </div>
+</nav>
+
+<!-- =============================================
+     PÁGINA — wrapper que compensa o nav fixo
+     ============================================= -->
+<div class="page">
+
+  <!-- =============================================
+       HERO — seção principal acima da dobra
+       ============================================= -->
+  <section class="hero">
+    <!-- Fundo decorativo -->
+    <div class="hero-bg"></div>
+    <div class="hero-noise"></div>
+
+    <!-- Conteúdo -->
+    <div class="hero-content">
+      <!-- Eyebrow: categoria/produto em cima do título -->
+      <span class="hero-eyebrow">
+        ✦ Nome do Produto ou Serviço
+      </span>
+
+      <!-- Título com destaque em itálico animado -->
+      <h1 class="hero-title">
+        Título principal com <em>destaque</em> aqui
+      </h1>
+
+      <!-- Subtítulo -->
+      <p class="hero-sub">
+        Parágrafo de subtítulo explicando o valor. Mantenha em 1–2 linhas,
+        focado no benefício principal.
+      </p>
+
+      <!-- CTAs -->
+      <div class="hero-actions">
+        <a href="#contato" class="btn btn-xl btn-primary">
+          CTA Principal
+        </a>
+        <a href="#features" class="btn btn-lg btn-secondary">
+          Saiba mais
+        </a>
+      </div>
+    </div>
+  </section>
+
+
+  <!-- =============================================
+       SEÇÃO DE BENEFÍCIOS / FEATURES — GRID 3
+       ============================================= -->
+  <section class="section" id="features">
+    <div class="container">
+
+      <div class="section-header text-center">
+        <p class="section-label mb-4">Benefícios</p>
+        <h2 class="section-title mb-4">Por que escolher a Viskoo</h2>
+        <p class="section-desc" style="margin-inline:auto">Descrição breve do que diferencia este serviço. Foque em resultados concretos.</p>
+      </div>
+
+      <div class="grid grid-3">
+
+        <!-- Feature Card 1 -->
+        <div class="card card-accent reveal">
+          <div class="card-body">
+            <div class="icon-wrap mb-5">
+              <!-- Substitua pelo ícone adequado -->
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+            </div>
+            <div class="t-h4 mb-4">Benefício 1</div>
+            <p class="t-sm t-secondary">Descrição concisa do benefício. Foco no resultado que o cliente obtém, não na funcionalidade.</p>
+          </div>
+        </div>
+
+        <!-- Feature Card 2 -->
+        <div class="card card-accent reveal">
+          <div class="card-body">
+            <div class="icon-wrap mb-5">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 8v4l3 3"/></svg>
+            </div>
+            <div class="t-h4 mb-4">Benefício 2</div>
+            <p class="t-sm t-secondary">Descrição concisa do benefício. Foco no resultado que o cliente obtém, não na funcionalidade.</p>
+          </div>
+        </div>
+
+        <!-- Feature Card 3 -->
+        <div class="card card-accent reveal">
+          <div class="card-body">
+            <div class="icon-wrap mb-5">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+            </div>
+            <div class="t-h4 mb-4">Benefício 3</div>
+            <p class="t-sm t-secondary">Descrição concisa do benefício. Foco no resultado que o cliente obtém, não na funcionalidade.</p>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+
+  <!-- =============================================
+       SEÇÃO DE STATS / NÚMEROS
+       ============================================= -->
+  <section class="section">
+    <div class="container">
+
+      <div class="grid grid-4">
+        <div class="stat-card reveal text-center">
+          <div class="stat-value t-gradient">+200</div>
+          <div class="stat-label">Clientes atendidos</div>
+          <div class="stat-delta up">▲ crescendo</div>
+        </div>
+        <div class="stat-card reveal text-center">
+          <div class="stat-value t-gradient">98%</div>
+          <div class="stat-label">Satisfação</div>
+          <div class="stat-delta up">▲ NPS 92</div>
+        </div>
+        <div class="stat-card reveal text-center">
+          <div class="stat-value t-gradient">72h</div>
+          <div class="stat-label">Entrega média</div>
+          <div class="stat-delta up">▲ mais rápido</div>
+        </div>
+        <div class="stat-card reveal text-center">
+          <div class="stat-value t-gradient">5★</div>
+          <div class="stat-label">Avaliação Google</div>
+          <div class="stat-delta up">▲ 47 avaliações</div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+
+  <!-- =============================================
+       SEÇÃO DE COMO FUNCIONA — LISTA STEPS
+       ============================================= -->
+  <section class="section">
+    <div class="container">
+
+      <div class="section-header">
+        <p class="section-label mb-4">Processo</p>
+        <h2 class="section-title mb-4">Como funciona</h2>
+        <p class="section-desc">Etapas simples do início ao resultado.</p>
+      </div>
+
+      <div class="grid grid-2" style="align-items:start">
+
+        <!-- Steps list -->
+        <div style="display:flex;flex-direction:column;gap:var(--space-3)">
+
+          <div class="card reveal" style="border-radius:var(--r-lg)">
+            <div class="card-body" style="display:flex;gap:var(--space-4);align-items:flex-start">
+              <div style="width:32px;height:32px;border-radius:var(--r-full);background:var(--accent);color:#000;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:13px;flex-shrink:0">1</div>
+              <div>
+                <div class="t-h4 mb-4">Briefing</div>
+                <p class="t-sm t-secondary">Conversamos para entender seus objetivos e definir o escopo do projeto.</p>
+              </div>
+            </div>
+          </div>
+
+          <div class="card reveal" style="border-radius:var(--r-lg)">
+            <div class="card-body" style="display:flex;gap:var(--space-4);align-items:flex-start">
+              <div style="width:32px;height:32px;border-radius:var(--r-full);background:var(--accent);color:#000;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:13px;flex-shrink:0">2</div>
+              <div>
+                <div class="t-h4 mb-4">Desenvolvimento</div>
+                <p class="t-sm t-secondary">Nossa equipe executa o projeto com atualizações periódicas de progresso.</p>
+              </div>
+            </div>
+          </div>
+
+          <div class="card reveal" style="border-radius:var(--r-lg)">
+            <div class="card-body" style="display:flex;gap:var(--space-4);align-items:flex-start">
+              <div style="width:32px;height:32px;border-radius:var(--r-full);background:var(--accent);color:#000;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:13px;flex-shrink:0">3</div>
+              <div>
+                <div class="t-h4 mb-4">Entrega</div>
+                <p class="t-sm t-secondary">Revisamos juntos, ajustamos e entregamos o resultado final.</p>
+              </div>
+            </div>
+          </div>
+
+        </div>
+
+        <!-- Imagem / visual de suporte -->
+        <div class="reveal" style="height:320px;border-radius:var(--r-xl);background:var(--bg-surface);border:1px solid var(--border);display:flex;align-items:center;justify-content:center;color:var(--text-muted);font-size:14px">
+          <!-- Substitua por <img> ou ilustração -->
+          Imagem / vídeo / mockup
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+
+  <!-- =============================================
+       SEÇÃO DE PLANOS / PREÇOS
+       ============================================= -->
+  <section class="section">
+    <div class="container">
+
+      <div class="section-header text-center">
+        <p class="section-label mb-4">Investimento</p>
+        <h2 class="section-title mb-4">Escolha o plano ideal</h2>
+        <p class="section-desc" style="margin-inline:auto">Sem surpresas. Valores transparentes e entrega garantida.</p>
+      </div>
+
+      <div class="grid grid-3" style="align-items:start">
+
+        <!-- Plano Starter -->
+        <div class="card reveal">
+          <div class="card-body">
+            <div class="flex items-center justify-between mb-5">
+              <span class="t-label">Starter</span>
+              <span class="badge badge-default">Básico</span>
+            </div>
+            <div style="font-size:36px;font-weight:700;letter-spacing:-0.04em;margin-bottom:var(--space-2)">R$997</div>
+            <p class="t-xs t-muted mb-5">pagamento único</p>
+            <ul style="list-style:none;display:flex;flex-direction:column;gap:var(--space-3);margin-bottom:var(--space-6)">
+              <li class="flex items-center gap-3 t-sm t-secondary"><span style="color:#30d158">✓</span> Item incluso 1</li>
+              <li class="flex items-center gap-3 t-sm t-secondary"><span style="color:#30d158">✓</span> Item incluso 2</li>
+              <li class="flex items-center gap-3 t-sm t-muted"><span style="color:var(--text-muted)">–</span> Item não incluso</li>
+            </ul>
+            <a href="#contato" class="btn btn-secondary btn-md btn-full">Solicitar</a>
+          </div>
+        </div>
+
+        <!-- Plano Pro (destaque) -->
+        <div class="card card-accent reveal">
+          <div class="card-body">
+            <div class="flex items-center justify-between mb-5">
+              <span class="t-label t-accent">Pro</span>
+              <span class="badge badge-accent">Recomendado</span>
+            </div>
+            <div style="font-size:36px;font-weight:700;letter-spacing:-0.04em;margin-bottom:var(--space-2);color:var(--accent)">R$1.997</div>
+            <p class="t-xs t-muted mb-5">pagamento único</p>
+            <ul style="list-style:none;display:flex;flex-direction:column;gap:var(--space-3);margin-bottom:var(--space-6)">
+              <li class="flex items-center gap-3 t-sm t-secondary"><span style="color:#30d158">✓</span> Tudo do Starter</li>
+              <li class="flex items-center gap-3 t-sm t-secondary"><span style="color:#30d158">✓</span> Item extra 1</li>
+              <li class="flex items-center gap-3 t-sm t-secondary"><span style="color:#30d158">✓</span> Item extra 2</li>
+              <li class="flex items-center gap-3 t-sm t-secondary"><span style="color:#30d158">✓</span> Suporte prioritário</li>
+            </ul>
+            <a href="#contato" class="btn btn-primary btn-md btn-full">Solicitar</a>
+          </div>
+        </div>
+
+        <!-- Plano Enterprise -->
+        <div class="card reveal">
+          <div class="card-body">
+            <div class="flex items-center justify-between mb-5">
+              <span class="t-label">Enterprise</span>
+              <span class="badge badge-default">Custom</span>
+            </div>
+            <div style="font-size:36px;font-weight:700;letter-spacing:-0.04em;margin-bottom:var(--space-2)">Custom</div>
+            <p class="t-xs t-muted mb-5">sob consulta</p>
+            <ul style="list-style:none;display:flex;flex-direction:column;gap:var(--space-3);margin-bottom:var(--space-6)">
+              <li class="flex items-center gap-3 t-sm t-secondary"><span style="color:#30d158">✓</span> Tudo do Pro</li>
+              <li class="flex items-center gap-3 t-sm t-secondary"><span style="color:#30d158">✓</span> Personalização total</li>
+              <li class="flex items-center gap-3 t-sm t-secondary"><span style="color:#30d158">✓</span> SLA dedicado</li>
+            </ul>
+            <a href="#contato" class="btn btn-outline btn-md btn-full">Falar com equipe</a>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+
+  <!-- =============================================
+       FAQ — PERGUNTAS FREQUENTES
+       ============================================= -->
+  <section class="section">
+    <div class="container">
+
+      <div class="section-header">
+        <p class="section-label mb-4">Dúvidas</p>
+        <h2 class="section-title mb-4">Perguntas frequentes</h2>
+      </div>
+
+      <div style="max-width:720px;display:flex;flex-direction:column;gap:var(--space-3)">
+
+        <details class="card reveal" style="border-radius:var(--r-lg)">
+          <summary style="padding:var(--space-5);cursor:pointer;list-style:none;display:flex;justify-content:space-between;align-items:center;font-size:15px;font-weight:500">
+            Qual é o prazo de entrega?
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
+          </summary>
+          <div class="card-body" style="padding-top:0;color:var(--text-secondary);font-size:14px;line-height:1.65">
+            O prazo varia de acordo com o plano escolhido e o escopo. Em média entregamos em 3–5 dias úteis.
+          </div>
+        </details>
+
+        <details class="card reveal" style="border-radius:var(--r-lg)">
+          <summary style="padding:var(--space-5);cursor:pointer;list-style:none;display:flex;justify-content:space-between;align-items:center;font-size:15px;font-weight:500">
+            Vocês oferecem suporte pós-entrega?
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
+          </summary>
+          <div class="card-body" style="padding-top:0;color:var(--text-secondary);font-size:14px;line-height:1.65">
+            Sim. Todos os planos incluem suporte por 30 dias. O plano Pro e Enterprise têm SLA estendido.
+          </div>
+        </details>
+
+        <details class="card reveal" style="border-radius:var(--r-lg)">
+          <summary style="padding:var(--space-5);cursor:pointer;list-style:none;display:flex;justify-content:space-between;align-items:center;font-size:15px;font-weight:500">
+            Preciso fornecer o conteúdo?
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
+          </summary>
+          <div class="card-body" style="padding-top:0;color:var(--text-secondary);font-size:14px;line-height:1.65">
+            Podemos criar textos e imagens por você, ou usar o material que você já tem. Fica a seu critério.
+          </div>
+        </details>
+
+      </div>
+    </div>
+  </section>
+
+
+  <!-- =============================================
+       DEPOIMENTOS / SOCIAL PROOF
+       ============================================= -->
+  <section class="section">
+    <div class="container">
+
+      <div class="section-header text-center">
+        <p class="section-label mb-4">Depoimentos</p>
+        <h2 class="section-title mb-4">O que nossos clientes dizem</h2>
+      </div>
+
+      <div class="grid grid-3">
+
+        <div class="card reveal">
+          <div class="card-body">
+            <div style="color:#ffd60a;font-size:16px;margin-bottom:var(--space-4)">★★★★★</div>
+            <p class="t-sm t-secondary mb-5">"Depoimento real do cliente. Foco em resultado concreto obtido após contratar o serviço."</p>
+            <div class="flex items-center gap-3">
+              <div class="avatar">JD</div>
+              <div>
+                <div style="font-size:13px;font-weight:500">João da Silva</div>
+                <div class="t-xs t-muted">CEO · Empresa XYZ</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="card reveal">
+          <div class="card-body">
+            <div style="color:#ffd60a;font-size:16px;margin-bottom:var(--space-4)">★★★★★</div>
+            <p class="t-sm t-secondary mb-5">"Outro depoimento real. Destaque o antes e depois ou o benefício mais marcante."</p>
+            <div class="flex items-center gap-3">
+              <div class="avatar">MA</div>
+              <div>
+                <div style="font-size:13px;font-weight:500">Maria Alves</div>
+                <div class="t-xs t-muted">Fundadora · Startup ABC</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="card reveal">
+          <div class="card-body">
+            <div style="color:#ffd60a;font-size:16px;margin-bottom:var(--space-4)">★★★★★</div>
+            <p class="t-sm t-secondary mb-5">"Terceiro depoimento. Varie o perfil de cliente para cobrir segmentos diferentes."</p>
+            <div class="flex items-center gap-3">
+              <div class="avatar">CR</div>
+              <div>
+                <div style="font-size:13px;font-weight:500">Carlos Rodrigues</div>
+                <div class="t-xs t-muted">Diretor · Grupo DEF</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+
+  <!-- =============================================
+       CTA FINAL — seção de contato / conversão
+       ============================================= -->
+  <section class="section" id="contato">
+    <div class="container">
+      <div style="max-width:640px;margin-inline:auto;text-align:center">
+
+        <span class="hero-eyebrow" style="margin-bottom:var(--space-5);display:inline-flex">
+          ✦ Pronto para começar?
+        </span>
+        <h2 class="t-h1 mb-5">Vamos criar algo <span class="t-gradient">incrível</span> juntos</h2>
+        <p class="t-body t-secondary mb-7">
+          Preencha o formulário abaixo e nossa equipe entrará em contato em até 24 horas úteis.
+        </p>
+
+        <!-- Formulário de contato -->
+        <div class="card" style="text-align:left;max-width:480px;margin-inline:auto">
+          <div class="card-body">
+            <div style="display:flex;flex-direction:column;gap:var(--space-4)">
+              <div class="form-group">
+                <label class="form-label">Seu nome</label>
+                <input class="input" type="text" placeholder="João Silva" />
+              </div>
+              <div class="form-group">
+                <label class="form-label">WhatsApp</label>
+                <input class="input" type="tel" placeholder="(11) 99999-9999" />
+              </div>
+              <div class="form-group">
+                <label class="form-label">E-mail</label>
+                <input class="input" type="email" placeholder="voce@email.com" />
+              </div>
+              <div class="form-group">
+                <label class="form-label">Mensagem (opcional)</label>
+                <textarea class="input" placeholder="Conte um pouco sobre o projeto…"></textarea>
+              </div>
+              <button class="btn btn-primary btn-lg btn-full">
+                Solicitar orçamento gratuito
+              </button>
+              <p class="t-xs t-muted text-center">Sem compromisso. Resposta em até 24h úteis.</p>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+
+  <!-- =============================================
+       FOOTER — copiar idêntico em todas as páginas
+       ============================================= -->
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-grid">
+
+        <!-- Coluna 1: Brand -->
+        <div>
+          <div class="footer-logo">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#f48322" stroke-width="2.5"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+            Viskoo
+          </div>
+          <p class="footer-desc">
+            Criamos experiências digitais que geram resultados reais para o seu negócio.
+          </p>
+        </div>
+
+        <!-- Coluna 2: Serviços -->
+        <div>
+          <h4 class="footer-heading">Serviços</h4>
+          <ul class="footer-links">
+            <li><a href="/site/">Sites Profissionais</a></li>
+            <li><a href="/landing-page/">Landing Pages</a></li>
+            <li><a href="/branding/">Branding</a></li>
+            <li><a href="/social-media/">Social Media</a></li>
+            <li><a href="/agentes-ia/">Agentes IA</a></li>
+          </ul>
+        </div>
+
+        <!-- Coluna 3: Empresa -->
+        <div>
+          <h4 class="footer-heading">Empresa</h4>
+          <ul class="footer-links">
+            <li><a href="/#sobre">Sobre nós</a></li>
+            <li><a href="/#portfolio">Portfólio</a></li>
+            <li><a href="/#depoimentos">Depoimentos</a></li>
+            <li><a href="/#contato">Contato</a></li>
+          </ul>
+        </div>
+
+        <!-- Coluna 4: Contato -->
+        <div>
+          <h4 class="footer-heading">Contato</h4>
+          <ul class="footer-links">
+            <li><a href="https://wa.me/5511999999999">WhatsApp</a></li>
+            <li><a href="mailto:oi@viskoo.com.br">oi@viskoo.com.br</a></li>
+            <li><a href="https://instagram.com/viskoo" target="_blank" rel="noopener">Instagram</a></li>
+          </ul>
+        </div>
+
+      </div>
+
+      <div class="footer-bottom">
+        <span>© 2025 Viskoo. Todos os direitos reservados.</span>
+        <span>Feito com cuidado em São Paulo, Brasil</span>
+      </div>
+    </div>
+  </footer>
+
+</div><!-- /.page -->
+
+
+<!-- =============================================
+     WHATSAPP FLUTUANTE — fixo em todas as páginas
+     ============================================= -->
+<a
+  href="https://wa.me/5511999999999?text=Olá!%20Vim%20pelo%20site%20e%20quero%20saber%20mais."
+  class="floating-whatsapp"
+  target="_blank"
+  rel="noopener"
+  aria-label="Falar no WhatsApp"
+>
+  <svg viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+    <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 0 1-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 0 1-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 0 1 2.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0 0 12.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 0 0 5.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 0 0-3.48-8.413Z"/>
+  </svg>
+</a>
+
+
+<!-- =============================================
+     SCRIPTS
+     ============================================= -->
+<script>
+  /* Reveal on scroll */
+  const revealEls = document.querySelectorAll('.reveal');
+  const revealObserver = new IntersectionObserver(
+    entries => entries.forEach(e => e.target.classList.toggle('visible', e.isIntersecting)),
+    { threshold: 0.12 }
+  );
+  revealEls.forEach(el => revealObserver.observe(el));
+
+  /* FAQ accordion — fecha outros quando abre um */
+  document.querySelectorAll('details').forEach(detail => {
+    detail.addEventListener('toggle', () => {
+      if (detail.open) {
+        document.querySelectorAll('details').forEach(d => {
+          if (d !== detail) d.open = false;
+        });
+      }
+    });
+  });
+</script>
+
+</body>
+</html>
