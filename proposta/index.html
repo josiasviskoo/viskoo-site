@@ -16,6 +16,32 @@
   --font:'DM Sans',sans-serif;--mono:'DM Mono',monospace;
   --page-w:780px;--r:10px;
 }
+/* ── DARK MODE ── */
+body.dark{
+  --ink:#f0f0f0;--ink-2:#aaa;--ink-3:#666;--ink-4:#444;
+  --surface:#0f0f0f;--white:#1a1a1a;--line:#2a2a2a;
+  --accent:#f48322;--accent-dim:rgba(244,131,34,.13);
+}
+body.dark .page{box-shadow:0 1px 3px rgba(0,0,0,.4),0 4px 20px rgba(0,0,0,.5)}
+body.dark .info-block{background:#222;border-color:#333}
+body.dark .ptable th{background:#222}
+body.dark .summary-box{background:#111;border:1px solid #333}
+body.dark .contact-box{background:#111}
+body.dark .notice{background:rgba(244,131,34,.08);border-color:rgba(244,131,34,.15)}
+body.dark .plan-card{background:#222;border-color:#333}
+body.dark .plan-card.featured{border-color:rgba(244,131,34,.5)}
+body.dark .modal-box{background:#1a1a1a;color:#f0f0f0}
+body.dark .modal-input{background:#222;border-color:#333;color:#f0f0f0}
+body.dark .modal-textarea{background:#222;border-color:#333;color:#f0f0f0}
+body.dark .mbtn-ghost{background:#222;color:#aaa;border-color:#333}
+body.dark .import-status{color:#aaa}
+body.dark [contenteditable]:hover{background:rgba(244,131,34,.08)}
+body.dark [contenteditable]:focus{background:rgba(244,131,34,.07)}
+body.dark .add-plan-btn{border-color:rgba(244,131,34,.5)}
+body.dark .add-step-btn{border-color:#333;color:#666}
+body.dark .add-step-btn:hover{border-color:var(--accent);color:var(--accent)}
+body.dark .plans-controls span{color:#555}
+body.dark #import-textarea{background:#222;border-color:#333;color:#aaa}
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
 html{-webkit-font-smoothing:antialiased}
 body{font-family:var(--font);background:var(--surface);color:var(--ink);font-size:14px;line-height:1.6}
@@ -224,7 +250,7 @@ select.modal-input{cursor:pointer;appearance:none;background-image:url("data:ima
 @media print{
   @page{size:A4 portrait;margin:12mm 14mm}
   body{background:#fff}
-  #toolbar,#toast,.modal-bg,.plans-controls,.add-plan-btn,.plan-toolbar,.tl-item-ctrl,.add-step-btn{display:none!important}
+  #toolbar,#toast,.modal-bg,.plans-controls,.add-plan-btn,.plan-toolbar,.tl-item-ctrl,.add-step-btn,#btn-sum-per{display:none!important}
   #doc{padding:0;max-width:100%}
   .page{box-shadow:none;margin-bottom:0;page-break-after:always;border-radius:0}
   .page:last-child{page-break-after:avoid}
@@ -244,6 +270,23 @@ select.modal-input{cursor:pointer;appearance:none;background-image:url("data:ima
     Viskoo
   </div>
   <div class="tb-spacer"></div>
+
+  <!-- Upload de logo -->
+  <button class="tb-btn tb-ghost" onclick="document.getElementById('logo-file-input').click()" title="Subir logo da empresa">
+    <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>
+    Logo
+  </button>
+  <input type="file" id="logo-file-input" accept="image/*" style="display:none" onchange="uploadLogo(event)"/>
+
+  <!-- Dark / Light toggle -->
+  <button class="tb-btn tb-ghost" id="btn-theme" onclick="toggleTheme()" title="Alternar dark/light">
+    <svg id="icon-moon" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+    <svg id="icon-sun" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" style="display:none"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg>
+    <span id="theme-label">Dark</span>
+  </button>
+
+  <div style="width:1px;height:22px;background:rgba(255,255,255,.12)"></div>
+
   <button class="tb-btn tb-ghost" onclick="openImport()">
     <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
     Importar
@@ -266,7 +309,10 @@ select.modal-input{cursor:pointer;appearance:none;background-image:url("data:ima
   <div class="page-inner">
     <div class="page-hdr">
       <div class="logo-wrap">
-        <div class="logo-mark">V</div>
+        <div class="logo-mark" id="logo-mark-1">
+          <img id="logo-img-1" src="" style="display:none;width:100%;height:100%;object-fit:contain;border-radius:8px"/>
+          <span id="logo-letter-1">V</span>
+        </div>
         <div>
           <div class="logo-name" contenteditable data-ph="Viskoo" id="f-logo-name">Viskoo</div>
           <div class="logo-sub" contenteditable data-ph="Subtítulo" id="f-logo-sub">Marketing Digital</div>
@@ -340,7 +386,13 @@ select.modal-input{cursor:pointer;appearance:none;background-image:url("data:ima
       <div class="summary-box">
         <div>
           <div class="sum-lbl" contenteditable id="f-sum-lbl">Investimento total</div>
-          <div><span class="sum-val" id="s-value">R$0</span><span class="sum-per" id="s-per">/mês</span></div>
+          <div style="display:flex;align-items:baseline;gap:0">
+            <span class="sum-val" id="s-value">R$0</span>
+            <span class="sum-per" id="s-per">/mês</span>
+            <button onclick="toggleSumPer()" title="Mostrar/ocultar periodicidade"
+              style="margin-left:8px;background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.15);border-radius:4px;color:rgba(255,255,255,.45);font-size:10px;padding:1px 6px;cursor:pointer;font-family:var(--font);line-height:1.6"
+              id="btn-sum-per">ocultar</button>
+          </div>
           <div class="sum-break" id="s-break"></div>
         </div>
         <div class="sum-right">
@@ -790,7 +842,9 @@ function buildSnap(){
       contactLbl:gt('f-contact-lbl'),contactForLbl:gt('f-contact-for-lbl'),
       cnome:gt('f-cnome'),ctel2:gt('f-ctel2'),cemail2:gt('f-cemail2'),csite2:gt('f-csite2'),
       pg1:gt('f-pg1'),pg2:gt('f-pg2'),pg3:gt('f-pg3'),pg4:gt('f-pg4'),
-    }
+    },
+    logoDataUrl: logoDataUrl,
+    sumPerVisible: sumPerVisible
   };
 }
 
@@ -819,6 +873,14 @@ function applySnap(snap){
   pairs.forEach(function(pair){ if(pair[1]!==undefined) st(pair[0],pair[1]); });
   plans = snap.plans||[];
   steps = snap.steps||[];
+  // restaurar logo
+  if(snap.logoDataUrl){ logoDataUrl=snap.logoDataUrl; applyLogoToAll(logoDataUrl); }
+  // restaurar visibilidade do /mês
+  if(snap.sumPerVisible === false){
+    sumPerVisible = false;
+    var per=document.getElementById('s-per'); if(per) per.style.display='none';
+    var btn=document.getElementById('btn-sum-per'); if(btn) btn.textContent='exibir';
+  }
   renderCards(); renderTable(); renderTimeline(); syncMirrors();
 }
 
@@ -880,9 +942,87 @@ document.addEventListener('input',function(e){
 });
 
 /* ═══════════════════════════
+   DARK MODE
+   ═══════════════════════════ */
+function toggleTheme(){
+  var isDark = document.body.classList.toggle('dark');
+  document.getElementById('icon-moon').style.display = isDark ? 'none' : 'block';
+  document.getElementById('icon-sun').style.display  = isDark ? 'block' : 'none';
+  document.getElementById('theme-label').textContent  = isDark ? 'Light' : 'Dark';
+  try{ localStorage.setItem('viskoo-theme', isDark?'dark':'light'); }catch(e){}
+}
+
+function applyTheme(theme){
+  if(theme==='dark'){
+    document.body.classList.add('dark');
+    document.getElementById('icon-moon').style.display = 'none';
+    document.getElementById('icon-sun').style.display  = 'block';
+    document.getElementById('theme-label').textContent  = 'Light';
+  }
+}
+
+/* ═══════════════════════════
+   LOGO UPLOAD
+   ═══════════════════════════ */
+var logoDataUrl = '';
+
+function uploadLogo(evt){
+  var file = evt.target.files[0];
+  if(!file) return;
+  var reader = new FileReader();
+  reader.onload = function(e){
+    logoDataUrl = e.target.result;
+    applyLogoToAll(logoDataUrl);
+    autoSave();
+    toast('✓ Logo aplicado à proposta!');
+  };
+  reader.readAsDataURL(file);
+  evt.target.value = '';
+}
+
+function applyLogoToAll(src){
+  var ids = [
+    {img:'logo-img-1',   ltr:'logo-letter-1'},
+    {img:'logo-img-m2',  ltr:'logo-letter-m2'},
+    {img:'logo-img-m3',  ltr:'logo-letter-m3'},
+    {img:'logo-img-m4',  ltr:'logo-letter-m4'},
+  ];
+  ids.forEach(function(p){
+    var imgEl = document.getElementById(p.img);
+    var ltrEl = document.getElementById(p.ltr);
+    if(!imgEl || !ltrEl) return;
+    if(src){
+      imgEl.src = src;
+      imgEl.style.display = 'block';
+      ltrEl.style.display = 'none';
+    } else {
+      imgEl.style.display = 'none';
+      ltrEl.style.display = 'block';
+    }
+  });
+}
+
+/* ═══════════════════════════
+   TOGGLE /mês NO SUMMARY
+   ═══════════════════════════ */
+var sumPerVisible = true;
+
+function toggleSumPer(){
+  sumPerVisible = !sumPerVisible;
+  var per = document.getElementById('s-per');
+  var btn = document.getElementById('btn-sum-per');
+  if(per) per.style.display = sumPerVisible ? '' : 'none';
+  if(btn) btn.textContent = sumPerVisible ? 'ocultar' : 'exibir';
+  autoSave();
+}
+
+/* ═══════════════════════════
    INIT
    ═══════════════════════════ */
 function init(){
+  // restaurar tema
+  try{ var t=localStorage.getItem('viskoo-theme'); if(t) applyTheme(t); }catch(e){}
+
   st('f-data',today());
   try{
     var saved=localStorage.getItem('viskoo-proposta-v3');
