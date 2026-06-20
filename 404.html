@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="icon" type="image/svg+xml" href="assets/img/viskoo-logo-favicon.svg">
+<title>Página não encontrada | Viskoo</title>
+<meta name="robots" content="noindex, nofollow">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;1,9..40,300&family=DM+Mono:wght@300;400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="index.css">
+<style>
+.not-found-number {
+  font-size: clamp(96px, 20vw, 200px);
+  font-weight: 700;
+  letter-spacing: -0.06em;
+  line-height: 1;
+  background: linear-gradient(135deg, var(--accent) 0%, #ffb347 50%, var(--accent) 100%);
+  background-size: 200% auto;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  animation: gradientShift 3s ease infinite;
+  margin-bottom: var(--space-4);
+  display: block;
+}
+.not-found-countdown {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  font-size: 13px;
+  color: var(--text-muted);
+  margin-top: var(--space-5);
+  font-family: var(--font-mono);
+}
+.not-found-countdown-num {
+  color: var(--accent);
+  font-weight: 500;
+  min-width: 1ch;
+  display: inline-block;
+}
+.not-found-progress {
+  width: 160px;
+  height: 2px;
+  background: var(--bg-elevated);
+  border-radius: var(--r-full);
+  overflow: hidden;
+  margin: var(--space-4) auto 0;
+}
+.not-found-progress-bar {
+  height: 100%;
+  background: linear-gradient(90deg, var(--accent), #ffb347);
+  border-radius: var(--r-full);
+  width: 100%;
+  transform-origin: left;
+  animation: drain 3s linear forwards;
+}
+@keyframes drain {
+  from { transform: scaleX(1); }
+  to   { transform: scaleX(0); }
+}
+</style>
+</head>
+<body>
+
+<nav class="nav">
+  <div class="nav-inner">
+    <a href="./" class="nav-logo">
+      <img src="assets/img/viskoo-branco.svg" alt="Viskoo Logo" height="24">
+    </a>
+    <ul class="nav-links">
+      <li><a href="./produtos/">Produtos</a></li>
+      <li><a href="https://wa.me/5516993438187" class="nav-cta">WhatsApp</a></li>
+    </ul>
+  </div>
+</nav>
+
+<main class="page">
+  <section class="hero">
+    <div class="hero-bg"></div>
+    <div class="hero-content" style="position: relative; z-index: 1;">
+      <span class="not-found-number">404</span>
+      <h1 class="hero-title" style="font-size: clamp(24px, 4vw, 40px); margin-bottom: var(--space-3);">Página não encontrada</h1>
+      <p class="hero-sub" style="font-size: 16px; margin-bottom: var(--space-6);">O endereço que você acessou não existe ou foi removido.</p>
+      <div class="hero-actions">
+        <a href="./" class="btn btn-primary btn-lg">Ir para a página principal</a>
+      </div>
+      <div class="not-found-countdown">
+        Redirecionando em <span class="not-found-countdown-num" id="countdown">3</span>s
+      </div>
+      <div class="not-found-progress">
+        <div class="not-found-progress-bar"></div>
+      </div>
+    </div>
+  </section>
+</main>
+
+<script>
+(function () {
+  var el = document.getElementById('countdown');
+  var n = 3;
+  var iv = setInterval(function () {
+    n--;
+    el.textContent = n;
+    if (n <= 0) {
+      clearInterval(iv);
+      window.location.replace('/');
+    }
+  }, 1000);
+})();
+</script>
+</body>
+</html>
