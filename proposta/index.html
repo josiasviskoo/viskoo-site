@@ -283,7 +283,7 @@ select.modal-input{cursor:pointer;appearance:none;background-image:url("data:ima
 @media print{
   @page{size:A4 portrait;margin:12mm 14mm}
   body{background:#fff}
-  #toolbar,#toast,.modal-bg,.plans-controls,.add-plan-btn,.plan-toolbar,.tl-item-ctrl,.add-step-btn,#btn-sum-per,#logo-popover{display:none!important}
+  #toolbar,#toast,.modal-bg,.plans-controls,.add-plan-btn,.plan-toolbar,.tl-item-ctrl,.add-step-btn,#btn-sum-per,#sum-ctrl,#logo-popover{display:none!important}
   #doc{padding:0;max-width:100%}
   .page{box-shadow:none;margin-bottom:0;page-break-after:always;border-radius:0}
   .page:last-child{page-break-after:avoid}
@@ -419,6 +419,14 @@ select.modal-input{cursor:pointer;appearance:none;background-image:url("data:ima
       <thead><tr><th contenteditable id="f-th1">Serviço</th><th contenteditable id="f-th2">Tipo</th><th contenteditable id="f-th3">Valor</th></tr></thead>
       <tbody id="ptable-body"><tr><td colspan="3" style="text-align:center;color:var(--ink-4);padding:20px">Adicione planos na página de planos abaixo ↓</td></tr></tbody>
     </table>
+
+    <div id="sum-ctrl" style="display:none;justify-content:flex-end;margin-top:10px;margin-bottom:-2px">
+      <button onclick="toggleSummaryCard()" id="btn-sum-card"
+        style="background:transparent;border:1px solid var(--line);border-radius:5px;font-size:11px;color:var(--ink-3);cursor:pointer;font-family:var(--font);padding:2px 10px;line-height:1.7;transition:all 120ms"
+        onmouseover="this.style.borderColor='var(--accent)';this.style.color='var(--accent)'"
+        onmouseout="this.style.borderColor='var(--line)';this.style.color='var(--ink-3)'"
+        title="Mostrar/ocultar card de investimento total">Ocultar card de total</button>
+    </div>
 
     <div id="summary-wrap" style="display:none">
       <div class="summary-box">
@@ -680,10 +688,14 @@ function syncMirrors(){
 function renderTable(){
   const tbody=document.getElementById('ptable-body');
   const sw=document.getElementById('summary-wrap');
+  const ctrl=document.getElementById('sum-ctrl');
+  const btn=document.getElementById('btn-sum-card');
   if(!tbody) return;
   if(!plans.length){
     tbody.innerHTML='<tr><td colspan="3" style="text-align:center;color:var(--ink-4);padding:20px">Adicione planos na página de planos abaixo ↓</td></tr>';
-    if(sw) sw.style.display='none'; return;
+    if(sw) sw.style.display='none';
+    if(ctrl) ctrl.style.display='none';
+    return;
   }
   tbody.innerHTML=plans.map(p=>'<tr><td><div class="tname">'+p.nome+'</div><div class="tdesc">'+p.desc+'</div></td><td><span class="tbadge">'+(p.tipo==='unico'?'Único':'Mensal')+'</span></td><td class="tprice">'+fmtP(p.preco)+'</td></tr>').join('');
   const total=plans.reduce((s,p)=>s+Number(p.preco),0);
@@ -694,7 +706,9 @@ function renderTable(){
   st('s-value',fmtP(total));
   st('s-per',hasMensal?'/mês':'/único');
   st('s-break',(hasMensal&&hasUnico)?fmtP(totM)+'/mês + '+fmtP(totU)+' único':'');
-  if(sw) sw.style.display='block';
+  if(ctrl) ctrl.style.display='flex';
+  if(btn) btn.textContent = summaryCardVisible ? 'Ocultar card de total' : 'Exibir card de total';
+  if(sw) sw.style.display = summaryCardVisible ? 'block' : 'none';
 }
 
 /* ═══════════════════════════
@@ -918,6 +932,7 @@ function buildSnap(){
     logoSize: logoSize,
     logoVisible: logoVisible,
     sumPerVisible: sumPerVisible,
+    summaryCardVisible: summaryCardVisible,
     companyLogoDataUrl: companyLogoDataUrl,
     companyLogoVisible: companyLogoVisible
   };
@@ -965,6 +980,12 @@ function applySnap(snap){
     sumPerVisible = false;
     var per=document.getElementById('s-per'); if(per) per.style.display='none';
     var btn=document.getElementById('btn-sum-per'); if(btn) btn.textContent='exibir';
+  }
+  // restaurar visibilidade do card de investimento total
+  if(snap.summaryCardVisible === false){
+    summaryCardVisible = false;
+  } else {
+    summaryCardVisible = true;
   }
   renderCards(); renderTable(); renderTimeline(); syncMirrors();
 }
@@ -1226,6 +1247,7 @@ function toggleCompanyLogoVisibility(){
    TOGGLE /mês NO SUMMARY
    ═══════════════════════════ */
 var sumPerVisible = true;
+var summaryCardVisible = true;
 
 function toggleSumPer(){
   sumPerVisible = !sumPerVisible;
@@ -1233,6 +1255,15 @@ function toggleSumPer(){
   var btn = document.getElementById('btn-sum-per');
   if(per) per.style.display = sumPerVisible ? '' : 'none';
   if(btn) btn.textContent = sumPerVisible ? 'ocultar' : 'exibir';
+  autoSave();
+}
+
+function toggleSummaryCard(){
+  summaryCardVisible = !summaryCardVisible;
+  var sw = document.getElementById('summary-wrap');
+  var btn = document.getElementById('btn-sum-card');
+  if(sw) sw.style.display = summaryCardVisible ? 'block' : 'none';
+  if(btn) btn.textContent = summaryCardVisible ? 'Ocultar card de total' : 'Exibir card de total';
   autoSave();
 }
 
@@ -1252,6 +1283,17 @@ function init(){
 }
 
 document.addEventListener('DOMContentLoaded',init);
+
+/* ═══════════════════════════
+   NOME DO PDF AO IMPRIMIR
+   ═══════════════════════════ */
+window.addEventListener('beforeprint', function(){
+  var empresa = gt('f-empresa') || 'Cliente';
+  document.title = 'Viskoo - Proposta Comercial - ' + empresa;
+});
+window.addEventListener('afterprint', function(){
+  document.title = 'Proposta Comercial — Viskoo';
+});
 </script>
 </body>
 </html>
