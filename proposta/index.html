@@ -98,6 +98,29 @@ body:not(.dark){--tb-bg:#0a0a0a;--tb-text:#fff;--tb-btn-bg:rgba(255,255,255,.08)
 .lp-slider::-webkit-slider-thumb{-webkit-appearance:none;width:14px;height:14px;border-radius:50%;background:var(--accent);cursor:pointer}
 .lp-slider::-moz-range-thumb{width:14px;height:14px;border-radius:50%;background:var(--accent);cursor:pointer;border:none}
 .lp-slider:disabled{opacity:.35;cursor:not-allowed}
+/* ── LOGO POPOVER ── */
+#logo-popover{
+  display:none;position:fixed;z-index:400;
+  background:#1a1a1a;border:1px solid rgba(255,255,255,.1);
+  border-radius:12px;padding:14px 16px;width:260px;
+  box-shadow:0 8px 32px rgba(0,0,0,.45);
+}
+#logo-popover.open{display:block}
+.lp-section-title{font-size:10px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:rgba(255,255,255,.4);margin-bottom:8px}
+.lp-preview{height:52px;border:1px dashed rgba(255,255,255,.12);border-radius:7px;display:flex;align-items:center;justify-content:center;margin-bottom:10px;overflow:hidden;background:rgba(255,255,255,.04)}
+.lp-preview img{max-height:44px;max-width:220px;object-fit:contain}
+#lp-preview-empty,#lp-company-empty{font-size:11px;color:rgba(255,255,255,.25)}
+.lp-row{margin-bottom:10px}
+.lp-lbl{display:flex;justify-content:space-between;font-size:11px;color:rgba(255,255,255,.45);margin-bottom:5px}
+.lp-actions{display:flex;gap:6px}
+.lp-btn{height:28px;padding:0 12px;border-radius:5px;font-family:var(--font);font-size:11px;font-weight:600;cursor:pointer;border:none;transition:all 120ms}
+.lp-btn-accent{background:var(--accent);color:#000}
+.lp-btn-accent:hover{background:#ff9a3c}
+.lp-btn-ghost{background:rgba(255,255,255,.08);color:rgba(255,255,255,.7);border:1px solid rgba(255,255,255,.1)}
+.lp-btn-ghost:hover{background:rgba(255,255,255,.14);color:#fff}
+.lp-btn-danger{background:rgba(224,52,52,.15);color:#e03434;border:1px solid rgba(224,52,52,.2);display:flex;align-items:center;justify-content:center}
+.lp-btn-danger:hover{background:#e03434;color:#fff}
+.lp-divider{height:1px;background:rgba(255,255,255,.08);margin:12px 0}
 /* capa */
 .cover-tag{display:inline-flex;align-items:center;gap:7px;background:var(--accent-dim);border:1px solid rgba(244,131,34,.2);border-radius:99px;padding:4px 12px;margin-bottom:20px}
 .cover-tag-dot{width:5px;height:5px;border-radius:50%;background:var(--accent);flex-shrink:0}
@@ -373,7 +396,7 @@ select.modal-input{cursor:pointer;appearance:none;background-image:url("data:ima
   <div class="page-inner">
     <div class="page-hdr">
       <div class="logo-wrap">
-        <div class="logo-mark">V</div>
+        <div class="logo-mark" id="logo-mark-2"><img id="logo-img-2" src="" style="display:none;width:100%;height:100%;object-fit:contain;border-radius:8px"/><span id="logo-letter-2">V</span></div>
         <div><div class="logo-name" id="m-logo-name"></div><div class="logo-sub" id="m-logo-sub"></div></div>
       </div>
       <div class="meta-right"><div class="client-logo-wrap"><img class="client-logo-img" id="client-logo-img-2" src="" alt="Logo"/></div><div class="meta-text"><div class="meta-empresa" id="m-empresa-2"></div><div class="meta-date" id="m-data-2"></div></div></div>
@@ -434,7 +457,7 @@ select.modal-input{cursor:pointer;appearance:none;background-image:url("data:ima
   <div class="page-inner">
     <div class="page-hdr">
       <div class="logo-wrap">
-        <div class="logo-mark">V</div>
+        <div class="logo-mark" id="logo-mark-3"><img id="logo-img-3" src="" style="display:none;width:100%;height:100%;object-fit:contain;border-radius:8px"/><span id="logo-letter-3">V</span></div>
         <div><div class="logo-name" id="m-logo-name-3"></div><div class="logo-sub" id="m-logo-sub-3"></div></div>
       </div>
       <div class="meta-right"><div class="client-logo-wrap"><img class="client-logo-img" id="client-logo-img-3" src="" alt="Logo"/></div><div class="meta-text"><div class="meta-empresa" id="m-empresa-3"></div><div class="meta-date" id="m-data-3"></div></div></div>
@@ -465,7 +488,7 @@ select.modal-input{cursor:pointer;appearance:none;background-image:url("data:ima
   <div class="page-inner" style="display:flex;flex-direction:column;min-height:460px">
     <div class="page-hdr">
       <div class="logo-wrap">
-        <div class="logo-mark">V</div>
+        <div class="logo-mark" id="logo-mark-4"><img id="logo-img-4" src="" style="display:none;width:100%;height:100%;object-fit:contain;border-radius:8px"/><span id="logo-letter-4">V</span></div>
         <div><div class="logo-name" id="m-logo-name-4"></div><div class="logo-sub" id="m-logo-sub-4"></div></div>
       </div>
       <div class="meta-right"><div class="client-logo-wrap"><img class="client-logo-img" id="client-logo-img-4" src="" alt="Logo"/></div><div class="meta-text"><div class="meta-empresa" id="m-empresa-4"></div><div class="meta-date" id="m-data-4"></div></div></div>
@@ -569,9 +592,21 @@ select.modal-input{cursor:pointer;appearance:none;background-image:url("data:ima
 
 <!-- POPOVER LOGO -->
 <div id="logo-popover">
-  <div class="lp-title">Logo da empresa</div>
+  <div class="lp-section-title">Logo da sua empresa</div>
   <div class="lp-preview">
-    <img id="lp-preview-img" src="" alt=""/>
+    <img id="lp-company-img" src="" alt="" style="display:none"/>
+    <span id="lp-company-empty">Nenhuma imagem</span>
+  </div>
+  <div class="lp-actions">
+    <button class="lp-btn lp-btn-accent" onclick="document.getElementById('company-logo-file').click()">Subir</button>
+    <button class="lp-btn lp-btn-ghost" id="lp-company-vis" onclick="toggleCompanyLogoVisibility()">Ocultar</button>
+    <button class="lp-btn lp-btn-danger" id="lp-company-remove" onclick="removeCompanyLogo()" style="display:none">✕</button>
+  </div>
+  <input type="file" id="company-logo-file" accept="image/*" style="display:none" onchange="uploadCompanyLogo(event)"/>
+  <div class="lp-divider"></div>
+  <div class="lp-section-title">Logo do cliente</div>
+  <div class="lp-preview">
+    <img id="lp-preview-img" src="" alt="" style="display:none"/>
     <span id="lp-preview-empty">Nenhum logo subido</span>
   </div>
   <div class="lp-row">
@@ -582,7 +617,7 @@ select.modal-input{cursor:pointer;appearance:none;background-image:url("data:ima
     <input type="range" class="lp-slider" id="lp-slider" min="20" max="80" value="36" oninput="resizeLogo(this.value)"/>
   </div>
   <div class="lp-actions">
-    <button class="lp-btn lp-btn-accent" onclick="document.getElementById('logo-file-input').click()">Subir logo</button>
+    <button class="lp-btn lp-btn-accent" onclick="document.getElementById('logo-file-input').click()">Subir</button>
     <button class="lp-btn lp-btn-ghost" id="lp-toggle-vis" onclick="toggleLogoVisibility()">Ocultar</button>
     <button class="lp-btn lp-btn-danger" id="lp-remove" onclick="removeLogo()" style="display:none">✕</button>
   </div>
@@ -882,7 +917,9 @@ function buildSnap(){
     logoDataUrl: logoDataUrl,
     logoSize: logoSize,
     logoVisible: logoVisible,
-    sumPerVisible: sumPerVisible
+    sumPerVisible: sumPerVisible,
+    companyLogoDataUrl: companyLogoDataUrl,
+    companyLogoVisible: companyLogoVisible
   };
 }
 
@@ -919,6 +956,10 @@ function applySnap(snap){
     applyLogoToAll();
     updatePopoverState();
   }
+  // restaurar logo da empresa
+  companyLogoDataUrl = snap.companyLogoDataUrl || '';
+  companyLogoVisible = snap.companyLogoVisible !== false;
+  applyCompanyLogoToAll();
   // restaurar visibilidade do /mês
   if(snap.sumPerVisible === false){
     sumPerVisible = false;
@@ -1015,12 +1056,23 @@ var logoDataUrl  = '';
 var logoSize     = 36;   // altura em px
 var logoVisible  = true;
 var logoPopOpen  = false;
+var companyLogoDataUrl = '';
+var companyLogoVisible = true;
 
 function toggleLogoPopover(evt){
   evt.stopPropagation();
   logoPopOpen = !logoPopOpen;
   var pop = document.getElementById('logo-popover');
-  if(pop) pop.classList.toggle('open', logoPopOpen);
+  if(pop){
+    pop.classList.toggle('open', logoPopOpen);
+    if(logoPopOpen){
+      var rect = evt.currentTarget.getBoundingClientRect();
+      var left = rect.left;
+      if(left + 260 > window.innerWidth - 8) left = window.innerWidth - 268;
+      pop.style.left = left + 'px';
+      pop.style.top = (rect.bottom + 6) + 'px';
+    }
+  }
   updatePopoverState();
 }
 
@@ -1048,6 +1100,16 @@ function updatePopoverState(){
   if(toggleBtn) toggleBtn.textContent = logoVisible ? 'Ocultar' : 'Exibir';
   if(slider){ slider.value = logoSize; slider.disabled = !hasLogo; }
   if(sizeVal) sizeVal.textContent = logoSize + 'px';
+
+  var cImg = document.getElementById('lp-company-img');
+  var cEmpty = document.getElementById('lp-company-empty');
+  var cVis = document.getElementById('lp-company-vis');
+  var cRemove = document.getElementById('lp-company-remove');
+  var hasCompanyLogo = !!companyLogoDataUrl;
+  if(cImg){ cImg.src = companyLogoDataUrl; cImg.style.display = hasCompanyLogo ? 'block' : 'none'; }
+  if(cEmpty) cEmpty.style.display = hasCompanyLogo ? 'none' : 'block';
+  if(cRemove) cRemove.style.display = hasCompanyLogo ? 'flex' : 'none';
+  if(cVis) cVis.textContent = companyLogoVisible ? 'Ocultar' : 'Exibir';
 }
 
 function uploadLogo(evt){
@@ -1109,6 +1171,57 @@ function applyLogoToAll(){
   });
 }
 
+function applyCompanyLogoToAll(){
+  for(var n=1;n<=4;n++){
+    var mark = document.getElementById('logo-mark-'+n);
+    var img = document.getElementById('logo-img-'+n);
+    var letter = document.getElementById('logo-letter-'+n);
+    if(mark) mark.style.display = companyLogoVisible ? '' : 'none';
+    if(img && letter){
+      if(companyLogoDataUrl){
+        img.src = companyLogoDataUrl;
+        img.style.display = 'block';
+        letter.style.display = 'none';
+      } else {
+        img.style.display = 'none';
+        letter.style.display = '';
+      }
+    }
+  }
+}
+
+function uploadCompanyLogo(evt){
+  var file = evt.target.files[0];
+  if(!file) return;
+  var reader = new FileReader();
+  reader.onload = function(e){
+    companyLogoDataUrl = e.target.result;
+    companyLogoVisible = true;
+    applyCompanyLogoToAll();
+    autoSave();
+    toast('✓ Logo da empresa aplicado!');
+    updatePopoverState();
+  };
+  reader.readAsDataURL(file);
+  evt.target.value = '';
+}
+
+function removeCompanyLogo(){
+  companyLogoDataUrl = '';
+  companyLogoVisible = true;
+  applyCompanyLogoToAll();
+  autoSave();
+  updatePopoverState();
+  toast('Logo da empresa removido.');
+}
+
+function toggleCompanyLogoVisibility(){
+  companyLogoVisible = !companyLogoVisible;
+  applyCompanyLogoToAll();
+  autoSave();
+  updatePopoverState();
+}
+
 /* ═══════════════════════════
    TOGGLE /mês NO SUMMARY
    ═══════════════════════════ */
@@ -1135,7 +1248,7 @@ function init(){
     var saved=localStorage.getItem('viskoo-proposta-v3');
     if(saved){ applySnap(JSON.parse(saved)); toast('Rascunho restaurado.'); return; }
   }catch(e){}
-  renderCards(); renderTable(); renderTimeline(); syncMirrors();
+  renderCards(); renderTable(); renderTimeline(); syncMirrors(); applyCompanyLogoToAll();
 }
 
 document.addEventListener('DOMContentLoaded',init);

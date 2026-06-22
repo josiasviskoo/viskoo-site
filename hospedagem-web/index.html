@@ -104,6 +104,50 @@
     justify-content: center;
   }
 }
+.planos-note {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--space-3);
+  max-width: 600px;
+  margin: 0 auto var(--space-7);
+  padding: var(--space-4) var(--space-5);
+  border-radius: var(--r-lg);
+  background: rgba(255,255,255,0.03);
+  border: 1px solid var(--border);
+}
+.planos-note-icon {
+  flex-shrink: 0;
+  width: 36px;
+  height: 36px;
+  border-radius: var(--r-md);
+  background: rgba(37,211,102,0.1);
+  border: 1px solid rgba(37,211,102,0.2);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #25d366;
+}
+.planos-note-icon svg {
+  width: 18px;
+  height: 18px;
+  display: block;
+}
+.planos-note-text {
+  font-size: 13px;
+  color: var(--text-secondary);
+  line-height: 1.6;
+}
+.planos-note-text strong {
+  color: var(--text-primary);
+  font-weight: 500;
+}
+.plan-btn-hint {
+  text-align: center;
+  font-size: 11px;
+  color: var(--text-muted);
+  margin-top: var(--space-2);
+  letter-spacing: 0.02em;
+}
 </style>
 </head>
 <body>
@@ -190,6 +234,12 @@
         <h2 class="section-title">Nuvem Light, Pro e Premium</h2>
         <p class="section-desc" style="margin: 0 auto;">Escolha a base que acompanha o tamanho da operação.</p>
       </div>
+      <div class="planos-note">
+        <div class="planos-note-icon">
+          <svg viewBox="0 0 32 32" aria-hidden="true"><path fill="currentColor" d="M16.03 3.2A12.74 12.74 0 0 0 5.2 22.62L3.6 28.8l6.32-1.55A12.72 12.72 0 1 0 16.03 3.2Zm0 2.27a10.45 10.45 0 0 1 8.86 16.01 10.43 10.43 0 0 1-13.83 3.41l-.45-.27-3.75.92.95-3.66-.3-.47A10.46 10.46 0 0 1 16.03 5.47Zm-4.1 4.93c-.24 0-.62.09-.94.44-.32.36-1.24 1.21-1.24 2.95 0 1.73 1.27 3.41 1.44 3.64.18.24 2.45 3.91 6.03 5.32 2.98 1.17 3.59.94 4.23.88.65-.06 2.1-.86 2.4-1.69.29-.83.29-1.54.2-1.69-.09-.14-.32-.23-.68-.41-.35-.17-2.09-1.03-2.42-1.15-.32-.12-.56-.18-.8.18-.23.35-.91 1.15-1.12 1.38-.2.24-.41.27-.76.09-.36-.18-1.5-.55-2.85-1.76-1.05-.94-1.76-2.1-1.97-2.45-.2-.36-.02-.55.16-.72.16-.16.35-.41.53-.62.18-.2.24-.35.36-.59.12-.23.06-.44-.03-.62-.09-.18-.8-1.93-1.09-2.64-.29-.69-.58-.6-.8-.61h-.69Z"/></svg>
+        </div>
+        <p class="planos-note-text"><strong>Sem checkout.</strong> Ao clicar em "Quero este plano", você abre uma conversa no WhatsApp. Nossa equipe explica todos os detalhes, tira dúvidas e adapta o atendimento antes de qualquer cobrança — porque cada cliente merece um início personalizado.</p>
+      </div>
       <div class="grid grid-3">
         <article class="card card-body">
           <p class="t-label t-accent mb-2">Nuvem Light</p>
@@ -202,6 +252,7 @@
           </ul>
           <div style="margin-top: var(--space-6);">
             <a href="https://wa.me/5516993438187?text=Ol%C3%A1%21%20Tenho%20interesse%20no%20plano%20Nuvem%20Light%20de%20hospedagem%20web%20%28R%2467%2Fm%C3%AAs%29.%20Podem%20me%20passar%20mais%20informa%C3%A7%C3%B5es%3F" class="btn btn-outline btn-md btn-full">Quero este plano</a>
+            <p class="plan-btn-hint">Abre uma conversa no WhatsApp</p>
           </div>
         </article>
         <article class="card card-body card-accent">
@@ -215,6 +266,7 @@
           </ul>
           <div style="margin-top: var(--space-6);">
             <a href="https://wa.me/5516993438187?text=Ol%C3%A1%21%20Tenho%20interesse%20no%20plano%20Nuvem%20Pro%20de%20hospedagem%20web%20%28R%24107%2Fm%C3%AAs%29.%20Podem%20me%20passar%20mais%20informa%C3%A7%C3%B5es%3F" class="btn btn-primary btn-md btn-full">Quero este plano</a>
+            <p class="plan-btn-hint">Abre uma conversa no WhatsApp</p>
           </div>
         </article>
         <article class="card card-body">
@@ -228,6 +280,7 @@
           </ul>
           <div style="margin-top: var(--space-6);">
             <a href="https://wa.me/5516993438187?text=Ol%C3%A1%21%20Tenho%20interesse%20no%20plano%20Nuvem%20Premium%20de%20hospedagem%20web%20%28R%24137%2Fm%C3%AAs%29.%20Podem%20me%20passar%20mais%20informa%C3%A7%C3%B5es%3F" class="btn btn-outline btn-md btn-full">Quero este plano</a>
+            <p class="plan-btn-hint">Abre uma conversa no WhatsApp</p>
           </div>
         </article>
       </div>
