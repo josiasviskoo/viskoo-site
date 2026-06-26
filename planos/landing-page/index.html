@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Tabela de Preços | Viskoo</title>
+  <!-- Importação das fontes do DS -->
+  <link href="https://fonts.googleapis.com/css2?family=DM+Mono:ital,wght@0,300;0,400;0,500;1,300&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;1,9..40,300&display=swap" rel="stylesheet">
+  
+  <!-- Estilos baseados no Design System Viskoo -->
+  <style>
+    /* Injetando variáveis do seu Design System */
+    :root {
+      --bg-base: #080808; --bg-surface: #111111; --text-primary: #f0f0f0; 
+      --text-secondary: rgba(240,240,240,0.55); --accent: #f48322;
+      --border: rgba(255,255,255,0.07); --r-xl: 32px; --r-lg: 20px;
+    }
+    body { background: var(--bg-base); color: var(--text-primary); font-family: 'DM Sans', sans-serif; padding: 40px 20px; }
+    
+    /* Layout */
+    .container { max-width: 1100px; margin: 0 auto; }
+    .grid-3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; margin-top: 40px; }
+    @media (max-width: 768px) { .grid-3 { grid-template-columns: 1fr; } }
+
+    /* Componentes Reutilizados do DS */
+    .card { background: var(--bg-surface); border: 1px solid var(--border); border-radius: var(--r-xl); padding: 40px; transition: 0.3s; }
+    .card-accent { border-color: rgba(244,131,34,0.4); }
+    .badge { padding: 4px 12px; border-radius: 9999px; font-size: 11px; text-transform: uppercase; border: 1px solid var(--border); }
+    .badge-accent { border-color: var(--accent); color: var(--accent); }
+    .btn { display: block; text-align: center; padding: 12px; border-radius: 12px; font-weight: 600; text-decoration: none; cursor: pointer; }
+    .btn-primary { background: var(--accent); color: #000; }
+    .btn-secondary { background: #222; color: #fff; }
+    .tabs { display: flex; gap: 4px; background: #1a1a1a; padding: 4px; border-radius: 20px; width: fit-content; margin: 0 auto 40px; }
+    .tab { padding: 10px 24px; border-radius: 16px; border: none; cursor: pointer; color: var(--text-secondary); background: transparent; font-weight: 500; }
+    .tab.active { background: var(--bg-surface); color: var(--text-primary); box-shadow: 0 4px 12px rgba(0,0,0,0.3); }
+  </style>
+</head>
+<body>
+
+<div class="container">
+  <div style="text-align:center">
+    <p style="text-transform:uppercase; font-size: 11px; color: var(--accent); letter-spacing: 2px;">Investimento</p>
+    <h2 style="font-size: 40px; margin: 16px 0;">Planos de Landing Pages</h2>
+    
+    <!-- Seletor de Planos -->
+    <div class="tabs">
+      <button class="tab active" onclick="switchPricing('single', this)">Valor Integral</button>
+      <button class="tab" onclick="switchPricing('monthly', this)">Assinatura</button>
+    </div>
+  </div>
+
+  <div class="grid-3">
+    <!-- Plano 1 -->
+    <article class="card">
+      <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:24px;">
+        <span style="font-weight:600">Layout Pronto</span>
+        <span class="badge">Essencial</span>
+      </div>
+      <div class="price" data-single="R$ 600" data-monthly="R$ 150/mês" style="font-size:36px; font-weight:700;">R$ 600</div>
+      <ul style="list-style:none; margin: 24px 0; color:var(--text-secondary);">
+        <li style="margin-bottom:12px">✓ Copy via Briefing</li>
+        <li style="margin-bottom:12px">✓ Construção Ágil</li>
+        <li style="margin-bottom:12px; opacity:0.5">✕ Sem Foto/Vídeo</li>
+      </ul>
+      <a href="#contato" class="btn btn-secondary">Selecionar</a>
+    </article>
+
+    <!-- Plano 2 -->
+    <article class="card card-accent">
+      <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:24px;">
+        <span style="font-weight:600; color:var(--accent)">Layout Exclusivo</span>
+        <span class="badge badge-accent">Destaque</span>
+      </div>
+      <div class="price" data-single="R$ 800" data-monthly="R$ 200/mês" style="font-size:36px; font-weight:700; color:var(--accent);">R$ 800</div>
+      <ul style="list-style:none; margin: 24px 0; color:var(--text-secondary);">
+        <li style="margin-bottom:12px">✓ Design Personalizado</li>
+        <li style="margin-bottom:12px">✓ Copy Estratégica</li>
+        <li style="margin-bottom:12px; opacity:0.5">✕ Sem Foto/Vídeo</li>
+      </ul>
+      <a href="#contato" class="btn btn-primary">Selecionar</a>
+    </article>
+
+    <!-- Plano 3 -->
+    <article class="card">
+      <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:24px;">
+        <span style="font-weight:600">One-Page Completa</span>
+        <span class="badge">Premium</span>
+      </div>
+      <div class="price" data-single="R$ 1.100" data-monthly="R$ 300/mês" style="font-size:36px; font-weight:700;">R$ 1.100</div>
+      <ul style="list-style:none; margin: 24px 0; color:var(--text-secondary);">
+        <li style="margin-bottom:12px">✓ Design Multi-seções</li>
+        <li style="margin-bottom:12px">✓ Produção Foto e Vídeo</li>
+        <li style="margin-bottom:12px">✓ Foco em Conversão</li>
+      </ul>
+      <a href="#contato" class="btn btn-secondary">Selecionar</a>
+    </article>
+  </div>
+</div>
+
+<script>
+  function switchPricing(type, el) {
+    document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+    el.classList.add('active');
+    document.querySelectorAll('.price').forEach(p => {
+      p.innerText = p.getAttribute('data-' + type);
+    });
+  }
+</script>
+
+</body>
+</html>
