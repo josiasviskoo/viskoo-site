@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Tabela de Preços | Planos para Parceiros</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;1,9..40,300&family=DM+Mono:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+/* CSS Variables */
+:root {
+  --bg-base:        #080808;
+  --bg-surface:     #111111;
+  --border:         rgba(255,255,255,0.07);
+  --text-primary:   #f0f0f0;
+  --text-secondary: rgba(240,240,240,0.55);
+  --accent:         #f48322;
+  --accent-dim:     rgba(244,131,34,0.15);
+  --font-body:      'DM Sans', sans-serif;
+  --space-3:  12px;
+  --space-4:  16px;
+  --space-5:  24px;
+  --space-7:  48px;
+  --space-8:  64px;
+  --space-10: 128px;
+  --r-md:   12px;
+  --r-lg:   20px;
+  --r-xl:   32px;
+  --r-full: 9999px;
+}
+
+/* Base */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+body { background: var(--bg-base); color: var(--text-primary); font-family: var(--font-body); padding: var(--space-8) 0; }
+.container { max-width: 1200px; margin: 0 auto; padding: 0 var(--space-5); }
+.section { padding: var(--space-10) 0; }
+.text-center { text-align: center; }
+
+/* Header */
+.section-label { font-size: 11px; font-weight: 500; letter-spacing: 0.12em; text-transform: uppercase; color: var(--accent); margin-bottom: var(--space-3); }
+.section-title { font-size: 40px; font-weight: 700; margin-bottom: var(--space-3); }
+.section-desc { font-size: 16px; color: var(--text-secondary); max-width: 600px; margin: 0 auto var(--space-7); }
+
+/* Pricing Elements */
+.plan-price { font-size: 40px; font-weight: 700; margin: var(--space-3) 0; }
+.plan-price small { font-size: 14px; color: var(--text-secondary); }
+.plan-size { display: inline-block; padding: 8px 14px; border-radius: var(--r-full); margin-bottom: var(--space-3); background: var(--accent-dim); color: var(--accent); font-size: 13px; font-weight: 700; }
+.plan-list { list-style: none; margin-top: var(--space-4); }
+.plan-list li { display: flex; gap: 10px; color: var(--text-secondary); font-size: 14px; margin-bottom: 10px; }
+.plan-list svg { flex: 0 0 auto; color: var(--accent); width: 16px; }
+
+/* Note */
+.planos-note { max-width: 850px; margin: var(--space-7) auto 0; padding: var(--space-5); border-radius: var(--r-lg); background: rgba(255,255,255,0.03); border: 1px solid var(--border); font-size: 13px; color: var(--text-secondary); line-height: 1.6; }
+
+/* Grid */
+.grid { display: grid; gap: var(--space-4); grid-template-columns: repeat(4, 1fr); }
+@media (max-width: 1024px) { .grid { grid-template-columns: repeat(2, 1fr); } }
+@media (max-width: 768px) { .grid { grid-template-columns: 1fr; } }
+
+/* Card */
+.card { background: var(--bg-surface); border: 1px solid var(--border); border-radius: var(--r-xl); padding: var(--space-5); display: flex; flex-direction: column; }
+.btn { display: inline-flex; justify-content: center; padding: 12px 20px; border-radius: var(--r-md); border: 1px solid var(--accent); color: var(--accent); text-decoration: none; font-size: 14px; font-weight: 500; margin-top: auto; }
+</style>
+</head>
+<body>
+
+  <section class="section">
+    <div class="container">
+      <div class="section-header text-center">
+        <p class="section-label">Parceiros</p>
+        <h2 class="section-title">Planos Exclusivos para Intermediação</h2>
+        <p class="section-desc">Planos voltados para parceiros. *Planos para cliente final possuem escopo e estrutura distintos.*</p>
+      </div>
+
+      <div class="grid">
+        <!-- Planos -->
+        <article class="card">
+          <p class="plan-size">1 Cliente</p>
+          <div class="plan-price">R$300</div>
+          <p class="t-sm">Para testar a parceria, entender a rotina de relatórios e o atendimento.</p>
+          <ul class="plan-list">
+            <li><svg viewBox="0 0 20 20" fill="currentColor"><path d="M7.5 13.5 4.8 10.8l-1.4 1.4 4.1 4.1 9-9-1.4-1.4z"/></svg> Relatório Semanal, Quinzenal ou Mensal.</li>
+            <li><svg viewBox="0 0 20 20" fill="currentColor"><path d="M7.5 13.5 4.8 10.8l-1.4 1.4 4.1 4.1 9-9-1.4-1.4z"/></svg> Grupo exclusivo para gestão de anúncios.</li>
+            <li><svg viewBox="0 0 20 20" fill="currentColor"><path d="M7.5 13.5 4.8 10.8l-1.4 1.4 4.1 4.1 9-9-1.4-1.4z"/></svg> Sem atendimento direto (programado).</li>
+          </ul>
+          <a href="#" class="btn">Contratar</a>
+        </article>
+
+        <article class="card">
+          <p class="plan-size">Até 3 Clientes</p>
+          <div class="plan-price">R$900</div>
+          <p class="t-sm">Para dar um passo na escala e gerenciar múltiplos projetos.</p>
+          <ul class="plan-list">
+            <li><svg viewBox="0 0 20 20" fill="currentColor"><path d="M7.5 13.5 4.8 10.8l-1.4 1.4 4.1 4.1 9-9-1.4-1.4z"/></svg> Relatório Semanal, Quinzenal ou Mensal.</li>
+            <li><svg viewBox="0 0 20 20" fill="currentColor"><path d="M7.5 13.5 4.8 10.8l-1.4 1.4 4.1 4.1 9-9-1.4-1.4z"/></svg> Grupo exclusivo para gestão de anúncios.</li>
+            <li><svg viewBox="0 0 20 20" fill="currentColor"><path d="M7.5 13.5 4.8 10.8l-1.4 1.4 4.1 4.1 9-9-1.4-1.4z"/></svg> Sem atendimento direto (programado).</li>
+          </ul>
+          <a href="#" class="btn">Contratar</a>
+        </article>
+
+        <article class="card">
+          <p class="plan-size">Até 5 Clientes</p>
+          <div class="plan-price">R$1.500</div>
+          <p class="t-sm">Focado em escala com gestão de múltiplos projetos.</p>
+          <ul class="plan-list">
+            <li><svg viewBox="0 0 20 20" fill="currentColor"><path d="M7.5 13.5 4.8 10.8l-1.4 1.4 4.1 4.1 9-9-1.4-1.4z"/></svg> Relatório Quinzenal ou Mensal.</li>
+            <li><svg viewBox="0 0 20 20" fill="currentColor"><path d="M7.5 13.5 4.8 10.8l-1.4 1.4 4.1 4.1 9-9-1.4-1.4z"/></svg> Grupo exclusivo para gestão de anúncios.</li>
+            <li><svg viewBox="0 0 20 20" fill="currentColor"><path d="M7.5 13.5 4.8 10.8l-1.4 1.4 4.1 4.1 9-9-1.4-1.4z"/></svg> Sem atendimento direto (programado).</li>
+          </ul>
+          <a href="#" class="btn">Contratar</a>
+        </article>
+
+        <article class="card">
+          <p class="plan-size">Até 10 Clientes</p>
+          <div class="plan-price">R$2.500</div>
+          <p class="t-sm">Alta escala. Volumes superiores a este plano são atendidos sob consulta.</p>
+          <ul class="plan-list">
+            <li><svg viewBox="0 0 20 20" fill="currentColor"><path d="M7.5 13.5 4.8 10.8l-1.4 1.4 4.1 4.1 9-9-1.4-1.4z"/></svg> Relatório Mensal ou Quinzenal.</li>
+            <li><svg viewBox="0 0 20 20" fill="currentColor"><path d="M7.5 13.5 4.8 10.8l-1.4 1.4 4.1 4.1 9-9-1.4-1.4z"/></svg> Grupo exclusivo para gestão de anúncios.</li>
+            <li><svg viewBox="0 0 20 20" fill="currentColor"><path d="M7.5 13.5 4.8 10.8l-1.4 1.4 4.1 4.1 9-9-1.4-1.4z"/></svg> Sem atendimento direto (programado).</li>
+          </ul>
+          <a href="#" class="btn">Contratar</a>
+        </article>
+      </div>
+
+      <div class="planos-note">
+        <p><strong>Avisos Importantes:</strong> O valor refere-se apenas ao serviço de gestão. Não há atendimento direto contínuo; o suporte é <strong>atendimento programado</strong>, ocorrendo em datas específicas de planejamento (weekly ou mensal), conforme a entrega de dados no grupo de WhatsApp. Volumes de clientes acima de 10 são tratados <strong>sob consulta</strong>.</p>
+      </div>
+
+    </div>
+  </section>
+</body>
+</html>
