@@ -4,85 +4,115 @@
 <meta charset="UTF-8">
 <script>if(sessionStorage.getItem('planos_auth_v1')!=='ok'){sessionStorage.setItem('planos_redir',location.href);location.replace('../../')}</script>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Nossos Planos | Soluções de Performance</title>
+<title>Planos Tráfego Pago | Viskoo</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600&family=DM+Mono:wght@300;400;500&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700&family=DM+Mono:wght@300;400;500&display=swap" rel="stylesheet">
 <style>
 :root {
-  --bg-base: #080808;
-  --bg-surface: #111111;
-  --border: rgba(255,255,255,0.07);
-  --text-primary: #f0f0f0;
-  --text-secondary: rgba(240,240,240,0.55);
-  --accent: #f48322;
-  --accent-dim: rgba(244,131,34,0.15);
-  --shadow-accent: 0 0 32px rgba(244,131,34,0.25);
-  --font-body: 'DM Sans', sans-serif;
+  --bg-base: #080808; --bg-surface: #111111; --border: rgba(255,255,255,0.07);
+  --text-primary: #f0f0f0; --text-secondary: rgba(240,240,240,0.55);
+  --accent: #f48322; --accent-dim: rgba(244,131,34,0.15);
+  --shadow-accent: 0 0 36px rgba(244,131,34,0.2); --font-body: 'DM Sans', sans-serif;
+  --r-xl: 24px; --r-md: 12px; --r-full: 9999px;
 }
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-body { background: var(--bg-base); color: var(--text-primary); font-family: var(--font-body); padding: 64px 0; }
-.container { max-width: 1000px; margin: 0 auto; padding: 0 24px; }
-.section-header { text-align: center; margin-bottom: 64px; }
-.section-label { font-size: 11px; font-weight: 500; letter-spacing: 0.12em; text-transform: uppercase; color: var(--accent); margin-bottom: 12px; }
-.section-title { font-size: 40px; font-weight: 700; margin-bottom: 16px; }
-.grid { display: grid; gap: 24px; grid-template-columns: repeat(3, 1fr); }
+body { background: var(--bg-base); color: var(--text-primary); font-family: var(--font-body); padding: 56px 0; }
+.container { max-width: 1060px; margin: 0 auto; padding: 0 24px; }
+.section-header { text-align: center; margin-bottom: 56px; }
+.section-label { font-size: 11px; font-weight: 500; letter-spacing: 0.12em; text-transform: uppercase; color: var(--accent); margin-bottom: 10px; }
+.section-title { font-size: clamp(28px,4vw,40px); font-weight: 700; letter-spacing: -0.03em; margin-bottom: 12px; }
+.section-desc { font-size: 15px; color: var(--text-secondary); max-width: 540px; margin: 0 auto; line-height: 1.65; }
+.grid { display: grid; gap: 20px; grid-template-columns: repeat(3, 1fr); }
 @media (max-width: 768px) { .grid { grid-template-columns: 1fr; } }
-.card { background: var(--bg-surface); border: 1px solid var(--border); border-radius: 20px; padding: 32px; display: flex; flex-direction: column; transition: border-color 0.3s ease; }
-/* Estilo de Destaque */
-.card-accent { border-color: rgba(244,131,34,0.5); box-shadow: var(--shadow-accent); }
-.plan-name { font-size: 18px; font-weight: 600; margin-bottom: 8px; }
-.plan-price { font-size: 32px; font-weight: 700; margin-bottom: 24px; }
-.plan-price span { font-size: 14px; color: var(--text-secondary); font-weight: 400; }
-.plan-list { list-style: none; margin-bottom: 32px; }
-.plan-list li { display: flex; gap: 10px; color: var(--text-secondary); font-size: 14px; margin-bottom: 12px; }
-.plan-list svg { flex: 0 0 auto; color: var(--accent); width: 16px; }
-.btn { display: inline-flex; justify-content: center; padding: 14px; border-radius: 12px; border: 1px solid var(--accent); color: var(--accent); text-decoration: none; font-size: 14px; font-weight: 500; margin-top: auto; }
-.btn-primary { background: var(--accent); color: #000; border: none; }
+.card { background: var(--bg-surface); border: 1px solid var(--border); border-radius: var(--r-xl); padding: 32px; display: flex; flex-direction: column; }
+.card-accent { border-color: rgba(244,131,34,0.45); box-shadow: var(--shadow-accent); }
+.badge-rec { display: inline-flex; align-items: center; gap: 5px; font-size: 10px; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; color: #000; background: var(--accent); padding: 4px 12px; border-radius: var(--r-full); margin-bottom: 16px; }
+.plan-name { font-size: 19px; font-weight: 700; margin-bottom: 6px; }
+.plan-name-accent { color: var(--accent); }
+.plan-tag { font-size: 12px; color: var(--text-secondary); margin-bottom: 20px; }
+.plan-price { font-size: 36px; font-weight: 700; letter-spacing: -0.03em; margin-bottom: 4px; }
+.plan-price-accent { color: var(--accent); }
+.plan-period { font-size: 13px; color: var(--text-secondary); margin-bottom: 26px; }
+.plan-list { list-style: none; margin-bottom: 28px; flex: 1; }
+.plan-list li { display: flex; gap: 10px; color: var(--text-secondary); font-size: 14px; margin-bottom: 11px; align-items: flex-start; line-height: 1.45; }
+.plan-list li svg { flex-shrink: 0; margin-top: 1px; color: var(--accent); width: 15px; height: 15px; }
+.plan-list li.off { opacity: 0.35; }
+.plan-list li.off svg { color: var(--text-secondary); }
+.btn { display: inline-flex; justify-content: center; padding: 14px; border-radius: var(--r-md); text-decoration: none; font-size: 14px; font-weight: 600; margin-top: auto; border: none; cursor: pointer; font-family: var(--font-body); }
+.btn-primary { background: var(--accent); color: #000; }
+.btn-outline { border: 1px solid rgba(244,131,34,0.5); color: var(--accent); background: transparent; }
+.note { margin-top: 36px; padding: 20px 24px; border-radius: 16px; background: rgba(255,255,255,0.03); border: 1px solid var(--border); font-size: 13px; color: var(--text-secondary); line-height: 1.65; }
+.note strong { color: var(--text-primary); }
 </style>
 </head>
 <body>
+<section class="container">
+  <div class="section-header">
+    <p class="section-label">Tráfego Pago · Clientes</p>
+    <h2 class="section-title">Performance para o seu negócio</h2>
+    <p class="section-desc">Gestão especializada de campanhas para atrair leads qualificados e escalar seus resultados com previsibilidade.</p>
+  </div>
 
-  <section class="container">
-    <div class="section-header">
-      <p class="section-label">Para Clientes</p>
-      <h2 class="section-title">Soluções de Escala para seu Negócio</h2>
-    </div>
+  <div class="grid">
+    <!-- Plano 1 -->
+    <article class="card">
+      <h3 class="plan-name">Gestão Unificada</h3>
+      <p class="plan-tag">Meta Ads OU Google Ads</p>
+      <div class="plan-price">R$ 900</div>
+      <p class="plan-period">por mês · sem fidelidade</p>
+      <ul class="plan-list">
+        <li><svg viewBox="0 0 20 20" fill="currentColor"><path d="M7.5 13.5 4.8 10.8l-1.4 1.4 4.1 4.1 9-9-1.4-1.4z"/></svg>Gestão de 1 plataforma (Meta OU Google).</li>
+        <li><svg viewBox="0 0 20 20" fill="currentColor"><path d="M7.5 13.5 4.8 10.8l-1.4 1.4 4.1 4.1 9-9-1.4-1.4z"/></svg>Configuração e estrutura de campanhas.</li>
+        <li><svg viewBox="0 0 20 20" fill="currentColor"><path d="M7.5 13.5 4.8 10.8l-1.4 1.4 4.1 4.1 9-9-1.4-1.4z"/></svg>Otimização semanal de anúncios.</li>
+        <li><svg viewBox="0 0 20 20" fill="currentColor"><path d="M7.5 13.5 4.8 10.8l-1.4 1.4 4.1 4.1 9-9-1.4-1.4z"/></svg>Relatório mensal de performance.</li>
+        <li><svg viewBox="0 0 20 20" fill="currentColor"><path d="M7.5 13.5 4.8 10.8l-1.4 1.4 4.1 4.1 9-9-1.4-1.4z"/></svg>Atendimento via WhatsApp.</li>
+        <li class="off"><svg viewBox="0 0 20 20" fill="currentColor"><path d="M6 18L18 6M6 6l12 12"/></svg>Segunda plataforma inclusa.</li>
+        <li class="off"><svg viewBox="0 0 20 20" fill="currentColor"><path d="M6 18L18 6M6 6l12 12"/></svg>Produção de criativos.</li>
+      </ul>
+      <a href="#" class="btn btn-outline">Contratar</a>
+    </article>
 
-    <div class="grid">
-      <article class="card card-accent">
-        <h3 class="plan-name">Gestão Unificada</h3>
-        <div class="plan-price">R$ 800 <span>/mês</span></div>
-        <ul class="plan-list">
-          <li><svg viewBox="0 0 20 20" fill="currentColor"><path d="M7.5 13.5 4.8 10.8l-1.4 1.4 4.1 4.1 9-9-1.4-1.4z"/></svg> Gestão Meta <strong>OU</strong> Google Ads.</li>
-          <li><svg viewBox="0 0 20 20" fill="currentColor"><path d="M7.5 13.5 4.8 10.8l-1.4 1.4 4.1 4.1 9-9-1.4-1.4z"/></svg> Atendimento comercial direto.</li>
-          <li><svg viewBox="0 0 20 20" fill="currentColor"><path d="M7.5 13.5 4.8 10.8l-1.4 1.4 4.1 4.1 9-9-1.4-1.4z"/></svg> Relatórios semanais/quinzenais/mensais.</li>
-        </ul>
-        <a href="#" class="btn btn-primary">Contratar</a>
-      </article>
+    <!-- Plano 2 — Recomendado -->
+    <article class="card card-accent">
+      <div class="badge-rec">★ Recomendado</div>
+      <h3 class="plan-name plan-name-accent">Gestão Total</h3>
+      <p class="plan-tag">Meta Ads + Google Ads</p>
+      <div class="plan-price plan-price-accent">R$ 1.500</div>
+      <p class="plan-period">por mês · sem fidelidade</p>
+      <ul class="plan-list">
+        <li><svg viewBox="0 0 20 20" fill="currentColor"><path d="M7.5 13.5 4.8 10.8l-1.4 1.4 4.1 4.1 9-9-1.4-1.4z"/></svg>Gestão de Meta Ads <strong>E</strong> Google Ads.</li>
+        <li><svg viewBox="0 0 20 20" fill="currentColor"><path d="M7.5 13.5 4.8 10.8l-1.4 1.4 4.1 4.1 9-9-1.4-1.4z"/></svg>Estrutura completa de campanhas.</li>
+        <li><svg viewBox="0 0 20 20" fill="currentColor"><path d="M7.5 13.5 4.8 10.8l-1.4 1.4 4.1 4.1 9-9-1.4-1.4z"/></svg>Otimização semanal em ambas as plataformas.</li>
+        <li><svg viewBox="0 0 20 20" fill="currentColor"><path d="M7.5 13.5 4.8 10.8l-1.4 1.4 4.1 4.1 9-9-1.4-1.4z"/></svg>Relatório quinzenal com análise estratégica.</li>
+        <li><svg viewBox="0 0 20 20" fill="currentColor"><path d="M7.5 13.5 4.8 10.8l-1.4 1.4 4.1 4.1 9-9-1.4-1.4z"/></svg>Reunião mensal de alinhamento.</li>
+        <li><svg viewBox="0 0 20 20" fill="currentColor"><path d="M7.5 13.5 4.8 10.8l-1.4 1.4 4.1 4.1 9-9-1.4-1.4z"/></svg>Atendimento comercial prioritário.</li>
+        <li class="off"><svg viewBox="0 0 20 20" fill="currentColor"><path d="M6 18L18 6M6 6l12 12"/></svg>Produção de criativos.</li>
+      </ul>
+      <a href="#" class="btn btn-primary">Contratar</a>
+    </article>
 
-      <article class="card card-accent">
-        <h3 class="plan-name">Gestão Total</h3>
-        <div class="plan-price">R$ 1.100 <span>/mês</span></div>
-        <ul class="plan-list">
-          <li><svg viewBox="0 0 20 20" fill="currentColor"><path d="M7.5 13.5 4.8 10.8l-1.4 1.4 4.1 4.1 9-9-1.4-1.4z"/></svg> Gestão Meta <strong>E</strong> Google Ads.</li>
-          <li><svg viewBox="0 0 20 20" fill="currentColor"><path d="M7.5 13.5 4.8 10.8l-1.4 1.4 4.1 4.1 9-9-1.4-1.4z"/></svg> Acompanhamento comercial estratégico.</li>
-          <li><svg viewBox="0 0 20 20" fill="currentColor"><path d="M7.5 13.5 4.8 10.8l-1.4 1.4 4.1 4.1 9-9-1.4-1.4z"/></svg> Relatórios semanais/quinzenais/mensais.</li>
-        </ul>
-        <a href="#" class="btn btn-primary">Contratar</a>
-      </article>
+    <!-- Plano 3 -->
+    <article class="card">
+      <h3 class="plan-name">Performance Plus</h3>
+      <p class="plan-tag">Meta + Google + Criativos</p>
+      <div class="plan-price">R$ 2.200</div>
+      <p class="plan-period">por mês · sem fidelidade</p>
+      <ul class="plan-list">
+        <li><svg viewBox="0 0 20 20" fill="currentColor"><path d="M7.5 13.5 4.8 10.8l-1.4 1.4 4.1 4.1 9-9-1.4-1.4z"/></svg>Tudo do plano Gestão Total.</li>
+        <li><svg viewBox="0 0 20 20" fill="currentColor"><path d="M7.5 13.5 4.8 10.8l-1.4 1.4 4.1 4.1 9-9-1.4-1.4z"/></svg>Produção de criativos mensais (estático + vídeo).</li>
+        <li><svg viewBox="0 0 20 20" fill="currentColor"><path d="M7.5 13.5 4.8 10.8l-1.4 1.4 4.1 4.1 9-9-1.4-1.4z"/></svg>Testes A/B contínuos de anúncios.</li>
+        <li><svg viewBox="0 0 20 20" fill="currentColor"><path d="M7.5 13.5 4.8 10.8l-1.4 1.4 4.1 4.1 9-9-1.4-1.4z"/></svg>Relatório semanal de resultados.</li>
+        <li><svg viewBox="0 0 20 20" fill="currentColor"><path d="M7.5 13.5 4.8 10.8l-1.4 1.4 4.1 4.1 9-9-1.4-1.4z"/></svg>Estratégia de funil completo.</li>
+        <li><svg viewBox="0 0 20 20" fill="currentColor"><path d="M7.5 13.5 4.8 10.8l-1.4 1.4 4.1 4.1 9-9-1.4-1.4z"/></svg>2 reuniões mensais de estratégia.</li>
+        <li><svg viewBox="0 0 20 20" fill="currentColor"><path d="M7.5 13.5 4.8 10.8l-1.4 1.4 4.1 4.1 9-9-1.4-1.4z"/></svg>Atendimento prioritário com SLA.</li>
+      </ul>
+      <a href="#" class="btn btn-outline">Contratar</a>
+    </article>
+  </div>
 
-      <article class="card">
-        <h3 class="plan-name">Produção de Criativos</h3>
-        <div class="plan-price">R$ 500 <span></span></div>
-        <ul class="plan-list">
-          <li><svg viewBox="0 0 20 20" fill="currentColor"><path d="M7.5 13.5 4.8 10.8l-1.4 1.4 4.1 4.1 9-9-1.4-1.4z"/></svg> Produção focada em performance.</li>
-          <li><svg viewBox="0 0 20 20" fill="currentColor"><path d="M7.5 13.5 4.8 10.8l-1.4 1.4 4.1 4.1 9-9-1.4-1.4z"/></svg> Alinhamento direto para anúncios.</li>
-          <li><svg viewBox="0 0 20 20" fill="currentColor"><path d="M7.5 13.5 4.8 10.8l-1.4 1.4 4.1 4.1 9-9-1.4-1.4z"/></svg> Entrega otimizada para campanhas.</li>
-        </ul>
-        <a href="#" class="btn">Contratar</a>
-      </article>
-    </div>
-  </section>
-
+  <div class="note">
+    <strong>Importante:</strong> Os valores referem-se exclusivamente à gestão. O investimento em mídia (verba de anúncios) é separado e pago diretamente à plataforma (Meta ou Google). Recomendamos verba mínima de R$800/mês para resultados consistentes.
+  </div>
+</section>
 </body>
 </html>

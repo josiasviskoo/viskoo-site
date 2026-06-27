@@ -1,0 +1,557 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Viskoo — Ecossistema Operacional</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root{--bg:#0D0F14;--surface:#141720;--surface-2:#1C2030;--border:#252A3A;--border-2:#2E3448;--text:#E8EAF0;--text-2:#8B92A8;--text-3:#555E78;--red:#FF4D4D;--red-dim:#3A1A1A;--orange:#FF8C42;--orange-dim:#2E1E0E;--yellow:#F5C842;--yellow-dim:#2A2308;--green:#3ECF8E;--green-dim:#0E2A1E;--blue:#5B9CF6;--blue-dim:#111E38;--purple:#9B72F6;--purple-dim:#1E1430;--gray-dim:#1A1D26;--accent:#5B9CF6;--radius:10px;}
+  *{box-sizing:border-box;margin:0;padding:0;}
+  body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--text);line-height:1.6;min-height:100vh;}
+  header{border-bottom:1px solid var(--border);padding:32px 48px;display:flex;align-items:center;justify-content:space-between;}
+  .logo{display:flex;align-items:center;gap:12px;}
+  .logo-mark{width:36px;height:36px;background:var(--accent);border-radius:8px;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:16px;color:#fff;}
+  .logo-text{font-size:18px;font-weight:600;letter-spacing:-0.3px;}
+  .logo-sub{font-size:12px;color:var(--text-3);margin-top:1px;}
+  .version-badge{font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--text-3);background:var(--surface-2);border:1px solid var(--border);padding:4px 10px;border-radius:20px;}
+  nav{position:sticky;top:0;z-index:100;background:var(--bg);border-bottom:1px solid var(--border);padding:0 48px;display:flex;gap:0;overflow-x:auto;}
+  .nav-item{padding:14px 18px;font-size:12px;font-weight:500;color:var(--text-3);cursor:pointer;white-space:nowrap;border-bottom:2px solid transparent;transition:all .15s;}
+  .nav-item:hover{color:var(--text-2);}.nav-item.active{color:var(--accent);border-bottom-color:var(--accent);}
+  main{max-width:900px;margin:0 auto;padding:56px 48px;display:flex;flex-direction:column;gap:56px;}
+  .sl{font-size:10px;font-weight:600;letter-spacing:1.5px;text-transform:uppercase;color:var(--accent);margin-bottom:8px;}
+  .st{font-size:22px;font-weight:700;letter-spacing:-0.4px;color:var(--text);margin-bottom:6px;}
+  .sd{font-size:14px;color:var(--text-2);max-width:560px;}
+  .card{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);overflow:hidden;}
+  .ch{padding:18px 24px;border-bottom:1px solid var(--border);display:flex;align-items:center;gap:10px;}
+  .cht{font-size:13px;font-weight:600;color:var(--text);}
+  .chd{width:7px;height:7px;border-radius:50%;background:var(--accent);}
+  .pr{display:grid;grid-template-columns:56px 160px 1fr auto;align-items:center;padding:14px 24px;border-bottom:1px solid var(--border);gap:16px;transition:background .15s;}
+  .pr:last-child{border-bottom:none;}.pr:hover{background:var(--surface-2);}
+  .pe{font-size:22px;text-align:center;}
+  .pn{font-family:'JetBrains Mono',monospace;font-size:12px;font-weight:500;color:var(--text);background:var(--surface-2);border:1px solid var(--border-2);padding:3px 8px;border-radius:4px;white-space:nowrap;}
+  .pd{font-size:13px;color:var(--text-2);}
+  .pt{font-size:11px;font-weight:500;padding:3px 10px;border-radius:20px;white-space:nowrap;}
+  .tr{background:var(--red-dim);color:var(--red);}.to{background:var(--orange-dim);color:var(--orange);}.ty{background:var(--yellow-dim);color:var(--yellow);}.tg{background:var(--green-dim);color:var(--green);}.tb{background:var(--blue-dim);color:var(--blue);}.tp{background:var(--purple-dim);color:var(--purple);}.tz{background:var(--gray-dim);color:var(--text-3);}
+  .tier-row{display:grid;grid-template-columns:140px 1fr auto;align-items:center;padding:16px 24px;border-bottom:1px solid var(--border);gap:20px;}.tier-row:last-child{border-bottom:none;}.tier-row:hover{background:var(--surface-2);}
+  .tb2{display:flex;align-items:center;gap:8px;font-size:13px;font-weight:600;}
+  .td2{width:10px;height:10px;border-radius:50%;flex-shrink:0;}
+  .tdesc{font-size:13px;color:var(--text-2);}.tnote{font-size:11px;color:var(--text-3);font-style:italic;margin-top:3px;}
+  .mr{display:grid;grid-template-columns:36px 56px 1fr;align-items:start;padding:16px 24px;border-bottom:1px solid var(--border);gap:16px;}.mr:last-child{border-bottom:none;}
+  .mrk{font-family:'JetBrains Mono',monospace;font-size:18px;font-weight:700;color:var(--text-3);line-height:1;padding-top:2px;}
+  .me{font-size:20px;line-height:1;padding-top:2px;}
+  .mt{font-size:13px;font-weight:600;color:var(--text);margin-bottom:4px;}
+  .md{font-size:12px;color:var(--text-2);}
+  .md code{font-family:'JetBrains Mono',monospace;font-size:11px;background:var(--surface-2);border:1px solid var(--border-2);padding:1px 5px;border-radius:3px;color:var(--accent);}
+  .ei{display:flex;align-items:center;gap:16px;padding:13px 24px;border-bottom:1px solid var(--border);}.ei:last-child{border-bottom:none;}
+  .et{font-family:'JetBrains Mono',monospace;font-size:12px;color:var(--text);flex:1;}
+  .ex{font-size:12px;color:var(--text-2);text-align:right;flex-shrink:0;max-width:220px;}
+  .ri{display:flex;gap:16px;padding:16px 24px;border-bottom:1px solid var(--border);align-items:flex-start;}.ri:last-child{border-bottom:none;}
+  .rn{font-family:'JetBrains Mono',monospace;font-size:11px;font-weight:600;color:var(--accent);background:var(--blue-dim);border:1px solid #1E3060;padding:3px 8px;border-radius:4px;flex-shrink:0;margin-top:1px;}
+  .rt{font-size:13px;color:var(--text-2);line-height:1.6;}.rt strong{color:var(--text);}
+  .callout{background:var(--blue-dim);border:1px solid #1E3060;border-radius:var(--radius);padding:20px 24px;display:flex;gap:14px;align-items:flex-start;}
+  .ci{font-size:18px;flex-shrink:0;margin-top:1px;}.ct{font-size:13px;color:var(--text-2);line-height:1.7;}.ct strong{color:var(--text);}
+  .cg{background:var(--green-dim);border:1px solid #1A4A32;}
+  .cr{background:var(--red-dim);border:1px solid #4A1A1A;}
+  .co{background:var(--orange-dim);border:1px solid #4A2A0E;}
+  .fs{display:grid;grid-template-columns:40px 1fr;gap:16px;padding:18px 24px;border-bottom:1px solid var(--border);align-items:start;}.fs:last-child{border-bottom:none;}
+  .fn{width:28px;height:28px;border-radius:50%;background:var(--surface-2);border:1px solid var(--border-2);display:flex;align-items:center;justify-content:center;font-family:'JetBrains Mono',monospace;font-size:11px;font-weight:700;color:var(--accent);flex-shrink:0;}
+  .ftit{font-size:13px;font-weight:600;color:var(--text);margin-bottom:4px;}.fdesc{font-size:12px;color:var(--text-2);}
+  .ftag{display:inline-block;font-size:10px;font-weight:600;padding:2px 8px;border-radius:10px;margin-top:6px;}
+  .urgency-bar{background:var(--red-dim);border:1px solid #4A1A1A;border-radius:var(--radius);padding:16px 20px;display:flex;align-items:center;gap:14px;margin-bottom:20px;}
+  .urgency-icon{font-size:22px;flex-shrink:0;}
+  .urgency-text{font-size:13px;color:var(--text-2);line-height:1.6;}.urgency-text strong{color:var(--red);}
+
+  /* RITUAIS */
+  .ritual-grid{display:flex;flex-direction:column;gap:0;}
+  .ritual-row{display:grid;grid-template-columns:200px 1fr auto;align-items:center;padding:16px 24px;border-bottom:1px solid var(--border);gap:20px;transition:background .15s;}
+  .ritual-row:last-child{border-bottom:none;}.ritual-row:hover{background:var(--surface-2);}
+  .ritual-when{font-size:12px;font-weight:600;color:var(--text);}
+  .ritual-freq{font-size:10px;color:var(--text-3);margin-top:2px;}
+  .ritual-cmd{font-family:'JetBrains Mono',monospace;font-size:12px;color:var(--accent);background:var(--blue-dim);border:1px solid #1E3060;padding:6px 12px;border-radius:6px;line-height:1.5;}
+
+  footer{border-top:1px solid var(--border);padding:24px 48px;display:flex;align-items:center;justify-content:space-between;}
+  .footer-text{font-size:12px;color:var(--text-3);}.footer-version{font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--text-3);}
+  @media(max-width:640px){header,footer{padding:20px;}main{padding:32px 20px;gap:40px;}nav{padding:0 20px;}.pr{grid-template-columns:40px 1fr;}.pt{display:none;}.tier-row{grid-template-columns:1fr auto;}.mr{grid-template-columns:32px 1fr;}.me{display:none;}.ex{display:none;}.ritual-row{grid-template-columns:1fr;gap:10px;}}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="logo">
+    <div class="logo-mark">V</div>
+    <div>
+      <div class="logo-text">Viskoo Marketing</div>
+      <div class="logo-sub">Ecossistema Operacional — Guia Completo</div>
+    </div>
+  </div>
+  <div class="version-badge">v2.2 · Jun 2026</div>
+</header>
+
+<nav>
+  <div class="nav-item active" onclick="navTo('rituais',this)">Rituais</div>
+  <div class="nav-item" onclick="navTo('visao',this)">Visão Geral</div>
+  <div class="nav-item" onclick="navTo('asana',this)">Sistema Asana</div>
+  <div class="nav-item" onclick="navTo('reunioes',this)">Reuniões</div>
+  <div class="nav-item" onclick="navTo('pop',this)">POP Reuniões</div>
+  <div class="nav-item" onclick="navTo('orcamentos',this)">Orçamentos</div>
+  <div class="nav-item" onclick="navTo('receita',this)">Meta Receita</div>
+</nav>
+
+<main>
+
+<!-- ═══════════ 0. RITUAIS ═══════════ -->
+<section id="rituais">
+  <div class="sl">Rituais do Ecossistema</div>
+  <div class="st">Como acionar cada ritual</div>
+  <div class="sd" style="margin-bottom:24px">Não há comandos fixos. Fale naturalmente — eu identifico a intenção e executo com base nas regras deste arquivo. Exemplos abaixo mostram como você costuma falar em cada situação.</div>
+
+  <!-- REGRA CRÍTICA: projeto vs tarefa -->
+  <div class="callout cr" style="margin-bottom:20px">
+    <div class="ci">⚠️</div>
+    <div class="ct">
+      <strong>Regra de interpretação — "projeto" significa "tarefa do projeto".</strong><br>
+      Quando você diz <em>"qual projeto tenho que fazer hoje?"</em> ou <em>"o que tenho de projeto?"</em>, você está perguntando pelas <strong>tarefas dos projetos</strong> — não pelo projeto em si. Eu nunca interpreto como uma pergunta sobre o projeto como entidade. Sempre respondo com a lista de tarefas pendentes organizadas por projeto e prioridade.
+    </div>
+  </div>
+
+  <div class="card" style="margin-bottom:20px">
+    <div class="ch"><div class="chd" style="background:var(--orange)"></div><div class="cht">☀️ Abertura do dia — segunda a sexta, manhã</div></div>
+    <div>
+      <div style="padding:14px 24px;border-bottom:1px solid var(--border)">
+        <div style="font-size:11px;color:var(--text-3);text-transform:uppercase;letter-spacing:1px;margin-bottom:10px">Você pode falar assim</div>
+        <div style="display:flex;flex-direction:column;gap:8px">
+          <div style="font-family:'JetBrains Mono',monospace;font-size:12px;color:var(--accent);background:var(--blue-dim);border:1px solid #1E3060;padding:8px 14px;border-radius:6px">"Bom dia, o que tenho de tarefas hoje?"</div>
+          <div style="font-family:'JetBrains Mono',monospace;font-size:12px;color:var(--accent);background:var(--blue-dim);border:1px solid #1E3060;padding:8px 14px;border-radius:6px">"Qual tarefa faço primeiro?"</div>
+          <div style="font-family:'JetBrains Mono',monospace;font-size:12px;color:var(--accent);background:var(--blue-dim);border:1px solid #1E3060;padding:8px 14px;border-radius:6px">"Qual projeto tenho que fazer hoje?"</div>
+          <div style="font-family:'JetBrains Mono',monospace;font-size:12px;color:var(--accent);background:var(--blue-dim);border:1px solid #1E3060;padding:8px 14px;border-radius:6px">"O que está atrasado?"</div>
+        </div>
+      </div>
+      <div style="padding:14px 24px;background:var(--surface-2)">
+        <div style="font-size:12px;color:var(--text-2)"><strong style="color:var(--text)">O que eu faço:</strong> verifico transcrições de reuniões pendentes → tarefas atrasadas de ontem → agenda do dia e próximos 2 dias → puxo Asana e entrego lista ordenada pela lógica de prioridade → destaco os 3 inegociáveis do dia.</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="card" style="margin-bottom:20px">
+    <div class="ch"><div class="chd" style="background:var(--purple)"></div><div class="cht">🌙 Fechamento do dia — segunda a sexta, fim do dia</div></div>
+    <div>
+      <div style="padding:14px 24px;border-bottom:1px solid var(--border)">
+        <div style="font-size:11px;color:var(--text-3);text-transform:uppercase;letter-spacing:1px;margin-bottom:10px">Você pode falar assim</div>
+        <div style="display:flex;flex-direction:column;gap:8px">
+          <div style="font-family:'JetBrains Mono',monospace;font-size:12px;color:var(--accent);background:var(--blue-dim);border:1px solid #1E3060;padding:8px 14px;border-radius:6px">"Vou fechar o dia"</div>
+          <div style="font-family:'JetBrains Mono',monospace;font-size:12px;color:var(--accent);background:var(--blue-dim);border:1px solid #1E3060;padding:8px 14px;border-radius:6px">"Me ajuda a fechar o dia"</div>
+          <div style="font-family:'JetBrains Mono',monospace;font-size:12px;color:var(--accent);background:var(--blue-dim);border:1px solid #1E3060;padding:8px 14px;border-radius:6px">"O que ficou em aberto hoje?"</div>
+        </div>
+      </div>
+      <div style="padding:14px 24px;background:var(--surface-2)">
+        <div style="font-size:12px;color:var(--text-2)"><strong style="color:var(--text)">O que eu faço:</strong> verifico reuniões do dia sem transcrição processada → puxo tarefas ainda abertas → marco concluídas, movo atrasadas → faço a pergunta do fechamento: <em>"O que você fez hoje aproximou a Viskoo dos R$50k?"</em></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="card" style="margin-bottom:20px">
+    <div class="ch"><div class="chd" style="background:var(--red)"></div><div class="cht">📋 Pós-reunião — até 30 min após qualquer call</div></div>
+    <div>
+      <div style="padding:14px 24px;border-bottom:1px solid var(--border)">
+        <div style="font-size:11px;color:var(--text-3);text-transform:uppercase;letter-spacing:1px;margin-bottom:10px">Você pode falar assim</div>
+        <div style="display:flex;flex-direction:column;gap:8px">
+          <div style="font-family:'JetBrains Mono',monospace;font-size:12px;color:var(--accent);background:var(--blue-dim);border:1px solid #1E3060;padding:8px 14px;border-radius:6px">"Acabei a reunião com [cliente], segue a ATA:" [cola o texto]</div>
+          <div style="font-family:'JetBrains Mono',monospace;font-size:12px;color:var(--accent);background:var(--blue-dim);border:1px solid #1E3060;padding:8px 14px;border-radius:6px">"Segue a transcrição da reunião de hoje:" [cola o texto]</div>
+          <div style="font-family:'JetBrains Mono',monospace;font-size:12px;color:var(--accent);background:var(--blue-dim);border:1px solid #1E3060;padding:8px 14px;border-radius:6px">"Reunião com [cliente] concluída, processa isso:" [cola]</div>
+        </div>
+      </div>
+      <div style="padding:14px 24px;background:var(--surface-2)">
+        <div style="font-size:12px;color:var(--text-2)"><strong style="color:var(--text)">O que eu faço:</strong> identifico o cliente e o projeto → extraio tarefas da Viskoo (não do cliente) → sugiro lista com emoji, prazo e projeto no Asana → aguardo confirmação → crio tudo no Asana.</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="card" style="margin-bottom:20px">
+    <div class="ch"><div class="chd" style="background:var(--blue)"></div><div class="cht">📅 Segunda — planejamento da semana</div></div>
+    <div>
+      <div style="padding:14px 24px;border-bottom:1px solid var(--border)">
+        <div style="font-size:11px;color:var(--text-3);text-transform:uppercase;letter-spacing:1px;margin-bottom:10px">Você pode falar assim</div>
+        <div style="display:flex;flex-direction:column;gap:8px">
+          <div style="font-family:'JetBrains Mono',monospace;font-size:12px;color:var(--accent);background:var(--blue-dim);border:1px solid #1E3060;padding:8px 14px;border-radius:6px">"Bom dia, vamos planejar a semana"</div>
+          <div style="font-family:'JetBrains Mono',monospace;font-size:12px;color:var(--accent);background:var(--blue-dim);border:1px solid #1E3060;padding:8px 14px;border-radius:6px">"O que tenho essa semana?"</div>
+          <div style="font-family:'JetBrains Mono',monospace;font-size:12px;color:var(--accent);background:var(--blue-dim);border:1px solid #1E3060;padding:8px 14px;border-radius:6px">"Me ajuda a organizar a semana"</div>
+        </div>
+      </div>
+      <div style="padding:14px 24px;background:var(--surface-2)">
+        <div style="font-size:12px;color:var(--text-2)"><strong style="color:var(--text)">O que eu faço:</strong> puxo todas as tarefas da semana no Asana → cruzo com agenda dos 5 dias → distribuo por dia respeitando reuniões, prioridades e blocos de tempo → destaco as tarefas 💲 da semana.</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="card" style="margin-bottom:20px">
+    <div class="ch"><div class="chd" style="background:var(--yellow)"></div><div class="cht">🚀 Sexta — fechamento da semana</div></div>
+    <div>
+      <div style="padding:14px 24px;border-bottom:1px solid var(--border)">
+        <div style="font-size:11px;color:var(--text-3);text-transform:uppercase;letter-spacing:1px;margin-bottom:10px">Você pode falar assim</div>
+        <div style="display:flex;flex-direction:column;gap:8px">
+          <div style="font-family:'JetBrains Mono',monospace;font-size:12px;color:var(--accent);background:var(--blue-dim);border:1px solid #1E3060;padding:8px 14px;border-radius:6px">"Vamos fechar a semana"</div>
+          <div style="font-family:'JetBrains Mono',monospace;font-size:12px;color:var(--accent);background:var(--blue-dim);border:1px solid #1E3060;padding:8px 14px;border-radius:6px">"Como foi a semana?"</div>
+          <div style="font-family:'JetBrains Mono',monospace;font-size:12px;color:var(--accent);background:var(--blue-dim);border:1px solid #1E3060;padding:8px 14px;border-radius:6px">"O que ficou em aberto essa semana?"</div>
+        </div>
+      </div>
+      <div style="padding:14px 24px;background:var(--surface-2)">
+        <div style="font-size:12px;color:var(--text-2)"><strong style="color:var(--text)">O que eu faço:</strong> resumo do que foi concluído → o que ficou em aberto → tarefas que precisam ser remarcadas para a próxima semana → pergunta de fechamento: <em>"Essa semana aproximou a Viskoo dos R$50k?"</em></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="card" style="margin-bottom:20px">
+    <div class="ch"><div class="chd" style="background:var(--green)"></div><div class="cht">⚡ Sob demanda</div></div>
+    <div>
+      <div style="display:grid;grid-template-columns:180px 1fr;gap:0">
+        <div style="padding:14px 24px;border-bottom:1px solid var(--border);border-right:1px solid var(--border)"><div style="font-size:12px;font-weight:600;color:var(--text)">💲 Nova proposta</div><div style="font-size:11px;color:var(--text-3);margin-top:3px">Após briefing ou solicitação</div></div>
+        <div style="padding:14px 24px;border-bottom:1px solid var(--border)"><div style="font-family:'JetBrains Mono',monospace;font-size:12px;color:var(--accent)">"Preciso de uma proposta para [cliente]"<br>"Gera proposta — [serviços]"</div></div>
+        <div style="padding:14px 24px;border-bottom:1px solid var(--border);border-right:1px solid var(--border)"><div style="font-size:12px;font-weight:600;color:var(--text)">📊 Status da meta</div><div style="font-size:11px;color:var(--text-3);margin-top:3px">Visão financeira rápida</div></div>
+        <div style="padding:14px 24px;border-bottom:1px solid var(--border)"><div style="font-family:'JetBrains Mono',monospace;font-size:12px;color:var(--accent)">"Como estou em relação à meta?"<br>"Quanto falta para os R$50k?"</div></div>
+        <div style="padding:14px 24px;border-right:1px solid var(--border)"><div style="font-size:12px;font-weight:600;color:var(--text)">🔧 Atualizar este guia</div><div style="font-size:11px;color:var(--text-3);margin-top:3px">Quando o ecossistema evoluir</div></div>
+        <div style="padding:14px 24px"><div style="font-family:'JetBrains Mono',monospace;font-size:12px;color:var(--accent)">"Atualiza o sistema: [instrução]"</div></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="callout">
+    <div class="ci">💡</div>
+    <div class="ct"><strong>Como usar:</strong> Envie este arquivo + fale naturalmente. Não precisa de comando exato — eu identifico a intenção pelo contexto. Falar "bom dia, o que tenho hoje?" é suficiente para disparar a abertura do dia completa.</div>
+  </div>
+</section>
+
+<!-- ═══════════ 1. VISÃO GERAL ═══════════ -->
+<section id="visao">
+  <div class="sl">Visão Geral</div>
+  <div class="st">O ecossistema Viskoo</div>
+  <div class="sd" style="margin-bottom:24px">Tudo que foi construído conversa entre si. Cada ferramenta tem uma entrada e uma saída — o objetivo é que nenhuma informação se perca e nenhuma decisão precise ser tomada duas vezes.</div>
+
+  <div class="card">
+    <div class="ch"><div class="chd" style="background:var(--purple)"></div><div class="cht">Mapa do ecossistema — como as partes se conectam</div></div>
+    <div>
+      <div style="display:grid;grid-template-columns:180px 1fr auto;gap:16px;align-items:center;padding:16px 24px;border-bottom:1px solid var(--border)">
+        <div style="font-size:13px;font-weight:600;color:var(--text)">☀️ Abertura do dia</div>
+        <div style="font-size:12px;color:var(--text-2)">Verifico transcrições pendentes, tarefas atrasadas de ontem, puxo Asana + Google Calendar e entrego o dia ordenado por prioridade.</div>
+        <div class="pt tb">Diário</div>
+      </div>
+      <div style="display:grid;grid-template-columns:180px 1fr auto;gap:16px;align-items:center;padding:16px 24px;border-bottom:1px solid var(--border)">
+        <div style="font-size:13px;font-weight:600;color:var(--text)">📋 ATA de reunião</div>
+        <div style="font-size:12px;color:var(--text-2)">Template HTML em <code style="font-family:monospace;font-size:11px;color:var(--accent)">viskoo.com.br/ata</code>. Você preenche durante a call, clica um botão, e eu crio as tarefas no Asana com nomenclatura e emojis corretos.</div>
+        <div class="pt tg">Por reunião</div>
+      </div>
+      <div style="display:grid;grid-template-columns:180px 1fr auto;gap:16px;align-items:center;padding:16px 24px;border-bottom:1px solid var(--border)">
+        <div style="font-size:13px;font-weight:600;color:var(--text)">🎙️ Briefing gravado</div>
+        <div style="font-size:12px;color:var(--text-2)">Para reuniões de novos projetos — você grava, manda a transcrição em até 30 min, eu extraio escopo, crio tarefas no Asana e gero a proposta.</div>
+        <div class="pt ty">Por briefing</div>
+      </div>
+      <div style="display:grid;grid-template-columns:180px 1fr auto;gap:16px;align-items:center;padding:16px 24px;border-bottom:1px solid var(--border)">
+        <div style="font-size:13px;font-weight:600;color:var(--text)">💲 Gerador de orçamento</div>
+        <div style="font-size:12px;color:var(--text-2)">HTML com banco de planos em JSON. Você seleciona serviços, preenche os dados do cliente e exporta a proposta. Sem Figma, sem edição manual.</div>
+        <div class="pt to">Por proposta</div>
+      </div>
+      <div style="display:grid;grid-template-columns:180px 1fr auto;gap:16px;align-items:center;padding:16px 24px">
+        <div style="font-size:13px;font-weight:600;color:var(--text)">🌙 Fechamento do dia</div>
+        <div style="font-size:12px;color:var(--text-2)">Verifico reuniões sem transcrição, marco tarefas concluídas, movo o que não foi feito e faço a pergunta do fechamento.</div>
+        <div class="pt tb">Diário</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════ 2. SISTEMA ASANA ═══════════ -->
+<section id="asana">
+  <div class="sl">Sistema Asana</div>
+  <div class="st">Nomenclatura, tiers e priorização</div>
+  <div class="sd" style="margin-bottom:24px">Dois níveis: <strong>projetos</strong> (emoji de tier no início) e <strong>tarefas</strong> (emoji de tipo no final). Com isso a lista já vem ordenada por prioridade real.</div>
+
+  <div class="card" style="margin-bottom:20px">
+    <div class="ch"><div class="chd"></div><div class="cht">Formato do projeto e da tarefa</div></div>
+    <div style="padding:24px;display:flex;flex-direction:column;gap:16px">
+      <div>
+        <div style="font-size:11px;color:var(--text-3);text-transform:uppercase;letter-spacing:1px;margin-bottom:8px">Projeto — emoji de tier no início</div>
+        <div style="font-family:'JetBrains Mono',monospace;font-size:14px;color:var(--text);background:var(--surface-2);border:1px solid var(--border-2);border-radius:8px;padding:14px 18px"><span style="color:var(--accent)">🟡</span> CLIENTE — tipo de serviço</div>
+      </div>
+      <div>
+        <div style="font-size:11px;color:var(--text-3);text-transform:uppercase;letter-spacing:1px;margin-bottom:8px">Tarefa — emoji de tipo no final</div>
+        <div style="font-family:'JetBrains Mono',monospace;font-size:14px;color:var(--text);background:var(--surface-2);border:1px solid var(--border-2);border-radius:8px;padding:14px 18px">CLIENTE — descrição da tarefa <span style="color:var(--accent)">emoji</span></div>
+      </div>
+      <div style="display:flex;flex-direction:column;gap:8px">
+        <div style="font-family:'JetBrains Mono',monospace;font-size:12px;color:var(--text-2);background:var(--surface-2);border:1px solid var(--border-2);border-radius:6px;padding:10px 14px">🟡 CLIENTE A — Tráfego Pago</div>
+        <div style="font-family:'JetBrains Mono',monospace;font-size:12px;color:var(--text-2);background:var(--surface-2);border:1px solid var(--border-2);border-radius:6px;padding:10px 14px">🔵 CLIENTE B — Site + Social Media</div>
+        <div style="font-family:'JetBrains Mono',monospace;font-size:12px;color:var(--text-2);background:var(--surface-2);border:1px solid var(--border-2);border-radius:6px;padding:10px 14px">⚪ CLIENTE C — Landing Page</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="card" style="margin-bottom:20px">
+    <div class="ch"><div class="chd"></div><div class="cht">Exemplos de tarefas nomeadas corretamente</div></div>
+    <div>
+      <div class="ei"><div class="et">CLIENTE A — Site fora do ar, verificar hospedagem 🚨</div><div class="ex">Suporte crítico → topo absoluto</div></div>
+      <div class="ei"><div class="et">CLIENTE B — Follow-up proposta de social media 💲</div><div class="ex">Proposta aberta → P1 automático</div></div>
+      <div class="ei"><div class="et">CLIENTE C — Check-in semanal de campanha 👁️</div><div class="ex">Acompanhamento recorrente</div></div>
+      <div class="ei"><div class="et">CLIENTE D — Subir campanha antes do fim do dia 🔥</div><div class="ex">Alta prioridade, prazo duro</div></div>
+      <div class="ei"><div class="et">CLIENTE E — Criar posts da semana no Canva 🌞</div><div class="ex">Execução padrão</div></div>
+      <div class="ei"><div class="et">CLIENTE F — Relatório mensal de performance 📊</div><div class="ex">Relatório recorrente</div></div>
+      <div class="ei"><div class="et">CLIENTE G — Emitir nota fiscal do mês ⚙️</div><div class="ex">Admin — sem urgência crítica</div></div>
+      <div class="ei"><div class="et">Agência — Reorganizar Google Drive interno 🌙</div><div class="ex">Backlog, quando houver tempo</div></div>
+    </div>
+  </div>
+
+  <div class="card" style="margin-bottom:20px">
+    <div class="ch"><div class="chd"></div><div class="cht">Tabela de sufixos de tarefa</div></div>
+    <div>
+      <div class="pr"><div class="pe">🚨</div><div class="pn">Suporte urgente</div><div class="pd">Problema ativo: site fora, campanha parada, erro crítico. Ação imediata.</div><div class="pt tr">P0 — Imediato</div></div>
+      <div class="pr"><div class="pe">💲</div><div class="pn">Proposta / orçamento</div><div class="pd">Envio ou follow-up de proposta, orçamento, negociação ativa, fechamento.</div><div class="pt to">P1 — Alta</div></div>
+      <div class="pr"><div class="pe">👁️</div><div class="pn">Acompanhamento</div><div class="pd">Contato recorrente, follow-up de status, check-in periódico com cliente.</div><div class="pt ty">P2 — Recorrente</div></div>
+      <div class="pr"><div class="pe">🔥</div><div class="pn">Alta prioridade</div><div class="pd">Entrega com prazo duro, cliente aguardando, impacto direto em receita.</div><div class="pt ty">P2 — Urgente</div></div>
+      <div class="pr"><div class="pe">🌞</div><div class="pn">Execução normal</div><div class="pd">Criação, ajustes, conteúdo, desenvolvimento — produção padrão.</div><div class="pt tg">P3 — Normal</div></div>
+      <div class="pr"><div class="pe">📊</div><div class="pn">Relatório / análise</div><div class="pd">Relatórios de performance, análise de campanhas, revisão de resultados.</div><div class="pt tb">P3 — Normal</div></div>
+      <div class="pr"><div class="pe">⚙️</div><div class="pn">Administrativo</div><div class="pd">Cobranças, contratos, notas fiscais, onboarding, encerramento.</div><div class="pt tp">P4 — Admin</div></div>
+      <div class="pr"><div class="pe">🌙</div><div class="pn">Quando puder</div><div class="pd">Backlog, ideias, melhorias internas, sem prazo definido.</div><div class="pt tz">P5 — Baixa</div></div>
+    </div>
+  </div>
+
+  <div class="card" style="margin-bottom:20px">
+    <div class="ch"><div class="chd" style="background:var(--yellow)"></div><div class="cht">Tiers de cliente</div></div>
+    <div>
+      <div class="tier-row"><div class="tb2"><div class="td2" style="background:var(--yellow)"></div>🟡 Amarelo</div><div><div class="tdesc">High-ticket — acima de ~R$2.000/mês. Clientes que movem a agência. Atenção máxima.</div><div class="tnote">Qualquer tarefa sobe um nível na fila. Marcador na descrição do projeto: <code style="font-family:monospace;font-size:10px;color:var(--accent)">TIER: amarelo</code></div></div><div class="pt ty">×2</div></div>
+      <div class="tier-row"><div class="tb2"><div class="td2" style="background:var(--blue)"></div>🔵 Azul</div><div><div class="tdesc">Ticket ok — ~R$1.000 a R$2.000/mês. Bom relacionamento, entrega consistente.</div><div class="tnote">Prioridade padrão. Marcador: <code style="font-family:monospace;font-size:10px;color:var(--accent)">TIER: azul</code></div></div><div class="pt tb">×1</div></div>
+      <div class="tier-row"><div class="tb2"><div class="td2" style="background:#9AA0B4"></div>⚪ Branco</div><div><div class="tdesc">Ticket baixo — abaixo de ~R$1.000/mês. Pontuais, stand-by ou saindo.</div><div class="tnote">Entra só se a fila acima estiver vazia. Marcador: <code style="font-family:monospace;font-size:10px;color:var(--accent)">TIER: branco</code></div></div><div class="pt tz">×0.5</div></div>
+    </div>
+  </div>
+
+  <div class="card" style="margin-bottom:20px">
+    <div class="ch"><div class="chd" style="background:var(--red)"></div><div class="cht">Ordem de priorização — como a IA ordena sua fila</div></div>
+    <div>
+      <div class="mr"><div class="mrk">01</div><div class="me">🚨</div><div><div class="mt">Suporte urgente — qualquer tier</div><div class="md">Sufixo <code>🚨</code> sempre primeiro. Problema ativo bate tudo.</div></div></div>
+      <div class="mr"><div class="mrk">02</div><div class="me">💲</div><div><div class="mt">Propostas e orçamentos ativos</div><div class="md">Sufixo <code>💲</code> sempre segundo — dinheiro em aberto tem urgência implícita.</div></div></div>
+      <div class="mr"><div class="mrk">03</div><div class="me">🔥</div><div><div class="mt">Alta prioridade + cliente Amarelo</div><div class="md">Sufixo <code>🔥</code> em projetos com <code>TIER: amarelo</code> na descrição sobe para cá.</div></div></div>
+      <div class="mr"><div class="mrk">04</div><div class="me">👁️🔥</div><div><div class="mt">Acompanhamento e alta prioridade — Amarelo</div><div class="md">Sufixos <code>👁️</code> e <code>🔥</code> em clientes Amarelo. High-ticket não pode atrasar check-in.</div></div></div>
+      <div class="mr"><div class="mrk">05</div><div class="me">🌞📊</div><div><div class="mt">Execução e relatórios — Amarelo</div><div class="md">Sufixos <code>🌞</code> e <code>📊</code> tier Amarelo têm prioridade sobre Azul.</div></div></div>
+      <div class="mr"><div class="mrk">06</div><div class="me">🔥👁️🌞📊</div><div><div class="mt">Execução e acompanhamento — Azul</div><div class="md">Fila padrão Azul: <code>🔥</code> → <code>👁️</code> → <code>🌞</code> → <code>📊</code>.</div></div></div>
+      <div class="mr"><div class="mrk">07</div><div class="me">⚙️</div><div><div class="mt">Administrativo</div><div class="md">Cobranças, contratos, notas. Importante mas não urgente por padrão.</div></div></div>
+      <div class="mr"><div class="mrk">08</div><div class="me">🌙</div><div><div class="mt">Clientes Branco + backlog</div><div class="md">Sufixo <code>🌙</code> ou clientes Branco — só se a fila acima estiver vazia.</div></div></div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="ch"><div class="chd" style="background:var(--text-3)"></div><div class="cht">Regras de consistência</div></div>
+    <div>
+      <div class="ri"><div class="rn">R0</div><div class="rt"><strong>Todo projeto começa com emoji de tier.</strong> 🟡 high-ticket, 🔵 ticket ok, ⚪ ticket baixo. Tier visível direto na lista.</div></div>
+      <div class="ri"><div class="rn">R1</div><div class="rt"><strong>Todo nome de tarefa termina com emoji.</strong> Sem sufixo → vai pro final da fila. A IA não classifica sem o marcador.</div></div>
+      <div class="ri"><div class="rn">R2</div><div class="rt"><strong>Quando o tier mudar, atualize o emoji do projeto.</strong> Cliente Azul virou Amarelo: troca o 🔵 pelo 🟡 no nome do projeto. Feito manualmente no Asana.</div></div>
+      <div class="ri"><div class="rn">R3</div><div class="rt"><strong>Use datas reais, não datas de criação.</strong> Tarefa sem prazo real → não coloque data. Data falsa polui a fila e faz a priorização errar.</div></div>
+      <div class="ri"><div class="rn">R4</div><div class="rt"><strong>Reuniões ficam na agenda, não no Asana.</strong> Pauta, preparação e follow-up pós-call entram no Asana com emoji. A reunião em si fica no calendário.</div></div>
+      <div class="ri"><div class="rn">R5</div><div class="rt"><strong>Não acumule 🔥 em tudo.</strong> Reserve para o que tem deadline duro naquele dia. Se tudo é urgente, nada é urgente.</div></div>
+      <div class="ri"><div class="rn">R6</div><div class="rt"><strong>👁️ é para contatos e controles periódicos.</strong> Check recorrente semanal, verificar campanha, confirmar entrega. Não urgente, mas não pode ser esquecida.</div></div>
+      <div class="ri"><div class="rn">R7</div><div class="rt"><strong>Renomear projeto não é possível via API.</strong> Clique no nome do projeto diretamente no Asana para editar.</div></div>
+      <div class="ri"><div class="rn">R8</div><div class="rt"><strong>Tarefas recorrentes não são criadas via API.</strong> Crie a tarefa base e configure a recorrência manualmente na interface do Asana.</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════ 3. REUNIÕES ═══════════ -->
+<section id="reunioes">
+  <div class="sl">Fluxo de Reuniões</div>
+  <div class="st">Dois tipos de reunião, dois fluxos diferentes</div>
+  <div class="sd" style="margin-bottom:20px">Reuniões de acompanhamento usam a ATA. Briefings usam gravação. Os dois caminhos chegam no mesmo lugar: tarefas criadas no Asana sem trabalho manual.</div>
+
+  <div class="urgency-bar">
+    <div class="urgency-icon">⚡</div>
+    <div class="urgency-text">
+      <strong>Regra de urgência — transcrição em até 30 minutos.</strong> Toda reunião termina com tarefas combinadas que podem ter prazo curto. Processar a transcrição imediatamente garante que nada seja perdido e que as tarefas entrem no Asana antes que o prazo vire problema. Ao terminar qualquer reunião, abra o Claude e envie a transcrição ou a ATA antes de fazer qualquer outra coisa.
+    </div>
+  </div>
+
+  <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:20px">
+    <div class="card">
+      <div class="ch"><div class="chd" style="background:var(--blue)"></div><div class="cht">📋 Reunião de acompanhamento</div></div>
+      <div>
+        <div class="fs"><div class="fn">1</div><div><div class="ftit">Abrir a ATA</div><div class="fdesc">Acesse <code style="font-family:monospace;font-size:11px;color:var(--accent)">viskoo.com.br/ata</code> antes da call.</div></div></div>
+        <div class="fs"><div class="fn">2</div><div><div class="ftit">Preencher durante a reunião</div><div class="fdesc">O que foi discutido, decidido, tarefas para você e para o cliente.</div></div></div>
+        <div class="fs"><div class="fn">3</div><div><div class="ftit">Clicar "Abrir no Claude"</div><div class="fdesc">Texto copiado automaticamente, abre este projeto numa nova aba.</div></div></div>
+        <div class="fs"><div class="fn">4</div><div><div class="ftit">Colar — eu sugiro as tarefas</div><div class="fdesc">Eu processo a ATA, extraio as tarefas da Viskoo e <strong style="color:var(--text)">apresento para sua confirmação antes de criar qualquer coisa no Asana.</strong></div><div><span class="ftag tg" style="background:var(--green-dim);color:var(--green)">Tarefas confirmadas → Asana</span></div></div></div>
+      </div>
+    </div>
+    <div class="card">
+      <div class="ch"><div class="chd" style="background:var(--yellow)"></div><div class="cht">🎙️ Reunião de briefing</div></div>
+      <div>
+        <div class="fs"><div class="fn">1</div><div><div class="ftit">Gravar a reunião</div><div class="fdesc">Google Meet com transcrição automática: Configurações → Transcrições → ativar.</div></div></div>
+        <div class="fs"><div class="fn">2</div><div><div class="ftit">Pegar a transcrição</div><div class="fdesc">Salva automaticamente no Google Drive ao terminar a call.</div></div></div>
+        <div class="fs"><div class="fn">3</div><div><div class="ftit">Colar aqui no Claude — imediatamente</div><div class="fdesc">Mande o texto da transcrição logo após a reunião. <strong style="color:var(--text)">Não espere terminar o dia.</strong></div></div></div>
+        <div class="fs"><div class="fn">4</div><div><div class="ftit">Eu processo tudo</div><div class="fdesc">Extraio briefing, monto escopo, sugiro tarefas para confirmação e gero a proposta.</div><div><span class="ftag ty" style="background:var(--yellow-dim);color:var(--yellow)">Escopo + tarefas + proposta</span></div></div></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="callout cg" style="margin-bottom:16px">
+    <div class="ci">✅</div>
+    <div class="ct"><strong>Regra dos dois fluxos:</strong> Já sabe o que vai acontecer na reunião (cliente ativo)? → ATA. Primeira reunião do projeto ou o cliente vai falar muita coisa que vira escopo? → Grave. Dúvida? Grave.</div>
+  </div>
+
+  <div class="callout cr">
+    <div class="ci">⚡</div>
+    <div class="ct"><strong>Se eu detectar uma reunião no calendário sem transcrição processada,</strong> vou perguntar na abertura do dia ou no primeiro contato: <em>"Você teve reunião com [cliente] ontem/hoje — quer processar a transcrição agora?"</em> Tarefas com prazo curto não podem esperar até o dia seguinte para entrar no Asana.</div>
+  </div>
+</section>
+
+<!-- ═══════════ 4. POP REUNIÕES ═══════════ -->
+<section id="pop">
+  <div class="sl">Procedimento Operacional Padrão</div>
+  <div class="st">POP — O que a IA faz em cada reunião</div>
+  <div class="sd" style="margin-bottom:24px">Regras que eu sigo automaticamente toda vez que processo uma ATA ou transcrição.</div>
+
+  <div class="card" style="margin-bottom:20px">
+    <div class="ch"><div class="chd" style="background:var(--orange)"></div><div class="cht">Regras do POP</div></div>
+    <div>
+      <div class="ri"><div class="rn">P1</div><div class="rt"><strong>Identifico o projeto automaticamente.</strong> O nome do cliente na ATA é cruzado com os projetos do Asana. Se não existir projeto específico, a tarefa vai para o Administrativo correspondente.</div></div>
+      <div class="ri"><div class="rn">P2</div><div class="rt"><strong>Só crio tarefas da Viskoo.</strong> Tarefas do cliente são registradas na ATA e ficam como referência, mas não entram no Asana.</div></div>
+      <div class="ri"><div class="rn">P3</div><div class="rt"><strong>Emoji e prazo são definidos pelo contexto.</strong> "Implementar até sexta" → 🔥 com data. "Quando der" → 🌙 sem data. "Enviar relatório" → 📊. "Follow-up em 7 dias" → 👁️.</div></div>
+      <div class="ri"><div class="rn">P4</div><div class="rt"><strong>Sempre sugiro as tarefas antes de criar.</strong> Eu listo o que identifiquei e aguardo sua confirmação. Nada é criado no Asana sem aprovação. Tipos possíveis por reunião: 🌞 entrega prometida (prazo até 48h), 👁️ próximo contato (7 dias, ou 5 dias para Amarelo), 💲 nova demanda ou upsell identificado. Nem toda reunião gera os 3 tipos.</div></div>
+      <div class="ri"><div class="rn">P5</div><div class="rt"><strong>Briefing gera proposta no mesmo dia.</strong> Se a reunião foi de briefing e o escopo ficou claro, a proposta sai no mesmo dia. Proposta no dia = fechamento mais rápido.</div></div>
+      <div class="ri"><div class="rn">P6</div><div class="rt"><strong>Demanda nova substitui, não acumula.</strong> Se o cliente trouxer algo que substitui uma tarefa anterior, atualizo a existente — não crio uma duplicada.</div></div>
+      <div class="ri"><div class="rn">P7</div><div class="rt"><strong>Próxima reunião — verifico se já está no calendário.</strong> Não crio o evento — isso fica no Google Calendar. Mas aviso se não encontrar nenhuma reunião futura agendada com aquele cliente.</div></div>
+      <div class="ri"><div class="rn">P8</div><div class="rt"><strong>Segunda e sexta são dias sem reuniões.</strong> Segunda reservada para planejamento. Sexta para execução e entrega — sem interrupções de call.</div></div>
+      <div class="ri"><div class="rn">P9</div><div class="rt"><strong>Preparação de reunião entra no dia anterior.</strong> Montar pauta, preparar relatório, revisar projeto — sempre 1 dia antes da call, nunca na manhã do mesmo dia.</div></div>
+      <div class="ri"><div class="rn">P10</div><div class="rt"><strong>Transcrição deve ser processada em até 30 minutos após o fim da reunião.</strong> Tarefas combinadas na call podem ter prazo curto — o quanto antes entrar no Asana, melhor. Se não processar na hora, eu lembro na próxima abertura do dia.</div></div>
+    </div>
+  </div>
+
+  <div class="callout co">
+    <div class="ci">🕐</div>
+    <div class="ct"><strong>Regra de ouro:</strong> Saiu da reunião → ATA ou transcrição no Claude em até 30 minutos. Depois disso a memória falha, os detalhes se perdem e tarefas com prazo curto ficam sem registro.</div>
+  </div>
+</section>
+
+<!-- ═══════════ 5. ORÇAMENTOS ═══════════ -->
+<section id="orcamentos">
+  <div class="sl">Orçamentos</div>
+  <div class="st">Gerador de propostas comerciais</div>
+  <div class="sd" style="margin-bottom:24px">Sistema HTML com banco de planos em JSON. Sem Figma, sem edição manual por proposta.</div>
+
+  <div class="card" style="margin-bottom:20px">
+    <div class="ch"><div class="chd" style="background:var(--green)"></div><div class="cht">Como o sistema funciona</div></div>
+    <div>
+      <div class="fs"><div class="fn">1</div><div><div class="ftit">Banco de planos em JSON</div><div class="fdesc">Todos os serviços e valores ficam num JSON. Mudança de preço → atualiza o JSON uma vez, reflete em todas as propostas futuras.</div></div></div>
+      <div class="fs"><div class="fn">2</div><div><div class="ftit">Seleção de planos (3 por linha)</div><div class="fdesc">Você escolhe quais serviços entram na proposta. Cards aparecem 3 por linha, organizados por categoria.</div></div></div>
+      <div class="fs"><div class="fn">3</div><div><div class="ftit">Dados do cliente e contato</div><div class="fdesc">Nome do cliente, serviço, validade da proposta e dados de contato da Viskoo (Josias · josias@viskoo.com.br · 16 99343-8187 · viskoo.com.br).</div></div></div>
+      <div class="fs"><div class="fn">4</div><div><div class="ftit">Exportar proposta</div><div class="fdesc">Gera um JSON da proposta para salvar e importar depois. Também pode ser impressa ou exportada como PDF direto do HTML.</div><div><span class="ftag tg" style="background:var(--green-dim);color:var(--green)">Proposta pronta para envio</span></div></div></div>
+    </div>
+  </div>
+
+  <div class="card" style="margin-bottom:20px">
+    <div class="ch"><div class="chd" style="background:var(--blue)"></div><div class="cht">Escopo de serviços</div></div>
+    <div style="display:grid;grid-template-columns:1fr 1fr;border-bottom:1px solid var(--border)">
+      <div style="padding:20px 24px;border-right:1px solid var(--border)">
+        <div style="font-size:13px;font-weight:600;color:var(--blue);margin-bottom:12px">✅ Dentro do escopo padrão</div>
+        <div style="display:flex;flex-direction:column;gap:8px">
+          <div style="font-size:13px;color:var(--text-2)">→ Tráfego Pago — Meta Ads, Google Ads</div>
+          <div style="font-size:13px;color:var(--text-2)">→ Social Media — gestão de conteúdo</div>
+          <div style="font-size:13px;color:var(--text-2)">→ Site — desenvolvimento</div>
+          <div style="font-size:13px;color:var(--text-2)">→ Landing Page — conversão</div>
+          <div style="font-size:13px;color:var(--text-2)">→ Marketing Digital Total — pacote completo</div>
+        </div>
+      </div>
+      <div style="padding:20px 24px">
+        <div style="font-size:13px;font-weight:600;color:var(--yellow);margin-bottom:12px">⚡ Fora do escopo, mas vale a pena</div>
+        <div style="display:flex;flex-direction:column;gap:8px">
+          <div style="font-size:13px;color:var(--text-2)">→ Desenvolvimento de App (viável com IA)</div>
+          <div style="font-size:13px;color:var(--text-2)">→ Automações e integrações (N8N)</div>
+          <div style="font-size:13px;color:var(--text-2)">→ Agente WhatsApp com IA</div>
+          <div style="font-size:13px;color:var(--text-2)">→ E-commerce complexo</div>
+          <div style="font-size:13px;color:var(--text-2)">→ Projetos sob demanda de alto valor</div>
+        </div>
+      </div>
+    </div>
+    <div style="padding:16px 24px;background:var(--surface-2)"><div style="font-size:13px;color:var(--text-2)"><strong style="color:var(--text)">Fora do escopo:</strong> entenda o problema, estime o valor gerado para o cliente e precifique com base nisso — não no seu tempo.</div></div>
+  </div>
+
+  <div class="card">
+    <div class="ch"><div class="chd" style="background:var(--orange)"></div><div class="cht">Regras do processo comercial</div></div>
+    <div>
+      <div class="ri"><div class="rn">O1</div><div class="rt"><strong>Propostas abertas geram 3 tarefas de follow-up 💲 no Asana.</strong> Tentativa 1, 2 e 3 — a cada 2 dias úteis (exceto sáb/dom). Eu apresento as tarefas sugeridas e aguardo confirmação antes de criar.</div></div>
+      <div class="ri"><div class="rn">O2</div><div class="rt"><strong>Validade padrão da proposta: 30 dias.</strong> Dentro desse período, 3 tentativas de follow-up a cada 2 dias úteis. Cria urgência sem parecer insistente.</div></div>
+      <div class="ri"><div class="rn">O3</div><div class="rt"><strong>O banco de planos em JSON é a única fonte de verdade.</strong> Mudança de preço → atualiza no JSON, nunca direto no HTML da proposta.</div></div>
+      <div class="ri"><div class="rn">O4</div><div class="rt"><strong>Propostas são exportadas como JSON.</strong> Permite importar depois, ver histórico e reutilizar para clientes similares.</div></div>
+      <div class="ri"><div class="rn">O5</div><div class="rt"><strong>Após o briefing, proposta sai no mesmo dia.</strong> Escopo claro → proposta no dia → fechamento mais rápido.</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════ 6. META DE RECEITA ═══════════ -->
+<section id="receita">
+  <div class="sl">Mapa de Receita</div>
+  <div class="st">De R$26k para R$50k/mês</div>
+  <div class="sd" style="margin-bottom:24px">Use toda semana para saber se está no caminho certo.</div>
+
+  <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-bottom:20px">
+    <div style="background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:20px 22px"><div style="font-size:11px;color:var(--text-3);text-transform:uppercase;letter-spacing:1px;margin-bottom:6px">Receita atual</div><div style="font-size:28px;font-weight:700;color:var(--text);letter-spacing:-1px">R$26k</div><div style="font-size:12px;color:var(--text-3);margin-top:4px">estimativa mensal</div></div>
+    <div style="background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:20px 22px"><div style="font-size:11px;color:var(--text-3);text-transform:uppercase;letter-spacing:1px;margin-bottom:6px">Meta</div><div style="font-size:28px;font-weight:700;color:var(--green);letter-spacing:-1px">R$50k</div><div style="font-size:12px;color:var(--text-3);margin-top:4px">por mês</div></div>
+    <div style="background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:20px 22px"><div style="font-size:11px;color:var(--text-3);text-transform:uppercase;letter-spacing:1px;margin-bottom:6px">Gap</div><div style="font-size:28px;font-weight:700;color:var(--orange);letter-spacing:-1px">R$24k</div><div style="font-size:12px;color:var(--text-3);margin-top:4px">para fechar</div></div>
+  </div>
+
+  <div style="background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:20px 24px;margin-bottom:20px">
+    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px"><div style="font-size:13px;color:var(--text-2)">Progresso para a meta</div><div style="font-size:13px;font-weight:600;color:var(--text)">52%</div></div>
+    <div style="background:var(--surface-2);border-radius:4px;height:8px;overflow:hidden"><div style="background:linear-gradient(90deg,var(--blue) 0%,var(--green) 100%);width:52%;height:100%;border-radius:4px"></div></div>
+    <div style="display:flex;justify-content:space-between;margin-top:6px"><div style="font-size:11px;color:var(--text-3)">R$0</div><div style="font-size:11px;color:var(--text-3)">R$50.000</div></div>
+  </div>
+
+  <div class="card" style="margin-bottom:20px">
+    <div class="ch"><div class="chd" style="background:var(--yellow)"></div><div class="cht">Composição atual da carteira</div></div>
+    <div>
+      <div style="display:grid;grid-template-columns:100px 60px 80px 80px 1fr;gap:12px;align-items:center;padding:10px 24px;border-bottom:1px solid var(--border);font-size:11px;color:var(--text-3);text-transform:uppercase;letter-spacing:0.8px"><div>Tier</div><div>Qtd</div><div>Ticket médio</div><div>Subtotal</div><div>Contribuição</div></div>
+      <div style="display:grid;grid-template-columns:100px 60px 80px 80px 1fr;gap:12px;align-items:center;padding:14px 24px;border-bottom:1px solid var(--border)"><div style="font-size:13px;font-weight:600">🟡 Amarelo</div><div style="font-size:13px;color:var(--text-2)">7</div><div style="font-size:13px;color:var(--text-2)">R$2.200</div><div style="font-size:13px;font-weight:600;color:var(--yellow)">R$15.400</div><div style="background:var(--surface-2);border-radius:3px;height:6px;overflow:hidden"><div style="background:var(--yellow);width:59%;height:100%;border-radius:3px"></div></div></div>
+      <div style="display:grid;grid-template-columns:100px 60px 80px 80px 1fr;gap:12px;align-items:center;padding:14px 24px;border-bottom:1px solid var(--border)"><div style="font-size:13px;font-weight:600">🔵 Azul</div><div style="font-size:13px;color:var(--text-2)">15</div><div style="font-size:13px;color:var(--text-2)">R$1.200</div><div style="font-size:13px;font-weight:600;color:var(--blue)">R$18.000</div><div style="background:var(--surface-2);border-radius:3px;height:6px;overflow:hidden"><div style="background:var(--blue);width:69%;height:100%;border-radius:3px"></div></div></div>
+      <div style="display:grid;grid-template-columns:100px 60px 80px 80px 1fr;gap:12px;align-items:center;padding:14px 24px"><div style="font-size:13px;font-weight:600">⚪ Branco</div><div style="font-size:13px;color:var(--text-2)">8</div><div style="font-size:13px;color:var(--text-2)">R$400</div><div style="font-size:13px;font-weight:600;color:var(--text-3)">R$3.200</div><div style="background:var(--surface-2);border-radius:3px;height:6px;overflow:hidden"><div style="background:var(--text-3);width:12%;height:100%;border-radius:3px"></div></div></div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="ch"><div class="chd" style="background:var(--green)"></div><div class="cht">Caminhos para fechar o gap de R$24k</div></div>
+    <div>
+      <div style="padding:18px 24px;border-bottom:1px solid var(--border);display:grid;grid-template-columns:28px 1fr auto;gap:14px;align-items:start">
+        <div style="font-size:18px;line-height:1;padding-top:2px">1</div>
+        <div><div style="font-size:13px;font-weight:600;color:var(--text);margin-bottom:4px">Upsell da base existente — caminho mais rápido</div><div style="font-size:12px;color:var(--text-2)">Converter 5 clientes Azul para o pacote principal (~R$2.200). Você já tem relacionamento e entrega resultado.</div></div>
+        <div style="text-align:right;flex-shrink:0"><div style="font-size:15px;font-weight:700;color:var(--green)">+R$5.000</div><div style="font-size:11px;color:var(--text-3)">por mês</div></div>
+      </div>
+      <div style="padding:18px 24px;border-bottom:1px solid var(--border);display:grid;grid-template-columns:28px 1fr auto;gap:14px;align-items:start">
+        <div style="font-size:18px;line-height:1;padding-top:2px">2</div>
+        <div><div style="font-size:13px;font-weight:600;color:var(--text);margin-bottom:4px">Novos clientes Amarelo — maior impacto por cliente</div><div style="font-size:12px;color:var(--text-2)">Cada novo cliente no ticket de R$2.200 vale quase 2× um cliente Azul. 11 novos fecham o gap sozinhos.</div></div>
+        <div style="text-align:right;flex-shrink:0"><div style="font-size:15px;font-weight:700;color:var(--yellow)">+R$2.200</div><div style="font-size:11px;color:var(--text-3)">por cliente</div></div>
+      </div>
+      <div style="padding:18px 24px;display:grid;grid-template-columns:28px 1fr auto;gap:14px;align-items:start">
+        <div style="font-size:18px;line-height:1;padding-top:2px">3</div>
+        <div><div style="font-size:13px;font-weight:600;color:var(--text);margin-bottom:4px">Eliminar Branco — libera energia, não fecha a meta</div><div style="font-size:12px;color:var(--text-2)">Clientes Branco somam pouco mas consomem tempo. Encerre contratos abaixo de R$300/mês e redirecione para prospecção Amarelo.</div></div>
+        <div style="text-align:right;flex-shrink:0"><div style="font-size:15px;font-weight:700;color:var(--text-3)">Energia</div><div style="font-size:11px;color:var(--text-3)">liberada</div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<footer>
+  <div class="footer-text">Viskoo Marketing · Uso interno · Sem nomes de clientes reais</div>
+  <div class="footer-version">ecossistema-v2.3 · Jun 2026</div>
+</footer>
+
+<script>
+function navTo(id, el) {
+  document.getElementById(id).scrollIntoView({ behavior: 'smooth', block: 'start' });
+  document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
+  el.classList.add('active');
+}
+window.addEventListener('scroll', () => {
+  const sections = ['rituais','visao','asana','reunioes','pop','orcamentos','receita'];
+  const navItems = document.querySelectorAll('.nav-item');
+  let current = 'rituais';
+  sections.forEach(id => {
+    const el = document.getElementById(id);
+    if (el && window.scrollY >= el.offsetTop - 130) current = id;
+  });
+  navItems.forEach((n, i) => n.classList.toggle('active', sections[i] === current));
+});
+</script>
+</body>
+</html>

@@ -4,67 +4,78 @@
 <meta charset="UTF-8">
 <script>if(sessionStorage.getItem('planos_auth_v1')!=='ok'){sessionStorage.setItem('planos_redir',location.href);location.replace('../')}</script>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Planos Site Institucional Express | Viskoo</title>
+<title>Site Institucional Express | Viskoo</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600&family=DM+Mono:wght@300;400;500&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700&family=DM+Mono:wght@300;400;500&display=swap" rel="stylesheet">
 <style>
 :root {
   --bg-base: #080808; --bg-surface: #111111; --border: rgba(255,255,255,0.07);
   --text-primary: #f0f0f0; --text-secondary: rgba(240,240,240,0.55);
-  --accent: #f48322; --accent-dim: rgba(244,131,34,0.15);
-  --shadow-accent: 0 0 32px rgba(244,131,34,0.25); --font-body: 'DM Sans', sans-serif;
+  --accent: #f48322; --accent-dim: rgba(244,131,34,0.12);
+  --font-body: 'DM Sans', sans-serif; --r-xl: 28px; --r-md: 14px; --r-full: 9999px;
 }
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-body { background: var(--bg-base); color: var(--text-primary); font-family: var(--font-body); padding: 64px 0; min-height: 100vh; display: flex; align-items: center; }
-.container { max-width: 760px; margin: 0 auto; padding: 0 24px; width: 100%; }
-.section-header { text-align: center; margin-bottom: 48px; }
+body { background: var(--bg-base); color: var(--text-primary); font-family: var(--font-body); min-height: 100vh; display: flex; flex-direction: column; justify-content: center; align-items: center; padding: 56px 24px; }
+.wrapper { max-width: 640px; width: 100%; }
 .section-label { font-size: 11px; font-weight: 500; letter-spacing: 0.12em; text-transform: uppercase; color: var(--accent); margin-bottom: 12px; }
-.section-title { font-size: 40px; font-weight: 700; margin-bottom: 16px; }
-.section-desc { font-size: 16px; color: var(--text-secondary); max-width: 520px; margin: 0 auto; line-height: 1.6; }
-.card { background: var(--bg-surface); border: 2px solid rgba(244,131,34,0.5); border-radius: 24px; padding: 48px; box-shadow: var(--shadow-accent); display: flex; gap: 48px; align-items: flex-start; }
-@media (max-width: 640px) { .card { flex-direction: column; gap: 32px; } }
-.card-left { flex: 1; }
-.plan-name { font-size: 22px; font-weight: 600; margin-bottom: 8px; color: var(--accent); }
-.plan-price { font-size: 52px; font-weight: 700; letter-spacing: -0.03em; margin-bottom: 8px; line-height: 1; }
-.plan-sub { font-size: 14px; color: var(--text-secondary); margin-bottom: 32px; }
-.plan-list { list-style: none; }
-.plan-list li { display: flex; gap: 10px; color: var(--text-secondary); font-size: 14px; margin-bottom: 12px; }
-.plan-list svg { flex: 0 0 auto; color: var(--accent); width: 16px; }
-.card-right { display: flex; flex-direction: column; justify-content: center; gap: 12px; min-width: 180px; }
-.btn { display: inline-flex; justify-content: center; padding: 14px 24px; border-radius: 12px; text-decoration: none; font-size: 14px; font-weight: 600; }
-.btn-primary { background: var(--accent); color: #000; }
-.btn-outline { border: 1px solid var(--accent); color: var(--accent); }
-.badge { display: inline-flex; align-items: center; gap: 6px; font-size: 11px; font-weight: 500; letter-spacing: 0.06em; text-transform: uppercase; color: var(--accent); background: var(--accent-dim); border: 1px solid rgba(244,131,34,0.25); padding: 5px 12px; border-radius: 9999px; margin-bottom: 16px; }
+.section-title { font-size: clamp(28px,5vw,44px); font-weight: 700; letter-spacing: -0.035em; line-height: 1.1; margin-bottom: 16px; }
+.section-desc { font-size: 15px; color: var(--text-secondary); line-height: 1.65; margin-bottom: 40px; }
+.card { background: var(--bg-surface); border: 1px solid rgba(244,131,34,0.45); border-radius: var(--r-xl); padding: 40px; box-shadow: 0 0 48px rgba(244,131,34,0.18); }
+.card-top { display: flex; align-items: flex-start; justify-content: space-between; flex-wrap: wrap; gap: 16px; margin-bottom: 32px; }
+.badge-rec { display: inline-flex; align-items: center; font-size: 10px; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; color: #000; background: var(--accent); padding: 4px 12px; border-radius: var(--r-full); margin-bottom: 14px; }
+.plan-name { font-size: 26px; font-weight: 700; color: var(--accent); margin-bottom: 4px; }
+.plan-tag { font-size: 13px; color: var(--text-secondary); }
+.price-block { text-align: right; }
+.price { font-size: 44px; font-weight: 700; letter-spacing: -0.04em; color: var(--accent); }
+.price-period { font-size: 14px; color: var(--text-secondary); margin-top: 2px; }
+.divider { border: none; border-top: 1px solid rgba(255,255,255,0.07); margin: 24px 0; }
+.grid-list { display: grid; grid-template-columns: 1fr 1fr; gap: 12px 24px; margin-bottom: 32px; }
+@media (max-width: 480px) { .grid-list { grid-template-columns: 1fr; } }
+.plan-list-item { display: flex; gap: 10px; color: var(--text-secondary); font-size: 14px; align-items: flex-start; line-height: 1.45; }
+.plan-list-item svg { flex-shrink: 0; margin-top: 1px; color: var(--accent); width: 15px; height: 15px; }
+.highlight-box { background: var(--accent-dim); border: 1px solid rgba(244,131,34,0.2); border-radius: 14px; padding: 16px 20px; margin-bottom: 28px; }
+.highlight-box p { font-size: 14px; color: var(--text-secondary); line-height: 1.55; }
+.highlight-box strong { color: var(--text-primary); }
+.btn { display: block; text-align: center; padding: 15px; border-radius: var(--r-md); text-decoration: none; font-size: 15px; font-weight: 700; background: var(--accent); color: #000; cursor: pointer; border: none; font-family: var(--font-body); }
 </style>
 </head>
 <body>
-<div class="container">
-  <div class="section-header">
-    <p class="section-label">Entrega Rápida</p>
-    <h2 class="section-title">Site Institucional Express</h2>
-    <p class="section-desc">Site profissional entregue em tempo reduzido, a partir do seu briefing visual, sem abrir mão da qualidade.</p>
-  </div>
+<div class="wrapper">
+  <p class="section-label">Web Design & Dev · Entrega Rápida</p>
+  <h2 class="section-title">Site Institucional Express</h2>
+  <p class="section-desc">Para quem precisa de uma presença digital profissional no ar em tempo recorde, sem abrir mão de qualidade.</p>
+
   <div class="card">
-    <div class="card-left">
-      <div class="badge">
-        <svg width="10" height="10" viewBox="0 0 20 20" fill="currentColor"><path d="M10 2l2.39 4.84 5.34.78-3.87 3.76.91 5.32L10 14.27l-4.77 2.43.91-5.32L2.27 7.62l5.34-.78z"/></svg>
-        Plano único
+    <div class="card-top">
+      <div>
+        <div class="badge-rec">★ Plano Único</div>
+        <p class="plan-name">Express</p>
+        <p class="plan-tag">Entrega em até 7 dias úteis</p>
       </div>
-      <h3 class="plan-name">Express</h3>
-      <div class="plan-price">R$ 900</div>
-      <p class="plan-sub">Pagamento único · Entrega em até 5 dias úteis</p>
-      <ul class="plan-list">
-        <li><svg viewBox="0 0 20 20" fill="currentColor"><path d="M7.5 13.5 4.8 10.8l-1.4 1.4 4.1 4.1 9-9-1.4-1.4z"/></svg> Layout baseado em briefing visual interativo.</li>
-        <li><svg viewBox="0 0 20 20" fill="currentColor"><path d="M7.5 13.5 4.8 10.8l-1.4 1.4 4.1 4.1 9-9-1.4-1.4z"/></svg> Design responsivo e rápido.</li>
-        <li><svg viewBox="0 0 20 20" fill="currentColor"><path d="M7.5 13.5 4.8 10.8l-1.4 1.4 4.1 4.1 9-9-1.4-1.4z"/></svg> E-mail profissional incluso.</li>
-        <li><svg viewBox="0 0 20 20" fill="currentColor"><path d="M7.5 13.5 4.8 10.8l-1.4 1.4 4.1 4.1 9-9-1.4-1.4z"/></svg> Hospedagem do primeiro mês inclusa.</li>
-        <li><svg viewBox="0 0 20 20" fill="currentColor"><path d="M7.5 13.5 4.8 10.8l-1.4 1.4 4.1 4.1 9-9-1.4-1.4z"/></svg> 1 rodada de revisões.</li>
-      </ul>
+      <div class="price-block">
+        <div class="price">R$ 1.200</div>
+        <p class="price-period">pagamento único</p>
+      </div>
     </div>
-    <div class="card-right">
-      <a href="#" class="btn btn-primary">Contratar</a>
-      <a href="../site/" class="btn btn-outline">Ver plano completo</a>
+
+    <hr class="divider">
+
+    <div class="grid-list">
+      <div class="plan-list-item"><svg viewBox="0 0 20 20" fill="currentColor"><path d="M7.5 13.5 4.8 10.8l-1.4 1.4 4.1 4.1 9-9-1.4-1.4z"/></svg>Até 4 seções na home (Hero, Sobre, Serviços, Contato).</div>
+      <div class="plan-list-item"><svg viewBox="0 0 20 20" fill="currentColor"><path d="M7.5 13.5 4.8 10.8l-1.4 1.4 4.1 4.1 9-9-1.4-1.4z"/></svg>Design profissional com identidade da marca.</div>
+      <div class="plan-list-item"><svg viewBox="0 0 20 20" fill="currentColor"><path d="M7.5 13.5 4.8 10.8l-1.4 1.4 4.1 4.1 9-9-1.4-1.4z"/></svg>Responsivo para mobile e desktop.</div>
+      <div class="plan-list-item"><svg viewBox="0 0 20 20" fill="currentColor"><path d="M7.5 13.5 4.8 10.8l-1.4 1.4 4.1 4.1 9-9-1.4-1.4z"/></svg>Formulário de contato e botão WhatsApp.</div>
+      <div class="plan-list-item"><svg viewBox="0 0 20 20" fill="currentColor"><path d="M7.5 13.5 4.8 10.8l-1.4 1.4 4.1 4.1 9-9-1.4-1.4z"/></svg>Google Analytics configurado.</div>
+      <div class="plan-list-item"><svg viewBox="0 0 20 20" fill="currentColor"><path d="M7.5 13.5 4.8 10.8l-1.4 1.4 4.1 4.1 9-9-1.4-1.4z"/></svg>SEO básico (meta tags e títulos).</div>
+      <div class="plan-list-item"><svg viewBox="0 0 20 20" fill="currentColor"><path d="M7.5 13.5 4.8 10.8l-1.4 1.4 4.1 4.1 9-9-1.4-1.4z"/></svg>1 rodada de revisão incluída.</div>
+      <div class="plan-list-item"><svg viewBox="0 0 20 20" fill="currentColor"><path d="M7.5 13.5 4.8 10.8l-1.4 1.4 4.1 4.1 9-9-1.4-1.4z"/></svg>Suporte técnico por 30 dias.</div>
     </div>
+
+    <div class="highlight-box">
+      <p><strong>Como funciona:</strong> Você preenche o briefing detalhado e nos envia os textos e imagens. A Viskoo cuida do design, desenvolvimento e publicação. Em até 7 dias úteis seu site estará no ar.</p>
+    </div>
+
+    <a href="#" class="btn">Contratar agora</a>
   </div>
 </div>
 </body>
