@@ -1,0 +1,389 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <!-- SEO -->
+  <title>Cadastro — Viskoo</title>
+  <meta name="description" content="Faça seu cadastro na Viskoo e gere toda a documentação necessária para contratar nossos serviços." />
+  <meta name="robots" content="noindex, nofollow" />
+  <link rel="canonical" href="https://viskoo.com.br/cadastro/" />
+
+  <!-- Open Graph -->
+  <meta property="og:title" content="Cadastro — Viskoo" />
+  <meta property="og:description" content="Faça seu cadastro e contrate a Viskoo." />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://viskoo.com.br/cadastro/" />
+  <meta property="og:image" content="https://viskoo.com.br/assets/og-image.jpg" />
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=DM+Mono:ital,wght@0,300;0,400;0,500;1,300&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;1,9..40,300&display=swap" rel="stylesheet" />
+
+  <!-- Design System -->
+  <link rel="stylesheet" href="../index.css" />
+
+  <style>
+    .cadastro-wrapper {
+      min-height: calc(100vh - 64px);
+      display: flex;
+      align-items: flex-start;
+      justify-content: center;
+      padding: var(--space-8) var(--space-4);
+    }
+
+    .cadastro-card {
+      width: 100%;
+      max-width: 640px;
+    }
+
+    .cadastro-header {
+      margin-bottom: var(--space-7);
+    }
+
+    .cadastro-header h1 {
+      font-size: 32px;
+      font-weight: 700;
+      letter-spacing: -0.03em;
+      margin-bottom: var(--space-3);
+    }
+
+    .cadastro-header p {
+      color: var(--text-secondary);
+      font-size: 15px;
+      line-height: 1.6;
+    }
+
+    .form-section-label {
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+      margin-bottom: var(--space-4);
+      padding-bottom: var(--space-3);
+      border-bottom: 1px solid var(--border);
+    }
+
+    .form-section {
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-4);
+      margin-bottom: var(--space-6);
+    }
+
+    .form-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: var(--space-4);
+    }
+
+    @media (max-width: 540px) {
+      .form-row {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .form-group {
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-2);
+    }
+
+    .form-label {
+      font-size: 13px;
+      font-weight: 500;
+      color: var(--text-primary);
+    }
+
+    .form-hint {
+      font-size: 12px;
+      color: var(--text-muted);
+      margin-top: 2px;
+    }
+
+    .input,
+    .select,
+    textarea.input {
+      background: var(--bg-surface);
+      border: 1px solid var(--border);
+      border-radius: var(--r-md);
+      color: var(--text-primary);
+      font-family: var(--font-body);
+      font-size: 14px;
+      padding: 10px 14px;
+      width: 100%;
+      transition: border-color 0.15s, box-shadow 0.15s;
+      outline: none;
+      box-sizing: border-box;
+    }
+
+    .input::placeholder,
+    .select option[value=""],
+    textarea.input::placeholder {
+      color: var(--text-muted);
+    }
+
+    .input:focus,
+    .select:focus,
+    textarea.input:focus {
+      border-color: var(--accent);
+      box-shadow: 0 0 0 3px var(--accent-dim);
+    }
+
+    .select {
+      appearance: none;
+      -webkit-appearance: none;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='rgba(240,240,240,0.3)' stroke-width='2'%3E%3Cpolyline points='6 9 12 15 18 9'/%3E%3C/svg%3E");
+      background-repeat: no-repeat;
+      background-position: right 12px center;
+      padding-right: 36px;
+      cursor: pointer;
+    }
+
+    textarea.input {
+      resize: vertical;
+      min-height: 100px;
+    }
+
+    .dia-pagamento-group {
+      display: flex;
+      gap: var(--space-3);
+    }
+
+    .dia-option {
+      flex: 1;
+      position: relative;
+    }
+
+    .dia-option input[type="radio"] {
+      position: absolute;
+      opacity: 0;
+      width: 0;
+      height: 0;
+    }
+
+    .dia-option label {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 10px;
+      border: 1px solid var(--border);
+      border-radius: var(--r-md);
+      background: var(--bg-surface);
+      color: var(--text-secondary);
+      font-size: 14px;
+      font-weight: 500;
+      cursor: pointer;
+      transition: border-color 0.15s, color 0.15s, background 0.15s;
+    }
+
+    .dia-option input[type="radio"]:checked + label {
+      border-color: var(--accent);
+      color: var(--accent);
+      background: var(--accent-dim);
+    }
+
+    .dia-option label:hover {
+      border-color: var(--border-hover);
+      color: var(--text-primary);
+    }
+
+    .btn-cadastrar {
+      width: 100%;
+      padding: 14px;
+      font-size: 15px;
+      font-weight: 600;
+      letter-spacing: 0.04em;
+      background: var(--accent);
+      color: #000;
+      border: none;
+      border-radius: var(--r-md);
+      cursor: pointer;
+      transition: background 0.15s, transform 0.1s;
+      margin-top: var(--space-3);
+    }
+
+    .btn-cadastrar:hover {
+      background: var(--accent-hover);
+    }
+
+    .btn-cadastrar:active {
+      transform: scale(0.99);
+    }
+
+    .divider {
+      height: 1px;
+      background: var(--border);
+      margin: var(--space-3) 0 var(--space-6);
+    }
+  </style>
+</head>
+
+<body>
+
+<div class="page">
+  <div class="cadastro-wrapper">
+    <div class="cadastro-card">
+
+      <!-- Cabeçalho -->
+      <div class="cadastro-header">
+        <span class="hero-eyebrow" style="margin-bottom: var(--space-4); display: inline-flex;">
+          ✦ Contratação
+        </span>
+        <h1>Cadastre-se</h1>
+        <p>Faça seu cadastro. Isso vai gerar toda a documentação necessária para contratar a VISKOO.</p>
+      </div>
+
+      <form id="form-cadastro" novalidate>
+
+        <!-- SEÇÃO: Informações Pessoais -->
+        <div class="form-section-label">Informações Pessoais</div>
+        <div class="form-section">
+
+          <div class="form-group">
+            <label class="form-label" for="nome">Nome Completo</label>
+            <input class="input" type="text" id="nome" name="nome" placeholder="Seu nome completo" />
+          </div>
+
+          <div class="form-row">
+            <div class="form-group">
+              <label class="form-label" for="email">E-mail</label>
+              <input class="input" type="email" id="email" name="email" placeholder="voce@email.com" />
+            </div>
+            <div class="form-group">
+              <label class="form-label" for="whatsapp">WhatsApp / Celular</label>
+              <input class="input" type="tel" id="whatsapp" name="whatsapp" placeholder="(11) 99999-9999" />
+            </div>
+          </div>
+
+        </div>
+
+        <div class="divider"></div>
+
+        <!-- SEÇÃO: Dados Empresariais -->
+        <div class="form-section-label">Dados Empresariais</div>
+        <div class="form-section">
+
+          <div class="form-group">
+            <label class="form-label" for="empresa">Empresa (Razão Social)</label>
+            <input class="input" type="text" id="empresa" name="empresa" placeholder="Nome da empresa ou razão social" />
+          </div>
+
+          <div class="form-group">
+            <label class="form-label" for="documento">CNPJ ou CPF</label>
+            <input class="input" type="text" id="documento" name="documento" placeholder="00.000.000/0001-00 ou 000.000.000-00" />
+          </div>
+
+        </div>
+
+        <div class="divider"></div>
+
+        <!-- SEÇÃO: Endereço -->
+        <div class="form-section-label">Endereço</div>
+        <div class="form-section">
+
+          <div class="form-row" style="grid-template-columns: 2fr 1fr;">
+            <div class="form-group">
+              <label class="form-label" for="rua">Rua / Avenida</label>
+              <input class="input" type="text" id="rua" name="rua" placeholder="Nome da rua ou avenida" />
+            </div>
+            <div class="form-group">
+              <label class="form-label" for="numero">Número</label>
+              <input class="input" type="text" id="numero" name="numero" placeholder="123" />
+            </div>
+          </div>
+
+          <div class="form-row">
+            <div class="form-group">
+              <label class="form-label" for="bairro">Bairro</label>
+              <input class="input" type="text" id="bairro" name="bairro" placeholder="Nome do bairro" />
+            </div>
+            <div class="form-group">
+              <label class="form-label" for="cep">CEP</label>
+              <input class="input" type="text" id="cep" name="cep" placeholder="00000-000" />
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label" for="cidade">Cidade</label>
+            <input class="input" type="text" id="cidade" name="cidade" placeholder="Nome da cidade" />
+          </div>
+
+        </div>
+
+        <div class="divider"></div>
+
+        <!-- SEÇÃO: Dados Comerciais -->
+        <div class="form-section-label">Dados Comerciais</div>
+        <div class="form-section">
+
+          <div class="form-group">
+            <label class="form-label">Melhor DIA para pagamentos</label>
+            <div class="dia-pagamento-group">
+              <div class="dia-option">
+                <input type="radio" id="dia-10" name="dia_pagamento" value="10" />
+                <label for="dia-10">Dia 10</label>
+              </div>
+              <div class="dia-option">
+                <input type="radio" id="dia-20" name="dia_pagamento" value="20" />
+                <label for="dia-20">Dia 20</label>
+              </div>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label" for="descricao">Descrição do projeto</label>
+            <textarea class="input" id="descricao" name="descricao" placeholder="Descreva o projeto ou serviço contratado…"></textarea>
+          </div>
+
+          <div class="form-row">
+            <div class="form-group">
+              <label class="form-label" for="valor">Valor (sem "R$")</label>
+              <input class="input" type="number" id="valor" name="valor" placeholder="0,00" min="0" step="0.01" />
+            </div>
+            <div class="form-group">
+              <label class="form-label" for="parcelamento">Parcelamento</label>
+              <select class="select" id="parcelamento" name="parcelamento">
+                <option value="" disabled selected>Selecione</option>
+                <option value="mensal">Assinatura mensal</option>
+                <option value="1x">1x</option>
+                <option value="2x">2x</option>
+                <option value="3x">3x</option>
+                <option value="4x">4x</option>
+              </select>
+            </div>
+          </div>
+
+        </div>
+
+        <!-- Botão de envio -->
+        <button type="submit" class="btn-cadastrar">CADASTRAR</button>
+
+        <p style="text-align: center; font-size: 12px; color: var(--text-muted); margin-top: var(--space-4);">
+          Seus dados são usados exclusivamente para gerar a documentação de contratação.
+        </p>
+
+      </form>
+
+    </div>
+  </div>
+
+</div><!-- /.page -->
+
+<script>
+  const params = new URLSearchParams(window.location.search);
+
+  const descricao = params.get('descricao');
+  const valor     = params.get('valor');
+  const parcela   = params.get('parcelamento');
+
+  if (descricao) document.getElementById('descricao').value = descricao;
+  if (valor)     document.getElementById('valor').value     = valor;
+  if (parcela)   document.getElementById('parcelamento').value = parcela;
+</script>
+
+</body>
+</html>

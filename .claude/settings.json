@@ -1,0 +1,10 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(mkdir -p /home/josias-viskoo/Github/viskoo-site/cadastro)"
+    ],
+    "additionalDirectories": [
+      "/home/josias-viskoo/Github/viskoo-site"
+    ]
+  }
+}
