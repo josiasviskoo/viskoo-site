@@ -348,7 +348,7 @@
               <label class="form-label" for="parcelamento">Parcelamento</label>
               <select class="select" id="parcelamento" name="parcelamento">
                 <option value="" disabled selected>Selecione</option>
-                <option value="mensal">Assinatura mensal</option>
+                <option value="Assinatura mensal">Assinatura mensal</option>
                 <option value="1x">1x</option>
                 <option value="2x">2x</option>
                 <option value="3x">3x</option>
@@ -380,9 +380,9 @@
   const valor     = params.get('valor');
   const parcela   = params.get('parcelamento');
 
-  if (descricao) document.getElementById('descricao').value = descricao;
-  if (valor)     document.getElementById('valor').value     = valor;
-  if (parcela)   document.getElementById('parcelamento').value = parcela;
+  if (descricao) document.getElementById('descricao').value        = descricao;
+  if (valor)     document.getElementById('valor').value            = valor.replace(',', '.');
+  if (parcela)   document.getElementById('parcelamento').value     = parcela;
 </script>
 
 </body>
