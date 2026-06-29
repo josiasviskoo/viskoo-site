@@ -374,15 +374,62 @@
 </div><!-- /.page -->
 
 <script>
+  // Preenche campos via URL params
   const params = new URLSearchParams(window.location.search);
 
   const descricao = params.get('descricao');
   const valor     = params.get('valor');
   const parcela   = params.get('parcelamento');
 
-  if (descricao) document.getElementById('descricao').value        = descricao;
-  if (valor)     document.getElementById('valor').value            = valor.replace(',', '.');
-  if (parcela)   document.getElementById('parcelamento').value     = parcela;
+  if (descricao) document.getElementById('descricao').value    = descricao;
+  if (valor)     document.getElementById('valor').value        = valor.replace(',', '.');
+  if (parcela)   document.getElementById('parcelamento').value = parcela;
+
+  // Envio do formulário para o webhook
+  document.getElementById('form-cadastro').addEventListener('submit', async function (e) {
+    e.preventDefault();
+
+    const btn = this.querySelector('.btn-cadastrar');
+    btn.disabled = true;
+    btn.textContent = 'Enviando…';
+
+    const data = {
+      nome:          document.getElementById('nome').value,
+      email:         document.getElementById('email').value,
+      whatsapp:      document.getElementById('whatsapp').value,
+      empresa:       document.getElementById('empresa').value,
+      documento:     document.getElementById('documento').value,
+      rua:           document.getElementById('rua').value,
+      numero:        document.getElementById('numero').value,
+      bairro:        document.getElementById('bairro').value,
+      cep:           document.getElementById('cep').value,
+      cidade:        document.getElementById('cidade').value,
+      dia_pagamento: document.querySelector('input[name="dia_pagamento"]:checked')?.value || '',
+      descricao:     document.getElementById('descricao').value,
+      valor:         document.getElementById('valor').value,
+      parcelamento:  document.getElementById('parcelamento').value,
+    };
+
+    try {
+      const res = await fetch('https://webhook.viskoo.com.br/webhook/git-cadastro', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(data),
+      });
+
+      if (res.ok) {
+        btn.textContent = 'Cadastro enviado!';
+        btn.style.background = '#30d158';
+      } else {
+        throw new Error('Resposta inesperada: ' + res.status);
+      }
+    } catch (err) {
+      btn.disabled = false;
+      btn.textContent = 'CADASTRAR';
+      alert('Erro ao enviar. Tente novamente.');
+      console.error(err);
+    }
+  });
 </script>
 
 </body>
