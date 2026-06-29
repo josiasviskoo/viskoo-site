@@ -861,6 +861,72 @@ body {
 }
 
 /* =============================================
+   PRICING CARD
+   ============================================= */
+.pricing-card {
+  background: var(--bg-surface);
+  border: 1px solid var(--border);
+  border-radius: var(--r-xl);
+  padding: var(--space-7);
+  display: flex;
+  flex-direction: column;
+  transition:
+    transform var(--duration-base) var(--ease-spring),
+    border-color var(--duration-base) var(--ease-out),
+    box-shadow var(--duration-base) var(--ease-out);
+}
+.pricing-card:hover { transform: translateY(-3px); box-shadow: var(--shadow-lg); }
+.pricing-card.card-accent { border-color: rgba(244,131,34,0.4); box-shadow: 0 0 32px rgba(244,131,34,0.15); }
+.pricing-card.card-accent:hover { border-color: rgba(244,131,34,0.65); box-shadow: var(--shadow-accent); }
+
+.badge-rec {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--black);
+  background: var(--accent);
+  padding: 4px 12px;
+  border-radius: var(--r-full);
+  margin-bottom: var(--space-4);
+}
+
+.plan-top { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: var(--space-5); }
+.plan-name { font-weight: 700; font-size: 18px; }
+.plan-name-accent { color: var(--accent); }
+
+.price-wrap { display: flex; align-items: center; gap: 10px; margin-bottom: 4px; }
+.price { font-size: 38px; font-weight: 700; letter-spacing: -0.03em; margin-bottom: 0; }
+.price-accent { color: var(--accent); }
+.price-sub { font-size: 13px; color: var(--text-secondary); margin-bottom: var(--space-6); }
+
+.price-lock {
+  display: flex;
+  flex-shrink: 0;
+  align-items: center;
+  justify-content: center;
+  width: 34px;
+  height: 34px;
+  border-radius: var(--r-md);
+  background: var(--bg-elevated);
+  border: 1px solid var(--border);
+  color: var(--text-secondary);
+  text-decoration: none;
+  transition: border-color var(--duration-fast) var(--ease-out), color var(--duration-fast) var(--ease-out);
+}
+.price-lock:hover { border-color: var(--accent); color: var(--accent); }
+body.prices-revealed .price-lock { display: none; }
+
+.plan-list { list-style: none; margin-bottom: var(--space-6); flex: 1; }
+.plan-list li { display: flex; gap: 10px; color: var(--text-secondary); font-size: 14px; margin-bottom: 11px; align-items: flex-start; line-height: 1.5; }
+.plan-list li::before { content: '✓'; color: var(--accent); flex-shrink: 0; font-weight: 700; }
+.plan-list li.off { opacity: 0.35; }
+.plan-list li.off::before { content: '✕'; color: var(--text-secondary); }
+
+/* =============================================
    TYPOGRAPHY
    ============================================= */
 .t-display { font-size: clamp(40px, 8vw, 96px); font-weight: 700; letter-spacing: -0.05em; line-height: 0.95; }
