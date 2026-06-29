@@ -1255,6 +1255,39 @@ select.input { appearance: none; cursor: pointer; }
 .pricing-card.card-accent { border-color: rgba(244,131,34,0.4); box-shadow: 0 0 32px rgba(244,131,34,0.15); }
 .pricing-card.card-accent:hover { border-color: rgba(244,131,34,0.65); box-shadow: var(--shadow-accent); }
 
+/* Price blur / reveal */
+.price-wrap {
+  position: relative;
+  margin-bottom: 4px;
+}
+.price-wrap .price {
+  margin-bottom: 0;
+  transition: filter 0.25s;
+}
+
+body:not(.prices-revealed) .price-wrap .price {
+  filter: blur(10px);
+  user-select: none;
+  pointer-events: none;
+}
+
+.price-lock {
+  display: none;
+  position: absolute;
+  inset: 0;
+  align-items: center;
+  justify-content: center;
+  gap: 7px;
+  color: var(--text-primary);
+  text-decoration: none;
+  border-radius: var(--r-sm);
+  transition: color 0.15s;
+}
+.price-lock:hover { color: var(--accent); }
+
+body:not(.prices-revealed) .price-lock { display: flex; }
+body.prices-revealed .price-lock { display: none; }
+
 /* =============================================
    NOTIFICATION / TOAST
    ============================================= */

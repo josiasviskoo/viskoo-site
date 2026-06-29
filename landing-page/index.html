@@ -40,7 +40,10 @@
             <span class="plan-name">Layout Pronto</span>
             <span class="badge badge-default">Essencial</span>
           </div>
-          <div class="price" data-single="R$ 900" data-monthly="R$ 220/mês">R$ 220/mês</div>
+          <div class="price-wrap">
+            <div class="price" data-single="R$ 900" data-monthly="R$ 220/mês">R$ 220/mês</div>
+            <a href="https://wa.me/5516993438187?text=Gostaria%20de%20saber%20dos%20planos" class="price-lock" target="_blank" rel="noopener noreferrer" aria-label="Ver preços no WhatsApp"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg></a>
+          </div>
           <p class="price-sub" data-sub-single="Pagamento único" data-sub-monthly="Mínimo 3 meses">Mínimo 3 meses</p>
           <ul class="plan-list">
             <li>Template adaptado à identidade da marca.</li>
@@ -60,7 +63,10 @@
             <span class="plan-name plan-name-accent">Layout Exclusivo</span>
             <span class="badge badge-accent">Popular</span>
           </div>
-          <div class="price price-accent" data-single="R$ 1.500" data-monthly="R$ 370/mês">R$ 370/mês</div>
+          <div class="price-wrap">
+            <div class="price price-accent" data-single="R$ 1.500" data-monthly="R$ 370/mês">R$ 370/mês</div>
+            <a href="https://wa.me/5516993438187?text=Gostaria%20de%20saber%20dos%20planos" class="price-lock" target="_blank" rel="noopener noreferrer" aria-label="Ver preços no WhatsApp"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg></a>
+          </div>
           <p class="price-sub" data-sub-single="Pagamento único" data-sub-monthly="Mínimo 3 meses">Mínimo 3 meses</p>
           <ul class="plan-list">
             <li>Design 100% personalizado e exclusivo.</li>
@@ -79,7 +85,10 @@
             <span class="plan-name">One-Page Completa</span>
             <span class="badge badge-default">Premium</span>
           </div>
-          <div class="price" data-single="R$ 2.500" data-monthly="R$ 600/mês">R$ 600/mês</div>
+          <div class="price-wrap">
+            <div class="price" data-single="R$ 2.500" data-monthly="R$ 600/mês">R$ 600/mês</div>
+            <a href="https://wa.me/5516993438187?text=Gostaria%20de%20saber%20dos%20planos" class="price-lock" target="_blank" rel="noopener noreferrer" aria-label="Ver preços no WhatsApp"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg></a>
+          </div>
           <p class="price-sub" data-sub-single="Pagamento único" data-sub-monthly="Mínimo 3 meses">Mínimo 3 meses</p>
           <ul class="plan-list">
             <li>Design multi-seção com animações.</li>
@@ -97,6 +106,10 @@
   </section>
 
   <script>
+    if (new URLSearchParams(location.search).has('planos')) {
+      document.body.classList.add('prices-revealed');
+    }
+
     function switchPricing(type, el) {
       document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
       el.classList.add('active');
