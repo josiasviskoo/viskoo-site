@@ -511,6 +511,24 @@
     .card-accent:hover { border-color:rgba(244,131,34,0.5); box-shadow:var(--shadow-accent); }
     .card-glass { background:rgba(255,255,255,0.03); backdrop-filter:blur(12px); -webkit-backdrop-filter:blur(12px); border:1px solid rgba(255,255,255,0.06); }
 
+    /* — Pricing Table — */
+    .pricing-card { background:var(--bg-surface); border:1px solid var(--border); border-radius:var(--r-xl); padding:var(--space-7); display:flex; flex-direction:column; transition:transform var(--duration-base) var(--ease-spring), border-color var(--duration-base) var(--ease-out), box-shadow var(--duration-base) var(--ease-out); }
+    .pricing-card:hover { transform:translateY(-3px); box-shadow:var(--shadow-lg); }
+    .pricing-card.card-accent { border-color:rgba(244,131,34,0.4); box-shadow:0 0 32px rgba(244,131,34,0.15); }
+    .pricing-card.card-accent:hover { border-color:rgba(244,131,34,0.65); box-shadow:var(--shadow-accent); }
+    .badge-rec { display:inline-flex; align-items:center; gap:5px; font-size:10px; font-weight:700; letter-spacing:0.08em; text-transform:uppercase; color:var(--black); background:var(--accent); padding:4px 12px; border-radius:var(--r-full); margin-bottom:var(--space-4); }
+    .plan-top { display:flex; justify-content:space-between; align-items:flex-start; margin-bottom:var(--space-5); }
+    .plan-name { font-weight:700; font-size:18px; }
+    .plan-name-accent { color:var(--accent); }
+    .price { font-size:38px; font-weight:700; letter-spacing:-0.03em; margin-bottom:4px; }
+    .price-accent { color:var(--accent); }
+    .price-sub { font-size:13px; color:var(--text-secondary); margin-bottom:var(--space-6); }
+    .plan-list { list-style:none; margin-bottom:var(--space-6); flex:1; }
+    .plan-list li { display:flex; gap:10px; color:var(--text-secondary); font-size:14px; margin-bottom:11px; align-items:flex-start; line-height:1.5; }
+    .plan-list li::before { content:'✓'; color:var(--accent); flex-shrink:0; font-weight:700; }
+    .plan-list li.off { opacity:0.35; }
+    .plan-list li.off::before { content:'✕'; color:var(--text-secondary); }
+
     /* — Grid — */
     .grid   { display:grid; gap:var(--space-4); }
     .grid-1 { grid-template-columns:1fr; }
@@ -750,6 +768,7 @@
           <li><a href="#cards">Cards</a></li>
           <li><a href="#forms">Formulários</a></li>
           <li><a href="#tabs">Tabs</a></li>
+          <li><a href="#pricing">Tabela de Preços</a></li>
           <li><a href="#toggles">Toggles</a></li>
           <li><a href="#avatar">Avatar</a></li>
           <li><a href="#stats">Stats</a></li>
@@ -1234,6 +1253,129 @@
   &lt;<span class="cls">button</span> <span class="kw">class</span>=<span class="str">"tab"</span>&gt;Trimestral&lt;/<span class="cls">button</span>&gt;
   &lt;<span class="cls">button</span> <span class="kw">class</span>=<span class="str">"tab"</span>&gt;Anual&lt;/<span class="cls">button</span>&gt;
 &lt;/<span class="cls">div</span>&gt;</pre>
+      </div>
+    </section>
+
+    <!-- =============================================
+         PRICING TABLE
+         ============================================= -->
+    <section id="pricing" class="ds-section">
+      <h2 class="ds-section-title">Tabela de Preços</h2>
+      <p class="ds-section-desc">Componente padrão para páginas de planos e produtos. <strong>Regra de ordem:</strong> quando o produto oferece pagamento mensal <em>e</em> pagamento único, a aba <em>Assinatura Mensal</em> é sempre a ativa por padrão e o primeiro item do segmented control. Quando há apenas um modelo de preço, as tabs são omitidas. O botão de CTA em todos os planos deve ser <strong>"Falar sobre esse plano"</strong> com ícone WhatsApp, link <code style="font-family:var(--font-mono);font-size:12px;color:var(--accent)">wa.me/5516993438187</code>, <code style="font-family:var(--font-mono);font-size:12px;color:var(--accent)">target="_blank"</code>.</p>
+
+      <h3 class="ds-subsection-title">Segmented control — dual pricing</h3>
+      <div class="ds-canvas dark">
+        <div class="tabs">
+          <button class="tab active">Assinatura Mensal</button>
+          <button class="tab">Valor Integral</button>
+        </div>
+      </div>
+
+      <h3 class="ds-subsection-title">Cards de plano</h3>
+      <div class="ds-canvas dark" style="align-items:stretch;gap:var(--space-4)">
+        <article class="pricing-card" style="flex:1;min-width:200px">
+          <div class="plan-top">
+            <span class="plan-name">Layout Pronto</span>
+            <span class="badge badge-default">Essencial</span>
+          </div>
+          <div class="price">R$ 220<span style="font-size:16px;font-weight:400;opacity:0.6">/mês</span></div>
+          <p class="price-sub">Mínimo 3 meses</p>
+          <ul class="plan-list" style="flex:unset;margin-bottom:var(--space-5)">
+            <li>Template adaptado à identidade da marca.</li>
+            <li>Formulário de captura de lead.</li>
+            <li class="off">Design exclusivo do zero.</li>
+          </ul>
+          <button class="btn btn-lg btn-secondary btn-full">Falar sobre esse plano</button>
+        </article>
+        <article class="pricing-card card-accent" style="flex:1;min-width:200px">
+          <div class="badge-rec">★ Recomendado</div>
+          <div class="plan-top">
+            <span class="plan-name plan-name-accent">Layout Exclusivo</span>
+            <span class="badge badge-accent">Popular</span>
+          </div>
+          <div class="price price-accent">R$ 370<span style="font-size:16px;font-weight:400;opacity:0.7">/mês</span></div>
+          <p class="price-sub">Mínimo 3 meses</p>
+          <ul class="plan-list" style="flex:unset;margin-bottom:var(--space-5)">
+            <li>Design 100% personalizado e exclusivo.</li>
+            <li>2 rodadas de revisão incluídas.</li>
+            <li>Integração com ferramenta de e-mail.</li>
+          </ul>
+          <button class="btn btn-lg btn-primary btn-full">Falar sobre esse plano</button>
+        </article>
+      </div>
+
+      <h3 class="ds-subsection-title">Regras de composição</h3>
+      <ul style="font-size:14px;color:var(--text-secondary);line-height:1.7;list-style:disc;padding-left:20px;max-width:640px;margin-bottom:var(--space-6)">
+        <li>Assinatura Mensal é sempre o padrão ativo (1ª tab) no dual pricing. O texto inicial de <code style="font-family:var(--font-mono);font-size:12px;color:var(--accent)">.price</code> e <code style="font-family:var(--font-mono);font-size:12px;color:var(--accent)">.price-sub</code> deve refletir o valor mensal.</li>
+        <li>Planos com um único modelo de preço omitem as tabs — exibem apenas header + grid de cards.</li>
+        <li>Plano recomendado: <code style="font-family:var(--font-mono);font-size:12px;color:var(--accent)">.card-accent</code> + <code style="font-family:var(--font-mono);font-size:12px;color:var(--accent)">.badge-rec</code> + <code style="font-family:var(--font-mono);font-size:12px;color:var(--accent)">.btn-primary</code>. Demais planos: <code style="font-family:var(--font-mono);font-size:12px;color:var(--accent)">.btn-secondary</code>.</li>
+        <li>Grid: <code style="font-family:var(--font-mono);font-size:12px;color:var(--accent)">.grid-3</code> em desktop → colapsa para 1 coluna em mobile (<code style="font-family:var(--font-mono);font-size:12px;color:var(--accent)">max-width:768px</code>).</li>
+        <li>Botão CTA: texto fixo <strong>"Falar sobre esse plano"</strong> + ícone WhatsApp SVG (path reutilizável em <code style="font-family:var(--font-mono);font-size:12px;color:var(--accent)">produtos/index.html</code>). Link: <code style="font-family:var(--font-mono);font-size:12px;color:var(--accent)">https://wa.me/5516993438187</code> — <code style="font-family:var(--font-mono);font-size:12px;color:var(--accent)">target="_blank" rel="noopener noreferrer"</code>.</li>
+      </ul>
+
+      <div class="ds-code">
+        <div class="ds-code-header"><div class="ds-code-dots"><span class="d1"></span><span class="d2"></span><span class="d3"></span></div><span class="ds-code-lang">HTML — estrutura completa com dual pricing</span></div>
+        <pre><span class="cmt">&lt;!-- Tabs: apenas quando há mensal + integral --&gt;</span>
+&lt;<span class="cls">div</span> <span class="kw">class</span>=<span class="str">"tabs"</span>&gt;
+  &lt;<span class="cls">button</span> <span class="kw">class</span>=<span class="str">"tab active"</span> <span class="kw">onclick</span>=<span class="str">"switchPricing('monthly',this)"</span>&gt;Assinatura Mensal&lt;/<span class="cls">button</span>&gt;
+  &lt;<span class="cls">button</span> <span class="kw">class</span>=<span class="str">"tab"</span> <span class="kw">onclick</span>=<span class="str">"switchPricing('single',this)"</span>&gt;Valor Integral&lt;/<span class="cls">button</span>&gt;
+&lt;/<span class="cls">div</span>&gt;
+
+&lt;<span class="cls">div</span> <span class="kw">class</span>=<span class="str">"grid grid-3"</span>&gt;
+
+  <span class="cmt">&lt;!-- Card padrão --&gt;</span>
+  &lt;<span class="cls">article</span> <span class="kw">class</span>=<span class="str">"card"</span>&gt;
+    &lt;<span class="cls">div</span> <span class="kw">class</span>=<span class="str">"plan-top"</span>&gt;
+      &lt;<span class="cls">span</span> <span class="kw">class</span>=<span class="str">"plan-name"</span>&gt;Nome do Plano&lt;/<span class="cls">span</span>&gt;
+      &lt;<span class="cls">span</span> <span class="kw">class</span>=<span class="str">"badge badge-default"</span>&gt;Essencial&lt;/<span class="cls">span</span>&gt;
+    &lt;/<span class="cls">div</span>&gt;
+    &lt;<span class="cls">div</span> <span class="kw">class</span>=<span class="str">"price"</span> <span class="kw">data-single</span>=<span class="str">"R$ 900"</span> <span class="kw">data-monthly</span>=<span class="str">"R$ 220/mês"</span>&gt;R$ 220/mês&lt;/<span class="cls">div</span>&gt;
+    &lt;<span class="cls">p</span> <span class="kw">class</span>=<span class="str">"price-sub"</span> <span class="kw">data-sub-single</span>=<span class="str">"Pagamento único"</span> <span class="kw">data-sub-monthly</span>=<span class="str">"Mínimo 3 meses"</span>&gt;Mínimo 3 meses&lt;/<span class="cls">p</span>&gt;
+    &lt;<span class="cls">ul</span> <span class="kw">class</span>=<span class="str">"plan-list"</span>&gt;
+      &lt;<span class="cls">li</span>&gt;Recurso incluído&lt;/<span class="cls">li</span>&gt;
+      &lt;<span class="cls">li</span> <span class="kw">class</span>=<span class="str">"off"</span>&gt;Recurso não incluso&lt;/<span class="cls">li</span>&gt;
+    &lt;/<span class="cls">ul</span>&gt;
+    &lt;<span class="cls">a</span> <span class="kw">href</span>=<span class="str">"https://wa.me/5516993438187"</span> <span class="kw">class</span>=<span class="str">"btn btn-lg btn-secondary btn-full"</span>
+       <span class="kw">target</span>=<span class="str">"_blank"</span> <span class="kw">rel</span>=<span class="str">"noopener noreferrer"</span>&gt;
+      &lt;<span class="cls">svg</span> <span class="kw">width</span>=<span class="str">"17"</span> <span class="kw">height</span>=<span class="str">"17"</span> <span class="kw">viewBox</span>=<span class="str">"0 0 32 32"</span> <span class="kw">fill</span>=<span class="str">"currentColor"</span>&gt;...&lt;/<span class="cls">svg</span>&gt;
+      Falar sobre esse plano
+    &lt;/<span class="cls">a</span>&gt;
+  &lt;/<span class="cls">article</span>&gt;
+
+  <span class="cmt">&lt;!-- Card recomendado --&gt;</span>
+  &lt;<span class="cls">article</span> <span class="kw">class</span>=<span class="str">"card card-accent"</span>&gt;
+    &lt;<span class="cls">div</span> <span class="kw">class</span>=<span class="str">"badge-rec"</span>&gt;★ Recomendado&lt;/<span class="cls">div</span>&gt;
+    &lt;<span class="cls">div</span> <span class="kw">class</span>=<span class="str">"plan-top"</span>&gt;
+      &lt;<span class="cls">span</span> <span class="kw">class</span>=<span class="str">"plan-name plan-name-accent"</span>&gt;Plano Destaque&lt;/<span class="cls">span</span>&gt;
+      &lt;<span class="cls">span</span> <span class="kw">class</span>=<span class="str">"badge badge-accent"</span>&gt;Popular&lt;/<span class="cls">span</span>&gt;
+    &lt;/<span class="cls">div</span>&gt;
+    &lt;<span class="cls">div</span> <span class="kw">class</span>=<span class="str">"price price-accent"</span> <span class="kw">data-single</span>=<span class="str">"R$ 1.500"</span> <span class="kw">data-monthly</span>=<span class="str">"R$ 370/mês"</span>&gt;R$ 370/mês&lt;/<span class="cls">div</span>&gt;
+    &lt;<span class="cls">p</span> <span class="kw">class</span>=<span class="str">"price-sub"</span> <span class="kw">data-sub-single</span>=<span class="str">"Pagamento único"</span> <span class="kw">data-sub-monthly</span>=<span class="str">"Mínimo 3 meses"</span>&gt;Mínimo 3 meses&lt;/<span class="cls">p</span>&gt;
+    &lt;<span class="cls">ul</span> <span class="kw">class</span>=<span class="str">"plan-list"</span>&gt;
+      &lt;<span class="cls">li</span>&gt;Todos os itens anteriores&lt;/<span class="cls">li</span>&gt;
+      &lt;<span class="cls">li</span>&gt;Design exclusivo&lt;/<span class="cls">li</span>&gt;
+    &lt;/<span class="cls">ul</span>&gt;
+    &lt;<span class="cls">a</span> <span class="kw">href</span>=<span class="str">"https://wa.me/5516993438187"</span> <span class="kw">class</span>=<span class="str">"btn btn-lg btn-primary btn-full"</span>
+       <span class="kw">target</span>=<span class="str">"_blank"</span> <span class="kw">rel</span>=<span class="str">"noopener noreferrer"</span>&gt;
+      &lt;<span class="cls">svg</span> ...&gt;...&lt;/<span class="cls">svg</span>&gt; Falar sobre esse plano
+    &lt;/<span class="cls">a</span>&gt;
+  &lt;/<span class="cls">article</span>&gt;
+
+&lt;/<span class="cls">div</span>&gt;
+
+&lt;<span class="cls">script</span>&gt;
+  <span class="fn">function</span> <span class="fn">switchPricing</span>(type, el) {
+    document.<span class="fn">querySelectorAll</span>(<span class="str">'.tab'</span>).<span class="fn">forEach</span>(t =&gt; t.classList.<span class="fn">remove</span>(<span class="str">'active'</span>));
+    el.classList.<span class="fn">add</span>(<span class="str">'active'</span>);
+    document.<span class="fn">querySelectorAll</span>(<span class="str">'.price'</span>).<span class="fn">forEach</span>(p =&gt; {
+      p.innerText = p.<span class="fn">getAttribute</span>(<span class="str">'data-'</span> + type);
+    });
+    document.<span class="fn">querySelectorAll</span>(<span class="str">'.price-sub'</span>).<span class="fn">forEach</span>(p =&gt; {
+      <span class="kw">const</span> key = <span class="str">'data-sub-'</span> + type;
+      <span class="kw">if</span> (p.<span class="fn">getAttribute</span>(key)) p.innerText = p.<span class="fn">getAttribute</span>(key);
+    });
+  }
+&lt;/<span class="cls">script</span>&gt;</pre>
       </div>
     </section>
 

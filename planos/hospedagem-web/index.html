@@ -9,39 +9,45 @@
 <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700&family=DM+Mono:wght@300;400;500&display=swap" rel="stylesheet">
 <style>
 :root {
-  --bg-base: #080808; --bg-surface: #111111; --border: rgba(255,255,255,0.07);
-  --text-primary: #f0f0f0; --text-secondary: rgba(240,240,240,0.55);
-  --accent: #f48322; --shadow-accent: 0 0 40px rgba(244,131,34,0.2);
-  --accent-dim: rgba(244,131,34,0.12);
-  --font-body: 'DM Sans', sans-serif; --r-xl: 24px; --r-md: 12px; --r-full: 9999px;
+  --bg-base: #080808; --bg-surface: #111111; --bg-elevated: #1a1a1a;
+  --border: rgba(255,255,255,0.07); --text-primary: #f0f0f0;
+  --text-secondary: rgba(240,240,240,0.55); --accent: #f48322;
+  --accent-dim: rgba(244,131,34,0.15); --r-xl: 32px; --r-md: 12px;
+  --r-lg: 20px; --r-full: 9999px;
+  --shadow-accent: 0 0 32px rgba(244,131,34,0.25);
+  --font-body: 'DM Sans', sans-serif;
 }
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-body { background: var(--bg-base); color: var(--text-primary); font-family: var(--font-body); padding: 56px 0; }
-.container { max-width: 1060px; margin: 0 auto; padding: 0 24px; }
-.section-header { text-align: center; margin-bottom: 56px; }
+body { background: var(--bg-base); color: var(--text-primary); font-family: var(--font-body); padding: 48px 20px; }
+.container { max-width: 1100px; margin: 0 auto; }
+.section-header { text-align: center; margin-bottom: 40px; }
 .section-label { font-size: 11px; font-weight: 500; letter-spacing: 0.12em; text-transform: uppercase; color: var(--accent); margin-bottom: 10px; }
 .section-title { font-size: clamp(28px,4vw,40px); font-weight: 700; letter-spacing: -0.03em; margin-bottom: 12px; }
-.section-desc { font-size: 15px; color: var(--text-secondary); max-width: 540px; margin: 0 auto; line-height: 1.65; }
-.grid { display: grid; gap: 20px; grid-template-columns: repeat(3, 1fr); }
+.section-desc { font-size: 15px; color: var(--text-secondary); max-width: 520px; margin: 0 auto; line-height: 1.6; }
+.grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; margin-top: 40px; }
 @media (max-width: 768px) { .grid { grid-template-columns: 1fr; } }
-.card { background: var(--bg-surface); border: 1px solid var(--border); border-radius: var(--r-xl); padding: 32px; display: flex; flex-direction: column; }
-.card-accent { border-color: rgba(244,131,34,0.45); box-shadow: var(--shadow-accent); }
+.card { background: var(--bg-surface); border: 1px solid var(--border); border-radius: var(--r-xl); padding: 36px; display: flex; flex-direction: column; transition: transform 0.25s, border-color 0.25s, box-shadow 0.25s; }
+.card:hover { transform: translateY(-3px); box-shadow: 0 8px 32px rgba(0,0,0,0.5); }
+.card-accent { border-color: rgba(244,131,34,0.4); box-shadow: 0 0 32px rgba(244,131,34,0.15); }
+.card-accent:hover { border-color: rgba(244,131,34,0.65); box-shadow: 0 0 40px rgba(244,131,34,0.25); }
 .badge-rec { display: inline-flex; align-items: center; gap: 5px; font-size: 10px; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; color: #000; background: var(--accent); padding: 4px 12px; border-radius: var(--r-full); margin-bottom: 16px; }
-.plan-badge { display: inline-flex; align-items: center; justify-content: center; font-size: 26px; font-weight: 700; color: var(--accent); background: var(--accent-dim); border-radius: 12px; padding: 10px 16px; margin-bottom: 16px; width: fit-content; }
-.plan-badge-accent { background: rgba(244,131,34,0.25); }
-.plan-name { font-size: 19px; font-weight: 700; margin-bottom: 6px; }
+.plan-top { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 8px; }
+.plan-name { font-weight: 700; font-size: 18px; }
 .plan-name-accent { color: var(--accent); }
-.plan-desc { font-size: 13px; color: var(--text-secondary); margin-bottom: 20px; line-height: 1.5; }
-.plan-price { font-size: 36px; font-weight: 700; letter-spacing: -0.03em; margin-bottom: 4px; }
-.plan-price-accent { color: var(--accent); }
-.plan-period { font-size: 13px; color: var(--text-secondary); margin-bottom: 26px; }
+.badge { padding: 4px 12px; border-radius: var(--r-full); font-size: 11px; border: 1px solid var(--border); color: var(--text-secondary); }
+.badge-accent { border-color: rgba(244,131,34,0.3); color: var(--accent); }
+.plan-desc { font-size: 13px; color: var(--text-secondary); margin-bottom: 22px; line-height: 1.5; }
+.price { font-size: 38px; font-weight: 700; letter-spacing: -0.03em; margin-bottom: 4px; }
+.price-accent { color: var(--accent); }
+.price-sub { font-size: 13px; color: var(--text-secondary); margin-bottom: 24px; }
 .plan-list { list-style: none; margin-bottom: 28px; flex: 1; }
-.plan-list li { display: flex; gap: 10px; color: var(--text-secondary); font-size: 14px; margin-bottom: 11px; align-items: flex-start; line-height: 1.45; }
-.plan-list li svg { flex-shrink: 0; margin-top: 1px; color: var(--accent); width: 15px; height: 15px; }
+.plan-list li { display: flex; gap: 10px; color: var(--text-secondary); font-size: 14px; margin-bottom: 11px; align-items: flex-start; line-height: 1.5; }
+.plan-list li::before { content: '✓'; color: var(--accent); flex-shrink: 0; font-weight: 700; }
 .plan-list li.off { opacity: 0.35; }
-.plan-list li.off svg { color: var(--text-secondary); }
-.btn { display: inline-flex; justify-content: center; padding: 14px; border-radius: var(--r-md); text-decoration: none; font-size: 14px; font-weight: 600; margin-top: auto; border: 1px solid rgba(244,131,34,0.5); color: var(--accent); background: transparent; cursor: pointer; font-family: var(--font-body); }
-.btn-primary { background: var(--accent); color: #000; border: none; }
+.plan-list li.off::before { content: '✕'; color: var(--text-secondary); }
+.btn { display: inline-flex; align-items: center; justify-content: center; gap: 8px; width: 100%; padding: 13px; border-radius: var(--r-md); font-weight: 600; text-decoration: none; cursor: pointer; font-size: 14px; font-family: var(--font-body); border: none; margin-top: auto; }
+.btn-primary { background: var(--accent); color: #000; }
+.btn-secondary { background: rgba(255,255,255,0.06); color: #fff; border: 1px solid var(--border); }
 </style>
 </head>
 <body>
@@ -53,55 +59,58 @@ body { background: var(--bg-base); color: var(--text-primary); font-family: var(
   </div>
   <div class="grid">
     <article class="card">
-      <div class="plan-badge">15Gb</div>
-      <h3 class="plan-name">Starter</h3>
+      <div class="plan-top">
+        <span class="plan-name">Starter</span>
+        <span class="badge">15Gb SSD</span>
+      </div>
       <p class="plan-desc">Para sites institucionais e landing pages. Entrada com suporte e qualidade.</p>
-      <div class="plan-price">R$ 79</div>
-      <p class="plan-period">por mês · renovação anual</p>
+      <div class="price">R$ 79</div>
+      <p class="price-sub">por mês · renovação anual</p>
       <ul class="plan-list">
-        <li><svg viewBox="0 0 20 20" fill="currentColor"><path d="M7.5 13.5 4.8 10.8l-1.4 1.4 4.1 4.1 9-9-1.4-1.4z"/></svg>15Gb de armazenamento SSD.</li>
-        <li><svg viewBox="0 0 20 20" fill="currentColor"><path d="M7.5 13.5 4.8 10.8l-1.4 1.4 4.1 4.1 9-9-1.4-1.4z"/></svg>cPanel incluso.</li>
-        <li><svg viewBox="0 0 20 20" fill="currentColor"><path d="M7.5 13.5 4.8 10.8l-1.4 1.4 4.1 4.1 9-9-1.4-1.4z"/></svg>5 contas de e-mail profissional.</li>
-        <li><svg viewBox="0 0 20 20" fill="currentColor"><path d="M7.5 13.5 4.8 10.8l-1.4 1.4 4.1 4.1 9-9-1.4-1.4z"/></svg>SSL gratuito.</li>
-        <li><svg viewBox="0 0 20 20" fill="currentColor"><path d="M7.5 13.5 4.8 10.8l-1.4 1.4 4.1 4.1 9-9-1.4-1.4z"/></svg>Suporte técnico via ticket.</li>
-        <li class="off"><svg viewBox="0 0 20 20" fill="currentColor"><path d="M6 18L18 6M6 6l12 12"/></svg>Backups diários.</li>
+        <li>cPanel incluso.</li>
+        <li>5 contas de e-mail profissional.</li>
+        <li>SSL gratuito.</li>
+        <li>Suporte técnico via ticket.</li>
+        <li class="off">Backups diários.</li>
       </ul>
-      <a href="#" class="btn">Contratar</a>
+      <a href="https://wa.me/5516993438187" class="btn btn-secondary" target="_blank" rel="noopener noreferrer"><svg width="17" height="17" viewBox="0 0 32 32" fill="currentColor" style="flex-shrink:0"><path d="M16.03 3.2A12.74 12.74 0 0 0 5.2 22.62L3.6 28.8l6.32-1.55A12.72 12.72 0 1 0 16.03 3.2Zm0 2.27a10.45 10.45 0 0 1 8.86 16.01 10.43 10.43 0 0 1-13.83 3.41l-.45-.27-3.75.92.95-3.66-.3-.47A10.46 10.46 0 0 1 16.03 5.47Zm-4.1 4.93c-.24 0-.62.09-.94.44-.32.36-1.24 1.21-1.24 2.95 0 1.73 1.27 3.41 1.44 3.64.18.24 2.45 3.91 6.03 5.32 2.98 1.17 3.59.94 4.23.88.65-.06 2.1-.86 2.4-1.69.29-.83.29-1.54.2-1.69-.09-.14-.32-.23-.68-.41-.35-.17-2.09-1.03-2.42-1.15-.32-.12-.56-.18-.8.18-.23.35-.91 1.15-1.12 1.38-.2.24-.41.27-.76.09-.36-.18-1.5-.55-2.85-1.76-1.05-.94-1.76-2.1-1.97-2.45-.2-.36-.02-.55.16-.72.16-.16.35-.41.53-.62.18-.2.24-.35.36-.59.12-.23.06-.44-.03-.62-.09-.18-.8-1.93-1.09-2.64-.29-.69-.58-.6-.8-.61h-.69Z"/></svg> Falar sobre esse plano</a>
     </article>
 
     <article class="card card-accent">
       <div class="badge-rec">★ Recomendado</div>
-      <div class="plan-badge plan-badge-accent">60Gb</div>
-      <h3 class="plan-name plan-name-accent">Plus</h3>
+      <div class="plan-top">
+        <span class="plan-name plan-name-accent">Plus</span>
+        <span class="badge badge-accent">60Gb SSD</span>
+      </div>
       <p class="plan-desc">Para operações que exigem mais recursos e acompanhamento próximo.</p>
-      <div class="plan-price plan-price-accent">R$ 119</div>
-      <p class="plan-period">por mês · renovação anual</p>
+      <div class="price price-accent">R$ 119</div>
+      <p class="price-sub">por mês · renovação anual</p>
       <ul class="plan-list">
-        <li><svg viewBox="0 0 20 20" fill="currentColor"><path d="M7.5 13.5 4.8 10.8l-1.4 1.4 4.1 4.1 9-9-1.4-1.4z"/></svg>60Gb de armazenamento SSD.</li>
-        <li><svg viewBox="0 0 20 20" fill="currentColor"><path d="M7.5 13.5 4.8 10.8l-1.4 1.4 4.1 4.1 9-9-1.4-1.4z"/></svg>cPanel incluso.</li>
-        <li><svg viewBox="0 0 20 20" fill="currentColor"><path d="M7.5 13.5 4.8 10.8l-1.4 1.4 4.1 4.1 9-9-1.4-1.4z"/></svg>E-mails ilimitados.</li>
-        <li><svg viewBox="0 0 20 20" fill="currentColor"><path d="M7.5 13.5 4.8 10.8l-1.4 1.4 4.1 4.1 9-9-1.4-1.4z"/></svg>SSL gratuito.</li>
-        <li><svg viewBox="0 0 20 20" fill="currentColor"><path d="M7.5 13.5 4.8 10.8l-1.4 1.4 4.1 4.1 9-9-1.4-1.4z"/></svg>Suporte prioritário.</li>
-        <li><svg viewBox="0 0 20 20" fill="currentColor"><path d="M7.5 13.5 4.8 10.8l-1.4 1.4 4.1 4.1 9-9-1.4-1.4z"/></svg>Backups semanais automáticos.</li>
+        <li>cPanel incluso.</li>
+        <li>E-mails ilimitados.</li>
+        <li>SSL gratuito.</li>
+        <li>Suporte prioritário.</li>
+        <li>Backups semanais automáticos.</li>
       </ul>
-      <a href="#" class="btn btn-primary">Contratar</a>
+      <a href="https://wa.me/5516993438187" class="btn btn-primary" target="_blank" rel="noopener noreferrer"><svg width="17" height="17" viewBox="0 0 32 32" fill="currentColor" style="flex-shrink:0"><path d="M16.03 3.2A12.74 12.74 0 0 0 5.2 22.62L3.6 28.8l6.32-1.55A12.72 12.72 0 1 0 16.03 3.2Zm0 2.27a10.45 10.45 0 0 1 8.86 16.01 10.43 10.43 0 0 1-13.83 3.41l-.45-.27-3.75.92.95-3.66-.3-.47A10.46 10.46 0 0 1 16.03 5.47Zm-4.1 4.93c-.24 0-.62.09-.94.44-.32.36-1.24 1.21-1.24 2.95 0 1.73 1.27 3.41 1.44 3.64.18.24 2.45 3.91 6.03 5.32 2.98 1.17 3.59.94 4.23.88.65-.06 2.1-.86 2.4-1.69.29-.83.29-1.54.2-1.69-.09-.14-.32-.23-.68-.41-.35-.17-2.09-1.03-2.42-1.15-.32-.12-.56-.18-.8.18-.23.35-.91 1.15-1.12 1.38-.2.24-.41.27-.76.09-.36-.18-1.5-.55-2.85-1.76-1.05-.94-1.76-2.1-1.97-2.45-.2-.36-.02-.55.16-.72.16-.16.35-.41.53-.62.18-.2.24-.35.36-.59.12-.23.06-.44-.03-.62-.09-.18-.8-1.93-1.09-2.64-.29-.69-.58-.6-.8-.61h-.69Z"/></svg> Falar sobre esse plano</a>
     </article>
 
     <article class="card">
-      <div class="plan-badge">80Gb</div>
-      <h3 class="plan-name">Pro</h3>
+      <div class="plan-top">
+        <span class="plan-name">Pro</span>
+        <span class="badge">80Gb SSD</span>
+      </div>
       <p class="plan-desc">Para agências, lojas e projetos com alto tráfego e necessidade de backups diários.</p>
-      <div class="plan-price">R$ 149</div>
-      <p class="plan-period">por mês · renovação anual</p>
+      <div class="price">R$ 149</div>
+      <p class="price-sub">por mês · renovação anual</p>
       <ul class="plan-list">
-        <li><svg viewBox="0 0 20 20" fill="currentColor"><path d="M7.5 13.5 4.8 10.8l-1.4 1.4 4.1 4.1 9-9-1.4-1.4z"/></svg>80Gb de armazenamento SSD.</li>
-        <li><svg viewBox="0 0 20 20" fill="currentColor"><path d="M7.5 13.5 4.8 10.8l-1.4 1.4 4.1 4.1 9-9-1.4-1.4z"/></svg>cPanel incluso.</li>
-        <li><svg viewBox="0 0 20 20" fill="currentColor"><path d="M7.5 13.5 4.8 10.8l-1.4 1.4 4.1 4.1 9-9-1.4-1.4z"/></svg>E-mails ilimitados.</li>
-        <li><svg viewBox="0 0 20 20" fill="currentColor"><path d="M7.5 13.5 4.8 10.8l-1.4 1.4 4.1 4.1 9-9-1.4-1.4z"/></svg>SSL gratuito.</li>
-        <li><svg viewBox="0 0 20 20" fill="currentColor"><path d="M7.5 13.5 4.8 10.8l-1.4 1.4 4.1 4.1 9-9-1.4-1.4z"/></svg>Suporte prioritário + SLA.</li>
-        <li><svg viewBox="0 0 20 20" fill="currentColor"><path d="M7.5 13.5 4.8 10.8l-1.4 1.4 4.1 4.1 9-9-1.4-1.4z"/></svg>Backups diários automáticos.</li>
+        <li>cPanel incluso.</li>
+        <li>E-mails ilimitados.</li>
+        <li>SSL gratuito.</li>
+        <li>Suporte prioritário + SLA.</li>
+        <li>Backups diários automáticos.</li>
       </ul>
-      <a href="#" class="btn">Contratar</a>
+      <a href="https://wa.me/5516993438187" class="btn btn-secondary" target="_blank" rel="noopener noreferrer"><svg width="17" height="17" viewBox="0 0 32 32" fill="currentColor" style="flex-shrink:0"><path d="M16.03 3.2A12.74 12.74 0 0 0 5.2 22.62L3.6 28.8l6.32-1.55A12.72 12.72 0 1 0 16.03 3.2Zm0 2.27a10.45 10.45 0 0 1 8.86 16.01 10.43 10.43 0 0 1-13.83 3.41l-.45-.27-3.75.92.95-3.66-.3-.47A10.46 10.46 0 0 1 16.03 5.47Zm-4.1 4.93c-.24 0-.62.09-.94.44-.32.36-1.24 1.21-1.24 2.95 0 1.73 1.27 3.41 1.44 3.64.18.24 2.45 3.91 6.03 5.32 2.98 1.17 3.59.94 4.23.88.65-.06 2.1-.86 2.4-1.69.29-.83.29-1.54.2-1.69-.09-.14-.32-.23-.68-.41-.35-.17-2.09-1.03-2.42-1.15-.32-.12-.56-.18-.8.18-.23.35-.91 1.15-1.12 1.38-.2.24-.41.27-.76.09-.36-.18-1.5-.55-2.85-1.76-1.05-.94-1.76-2.1-1.97-2.45-.2-.36-.02-.55.16-.72.16-.16.35-.41.53-.62.18-.2.24-.35.36-.59.12-.23.06-.44-.03-.62-.09-.18-.8-1.93-1.09-2.64-.29-.69-.58-.6-.8-.61h-.69Z"/></svg> Falar sobre esse plano</a>
     </article>
   </div>
 </section>

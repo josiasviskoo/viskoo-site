@@ -42,7 +42,7 @@
     .plan-list li::before { content: '✓'; color: var(--accent); flex-shrink: 0; font-weight: 700; }
     .plan-list li.off { opacity: 0.35; }
     .plan-list li.off::before { content: '✕'; color: var(--text-secondary); }
-    .btn { display: block; text-align: center; padding: 13px; border-radius: var(--r-md); font-weight: 600; text-decoration: none; cursor: pointer; font-size: 14px; font-family: 'DM Sans', sans-serif; border: none; margin-top: auto; }
+    .btn { display: inline-flex; align-items: center; justify-content: center; gap: 8px; width: 100%; padding: 13px; border-radius: var(--r-md); font-weight: 600; text-decoration: none; cursor: pointer; font-size: 14px; font-family: 'DM Sans', sans-serif; border: none; margin-top: auto; }
     .btn-primary { background: var(--accent); color: #000; }
     .btn-secondary { background: rgba(255,255,255,0.06); color: #fff; border: 1px solid var(--border); }
   </style>
@@ -54,8 +54,8 @@
     <h2 class="section-title">Planos de Landing Page</h2>
     <p class="section-desc">Páginas de conversão construídas para transformar visitante em contato ou venda.</p>
     <div class="tabs">
-      <button class="tab active" onclick="switchPricing('single',this)">Valor Integral</button>
-      <button class="tab" onclick="switchPricing('monthly',this)">Assinatura Mensal</button>
+      <button class="tab active" onclick="switchPricing('monthly',this)">Assinatura Mensal</button>
+      <button class="tab" onclick="switchPricing('single',this)">Valor Integral</button>
     </div>
   </div>
 
@@ -66,8 +66,8 @@
         <span class="plan-name">Layout Pronto</span>
         <span class="badge">Essencial</span>
       </div>
-      <div class="price" data-single="R$ 900" data-monthly="R$ 220/mês">R$ 900</div>
-      <p class="price-sub" data-sub-single="Pagamento único" data-sub-monthly="Mínimo 3 meses">Pagamento único</p>
+      <div class="price" data-single="R$ 900" data-monthly="R$ 220/mês">R$ 220/mês</div>
+      <p class="price-sub" data-sub-single="Pagamento único" data-sub-monthly="Mínimo 3 meses">Mínimo 3 meses</p>
       <ul class="plan-list">
         <li>Template adaptado à identidade da marca.</li>
         <li>Copy via briefing detalhado.</li>
@@ -77,7 +77,7 @@
         <li class="off">Produção de foto ou vídeo.</li>
         <li class="off">Design exclusivo do zero.</li>
       </ul>
-      <a href="#" class="btn btn-secondary">Selecionar</a>
+      <a href="https://wa.me/5516993438187" class="btn btn-secondary" target="_blank" rel="noopener noreferrer"><svg width="17" height="17" viewBox="0 0 32 32" fill="currentColor" style="flex-shrink:0"><path d="M16.03 3.2A12.74 12.74 0 0 0 5.2 22.62L3.6 28.8l6.32-1.55A12.72 12.72 0 1 0 16.03 3.2Zm0 2.27a10.45 10.45 0 0 1 8.86 16.01 10.43 10.43 0 0 1-13.83 3.41l-.45-.27-3.75.92.95-3.66-.3-.47A10.46 10.46 0 0 1 16.03 5.47Zm-4.1 4.93c-.24 0-.62.09-.94.44-.32.36-1.24 1.21-1.24 2.95 0 1.73 1.27 3.41 1.44 3.64.18.24 2.45 3.91 6.03 5.32 2.98 1.17 3.59.94 4.23.88.65-.06 2.1-.86 2.4-1.69.29-.83.29-1.54.2-1.69-.09-.14-.32-.23-.68-.41-.35-.17-2.09-1.03-2.42-1.15-.32-.12-.56-.18-.8.18-.23.35-.91 1.15-1.12 1.38-.2.24-.41.27-.76.09-.36-.18-1.5-.55-2.85-1.76-1.05-.94-1.76-2.1-1.97-2.45-.2-.36-.02-.55.16-.72.16-.16.35-.41.53-.62.18-.2.24-.35.36-.59.12-.23.06-.44-.03-.62-.09-.18-.8-1.93-1.09-2.64-.29-.69-.58-.6-.8-.61h-.69Z"/></svg> Falar sobre esse plano</a>
     </article>
 
     <!-- Plano 2 — Recomendado -->
@@ -87,8 +87,8 @@
         <span class="plan-name plan-name-accent">Layout Exclusivo</span>
         <span class="badge" style="border-color:var(--accent);color:var(--accent)">Popular</span>
       </div>
-      <div class="price price-accent" data-single="R$ 1.500" data-monthly="R$ 370/mês">R$ 1.500</div>
-      <p class="price-sub" data-sub-single="Pagamento único" data-sub-monthly="Mínimo 3 meses">Pagamento único</p>
+      <div class="price price-accent" data-single="R$ 1.500" data-monthly="R$ 370/mês">R$ 370/mês</div>
+      <p class="price-sub" data-sub-single="Pagamento único" data-sub-monthly="Mínimo 3 meses">Mínimo 3 meses</p>
       <ul class="plan-list">
         <li>Design 100% personalizado e exclusivo.</li>
         <li>Copy estratégica com foco em conversão.</li>
@@ -98,7 +98,7 @@
         <li>Integração com ferramenta de e-mail.</li>
         <li class="off">Produção de foto ou vídeo.</li>
       </ul>
-      <a href="#" class="btn btn-primary">Selecionar</a>
+      <a href="https://wa.me/5516993438187" class="btn btn-primary" target="_blank" rel="noopener noreferrer"><svg width="17" height="17" viewBox="0 0 32 32" fill="currentColor" style="flex-shrink:0"><path d="M16.03 3.2A12.74 12.74 0 0 0 5.2 22.62L3.6 28.8l6.32-1.55A12.72 12.72 0 1 0 16.03 3.2Zm0 2.27a10.45 10.45 0 0 1 8.86 16.01 10.43 10.43 0 0 1-13.83 3.41l-.45-.27-3.75.92.95-3.66-.3-.47A10.46 10.46 0 0 1 16.03 5.47Zm-4.1 4.93c-.24 0-.62.09-.94.44-.32.36-1.24 1.21-1.24 2.95 0 1.73 1.27 3.41 1.44 3.64.18.24 2.45 3.91 6.03 5.32 2.98 1.17 3.59.94 4.23.88.65-.06 2.1-.86 2.4-1.69.29-.83.29-1.54.2-1.69-.09-.14-.32-.23-.68-.41-.35-.17-2.09-1.03-2.42-1.15-.32-.12-.56-.18-.8.18-.23.35-.91 1.15-1.12 1.38-.2.24-.41.27-.76.09-.36-.18-1.5-.55-2.85-1.76-1.05-.94-1.76-2.1-1.97-2.45-.2-.36-.02-.55.16-.72.16-.16.35-.41.53-.62.18-.2.24-.35.36-.59.12-.23.06-.44-.03-.62-.09-.18-.8-1.93-1.09-2.64-.29-.69-.58-.6-.8-.61h-.69Z"/></svg> Falar sobre esse plano</a>
     </article>
 
     <!-- Plano 3 -->
@@ -107,8 +107,8 @@
         <span class="plan-name">One-Page Completa</span>
         <span class="badge">Premium</span>
       </div>
-      <div class="price" data-single="R$ 2.500" data-monthly="R$ 600/mês">R$ 2.500</div>
-      <p class="price-sub" data-sub-single="Pagamento único" data-sub-monthly="Mínimo 3 meses">Pagamento único</p>
+      <div class="price" data-single="R$ 2.500" data-monthly="R$ 600/mês">R$ 600/mês</div>
+      <p class="price-sub" data-sub-single="Pagamento único" data-sub-monthly="Mínimo 3 meses">Mínimo 3 meses</p>
       <ul class="plan-list">
         <li>Design multi-seção com animações.</li>
         <li>Copy estratégica com storytelling.</li>
@@ -118,7 +118,7 @@
         <li>Relatório de performance por 30 dias.</li>
         <li>Suporte técnico por 60 dias.</li>
       </ul>
-      <a href="#" class="btn btn-secondary">Selecionar</a>
+      <a href="https://wa.me/5516993438187" class="btn btn-secondary" target="_blank" rel="noopener noreferrer"><svg width="17" height="17" viewBox="0 0 32 32" fill="currentColor" style="flex-shrink:0"><path d="M16.03 3.2A12.74 12.74 0 0 0 5.2 22.62L3.6 28.8l6.32-1.55A12.72 12.72 0 1 0 16.03 3.2Zm0 2.27a10.45 10.45 0 0 1 8.86 16.01 10.43 10.43 0 0 1-13.83 3.41l-.45-.27-3.75.92.95-3.66-.3-.47A10.46 10.46 0 0 1 16.03 5.47Zm-4.1 4.93c-.24 0-.62.09-.94.44-.32.36-1.24 1.21-1.24 2.95 0 1.73 1.27 3.41 1.44 3.64.18.24 2.45 3.91 6.03 5.32 2.98 1.17 3.59.94 4.23.88.65-.06 2.1-.86 2.4-1.69.29-.83.29-1.54.2-1.69-.09-.14-.32-.23-.68-.41-.35-.17-2.09-1.03-2.42-1.15-.32-.12-.56-.18-.8.18-.23.35-.91 1.15-1.12 1.38-.2.24-.41.27-.76.09-.36-.18-1.5-.55-2.85-1.76-1.05-.94-1.76-2.1-1.97-2.45-.2-.36-.02-.55.16-.72.16-.16.35-.41.53-.62.18-.2.24-.35.36-.59.12-.23.06-.44-.03-.62-.09-.18-.8-1.93-1.09-2.64-.29-.69-.58-.6-.8-.61h-.69Z"/></svg> Falar sobre esse plano</a>
     </article>
   </div>
 </div>
