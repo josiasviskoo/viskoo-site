@@ -41,10 +41,10 @@
             <span class="badge badge-default">Essencial</span>
           </div>
           <div class="price-wrap">
-            <div class="price" data-single="R$ 900" data-monthly="R$ 220/mês">R$ 220/mês</div>
-            <a href="https://wa.me/5516993438187?text=Gostaria%20de%20saber%20dos%20planos" class="price-lock" target="_blank" rel="noopener noreferrer" aria-label="Ver preços no WhatsApp"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg></a>
+            <div class="price" id="price-0">R$ •••</div>
+            <a href="https://wa.me/5516993438187?text=Gostaria%20de%20saber%20dos%20planos" class="price-lock" target="_blank" rel="noopener noreferrer" aria-label="Ver preços no WhatsApp"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg></a>
           </div>
-          <p class="price-sub" data-sub-single="Pagamento único" data-sub-monthly="Mínimo 3 meses">Mínimo 3 meses</p>
+          <p class="price-sub" id="psub-0">Mínimo 3 meses</p>
           <ul class="plan-list">
             <li>Template adaptado à identidade da marca.</li>
             <li>Copy via briefing detalhado.</li>
@@ -64,10 +64,10 @@
             <span class="badge badge-accent">Popular</span>
           </div>
           <div class="price-wrap">
-            <div class="price price-accent" data-single="R$ 1.500" data-monthly="R$ 370/mês">R$ 370/mês</div>
-            <a href="https://wa.me/5516993438187?text=Gostaria%20de%20saber%20dos%20planos" class="price-lock" target="_blank" rel="noopener noreferrer" aria-label="Ver preços no WhatsApp"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg></a>
+            <div class="price price-accent" id="price-1">R$ •••</div>
+            <a href="https://wa.me/5516993438187?text=Gostaria%20de%20saber%20dos%20planos" class="price-lock" target="_blank" rel="noopener noreferrer" aria-label="Ver preços no WhatsApp"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg></a>
           </div>
-          <p class="price-sub" data-sub-single="Pagamento único" data-sub-monthly="Mínimo 3 meses">Mínimo 3 meses</p>
+          <p class="price-sub" id="psub-1">Mínimo 3 meses</p>
           <ul class="plan-list">
             <li>Design 100% personalizado e exclusivo.</li>
             <li>Copy estratégica com foco em conversão.</li>
@@ -86,10 +86,10 @@
             <span class="badge badge-default">Premium</span>
           </div>
           <div class="price-wrap">
-            <div class="price" data-single="R$ 2.500" data-monthly="R$ 600/mês">R$ 600/mês</div>
-            <a href="https://wa.me/5516993438187?text=Gostaria%20de%20saber%20dos%20planos" class="price-lock" target="_blank" rel="noopener noreferrer" aria-label="Ver preços no WhatsApp"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg></a>
+            <div class="price" id="price-2">R$ •••</div>
+            <a href="https://wa.me/5516993438187?text=Gostaria%20de%20saber%20dos%20planos" class="price-lock" target="_blank" rel="noopener noreferrer" aria-label="Ver preços no WhatsApp"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg></a>
           </div>
-          <p class="price-sub" data-sub-single="Pagamento único" data-sub-monthly="Mínimo 3 meses">Mínimo 3 meses</p>
+          <p class="price-sub" id="psub-2">Mínimo 3 meses</p>
           <ul class="plan-list">
             <li>Design multi-seção com animações.</li>
             <li>Copy estratégica com storytelling.</li>
@@ -106,19 +106,31 @@
   </section>
 
   <script>
-    if (new URLSearchParams(location.search).has('planos')) {
+    var PRICES = [
+      { monthly: 'R$ 220/mês', single: 'R$ 900',   subMonthly: 'Mínimo 3 meses', subSingle: 'Pagamento único' },
+      { monthly: 'R$ 370/mês', single: 'R$ 1.500', subMonthly: 'Mínimo 3 meses', subSingle: 'Pagamento único' },
+      { monthly: 'R$ 600/mês', single: 'R$ 2.500', subMonthly: 'Mínimo 3 meses', subSingle: 'Pagamento único' }
+    ];
+
+    var revealed = new URLSearchParams(location.search).has('planos');
+    var pricingMode = 'monthly';
+
+    if (revealed) {
       document.body.classList.add('prices-revealed');
+      PRICES.forEach(function(p, i) {
+        document.getElementById('price-' + i).textContent = p.monthly;
+        document.getElementById('psub-' + i).textContent = p.subMonthly;
+      });
     }
 
     function switchPricing(type, el) {
-      document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+      document.querySelectorAll('.tab').forEach(function(t) { t.classList.remove('active'); });
       el.classList.add('active');
-      document.querySelectorAll('.price').forEach(p => {
-        p.innerText = p.getAttribute('data-' + type);
-      });
-      document.querySelectorAll('.price-sub').forEach(p => {
-        const key = 'data-sub-' + type;
-        if (p.getAttribute(key)) p.innerText = p.getAttribute(key);
+      pricingMode = type;
+      if (!revealed) return;
+      PRICES.forEach(function(p, i) {
+        document.getElementById('price-' + i).textContent = type === 'single' ? p.single : p.monthly;
+        document.getElementById('psub-' + i).textContent = type === 'single' ? p.subSingle : p.subMonthly;
       });
     }
   </script>
