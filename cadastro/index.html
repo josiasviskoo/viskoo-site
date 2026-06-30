@@ -237,7 +237,7 @@
         <p>Faça seu cadastro. Isso vai gerar toda a documentação necessária para contratar a VISKOO.</p>
       </div>
 
-      <form id="form-cadastro" novalidate>
+      <form id="form-cadastro">
 
         <!-- SEÇÃO: Informações Pessoais -->
         <div class="form-section-label">Informações Pessoais</div>
@@ -245,17 +245,17 @@
 
           <div class="form-group">
             <label class="form-label" for="nome">Nome Completo</label>
-            <input class="input" type="text" id="nome" name="nome" placeholder="Seu nome completo" />
+            <input class="input" type="text" id="nome" name="nome" placeholder="Seu nome completo" required />
           </div>
 
           <div class="form-row">
             <div class="form-group">
               <label class="form-label" for="email">E-mail</label>
-              <input class="input" type="email" id="email" name="email" placeholder="voce@email.com" />
+              <input class="input" type="email" id="email" name="email" placeholder="voce@email.com" required />
             </div>
             <div class="form-group">
               <label class="form-label" for="whatsapp">WhatsApp / Celular</label>
-              <input class="input" type="tel" id="whatsapp" name="whatsapp" placeholder="(11) 99999-9999" />
+              <input class="input" type="tel" id="whatsapp" name="whatsapp" placeholder="(11) 99999-9999" required />
             </div>
           </div>
 
@@ -269,12 +269,12 @@
 
           <div class="form-group">
             <label class="form-label" for="empresa">Empresa (Razão Social)</label>
-            <input class="input" type="text" id="empresa" name="empresa" placeholder="Nome da empresa ou razão social" />
+            <input class="input" type="text" id="empresa" name="empresa" placeholder="Nome da empresa ou razão social" required />
           </div>
 
           <div class="form-group">
             <label class="form-label" for="documento">CNPJ ou CPF</label>
-            <input class="input" type="text" id="documento" name="documento" placeholder="00.000.000/0001-00 ou 000.000.000-00" />
+            <input class="input" type="text" id="documento" name="documento" placeholder="00.000.000/0001-00 ou 000.000.000-00" required />
           </div>
 
         </div>
@@ -288,28 +288,28 @@
           <div class="form-row" style="grid-template-columns: 2fr 1fr;">
             <div class="form-group">
               <label class="form-label" for="rua">Rua / Avenida</label>
-              <input class="input" type="text" id="rua" name="rua" placeholder="Nome da rua ou avenida" />
+              <input class="input" type="text" id="rua" name="rua" placeholder="Nome da rua ou avenida" required />
             </div>
             <div class="form-group">
               <label class="form-label" for="numero">Número</label>
-              <input class="input" type="text" id="numero" name="numero" placeholder="123" />
+              <input class="input" type="text" id="numero" name="numero" placeholder="123" required />
             </div>
           </div>
 
           <div class="form-row">
             <div class="form-group">
               <label class="form-label" for="bairro">Bairro</label>
-              <input class="input" type="text" id="bairro" name="bairro" placeholder="Nome do bairro" />
+              <input class="input" type="text" id="bairro" name="bairro" placeholder="Nome do bairro" required />
             </div>
             <div class="form-group">
               <label class="form-label" for="cep">CEP</label>
-              <input class="input" type="text" id="cep" name="cep" placeholder="00000-000" />
+              <input class="input" type="text" id="cep" name="cep" placeholder="00000-000" required />
             </div>
           </div>
 
           <div class="form-group">
             <label class="form-label" for="cidade">Cidade</label>
-            <input class="input" type="text" id="cidade" name="cidade" placeholder="Nome da cidade" />
+            <input class="input" type="text" id="cidade" name="cidade" placeholder="Nome da cidade" required />
           </div>
 
         </div>
@@ -324,11 +324,11 @@
             <label class="form-label">Melhor DIA para pagamentos</label>
             <div class="dia-pagamento-group">
               <div class="dia-option">
-                <input type="radio" id="dia-10" name="dia_pagamento" value="10" />
+                <input type="radio" id="dia-10" name="dia_pagamento" value="10" required />
                 <label for="dia-10">Dia 10</label>
               </div>
               <div class="dia-option">
-                <input type="radio" id="dia-20" name="dia_pagamento" value="20" />
+                <input type="radio" id="dia-20" name="dia_pagamento" value="20" required />
                 <label for="dia-20">Dia 20</label>
               </div>
             </div>
@@ -336,17 +336,17 @@
 
           <div class="form-group">
             <label class="form-label" for="descricao">Descrição do projeto</label>
-            <textarea class="input" id="descricao" name="descricao" placeholder="Descreva o projeto ou serviço contratado…"></textarea>
+            <textarea class="input" id="descricao" name="descricao" placeholder="Descreva o projeto ou serviço contratado…" required></textarea>
           </div>
 
           <div class="form-row">
             <div class="form-group">
               <label class="form-label" for="valor">Valor (sem "R$")</label>
-              <input class="input" type="number" id="valor" name="valor" placeholder="0,00" min="0" step="0.01" />
+              <input class="input" type="number" id="valor" name="valor" placeholder="0,00" min="0" step="0.01" required />
             </div>
             <div class="form-group">
               <label class="form-label" for="parcelamento">Parcelamento</label>
-              <select class="select" id="parcelamento" name="parcelamento">
+              <select class="select" id="parcelamento" name="parcelamento" required>
                 <option value="" disabled selected>Selecione</option>
                 <option value="Assinatura mensal">Assinatura mensal</option>
                 <option value="1x">1x</option>
