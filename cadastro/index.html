@@ -381,9 +381,24 @@
   const valor     = params.get('valor');
   const parcela   = params.get('parcelamento');
 
-  if (descricao) document.getElementById('descricao').value    = descricao;
-  if (valor)     document.getElementById('valor').value        = valor.replace(',', '.');
-  if (parcela)   document.getElementById('parcelamento').value = parcela;
+  if (descricao) document.getElementById('descricao').value = descricao;
+  if (valor)     document.getElementById('valor').value      = valor.replace(',', '.');
+
+  if (parcela) {
+    const selectParcelamento = document.getElementById('parcelamento');
+    const opcaoExistente = Array.from(selectParcelamento.options)
+      .find(opt => opt.value.toLowerCase() === parcela.toLowerCase());
+
+    if (opcaoExistente) {
+      selectParcelamento.value = opcaoExistente.value;
+    } else {
+      const novaOpcao = document.createElement('option');
+      novaOpcao.value = parcela;
+      novaOpcao.textContent = parcela;
+      selectParcelamento.appendChild(novaOpcao);
+      selectParcelamento.value = parcela;
+    }
+  }
 
   // Envio do formulário para o webhook
   document.getElementById('form-cadastro').addEventListener('submit', async function (e) {
