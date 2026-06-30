@@ -4,7 +4,8 @@
       "Bash(mkdir -p /home/josias-viskoo/Github/viskoo-site/cadastro)",
       "Bash(python3 /tmp/claude-1000/-home-josias-viskoo-Github-viskoo-site/56d915e0-80c8-4c20-841e-b2587ca86524/scratchpad/inject_pricing.py)",
       "Bash(pkill -f \"http.server 8910\")",
-      "Bash(echo \"exit: $?\")"
+      "Bash(echo \"exit: $?\")",
+      "Bash(python3 -c ' *)"
     ],
     "additionalDirectories": [
       "/home/josias-viskoo/Github/viskoo-site"
