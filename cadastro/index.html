@@ -148,6 +148,11 @@
       min-height: 100px;
     }
 
+    .input[readonly] {
+      color: var(--text-muted);
+      cursor: not-allowed;
+    }
+
     .dia-pagamento-group {
       display: flex;
       gap: var(--space-3);
@@ -386,18 +391,17 @@
 
   if (parcela) {
     const selectParcelamento = document.getElementById('parcelamento');
-    const opcaoExistente = Array.from(selectParcelamento.options)
-      .find(opt => opt.value.toLowerCase() === parcela.toLowerCase());
 
-    if (opcaoExistente) {
-      selectParcelamento.value = opcaoExistente.value;
-    } else {
-      const novaOpcao = document.createElement('option');
-      novaOpcao.value = parcela;
-      novaOpcao.textContent = parcela;
-      selectParcelamento.appendChild(novaOpcao);
-      selectParcelamento.value = parcela;
-    }
+    const inputParcelamento = document.createElement('input');
+    inputParcelamento.type = 'text';
+    inputParcelamento.id = 'parcelamento';
+    inputParcelamento.name = 'parcelamento';
+    inputParcelamento.className = 'input';
+    inputParcelamento.value = parcela;
+    inputParcelamento.readOnly = true;
+    inputParcelamento.required = true;
+
+    selectParcelamento.replaceWith(inputParcelamento);
   }
 
   // Envio do formulário para o webhook
