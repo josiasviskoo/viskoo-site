@@ -1493,6 +1493,14 @@ select.input { appearance: none; cursor: pointer; }
   padding: var(--space-4);
 }
 
+.marketing-proof-frame.marketing-proof-frame-plain {
+  border: 0;
+  background: transparent;
+  box-shadow: none;
+  padding: 0;
+  border-radius: 0;
+}
+
 .marketing-proof-frame img {
   display: block;
   border-radius: var(--r-lg);
@@ -1585,6 +1593,26 @@ select.input { appearance: none; cursor: pointer; }
 .marketing-web-slide img {
   aspect-ratio: 1000/1216;
   object-fit: cover;
+}
+
+.marketing-advantage-slide {
+  flex: 0 0 280px;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+  padding: var(--space-6);
+  cursor: default;
+}
+
+.marketing-advantage-slide:hover {
+  transform: none;
+}
+
+.marketing-advantage-step {
+  font-family: var(--font-mono);
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--accent);
 }
 
 .marketing-carousel-btn {
