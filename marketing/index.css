@@ -231,6 +231,9 @@ body {
 .nav-links a:hover { color: var(--text-primary); }
 
 .nav-cta {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
   font-size: 13px;
   font-weight: 500;
   color: var(--accent) !important;
@@ -788,6 +791,17 @@ select.input { appearance: none; cursor: pointer; }
 .icon-wrap:nth-child(2) { animation-delay: 0.6s; }
 .icon-wrap:nth-child(3) { animation-delay: 1.2s; }
 .icon-wrap:nth-child(4) { animation-delay: 1.8s; }
+
+.card-icon-mono {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 44px;
+  height: 44px;
+  border-radius: var(--r-lg);
+  background: rgba(255,255,255,0.08);
+  margin-bottom: var(--space-4);
+}
 
 /* =============================================
    DIVIDER
@@ -1437,6 +1451,10 @@ select.input { appearance: none; cursor: pointer; }
 .marketing-hero {
   min-height: 72vh;
   text-align: left;
+}
+
+.marketing-hero .hero-title {
+  font-size: clamp(30px, 4.2vw, 52px);
 }
 
 .marketing-hero .container {
