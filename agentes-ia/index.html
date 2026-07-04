@@ -17,7 +17,7 @@
 <link rel="stylesheet" href="index.css">
 </head>
 <body>
-<nav class="nav"><div class="nav-inner"><a href="../" class="nav-logo"><img src="assets/img/viskoo-branco.svg" alt="Viskoo Logo" height="24"></a><ul class="nav-links"><li><a href="../produtos/">Produtos</a></li><li><a href="https://wa.me/5516993438187?text=Ol%C3%A1%21%20Estou%20na%20p%C3%A1gina%20Agentes%20IA%20e%20gostaria%20de%20mais%20informa%C3%A7%C3%B5es." class="nav-cta">Conversar no WhatsApp</a></li></ul></div></nav>
+<nav class="nav"><div class="nav-inner"><a href="../" class="nav-logo"><img src="assets/img/viskoo-branco.svg" alt="Viskoo Logo" height="24"></a><button type="button" class="nav-toggle" aria-label="Abrir menu" aria-expanded="false" aria-controls="navLinks"><span></span><span></span><span></span></button><ul class="nav-links" id="navLinks"><li><a href="../produtos/">Produtos</a></li><li><a href="https://wa.me/5516993438187?text=Ol%C3%A1%21%20Estou%20na%20p%C3%A1gina%20Agentes%20IA%20e%20gostaria%20de%20mais%20informa%C3%A7%C3%B5es." class="nav-cta">Conversar no WhatsApp</a></li></ul></div></nav>
 <main class="page">
   <section class="hero" style="min-height: 64vh;"><div class="hero-bg"></div><div class="hero-content text-center"><span class="hero-eyebrow">Agentes IA</span><h1 class="hero-title">Equipe digital pronta para atender.</h1><p class="hero-sub t-body t-secondary" style="max-width: 700px; margin: 0 auto var(--space-6);">Assistentes inteligentes para responder, agendar, cobrar, consultar e apoiar processos da empresa 24 horas por dia.</p><a href="https://wa.me/5516993438187?text=Ol%C3%A1%21%20Estou%20na%20p%C3%A1gina%20Agentes%20IA%20e%20gostaria%20de%20mais%20informa%C3%A7%C3%B5es." class="btn btn-primary btn-lg">Quero meu agente IA</a></div></section>
   <section class="section"><div class="container"><div class="section-header text-center"><p class="section-label">Atendimento</p><h2 class="section-title">IA personalizada para sua operação</h2><p class="section-desc" style="margin: 0 auto;">Agentes para WhatsApp, site e rotinas internas.</p></div><div class="grid grid-3"><article class="card card-body"><h3 class="t-h3 mb-2">Vendas</h3><p class="t-sm t-secondary">Tira dúvidas e explica produtos com raciocínio comercial.</p></article><article class="card card-body"><h3 class="t-h3 mb-2">Agenda</h3><p class="t-sm t-secondary">Marca, remarca e organiza compromissos.</p></article><article class="card card-body"><h3 class="t-h3 mb-2">Financeiro</h3><p class="t-sm t-secondary">Apoia cobranças, boletos, pix e consultas.</p></article></div></div></section>
@@ -107,6 +107,26 @@
       if (el) el.textContent = p.value;
     });
   }
+})();
+</script>
+<script>
+(function(){
+  var toggle = document.querySelector('.nav-toggle');
+  var links = document.querySelector('.nav-links');
+  if (!toggle || !links) return;
+  function closeMenu(){
+    links.classList.remove('is-open');
+    toggle.classList.remove('is-open');
+    toggle.setAttribute('aria-expanded','false');
+  }
+  toggle.addEventListener('click', function(){
+    var open = links.classList.toggle('is-open');
+    toggle.classList.toggle('is-open', open);
+    toggle.setAttribute('aria-expanded', open ? 'true' : 'false');
+  });
+  links.querySelectorAll('a').forEach(function(a){
+    a.addEventListener('click', closeMenu);
+  });
 })();
 </script>
 </body>

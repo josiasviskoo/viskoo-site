@@ -17,7 +17,7 @@
 <link rel="stylesheet" href="index.css">
 </head>
 <body>
-<nav class="nav"><div class="nav-inner"><a href="../" class="nav-logo"><img src="assets/img/viskoo-branco.svg" alt="Viskoo Logo" height="24"></a><ul class="nav-links"><li><a href="../produtos/">Produtos</a></li><li><a href="https://wa.me/5516993438187?text=Ol%C3%A1%21%20Estou%20na%20p%C3%A1gina%20UI%2FUX%20e%20gostaria%20de%20mais%20informa%C3%A7%C3%B5es." class="nav-cta">Conversar no WhatsApp</a></li></ul></div></nav>
+<nav class="nav"><div class="nav-inner"><a href="../" class="nav-logo"><img src="assets/img/viskoo-branco.svg" alt="Viskoo Logo" height="24"></a><button type="button" class="nav-toggle" aria-label="Abrir menu" aria-expanded="false" aria-controls="navLinks"><span></span><span></span><span></span></button><ul class="nav-links" id="navLinks"><li><a href="../produtos/">Produtos</a></li><li><a href="https://wa.me/5516993438187?text=Ol%C3%A1%21%20Estou%20na%20p%C3%A1gina%20UI%2FUX%20e%20gostaria%20de%20mais%20informa%C3%A7%C3%B5es." class="nav-cta">Conversar no WhatsApp</a></li></ul></div></nav>
 <main class="page">
   <section class="hero" style="min-height: 64vh;"><div class="hero-bg"></div><div class="hero-content text-center"><span class="hero-eyebrow">UI/UX</span><h1 class="hero-title">Interfaces que ajudam pessoas a decidir e agir.</h1><p class="hero-sub t-body t-secondary" style="max-width: 700px; margin: 0 auto var(--space-6);">Design de telas, fluxos e experiências digitais para reduzir atrito e melhorar a percepção do produto.</p><a href="https://wa.me/5516993438187?text=Ol%C3%A1%21%20Estou%20na%20p%C3%A1gina%20UI%2FUX%20e%20gostaria%20de%20mais%20informa%C3%A7%C3%B5es." class="btn btn-primary btn-lg">Melhorar experiência</a></div></section>
   <section class="section"><div class="container"><div class="section-header text-center"><p class="section-label">Experiência</p><h2 class="section-title">Clareza visual e uso simples</h2><p class="section-desc" style="margin: 0 auto;">Design pensado para navegação, conversão e repetição de uso.</p></div><div class="grid grid-3"><article class="card card-body"><h3 class="t-h3 mb-2">Fluxos</h3><p class="t-sm t-secondary">Caminhos mais naturais para tarefas importantes.</p></article><article class="card card-body"><h3 class="t-h3 mb-2">Interface</h3><p class="t-sm t-secondary">Telas organizadas, consistentes e fáceis de entender.</p></article><article class="card card-body"><h3 class="t-h3 mb-2">Conversão</h3><p class="t-sm t-secondary">Menos atrito entre intenção e ação.</p></article></div></div></section>
@@ -109,6 +109,26 @@
       if (el) el.textContent = p.value;
     });
   }
+})();
+</script>
+<script>
+(function(){
+  var toggle = document.querySelector('.nav-toggle');
+  var links = document.querySelector('.nav-links');
+  if (!toggle || !links) return;
+  function closeMenu(){
+    links.classList.remove('is-open');
+    toggle.classList.remove('is-open');
+    toggle.setAttribute('aria-expanded','false');
+  }
+  toggle.addEventListener('click', function(){
+    var open = links.classList.toggle('is-open');
+    toggle.classList.toggle('is-open', open);
+    toggle.setAttribute('aria-expanded', open ? 'true' : 'false');
+  });
+  links.querySelectorAll('a').forEach(function(a){
+    a.addEventListener('click', closeMenu);
+  });
 })();
 </script>
 </body>

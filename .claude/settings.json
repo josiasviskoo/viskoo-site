@@ -6,7 +6,15 @@
       "Bash(pkill -f \"http.server 8910\")",
       "Bash(echo \"exit: $?\")",
       "Bash(python3 -c ' *)",
-      "Bash(awk -F: '{print $1}')"
+      "Bash(awk -F: '{print $1}')",
+      "Skill(run)",
+      "Skill(run:*)",
+      "Bash(python3 -m http.server 8934)",
+      "Bash(curl -s -o /dev/null -w \"%{http_code}\\\\n\" http://localhost:8934/agentes-ia/)",
+      "Bash(chromium-cli help *)",
+      "Bash(node -e \"console.log\\(require.resolve\\('playwright'\\)\\)\")",
+      "Bash(node -e \"console.log\\(require.resolve\\('puppeteer'\\)\\)\")",
+      "Bash(npm ls *)"
     ],
     "additionalDirectories": [
       "/home/josias-viskoo/Github/viskoo-site"

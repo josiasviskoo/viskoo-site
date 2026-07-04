@@ -151,7 +151,7 @@
 </style>
 </head>
 <body>
-<nav class="nav"><div class="nav-inner"><a href="../" class="nav-logo"><img src="assets/img/viskoo-branco.svg" alt="Viskoo Logo" height="24"></a><ul class="nav-links"><li><a href="../produtos/">Produtos</a></li><li><a href="https://wa.me/5516993438187?text=Ol%C3%A1%21%20Estou%20na%20p%C3%A1gina%20Hospedagem%20Web%20e%20gostaria%20de%20mais%20informa%C3%A7%C3%B5es." class="nav-cta">WhatsApp</a></li></ul></div></nav>
+<nav class="nav"><div class="nav-inner"><a href="../" class="nav-logo"><img src="assets/img/viskoo-branco.svg" alt="Viskoo Logo" height="24"></a><button type="button" class="nav-toggle" aria-label="Abrir menu" aria-expanded="false" aria-controls="navLinks"><span></span><span></span><span></span></button><ul class="nav-links" id="navLinks"><li><a href="../produtos/">Produtos</a></li><li><a href="https://wa.me/5516993438187?text=Ol%C3%A1%21%20Estou%20na%20p%C3%A1gina%20Hospedagem%20Web%20e%20gostaria%20de%20mais%20informa%C3%A7%C3%B5es." class="nav-cta">WhatsApp</a></li></ul></div></nav>
 <main class="page">
   <section class="hero" style="min-height: auto; padding-bottom: var(--space-10);">
     <div class="hero-bg"></div>
@@ -311,6 +311,26 @@
       if (el) el.textContent = p.value;
     });
   }
+})();
+</script>
+<script>
+(function(){
+  var toggle = document.querySelector('.nav-toggle');
+  var links = document.querySelector('.nav-links');
+  if (!toggle || !links) return;
+  function closeMenu(){
+    links.classList.remove('is-open');
+    toggle.classList.remove('is-open');
+    toggle.setAttribute('aria-expanded','false');
+  }
+  toggle.addEventListener('click', function(){
+    var open = links.classList.toggle('is-open');
+    toggle.classList.toggle('is-open', open);
+    toggle.setAttribute('aria-expanded', open ? 'true' : 'false');
+  });
+  links.querySelectorAll('a').forEach(function(a){
+    a.addEventListener('click', closeMenu);
+  });
 })();
 </script>
 </body>
