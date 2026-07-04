@@ -360,15 +360,22 @@ body {
   grid-template-columns: minmax(0, 1fr) minmax(280px, 1fr);
   grid-template-areas:
     "heading media"
-    "desc media";
-  gap: var(--space-8);
+    "desc desc";
+  gap: var(--space-6) var(--space-8);
   align-items: center;
   text-align: left;
   margin-bottom: var(--space-8);
 }
 
 .hero-top-heading { grid-area: heading; }
-.hero-top-desc { grid-area: desc; }
+.hero-top-desc {
+  grid-area: desc;
+  text-align: center;
+}
+
+.hero-top-desc p {
+  margin-inline: auto;
+}
 
 .hero-top-grid .hero-title,
 .hero-top-grid .hero-sub {
