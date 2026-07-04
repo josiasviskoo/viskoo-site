@@ -234,6 +234,9 @@ body {
   font-size: 13px;
   font-weight: 500;
   color: var(--accent) !important;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
 }
 
 @media (max-width: 768px) {
@@ -377,8 +380,7 @@ body {
   margin-inline: auto;
 }
 
-.hero-top-grid .hero-title,
-.hero-top-grid .hero-sub {
+.hero-top-grid .hero-title {
   margin-inline: 0;
 }
 
