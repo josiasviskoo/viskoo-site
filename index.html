@@ -767,7 +767,7 @@
 .lgpd-notice {
   position: fixed;
   left: var(--space-4);
-  bottom: var(--space-4);
+  bottom: calc(var(--space-4) + 44px + var(--space-3));
   z-index: 999;
   max-width: 320px;
   background: rgba(17,17,17,0.92);
@@ -797,7 +797,7 @@
   cursor: pointer;
 }
 @media (max-width: 480px) {
-  .lgpd-notice { left: var(--space-3); right: var(--space-3); bottom: var(--space-3); max-width: none; }
+  .lgpd-notice { left: var(--space-3); right: var(--space-3); bottom: calc(var(--space-3) + 40px + var(--space-3)); max-width: none; }
 }
 </style>
 <script>
