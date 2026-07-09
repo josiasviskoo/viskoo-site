@@ -138,11 +138,17 @@ a{color:inherit;text-decoration:none}
 .icon-btn{width:36px;height:36px;border-radius:50%;background:var(--bg-elevated);border:1px solid var(--border);display:flex;align-items:center;justify-content:center;cursor:pointer;color:var(--text-secondary);font-size:15px;flex-shrink:0;padding:0;transition:color var(--dur-fast),border-color var(--dur-fast)}
 .icon-btn:hover{color:var(--red);border-color:rgba(255,69,58,.3)}
 
-.app-topnav-wrap{border-top:1px solid var(--border);background:var(--topnav-bg)}
+.app-topnav-wrap{border-top:1px solid var(--border);background:var(--topnav-bg);position:relative}
+.app-topnav-wrap::before,.app-topnav-wrap::after{content:'';position:absolute;top:0;bottom:0;width:24px;pointer-events:none;z-index:1;opacity:0;transition:opacity var(--dur-fast)}
+.app-topnav-wrap::before{left:0;background:linear-gradient(90deg,var(--topnav-bg),transparent)}
+.app-topnav-wrap::after{right:0;background:linear-gradient(270deg,var(--topnav-bg),transparent)}
+.app-topnav-wrap.can-scroll-l::before,.app-topnav-wrap.can-scroll-r::after{opacity:1}
 .app-topnav{display:flex;gap:2px;padding:0 32px;max-width:1200px;margin:0 auto;overflow-x:auto}
-.nav-item{display:flex;align-items:center;gap:7px;padding:13px 14px;font-size:14px;color:var(--text-secondary);cursor:pointer;white-space:nowrap;border-bottom:2px solid transparent;transition:color var(--dur-fast),border-color var(--dur-fast)}
+.nav-item{position:relative;display:flex;align-items:center;gap:7px;padding:13px 14px;font-size:14px;color:var(--text-secondary);cursor:pointer;white-space:nowrap;border-bottom:2px solid transparent;transition:color var(--dur-fast),border-color var(--dur-fast)}
 .nav-item:hover{color:var(--text-primary)}
 .nav-item.active{color:var(--accent);border-bottom-color:var(--accent);font-weight:600}
+.nav-tooltip{position:fixed;max-width:220px;background:var(--bg-overlay);color:var(--text-primary);font-size:12px;font-weight:400;line-height:1.4;text-align:center;padding:8px 11px;border-radius:var(--r-md);border:1px solid var(--border-hover);box-shadow:var(--shadow-md);opacity:0;pointer-events:none;transition:opacity var(--dur-fast),transform var(--dur-fast);transform:translateX(-50%) translateY(-4px);z-index:500;white-space:normal}
+.nav-tooltip.show{opacity:1;transform:translateX(-50%) translateY(0)}
 .nav-icon{font-size:15px}
 .topnav-divider{width:1px;align-self:center;height:18px;background:var(--border);margin:0 6px;flex-shrink:0}
 
@@ -423,7 +429,7 @@ footer.app-footer{border-top:1px solid var(--border);padding:18px 0 0;margin-top
 /* ============ PIP VÍDEO ============ */
 .pip-widget{position:fixed;bottom:20px;left:20px;width:150px;aspect-ratio:9/16;border-radius:var(--r-lg);overflow:hidden;background:#000;border:1px solid var(--border-hover);box-shadow:var(--shadow-md);z-index:300;transition:transform var(--dur-base) var(--ease-spring)}
 .pip-widget:hover{transform:translateY(-2px)}
-.pip-widget iframe{width:100%;height:100%;border:none;display:block;pointer-events:none}
+.pip-widget iframe{position:absolute;top:50%;left:50%;width:316%;height:100%;border:none;pointer-events:none;transform:translate(-50%,-50%)}
 .pip-controls{position:absolute;top:6px;right:6px;display:flex;gap:4px;z-index:2}
 .pip-btn{width:22px;height:22px;border-radius:50%;background:rgba(0,0,0,.55);color:#fff;border:none;font-size:13px;display:flex;align-items:center;justify-content:center;cursor:pointer;backdrop-filter:blur(2px)}
 .pip-btn:hover{background:rgba(0,0,0,.75)}
@@ -465,6 +471,16 @@ footer.app-footer{border-top:1px solid var(--border);padding:18px 0 0;margin-top
 }
 @media(max-width:640px){
   .app-topbar-row1,.app-topnav,.page-container{padding-left:20px;padding-right:20px}
+}
+@media(max-width:420px){
+  .app-topbar-row1{gap:8px;padding-left:14px;padding-right:14px}
+  .logo-sub{display:none}
+  .topbar-right{gap:6px}
+  .theme-switch{width:44px;height:24px}
+  .theme-switch .ts-knob{width:18px;height:18px}
+  .theme-switch.is-light .ts-knob{transform:translateX(20px)}
+  .icon-btn,.notif-btn{width:32px;height:32px;font-size:13px}
+  .avatar{width:26px;height:26px;font-size:12px}
 }
 </style>
 </head>
@@ -621,15 +637,15 @@ footer.app-footer{border-top:1px solid var(--border);padding:18px 0 0;margin-top
 
     <div class="app-topnav-wrap">
       <nav class="app-topnav" id="nav-list">
-        <div class="nav-item active" data-page="dashboard"><span class="nav-icon">📊</span>Dashboard</div>
-        <div class="nav-item" data-page="criativos"><span class="nav-icon">🎨</span>Entregáveis</div>
-        <div class="nav-item" data-page="projeto"><span class="nav-icon">🗺️</span>Projeto</div>
-        <div class="nav-item" data-page="solicitacoes"><span class="nav-icon">📝</span>Solicitações</div>
-        <div class="nav-item" data-page="agendamento"><span class="nav-icon">📅</span>Agendamento</div>
-        <div class="nav-item" data-page="relatorios"><span class="nav-icon">📁</span>Relatórios</div>
-        <div class="nav-item" data-page="contratar"><span class="nav-icon">🛍️</span>Contratar serviços</div>
+        <div class="nav-item active" data-page="dashboard" tabindex="0" data-tooltip="Visão geral dos seus serviços contratados"><span class="nav-icon">📊</span>Dashboard</div>
+        <div class="nav-item" tabindex="0" data-page="criativos" data-tooltip="Peças e páginas em produção ou já publicadas"><span class="nav-icon">🎨</span>Entregáveis</div>
+        <div class="nav-item" tabindex="0" data-page="projeto" data-tooltip="O que já foi entregue e o que está em andamento"><span class="nav-icon">🗺️</span>Projeto</div>
+        <div class="nav-item" tabindex="0" data-page="solicitacoes" data-tooltip="Peça mudanças na campanha: um humano aprova antes de aplicar"><span class="nav-icon">📝</span>Solicitações</div>
+        <div class="nav-item" tabindex="0" data-page="agendamento" data-tooltip="1h mensal de conversa com um especialista humano"><span class="nav-icon">📅</span>Agendamento</div>
+        <div class="nav-item" tabindex="0" data-page="relatorios" data-tooltip="Histórico de relatórios mensais"><span class="nav-icon">📁</span>Relatórios</div>
+        <div class="nav-item" tabindex="0" data-page="contratar" data-tooltip="Amplie o que a agência faz por esta empresa"><span class="nav-icon">🛍️</span>Contratar serviços</div>
         <div class="topnav-divider"></div>
-        <div class="nav-item" data-page="financeiro"><span class="nav-icon">💳</span>Financeiro</div>
+        <div class="nav-item" tabindex="0" data-page="financeiro" data-tooltip="Da sua conta, mesmo se você trocar de empresa"><span class="nav-icon">💳</span>Financeiro</div>
       </nav>
     </div>
   </header>
@@ -1318,6 +1334,7 @@ function enterEmpresa(id){
   document.getElementById('app-shell').classList.add('active');
   switchPage('dashboard');
   boot();
+  if(window.updateNavFade) setTimeout(window.updateNavFade, 0);
 }
 
 function selectService(serviceId){
@@ -1504,6 +1521,43 @@ document.getElementById('nav-list').addEventListener('click', function(e){
   if(!item) return;
   switchPage(item.dataset.page);
 });
+
+(function(){
+  const nav = document.getElementById('nav-list');
+  const wrap = nav.closest('.app-topnav-wrap');
+  function updateFade(){
+    wrap.classList.toggle('can-scroll-l', nav.scrollLeft > 2);
+    wrap.classList.toggle('can-scroll-r', nav.scrollLeft + nav.clientWidth < nav.scrollWidth - 2);
+  }
+  nav.addEventListener('scroll', updateFade);
+  window.addEventListener('resize', updateFade);
+  window.updateNavFade = updateFade;
+  updateFade();
+
+  // tooltip renderizado fora do container (overflow-x:auto do nav clipa qualquer coisa que vaze pra baixo)
+  const tip = document.createElement('div');
+  tip.className = 'nav-tooltip';
+  document.body.appendChild(tip);
+  let showTimer;
+  function showTip(item){
+    const text = item.dataset.tooltip;
+    if(!text) return;
+    tip.textContent = text;
+    const r = item.getBoundingClientRect();
+    tip.classList.add('show');
+    const left = Math.min(Math.max(r.left + r.width / 2, 8 + tip.offsetWidth / 2), window.innerWidth - 8 - tip.offsetWidth / 2);
+    tip.style.left = left + 'px';
+    tip.style.top = (r.bottom + 8) + 'px';
+  }
+  function hideTip(){ tip.classList.remove('show'); }
+  nav.querySelectorAll('.nav-item[data-tooltip]').forEach(item => {
+    item.addEventListener('mouseenter', () => { clearTimeout(showTimer); showTimer = setTimeout(() => showTip(item), 150); });
+    item.addEventListener('mouseleave', () => { clearTimeout(showTimer); hideTip(); });
+    item.addEventListener('focus', () => showTip(item));
+    item.addEventListener('blur', hideTip);
+  });
+  nav.addEventListener('scroll', hideTip);
+})();
 
 /* =====================================================================
    BOOT — dispara todas as renderizações após login
