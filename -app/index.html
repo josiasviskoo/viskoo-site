@@ -1,0 +1,2248 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Viskoo · Painel do Cliente</title>
+<script>
+/* aplica o tema salvo antes do CSS pintar a tela, evita flash de tema errado */
+(function(){
+  try{ var t = localStorage.getItem('viskoo-theme'); if(t) document.documentElement.setAttribute('data-theme', t); }catch(e){}
+})();
+</script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Mono:ital,wght@0,300;0,400;0,500;1,300&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;1,9..40,300&display=swap" rel="stylesheet">
+<style>
+/* ============ TOKENS (mesmo design system de modelo-dashboard.html) ============ */
+:root{
+  --bg-base:#080808; --bg-surface:#111111; --bg-elevated:#1a1a1a; --bg-overlay:#222222;
+  --border:rgba(255,255,255,.07); --border-hover:rgba(255,255,255,.14);
+  --text-primary:#ffffff; --text-secondary:rgba(255,255,255,.85); --text-muted:rgba(255,255,255,.62);
+  --accent:#f48322; --accent-dim:rgba(244,131,34,.15); --accent-glow:rgba(244,131,34,.35); --accent-hover:#ff9a3c;
+  --font-body:'DM Sans',sans-serif; --font-mono:'DM Mono',monospace;
+  --space-1:4px;--space-2:8px;--space-3:12px;--space-4:16px;--space-5:24px;--space-6:32px;--space-7:48px;--space-8:64px;
+  --r-sm:6px;--r-md:12px;--r-lg:20px;--r-xl:32px;--r-full:9999px;
+  --shadow-md:0 4px 24px rgba(0,0,0,.6); --shadow-accent:0 0 32px rgba(244,131,34,.25);
+  --ease-out:cubic-bezier(.25,.46,.45,.94); --ease-spring:cubic-bezier(.34,1.56,.64,1);
+  --dur-fast:150ms; --dur-base:280ms;
+  --red:#ff453a; --red-dim:rgba(255,69,58,.14);
+  --orange:#f48322; --orange-dim:rgba(244,131,34,.14);
+  --yellow:#ffd60a; --yellow-dim:rgba(255,214,10,.14);
+  --green:#30d158; --green-dim:rgba(48,209,88,.14);
+  --blue:#64d2ff; --blue-dim:rgba(100,210,255,.14);
+  --purple:#bf5af2; --purple-dim:rgba(191,90,242,.14);
+  --gray:#8b8b8b; --gray-dim:rgba(139,139,139,.14);
+  --topbar-bg:rgba(8,8,8,.85);
+  --topnav-bg:rgba(0,0,0,.22);
+}
+/* ============ TEMA CLARO ============ */
+:root[data-theme="light"]{
+  --bg-base:#f6f6f4; --bg-surface:#ffffff; --bg-elevated:#eeeeec; --bg-overlay:#e4e4e1;
+  --border:rgba(0,0,0,.09); --border-hover:rgba(0,0,0,.18);
+  --text-primary:#000000; --text-secondary:rgba(0,0,0,.82); --text-muted:rgba(0,0,0,.62);
+  --shadow-md:0 4px 24px rgba(0,0,0,.08); --shadow-accent:0 0 32px rgba(244,131,34,.18);
+  --topbar-bg:rgba(246,246,244,.85);
+  --topnav-bg:rgba(0,0,0,.045);
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{-webkit-font-smoothing:antialiased}
+body{background:var(--bg-base);color:var(--text-primary);font-family:var(--font-body);font-size:17px;line-height:1.6;transition:background-color var(--dur-base) var(--ease-out),color var(--dur-base) var(--ease-out)}
+::selection{background:var(--accent);color:#000}
+::-webkit-scrollbar{width:4px;height:4px}::-webkit-scrollbar-thumb{background:var(--accent);border-radius:var(--r-full)}
+a{color:inherit;text-decoration:none}
+
+@keyframes fadeUp{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:translateY(0)}}
+@keyframes fillBar{from{width:0}}
+@keyframes fillHeight{from{height:0}}
+@keyframes spin{to{transform:rotate(360deg)}}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:.4}}
+@keyframes drawLine{from{stroke-dashoffset:1200}to{stroke-dashoffset:0}}
+
+.reveal{opacity:0;animation:fadeUp .6s var(--ease-out) forwards}
+
+/* ============ LOGIN ============ */
+.login-screen{min-height:100vh;display:flex;align-items:center;justify-content:center;padding:24px;position:relative;overflow:hidden}
+.login-screen::before{content:'';position:absolute;top:-20%;left:50%;transform:translateX(-50%);width:600px;height:600px;background:radial-gradient(circle,var(--accent-glow),transparent 70%);opacity:.25;pointer-events:none}
+.login-card{width:100%;max-width:380px;background:var(--bg-surface);border:1px solid var(--border);border-radius:var(--r-xl);padding:40px 32px;position:relative;z-index:1;box-shadow:var(--shadow-md)}
+.login-logo{display:flex;flex-direction:column;align-items:center;gap:14px;margin-bottom:28px}
+.login-mark{width:52px;height:52px;background:var(--accent);border-radius:var(--r-md);display:flex;align-items:center;justify-content:center;font-weight:700;font-size:22px;color:#000}
+.login-title{font-size:17px;font-weight:700;letter-spacing:-.02em}
+.login-sub{font-size:14px;color:var(--text-muted);text-align:center}
+.field{display:flex;flex-direction:column;gap:6px;margin-bottom:16px}
+.field label{font-size:13px;font-weight:600;letter-spacing:.04em;text-transform:uppercase;color:var(--text-muted)}
+.field input{background:var(--bg-elevated);border:1px solid var(--border);border-radius:var(--r-md);padding:11px 14px;color:var(--text-primary);font-family:var(--font-body);font-size:15px;outline:none;transition:border-color var(--dur-fast)}
+.field input:focus{border-color:var(--accent)}
+.field-row{display:flex;justify-content:space-between;align-items:center;margin-bottom:20px}
+.field-row a{font-size:13px;color:var(--accent)}
+.chk-row{display:flex;align-items:center;gap:7px;font-size:13px;color:var(--text-secondary)}
+.login-foot{margin-top:22px;text-align:center;font-size:13px;color:var(--text-muted)}
+.login-error{font-size:13px;color:var(--red);margin:-8px 0 14px;display:none}
+.login-screen .theme-toggle{position:absolute;top:20px;right:20px;z-index:2}
+
+/* ============ THEME SWITCH ============ */
+.theme-switch{position:relative;width:54px;height:28px;border-radius:var(--r-full);background:var(--bg-elevated);border:1px solid var(--border);cursor:pointer;flex-shrink:0;padding:0;transition:background var(--dur-base),border-color var(--dur-base)}
+.theme-switch:hover{border-color:var(--border-hover)}
+.ts-track{position:absolute;inset:0;display:flex;align-items:center;justify-content:space-between;padding:0 7px;font-size:13px;pointer-events:none}
+.ts-icon{opacity:.55;line-height:1;transition:opacity var(--dur-base)}
+.theme-switch.is-light .ts-icon.ts-sun,.theme-switch:not(.is-light) .ts-icon.ts-moon{opacity:1}
+.ts-knob{position:absolute;top:2px;left:2px;width:22px;height:22px;border-radius:50%;background:var(--accent);box-shadow:0 2px 8px rgba(0,0,0,.35);transition:transform var(--dur-base) var(--ease-spring)}
+.theme-switch.is-light .ts-knob{transform:translateX(26px)}
+
+/* ============ SELEÇÃO DE EMPRESA ============ */
+.empresa-screen{min-height:100vh;padding:40px 24px;display:none}
+.empresa-screen.active{display:block}
+.empresa-screen-inner{max-width:960px;margin:0 auto}
+.es-head{display:flex;align-items:center;justify-content:space-between;gap:16px;margin-bottom:32px;flex-wrap:wrap}
+.es-head-left{display:flex;align-items:center;gap:14px}
+.es-title{font-size:19px;font-weight:700;letter-spacing:-.02em}
+.es-sub{font-size:14px;color:var(--text-muted);margin-top:2px}
+.es-sub b{color:var(--text-secondary)}
+.es-head-right{display:flex;align-items:center;gap:10px}
+.empresa-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:16px}
+.empresa-card{background:var(--bg-surface);border:1px solid var(--border);border-radius:var(--r-xl);padding:20px;cursor:pointer;transition:transform var(--dur-base) var(--ease-spring),border-color var(--dur-base),box-shadow var(--dur-base)}
+.empresa-card:hover{transform:translateY(-2px);border-color:var(--accent);box-shadow:var(--shadow-md)}
+.empresa-card .avatar{width:44px;height:44px;font-size:17px;margin-bottom:14px;border-radius:var(--r-md)}
+.ec-name{font-size:16px;font-weight:700;margin-bottom:3px}
+.ec-seg{font-size:13px;color:var(--text-muted);margin-bottom:14px}
+.ec-foot{display:flex;justify-content:space-between;align-items:center}
+.empresa-card.add-new{border-style:dashed;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;color:var(--text-muted);min-height:172px}
+.empresa-card.add-new .plus{font-size:26px;color:var(--accent);margin-bottom:8px}
+.empresa-card.add-new:hover{color:var(--text-primary)}
+
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:6px;background:var(--accent);color:#000;font-weight:600;font-size:15px;font-family:var(--font-body);border-radius:var(--r-md);padding:12px 18px;border:none;cursor:pointer;transition:background var(--dur-fast),transform var(--dur-fast)}
+.btn:hover{background:var(--accent-hover)}
+.btn:active{transform:scale(.98)}
+.btn-block{width:100%}
+.btn-ghost{background:transparent;border:1px solid var(--border);color:var(--text-primary)}
+.btn-ghost:hover{background:var(--bg-elevated);border-color:var(--border-hover)}
+.btn-sm{padding:7px 12px;font-size:13px;border-radius:var(--r-sm)}
+.btn[disabled]{opacity:.35;cursor:not-allowed}
+
+/* ============ APP SHELL — menu superior + container central ============ */
+.app-shell{display:none;min-height:100vh;flex-direction:column}
+.app-shell.active{display:flex}
+
+.app-topbar{position:sticky;top:0;z-index:50;background:var(--topbar-bg);backdrop-filter:blur(10px);border-bottom:1px solid var(--border)}
+.app-topbar-row1{display:flex;align-items:center;gap:20px;padding:14px 32px;max-width:1200px;margin:0 auto}
+.topbar-brand{display:flex;align-items:center;gap:10px;flex-shrink:0}
+.logo-mark{width:34px;height:34px;background:var(--accent);border-radius:var(--r-md);display:flex;align-items:center;justify-content:center;font-weight:700;font-size:17px;color:#000;flex-shrink:0}
+.logo-text{font-size:16px;font-weight:700;letter-spacing:-.02em}
+.logo-sub{font-size:12px;color:var(--text-muted)}
+
+.topbar-right{display:flex;align-items:center;gap:10px;margin-left:auto}
+.topbar-user{display:flex;align-items:center;gap:8px;padding:4px 12px 4px 4px;border-radius:var(--r-full);background:var(--bg-elevated);border:1px solid var(--border)}
+.topbar-user .user-meta{display:flex;flex-direction:column;line-height:1.25}
+.topbar-user .user-meta b{font-size:12px;font-weight:600}
+.topbar-user .user-meta span{font-size:11px;color:var(--text-muted);max-width:140px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;display:block}
+.icon-btn{width:36px;height:36px;border-radius:50%;background:var(--bg-elevated);border:1px solid var(--border);display:flex;align-items:center;justify-content:center;cursor:pointer;color:var(--text-secondary);font-size:15px;flex-shrink:0;padding:0;transition:color var(--dur-fast),border-color var(--dur-fast)}
+.icon-btn:hover{color:var(--red);border-color:rgba(255,69,58,.3)}
+
+.app-topnav-wrap{border-top:1px solid var(--border);background:var(--topnav-bg)}
+.app-topnav{display:flex;gap:2px;padding:0 32px;max-width:1200px;margin:0 auto;overflow-x:auto}
+.nav-item{display:flex;align-items:center;gap:7px;padding:13px 14px;font-size:14px;color:var(--text-secondary);cursor:pointer;white-space:nowrap;border-bottom:2px solid transparent;transition:color var(--dur-fast),border-color var(--dur-fast)}
+.nav-item:hover{color:var(--text-primary)}
+.nav-item.active{color:var(--accent);border-bottom-color:var(--accent);font-weight:600}
+.nav-icon{font-size:15px}
+.topnav-divider{width:1px;align-self:center;height:18px;background:var(--border);margin:0 6px;flex-shrink:0}
+
+.avatar{width:30px;height:30px;border-radius:50%;background:var(--accent-dim);color:var(--accent);display:flex;align-items:center;justify-content:center;font-size:14px;font-weight:700;flex-shrink:0}
+
+/* ============ WORKSPACE SWITCHER ============ */
+.workspace-switcher{position:relative;flex-shrink:0}
+.ws-btn{width:220px;display:flex;align-items:center;gap:10px;padding:7px 10px;border-radius:var(--r-md);background:var(--bg-elevated);border:1px solid var(--border);cursor:pointer;text-align:left;font-family:var(--font-body)}
+.ws-btn:hover{border-color:var(--border-hover)}
+.ws-btn .avatar{border-radius:var(--r-sm)}
+.ws-info{flex:1;min-width:0}
+.ws-name{display:block;font-size:14px;font-weight:600;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.ws-sub{display:block;font-size:12px;color:var(--text-muted);overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.ws-caret{font-size:12px;color:var(--text-muted);flex-shrink:0}
+.ws-dropdown{display:none;position:absolute;top:calc(100% + 6px);left:0;width:260px;background:var(--bg-surface);border:1px solid var(--border-hover);border-radius:var(--r-md);box-shadow:var(--shadow-md);z-index:60;overflow:hidden}
+.ws-dropdown.active{display:block}
+.ws-dropdown-list{max-height:220px;overflow-y:auto}
+.ws-item{display:flex;align-items:center;gap:9px;padding:9px 12px;cursor:pointer;font-size:14px}
+.ws-item:hover{background:var(--bg-elevated)}
+.ws-item.current{background:var(--accent-dim);color:var(--accent)}
+.ws-item .avatar{width:24px;height:24px;font-size:12px;flex-shrink:0;border-radius:var(--r-sm)}
+.ws-item-name{flex:1;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.ws-dropdown-actions{border-top:1px solid var(--border)}
+.ws-action{width:100%;text-align:left;padding:10px 12px;font-size:14px;color:var(--text-secondary);background:none;border:none;cursor:pointer;display:flex;align-items:center;gap:8px;font-family:var(--font-body)}
+.ws-action:hover{background:var(--bg-elevated);color:var(--text-primary)}
+
+.page-container{width:100%;max-width:1200px;margin:0 auto;padding:28px 32px 80px;display:flex;flex-direction:column;gap:10px}
+.page-title-block{margin-bottom:6px}
+.topbar-title{font-size:20px;font-weight:700;letter-spacing:-.02em}
+.topbar-sub{font-size:13px;color:var(--text-muted);margin-top:2px}
+
+.chip{display:inline-flex;align-items:center;gap:5px;font-size:13px;font-family:var(--font-mono);color:var(--text-muted);background:var(--bg-elevated);border:1px solid var(--border);border-radius:var(--r-sm);padding:4px 10px;cursor:default}
+.chip.live{color:var(--green)}
+.chip.live::before{content:'';width:6px;height:6px;border-radius:50%;background:var(--green);animation:pulse 2s ease-in-out infinite}
+.chip.toggle{cursor:pointer;transition:background var(--dur-fast),color var(--dur-fast),border-color var(--dur-fast)}
+.chip.toggle.active{background:var(--accent-dim);color:var(--accent);border-color:rgba(244,131,34,.3)}
+
+.page{padding:0;display:none;flex-direction:column;gap:26px}
+.page.active{display:flex}
+
+.section-title{font-size:13px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:var(--text-muted);display:flex;align-items:center;gap:8px;margin-bottom:14px}
+
+/* ============ GRID ============ */
+.grid{display:grid;gap:16px}
+.g-stats{grid-template-columns:repeat(auto-fit,minmax(180px,1fr))}
+.g-2{grid-template-columns:1.4fr .9fr}
+.g-2-even{grid-template-columns:1fr 1fr}
+.g-3{grid-template-columns:repeat(3,1fr)}
+@media(max-width:1100px){.g-stats{grid-template-columns:repeat(2,1fr)}.g-2,.g-3,.g-2-even{grid-template-columns:1fr}}
+
+/* ============ CARD ============ */
+.card{background:var(--bg-surface);border:1px solid var(--border);border-radius:var(--r-xl);transition:transform var(--dur-base) var(--ease-spring),border-color var(--dur-base),box-shadow var(--dur-base)}
+.card:hover{transform:translateY(-2px);border-color:var(--border-hover);box-shadow:var(--shadow-md)}
+.card-h{padding:16px 20px;border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;gap:10px;flex-wrap:wrap}
+.card-ht{font-size:15px;font-weight:600;display:flex;align-items:center;gap:8px}
+.card-hd{width:6px;height:6px;border-radius:50%;background:var(--accent)}
+.card-b{padding:18px 20px}
+
+/* ============ STAT TILES ============ */
+.stat-card{padding:18px 20px;background:var(--bg-surface);border:1px solid var(--border);border-radius:var(--r-xl);position:relative;overflow:hidden}
+.stat-card:hover{transform:translateY(-2px);box-shadow:var(--shadow-md)}
+.stat-icon{font-size:17px;margin-bottom:10px;opacity:.9}
+.stat-value{font-size:clamp(22px,2.6vw,29px);font-weight:700;letter-spacing:-.03em;line-height:1;margin-bottom:6px}
+.stat-label{font-size:14px;color:var(--text-secondary)}
+.stat-delta{font-size:13px;font-weight:500;margin-top:8px;display:flex;align-items:center;gap:4px}
+.stat-delta.up{color:var(--green)}.stat-delta.down{color:var(--red)}.stat-delta.flat{color:var(--text-muted)}
+.stat-card.accent{border-color:rgba(244,131,34,.35)}
+.stat-card.accent::after{content:'';position:absolute;top:-30%;right:-20%;width:140px;height:140px;background:radial-gradient(circle,var(--accent-glow),transparent 70%);pointer-events:none}
+
+/* ============ BADGES ============ */
+.badge{display:inline-flex;align-items:center;gap:4px;font-size:12px;font-weight:500;padding:3px 9px;border-radius:var(--r-full);border:1px solid transparent}
+.badge-danger{background:rgba(255,69,58,.12);color:var(--red);border-color:rgba(255,69,58,.25)}
+.badge-warning{background:rgba(255,214,10,.12);color:var(--yellow);border-color:rgba(255,214,10,.25)}
+.badge-success{background:rgba(48,209,88,.12);color:var(--green);border-color:rgba(48,209,88,.25)}
+.badge-default{background:var(--bg-overlay);color:var(--text-secondary);border-color:var(--border)}
+.badge-dot{width:6px;height:6px;border-radius:50%;background:currentColor}
+
+/* ============ CAMPAIGN STATUS ============ */
+.status-card{padding:20px 24px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:16px}
+.status-left{display:flex;align-items:center;gap:14px}
+.status-ring{width:52px;height:52px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:22px;flex-shrink:0}
+.status-name{font-size:17px;font-weight:700}
+.status-desc{font-size:14px;color:var(--text-muted);margin-top:2px}
+
+/* ============ PROGRESS ============ */
+.progress-wrap{height:10px;background:var(--bg-elevated);border-radius:var(--r-full);overflow:hidden;margin-bottom:10px}
+.progress-bar{height:100%;background:linear-gradient(90deg,var(--accent),#ffb347);border-radius:var(--r-full);animation:fillBar 1.2s var(--ease-out) forwards}
+
+/* ============ CHART ============ */
+.chart-toolbar{display:flex;gap:8px;flex-wrap:wrap}
+.chart-wrap{padding:8px 20px 20px;position:relative}
+.chart-wrap svg{width:100%;height:220px;display:block;overflow:visible}
+.chart-axis-label{font-family:var(--font-mono);font-size:12px;fill:var(--text-muted)}
+.chart-legend{display:flex;gap:16px;padding:14px 20px 0;font-size:13px;color:var(--text-muted)}
+.chart-legend b{color:var(--text-primary);font-family:var(--font-mono)}
+
+/* ============ GALLERY (criativos) ============ */
+.gallery-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:16px}
+.creative-card{background:var(--bg-surface);border:1px solid var(--border);border-radius:var(--r-xl);overflow:hidden;transition:transform var(--dur-base) var(--ease-spring),border-color var(--dur-base)}
+.creative-card:hover{transform:translateY(-2px);border-color:var(--border-hover)}
+.creative-thumb{aspect-ratio:16/10;position:relative;display:flex;align-items:center;justify-content:center;font-size:34px}
+.creative-crown{position:absolute;top:10px;left:10px;background:var(--accent);color:#000;font-size:12px;font-weight:700;padding:3px 9px;border-radius:var(--r-full);display:flex;align-items:center;gap:4px}
+.creative-type{position:absolute;top:10px;right:10px;background:rgba(0,0,0,.55);border-radius:var(--r-sm);padding:4px 8px;font-size:13px;font-family:var(--font-mono);color:var(--text-primary)}
+.creative-body{padding:14px 16px}
+.creative-name{font-size:15px;font-weight:600;margin-bottom:8px}
+.creative-meta{display:flex;justify-content:space-between;font-size:13px;color:var(--text-muted);border-top:1px solid var(--border);padding-top:10px;margin-top:2px}
+.creative-meta b{color:var(--text-secondary);font-family:var(--font-mono);font-weight:500}
+
+/* ============ TIMELINE ============ */
+.timeline{padding:22px 24px}
+.timeline-item{display:grid;grid-template-columns:22px 1fr;gap:16px;position:relative;padding-bottom:26px}
+.timeline-item::before{content:'';position:absolute;left:10px;top:24px;bottom:-4px;width:1px;background:var(--border)}
+.timeline-item:last-child{padding-bottom:0}
+.timeline-item:last-child::before{display:none}
+.timeline-dot{width:22px;height:22px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:12px;z-index:1}
+.timeline-dot.done{background:var(--green-dim);color:var(--green);border:1px solid var(--green)}
+.timeline-dot.andamento{background:var(--accent-dim);color:var(--accent);border:1px solid var(--accent)}
+.timeline-dot.andamento::after{content:'';width:6px;height:6px;border-radius:50%;background:var(--accent);animation:pulse 1.6s ease-in-out infinite}
+.timeline-dot.planejado{background:var(--bg-elevated);color:var(--text-muted);border:1px solid var(--border)}
+.t-date{font-family:var(--font-mono);font-size:12px;color:var(--text-muted);margin-bottom:3px;text-transform:uppercase;letter-spacing:.04em}
+.t-title{font-size:15px;font-weight:600;margin-bottom:3px;display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+.t-desc{font-size:14px;color:var(--text-secondary)}
+
+/* ============ AGENDAMENTO ============ */
+.hours-card{padding:20px 24px}
+.hours-top{display:flex;justify-content:space-between;align-items:flex-end;margin-bottom:14px;flex-wrap:wrap;gap:10px}
+.hours-value{font-size:28px;font-weight:700;letter-spacing:-.03em}
+.hours-value .of{color:var(--text-muted);font-weight:500;font-size:17px}
+.hours-foot{display:flex;justify-content:space-between;font-size:13px;color:var(--text-muted)}
+.hours-foot b{color:var(--text-secondary);font-weight:500}
+
+.next-session{display:flex;align-items:center;gap:14px;padding:16px 20px;border-top:1px solid var(--border)}
+.next-session .ns-icon{width:38px;height:38px;border-radius:var(--r-md);background:var(--accent-dim);color:var(--accent);display:flex;align-items:center;justify-content:center;font-size:17px;flex-shrink:0}
+.next-session .ns-title{font-size:14px;font-weight:600}
+.next-session .ns-sub{font-size:13px;color:var(--text-muted);margin-top:2px}
+
+.cal-head{display:flex;align-items:center;justify-content:space-between;padding:14px 20px 0}
+.cal-month{font-size:14px;font-weight:600;font-family:var(--font-mono)}
+.calendar{display:grid;grid-template-columns:repeat(7,1fr);gap:6px;padding:14px 20px 6px}
+.cal-dow{text-align:center;font-size:12px;color:var(--text-muted);text-transform:uppercase;padding-bottom:4px}
+.cal-day{aspect-ratio:1;display:flex;align-items:center;justify-content:center;border-radius:var(--r-sm);font-size:14px;cursor:default;background:transparent;color:var(--text-muted);position:relative}
+.cal-day.empty{visibility:hidden}
+.cal-day.past{opacity:.25}
+.cal-day.has-slot{background:var(--bg-elevated);color:var(--text-primary);cursor:pointer;border:1px solid var(--border)}
+.cal-day.has-slot:hover{border-color:var(--accent)}
+.cal-day.has-slot::after{content:'';position:absolute;bottom:4px;width:4px;height:4px;border-radius:50%;background:var(--accent)}
+.cal-day.today{color:var(--accent);font-weight:700}
+.cal-day.selected{background:var(--accent);color:#000;font-weight:700}
+.cal-day.selected::after{display:none}
+
+.slot-section{padding:16px 20px 20px;border-top:1px solid var(--border)}
+.slot-section-title{font-size:13px;color:var(--text-muted);margin-bottom:10px}
+.slot-list{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:16px}
+.slot-chip{font-family:var(--font-mono);font-size:14px;padding:8px 14px;border-radius:var(--r-md);background:var(--bg-elevated);border:1px solid var(--border);color:var(--text-primary);cursor:pointer;transition:background var(--dur-fast),border-color var(--dur-fast)}
+.slot-chip:hover{border-color:var(--border-hover)}
+.slot-chip.selected{background:var(--accent);color:#000;border-color:var(--accent);font-weight:700}
+.confirm-banner{display:none;align-items:center;gap:10px;padding:12px 16px;border-radius:var(--r-md);background:var(--green-dim);color:var(--green);font-size:14px;margin-top:12px}
+
+/* ============ RELATÓRIOS ============ */
+.report-row{display:grid;grid-template-columns:1fr 130px 100px 90px;align-items:center;gap:14px;padding:14px 20px}
+.report-row:not(:last-child){border-bottom:1px solid var(--border)}
+.report-name{font-size:15px;font-weight:600}
+.report-sub{font-size:13px;color:var(--text-muted);margin-top:2px}
+.report-date{font-family:var(--font-mono);font-size:14px;color:var(--text-secondary)}
+@media(max-width:800px){.report-row{grid-template-columns:1fr;gap:8px}.report-row .report-actions{display:flex;gap:8px}}
+
+/* ============ FINANCEIRO (nível de conta) ============ */
+.plan-card{padding:20px 24px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:16px}
+.plan-name{font-size:17px;font-weight:700}
+.plan-desc{font-size:14px;color:var(--text-muted);margin-top:2px}
+.plan-price{font-size:26px;font-weight:700;letter-spacing:-.03em;text-align:right}
+.plan-price span{font-size:14px;color:var(--text-muted);font-weight:500}
+.pm-card{padding:18px 24px;display:flex;align-items:center;gap:14px;flex-wrap:wrap}
+.pm-icon{width:42px;height:42px;border-radius:var(--r-md);background:var(--accent-dim);color:var(--accent);display:flex;align-items:center;justify-content:center;font-size:18px;flex-shrink:0}
+.pm-info{flex:1;min-width:160px}
+.pm-title{font-size:15px;font-weight:600}
+.pm-sub{font-size:13px;color:var(--text-muted);margin-top:2px}
+.invoice-item{padding:14px 20px}
+.invoice-item:not(:last-child){border-bottom:1px solid var(--border)}
+.invoice-top{display:flex;justify-content:space-between;align-items:flex-start;gap:12px;flex-wrap:wrap;margin-bottom:8px}
+.invoice-name{font-size:15px;font-weight:600}
+.invoice-date{font-size:13px;color:var(--text-muted);margin-top:2px}
+.invoice-value{font-family:var(--font-mono);font-size:16px;font-weight:600;text-align:right}
+.invoice-breakdown{display:flex;flex-wrap:wrap;gap:6px;margin-top:8px}
+.invoice-chip{font-family:var(--font-mono);font-size:12px;color:var(--text-secondary);background:var(--bg-elevated);border:1px solid var(--border);border-radius:var(--r-sm);padding:3px 8px}
+
+/* ============ NOTIFICAÇÕES ============ */
+.notif-wrap{position:relative}
+.notif-btn{position:relative;width:36px;height:36px;border-radius:50%;background:var(--bg-elevated);border:1px solid var(--border);display:flex;align-items:center;justify-content:center;cursor:pointer;font-size:15px;color:var(--text-secondary);flex-shrink:0;padding:0}
+.notif-btn:hover{border-color:var(--border-hover);color:var(--text-primary)}
+.notif-badge{position:absolute;top:-3px;right:-3px;min-width:16px;height:16px;padding:0 4px;border-radius:var(--r-full);background:var(--red);color:#fff;font-size:10px;font-family:var(--font-mono);display:none;align-items:center;justify-content:center;border:2px solid var(--bg-base)}
+.notif-dropdown{display:none;position:absolute;top:calc(100% + 8px);right:0;width:340px;max-width:calc(100vw - 40px);max-height:420px;overflow-y:auto;background:var(--bg-surface);border:1px solid var(--border-hover);border-radius:var(--r-lg);box-shadow:var(--shadow-md);z-index:120}
+.notif-dropdown.active{display:block}
+.notif-head{padding:14px 16px;border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between}
+.notif-head b{font-size:13px}
+.notif-markall{background:none;border:none;color:var(--accent);font-size:11px;cursor:pointer;font-family:var(--font-body)}
+.notif-item{display:flex;gap:10px;padding:12px 16px;border-bottom:1px solid var(--border);cursor:pointer;align-items:flex-start}
+.notif-item:last-child{border-bottom:none}
+.notif-item:hover{background:var(--bg-elevated)}
+.notif-item.unread{background:rgba(244,131,34,.06)}
+.notif-icon{width:32px;height:32px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:14px;flex-shrink:0}
+.notif-body{flex:1;min-width:0}
+.notif-title{font-size:12px;font-weight:600}
+.notif-desc{font-size:11px;color:var(--text-muted);margin-top:2px}
+.notif-time{font-size:10px;color:var(--text-muted);margin-top:4px;font-family:var(--font-mono)}
+.notif-dot{width:7px;height:7px;border-radius:50%;background:var(--accent);flex-shrink:0;margin-top:5px}
+.notif-empty{padding:32px 16px;text-align:center;color:var(--text-muted);font-size:12px}
+
+/* ============ MULTI-SERVIÇO ============ */
+.service-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(190px,1fr));gap:14px}
+.service-card{background:var(--bg-surface);border:1px solid var(--border);border-radius:var(--r-lg);padding:16px;cursor:pointer;transition:transform var(--dur-base) var(--ease-spring),border-color var(--dur-base)}
+.service-card:hover{transform:translateY(-2px);border-color:var(--border-hover)}
+.service-card.active{border-color:var(--accent);background:var(--accent-dim)}
+.service-card .sc-icon{font-size:20px;margin-bottom:8px}
+.service-card .sc-name{font-size:13px;font-weight:700;margin-bottom:6px}
+.service-tag{display:inline-flex;align-items:center;gap:4px;font-size:11px;color:var(--text-secondary);background:var(--bg-elevated);border:1px solid var(--border);border-radius:var(--r-sm);padding:3px 8px}
+.servico-check-grid{display:flex;flex-wrap:wrap;gap:8px}
+.catalog-card{background:var(--bg-surface);border:1px solid var(--border);border-radius:var(--r-xl);padding:20px;display:flex;flex-direction:column;gap:10px;transition:transform var(--dur-base) var(--ease-spring),border-color var(--dur-base)}
+.catalog-card:hover{transform:translateY(-2px);border-color:var(--border-hover)}
+.catalog-card .cc-icon{font-size:26px}
+.catalog-card .cc-name{font-size:14px;font-weight:700}
+.catalog-card .cc-desc{font-size:12px;color:var(--text-secondary);flex:1}
+.req-urgent-note{display:none;gap:8px;align-items:flex-start;font-size:12px;color:var(--yellow);background:var(--yellow-dim);border:1px solid rgba(255,214,10,.25);border-radius:var(--r-md);padding:10px 12px;margin-top:-4px}
+
+/* ============ SOLICITAÇÕES ============ */
+.info-banner{display:flex;gap:12px;align-items:flex-start;padding:14px 18px;border-radius:var(--r-lg);background:var(--accent-dim);border:1px solid rgba(244,131,34,.25);font-size:14px;color:var(--text-secondary)}
+.info-banner .ib-icon{font-size:17px;flex-shrink:0}
+.info-banner b{color:var(--text-primary)}
+
+.req-form{padding:20px 24px;display:flex;flex-direction:column;gap:14px}
+.req-form label{font-size:13px;font-weight:600;letter-spacing:.04em;text-transform:uppercase;color:var(--text-muted);margin-bottom:6px;display:block}
+.req-form select,.req-form textarea{width:100%;background:var(--bg-elevated);border:1px solid var(--border);border-radius:var(--r-md);padding:11px 14px;color:var(--text-primary);font-family:var(--font-body);font-size:15px;outline:none;transition:border-color var(--dur-fast)}
+.req-form select:focus,.req-form textarea:focus{border-color:var(--accent)}
+.req-form textarea{resize:vertical;min-height:88px}
+.req-form input[type="file"]{width:100%;background:var(--bg-elevated);border:1px solid var(--border);border-radius:var(--r-md);padding:9px 12px;color:var(--text-secondary);font-family:var(--font-body);font-size:13px;cursor:pointer}
+.req-form input[type="file"]::file-selector-button{background:var(--accent);color:#000;border:none;border-radius:var(--r-sm);padding:6px 12px;margin-right:10px;font-family:var(--font-body);font-size:12px;font-weight:600;cursor:pointer}
+.req-form input[type="file"]::file-selector-button:hover{background:var(--accent-hover)}
+.req-file-preview{margin-top:10px;display:flex;align-items:center;gap:10px}
+.req-file-preview img{width:52px;height:52px;object-fit:cover;border-radius:var(--r-sm);border:1px solid var(--border)}
+.req-file-preview .rfp-name{font-size:12px;color:var(--text-secondary);flex:1;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.req-file-preview .rfp-remove{background:none;border:none;color:var(--text-muted);cursor:pointer;font-size:15px}
+.req-file-preview .rfp-remove:hover{color:var(--red)}
+.req-confirm{display:none;align-items:center;gap:10px;padding:12px 16px;border-radius:var(--r-md);background:var(--green-dim);color:var(--green);font-size:14px}
+.request-meta{font-size:12px;color:var(--text-muted);margin-bottom:8px}
+.request-meta b{color:var(--text-secondary);font-weight:500}
+.request-attachment{margin-top:8px}
+.request-attachment img{max-width:130px;max-height:100px;border-radius:var(--r-md);border:1px solid var(--border);display:block;object-fit:cover}
+
+.request-item{padding:16px 20px}
+.request-item:not(:last-child){border-bottom:1px solid var(--border)}
+.request-top{display:flex;justify-content:space-between;align-items:flex-start;gap:12px;margin-bottom:8px;flex-wrap:wrap}
+.request-type{font-size:15px;font-weight:600}
+.request-date{font-size:13px;color:var(--text-muted);margin-top:2px}
+.request-msg{font-size:14px;color:var(--text-secondary);margin-bottom:10px}
+.request-response{display:flex;gap:10px;background:var(--bg-elevated);border-radius:var(--r-md);padding:10px 14px;border-left:2px solid var(--accent)}
+.request-response .rr-icon{font-size:16px;flex-shrink:0}
+.request-response .rr-text{font-size:14px;color:var(--text-secondary)}
+.request-response .rr-text b{color:var(--text-primary)}
+.badge-info{background:rgba(100,210,255,.12);color:var(--blue);border-color:rgba(100,210,255,.25)}
+
+/* ============ MODAL ============ */
+.modal-overlay{position:fixed;inset:0;background:rgba(0,0,0,.65);backdrop-filter:blur(4px);display:none;align-items:center;justify-content:center;z-index:200;padding:20px}
+.modal-overlay.active{display:flex}
+.modal-box{width:100%;max-width:460px;background:var(--bg-surface);border:1px solid var(--border-hover);border-radius:var(--r-xl);box-shadow:var(--shadow-md);animation:fadeUp .3s var(--ease-out) forwards}
+.modal-h{padding:18px 22px;border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between}
+.modal-h b{font-size:16px}
+.modal-close{cursor:pointer;color:var(--text-muted);font-size:18px;line-height:1;background:none;border:none}
+.modal-close:hover{color:var(--text-primary)}
+.modal-b{padding:20px 22px;display:flex;flex-direction:column;gap:10px;font-size:14px;color:var(--text-secondary)}
+.modal-b .m-row{display:flex;justify-content:space-between}
+.modal-b .m-row b{color:var(--text-primary);font-family:var(--font-mono);font-weight:500}
+.modal-f{padding:16px 22px;border-top:1px solid var(--border);display:flex;justify-content:flex-end;gap:10px}
+
+footer.app-footer{border-top:1px solid var(--border);padding:18px 0 0;margin-top:8px;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:10px}
+.footer-text{font-size:13px;color:var(--text-muted)}
+.footer-text code{font-family:var(--font-mono);color:var(--accent);background:var(--bg-elevated);padding:1px 6px;border-radius:4px}
+
+/* ============ PIP VÍDEO ============ */
+.pip-widget{position:fixed;bottom:20px;left:20px;width:150px;aspect-ratio:9/16;border-radius:var(--r-lg);overflow:hidden;background:#000;border:1px solid var(--border-hover);box-shadow:var(--shadow-md);z-index:300;transition:transform var(--dur-base) var(--ease-spring)}
+.pip-widget:hover{transform:translateY(-2px)}
+.pip-widget iframe{width:100%;height:100%;border:none;display:block;pointer-events:none}
+.pip-controls{position:absolute;top:6px;right:6px;display:flex;gap:4px;z-index:2}
+.pip-btn{width:22px;height:22px;border-radius:50%;background:rgba(0,0,0,.55);color:#fff;border:none;font-size:13px;display:flex;align-items:center;justify-content:center;cursor:pointer;backdrop-filter:blur(2px)}
+.pip-btn:hover{background:rgba(0,0,0,.75)}
+.pip-label{position:absolute;bottom:6px;left:6px;font-size:11px;font-family:var(--font-mono);color:#fff;background:rgba(0,0,0,.5);padding:2px 7px;border-radius:var(--r-full);display:flex;align-items:center;gap:4px;z-index:2}
+.pip-label::before{content:'';width:5px;height:5px;border-radius:50%;background:var(--red);animation:pulse 1.6s ease-in-out infinite}
+@media(max-width:480px){.pip-widget{width:112px;bottom:14px;left:14px}}
+
+/* ============ CHAT DE SUPORTE ============ */
+.chat-fab{position:fixed;bottom:20px;right:20px;width:52px;height:52px;border-radius:50%;background:var(--accent);color:#000;display:flex;align-items:center;justify-content:center;font-size:22px;border:none;cursor:pointer;box-shadow:var(--shadow-accent);z-index:300;transition:transform var(--dur-fast) var(--ease-spring)}
+.chat-fab:hover{transform:scale(1.06)}
+.chat-badge{position:absolute;top:-2px;right:-2px;width:18px;height:18px;border-radius:50%;background:var(--red);color:#fff;font-size:12px;display:flex;align-items:center;justify-content:center;font-family:var(--font-mono);border:2px solid var(--bg-base)}
+.chat-panel{position:fixed;bottom:84px;right:20px;width:320px;max-width:calc(100vw - 40px);height:440px;max-height:calc(100vh - 120px);background:var(--bg-surface);border:1px solid var(--border-hover);border-radius:var(--r-xl);box-shadow:var(--shadow-md);z-index:300;display:none;flex-direction:column;overflow:hidden}
+.chat-panel.active{display:flex}
+.chat-head{padding:14px 16px;border-bottom:1px solid var(--border);display:flex;align-items:center;gap:10px}
+.chat-head .avatar{width:34px;height:34px}
+.chat-head-title{font-size:15px;font-weight:700}
+.chat-head-status{font-size:12px;color:var(--green);display:flex;align-items:center;gap:4px}
+.chat-head-status::before{content:'';width:6px;height:6px;border-radius:50%;background:var(--green)}
+.chat-close{margin-left:auto;background:none;border:none;color:var(--text-muted);font-size:17px;cursor:pointer}
+.chat-close:hover{color:var(--text-primary)}
+.chat-body{flex:1;overflow-y:auto;padding:14px 16px;display:flex;flex-direction:column;gap:10px}
+.chat-msg{max-width:80%;font-size:14px;padding:9px 12px;border-radius:var(--r-md);line-height:1.5}
+.chat-msg.in{align-self:flex-start;background:var(--bg-elevated);color:var(--text-primary);border-bottom-left-radius:4px}
+.chat-msg.out{align-self:flex-end;background:var(--accent);color:#000;border-bottom-right-radius:4px}
+.chat-typing{align-self:flex-start;display:flex;gap:3px;padding:10px 12px;background:var(--bg-elevated);border-radius:var(--r-md);border-bottom-left-radius:4px}
+.chat-typing span{width:5px;height:5px;border-radius:50%;background:var(--text-muted);animation:pulse 1s ease-in-out infinite}
+.chat-typing span:nth-child(2){animation-delay:.15s}
+.chat-typing span:nth-child(3){animation-delay:.3s}
+.chat-foot{border-top:1px solid var(--border);padding:10px 12px;display:flex;gap:8px}
+.chat-input{flex:1;background:var(--bg-elevated);border:1px solid var(--border);border-radius:var(--r-md);padding:9px 12px;color:var(--text-primary);font-family:var(--font-body);font-size:14px;outline:none}
+.chat-input:focus{border-color:var(--accent)}
+.chat-send{width:36px;height:36px;border-radius:var(--r-md);background:var(--accent);color:#000;border:none;cursor:pointer;font-size:16px;flex-shrink:0}
+.chat-send:hover{background:var(--accent-hover)}
+@media(max-width:480px){.chat-panel{right:14px;bottom:80px}.chat-fab{bottom:14px;right:14px}}
+
+@media(max-width:900px){
+  .topbar-user .user-meta{display:none}
+  .workspace-switcher{display:none}
+}
+@media(max-width:640px){
+  .app-topbar-row1,.app-topnav,.page-container{padding-left:20px;padding-right:20px}
+}
+</style>
+</head>
+<body>
+
+<!-- ======================================================================
+     LOGIN
+     ====================================================================== -->
+<div class="login-screen" id="login-screen">
+  <button class="theme-switch theme-toggle" type="button" title="Alternar tema claro/escuro" aria-label="Alternar tema claro/escuro">
+    <span class="ts-track"><span class="ts-icon ts-moon">🌙</span><span class="ts-icon ts-sun">☀️</span></span>
+    <span class="ts-knob"></span>
+  </button>
+  <div class="login-card reveal">
+    <div class="login-logo">
+      <div class="login-mark">V</div>
+      <div class="login-title">Viskoo Marketing</div>
+      <div class="login-sub">Acompanhe sua campanha de tráfego pago<br>em tempo real, sem depender de mensagens.</div>
+    </div>
+    <form id="login-form">
+      <div class="field">
+        <label for="login-email">E-mail</label>
+        <input type="email" id="login-email" placeholder="voce@suaempresa.com.br" value="ana@nordestebikes.com.br" required>
+      </div>
+      <div class="field" style="margin-bottom:8px">
+        <label for="login-pass">Senha</label>
+        <input type="password" id="login-pass" placeholder="••••••••" value="senha123" required>
+      </div>
+      <div class="login-error" id="login-error">Preencha e-mail e senha para continuar.</div>
+      <div class="field-row" style="margin-top:10px">
+        <label class="chk-row"><input type="checkbox" checked style="accent-color:var(--accent)"> Manter conectado</label>
+        <a href="#">Esqueci a senha</a>
+      </div>
+      <!-- INTEGRAÇÃO: autenticação real via backend (ex.: Supabase Auth / NextAuth / API própria).
+           Hoje o form apenas simula uma sessão local em memória (ver JS: handleLogin). -->
+      <button type="submit" class="btn btn-block">Entrar no painel</button>
+    </form>
+    <div class="login-foot">Acesso exclusivo de clientes Viskoo Marketing.</div>
+  </div>
+</div>
+
+<!-- ======================================================================
+     SELEÇÃO DE EMPRESA — uma conta pode reunir várias empresas/clientes,
+     cada uma com seu próprio painel (campanha, criativos, relatórios etc).
+     ====================================================================== -->
+<div class="empresa-screen" id="empresa-screen">
+  <div class="empresa-screen-inner">
+    <div class="es-head">
+      <div class="es-head-left">
+        <div class="login-mark" style="width:42px;height:42px;font-size:18px">V</div>
+        <div>
+          <div class="es-title">Selecione uma empresa</div>
+          <div class="es-sub">Você gerencia <b id="es-count">0</b> empresa(s) nesta conta.</div>
+        </div>
+      </div>
+      <div class="es-head-right">
+        <button class="theme-switch theme-toggle" type="button" title="Alternar tema claro/escuro" aria-label="Alternar tema claro/escuro">
+    <span class="ts-track"><span class="ts-icon ts-moon">🌙</span><span class="ts-icon ts-sun">☀️</span></span>
+    <span class="ts-knob"></span>
+  </button>
+        <button class="btn btn-ghost btn-sm" id="es-logout-btn">↩ Sair</button>
+      </div>
+    </div>
+    <div class="empresa-grid" id="empresa-grid"></div>
+  </div>
+</div>
+
+<!-- ======================================================================
+     MODAL — adicionar nova empresa
+     INTEGRAÇÃO: POST /companies (banco interno) + vínculo user_companies +
+     criação de contas de anúncio placeholder no Meta Ads / Google Ads.
+     ====================================================================== -->
+<div class="modal-overlay" id="empresa-modal">
+  <div class="modal-box">
+    <div class="modal-h"><b>Adicionar nova empresa</b><button class="modal-close" id="empresa-modal-close">✕</button></div>
+    <form id="empresa-form">
+      <div class="modal-b">
+        <div class="field" style="margin-bottom:0">
+          <label for="empresa-nome">Nome da empresa</label>
+          <input type="text" id="empresa-nome" placeholder="Ex.: Studio Fit Academia" required>
+        </div>
+        <div class="field" style="margin-bottom:0">
+          <label for="empresa-segmento">Segmento</label>
+          <input type="text" id="empresa-segmento" placeholder="Ex.: Academia / Fitness" required>
+        </div>
+        <div class="field" style="margin-bottom:0">
+          <label>Serviços contratados</label>
+          <div class="servico-check-grid" id="servico-check-grid"></div>
+        </div>
+      </div>
+      <div class="modal-f">
+        <button type="button" class="btn btn-ghost btn-sm" id="empresa-modal-cancel">Cancelar</button>
+        <button type="submit" class="btn btn-sm">Criar empresa e entrar</button>
+      </div>
+    </form>
+  </div>
+</div>
+
+<!-- ======================================================================
+     APP SHELL
+     ====================================================================== -->
+<div class="app-shell" id="app-shell">
+
+  <header class="app-topbar">
+    <div class="app-topbar-row1">
+      <div class="topbar-brand">
+        <div class="logo-mark">V</div>
+        <div>
+          <div class="logo-text">Viskoo</div>
+          <div class="logo-sub">Painel do Cliente</div>
+        </div>
+      </div>
+
+      <div class="workspace-switcher" id="workspace-switcher">
+        <button class="ws-btn" id="ws-btn" type="button">
+          <span class="avatar" id="ws-avatar">--</span>
+          <span class="ws-info">
+            <span class="ws-name" id="ws-name">—</span>
+            <span class="ws-sub" id="ws-sub">—</span>
+          </span>
+          <span class="ws-caret">▾</span>
+        </button>
+        <div class="ws-dropdown" id="ws-dropdown">
+          <div class="ws-dropdown-list" id="ws-dropdown-list"></div>
+          <div class="ws-dropdown-actions">
+            <button class="ws-action" id="ws-add-btn" type="button">➕ Adicionar empresa</button>
+            <button class="ws-action" id="ws-all-btn" type="button">🔀 Ver todas as empresas</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="topbar-right">
+        <div class="notif-wrap" id="notif-wrap">
+          <button class="notif-btn" id="notif-btn" type="button" title="Notificações">
+            🔔
+            <span class="notif-badge" id="notif-badge">0</span>
+          </button>
+          <div class="notif-dropdown" id="notif-dropdown">
+            <div class="notif-head"><b>Notificações</b><button class="notif-markall" id="notif-markall" type="button">Marcar tudo como lido</button></div>
+            <div id="notif-list"></div>
+          </div>
+        </div>
+        <button class="theme-switch theme-toggle" type="button" title="Alternar tema claro/escuro" aria-label="Alternar tema claro/escuro">
+          <span class="ts-track"><span class="ts-icon ts-moon">🌙</span><span class="ts-icon ts-sun">☀️</span></span>
+          <span class="ts-knob"></span>
+        </button>
+        <div class="topbar-user">
+          <span class="avatar" id="user-avatar">AR</span>
+          <span class="user-meta"><b id="user-name">Ana Ribeiro</b><span id="user-email">ana@nordestebikes.com.br</span></span>
+        </div>
+        <button class="icon-btn" id="logout-btn" title="Sair da conta">↩</button>
+      </div>
+    </div>
+
+    <div class="app-topnav-wrap">
+      <nav class="app-topnav" id="nav-list">
+        <div class="nav-item active" data-page="dashboard"><span class="nav-icon">📊</span>Dashboard</div>
+        <div class="nav-item" data-page="criativos"><span class="nav-icon">🎨</span>Entregáveis</div>
+        <div class="nav-item" data-page="projeto"><span class="nav-icon">🗺️</span>Projeto</div>
+        <div class="nav-item" data-page="solicitacoes"><span class="nav-icon">📝</span>Solicitações</div>
+        <div class="nav-item" data-page="agendamento"><span class="nav-icon">📅</span>Agendamento</div>
+        <div class="nav-item" data-page="relatorios"><span class="nav-icon">📁</span>Relatórios</div>
+        <div class="nav-item" data-page="contratar"><span class="nav-icon">🛍️</span>Contratar serviços</div>
+        <div class="topnav-divider"></div>
+        <div class="nav-item" data-page="financeiro"><span class="nav-icon">💳</span>Financeiro</div>
+      </nav>
+    </div>
+  </header>
+
+  <main class="page-container">
+    <div class="page-title-block">
+      <div class="topbar-title" id="topbar-title">Dashboard</div>
+      <div class="topbar-sub" id="topbar-sub">Visão geral da sua campanha</div>
+    </div>
+
+    <!-- ================= PÁGINA: DASHBOARD ================= -->
+    <div class="page active" id="page-dashboard">
+
+      <div>
+        <div class="section-title">Serviços contratados</div>
+        <div class="service-grid" id="service-grid"></div>
+      </div>
+
+      <div class="grid g-stats" id="stat-tiles"></div>
+
+      <div class="card reveal">
+        <div class="card-h">
+          <div class="card-ht"><div class="card-hd"></div><span id="status-card-title">Status do serviço</span></div>
+          <span class="chip toggle" id="status-req-chip" style="display:none">—</span>
+        </div>
+        <div class="status-card" id="status-card"></div>
+      </div>
+
+      <div class="card reveal" id="chart-card">
+        <div class="card-h">
+          <div class="card-ht"><div class="card-hd"></div>Performance ao longo do tempo</div>
+          <div class="chart-toolbar" id="chart-toolbar"></div>
+        </div>
+        <div class="chart-wrap" id="chart-wrap"></div>
+        <div class="chart-legend" id="chart-legend"></div>
+      </div>
+
+    </div>
+
+    <!-- ================= PÁGINA: CRIATIVOS ================= -->
+    <div class="page" id="page-criativos">
+      <div class="card reveal">
+        <div class="card-h">
+          <div class="card-ht"><div class="card-hd"></div>Entregáveis</div>
+          <div class="chart-toolbar" id="creative-filters"></div>
+        </div>
+        <div class="card-b">
+          <div class="gallery-grid" id="gallery-grid"></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ================= PÁGINA: PROJETO ================= -->
+    <div class="page" id="page-projeto">
+      <div class="card reveal">
+        <div class="card-h">
+          <div class="card-ht"><div class="card-hd"></div>Progresso do projeto</div>
+          <span class="chip" id="timeline-chip">—</span>
+        </div>
+        <div class="timeline" id="timeline"></div>
+      </div>
+    </div>
+
+    <!-- ================= PÁGINA: SOLICITAÇÕES ================= -->
+    <div class="page" id="page-solicitacoes">
+      <div class="info-banner reveal">
+        <span class="ib-icon">🤝</span>
+        <span><b>Painel self-service, gestão humana real por trás.</b> Você não mexe direto na campanha: descreve o que quer e um especialista do time analisa, ajusta e aplica. Toda solicitação fica registrada aqui com o status de aprovação.</span>
+      </div>
+
+      <div class="grid g-2">
+        <div class="card reveal">
+          <div class="card-h"><div class="card-ht"><div class="card-hd"></div>Nova solicitação</div></div>
+          <form class="req-form" id="req-form">
+            <div>
+              <label for="req-servico">Serviço relacionado</label>
+              <select id="req-servico" required></select>
+            </div>
+            <div>
+              <label for="req-tipo">Tipo de solicitação</label>
+              <!-- opções geradas por JS conforme o "Serviço relacionado" escolhido acima —
+                   ver renderReqTipoOptions(). Evita, por ex., pedir aumento de verba num
+                   serviço de Site, que não tem orçamento de mídia. -->
+              <select id="req-tipo" required></select>
+            </div>
+            <div>
+              <label for="req-msg">Explique o que você quer mudar</label>
+              <textarea id="req-msg" placeholder="Ex.: quero aumentar o investimento em 20% a partir da próxima semana porque teremos uma promoção de inverno." required></textarea>
+            </div>
+            <div>
+              <label for="req-prazo">Prazo desejável</label>
+              <select id="req-prazo">
+                <option value="Sem urgência">Sem urgência</option>
+                <option value="Até 1 semana">Até 1 semana</option>
+                <option value="Até 3 dias úteis">Até 3 dias úteis</option>
+                <option value="Urgente (até 24h)">Urgente (até 24h)</option>
+              </select>
+              <div class="req-urgent-note" id="req-urgent-note">
+                <span>⚠️</span>
+                <span>Solicitações urgentes são avaliadas caso a caso pelo time. Nem toda urgência é viável: se o motivo for prazo ou informação desorganizada do lado do cliente (briefing incompleto, resposta atrasada etc.), a solicitação entra na fila com o prazo mínimo viável do time, não como urgência real.</span>
+              </div>
+            </div>
+            <div>
+              <label for="req-imagem">Anexar imagem (opcional)</label>
+              <input type="file" id="req-imagem" accept="image/*">
+              <div class="req-file-preview" id="req-file-preview" style="display:none">
+                <img id="req-file-thumb" alt="">
+                <span class="rfp-name" id="req-file-name"></span>
+                <button type="button" class="rfp-remove" id="req-file-remove">✕</button>
+              </div>
+            </div>
+            <!-- INTEGRAÇÃO: POST para o banco interno (tabela client_requests) + upload da
+                 imagem para storage real (S3 / Supabase Storage) + notificação automática
+                 pro time (Slack/e-mail) avisando que há uma solicitação nova, incluindo o
+                 prazo desejável informado pelo cliente (referência de SLA, não garantia). -->
+            <button type="submit" class="btn btn-block">Enviar para aprovação</button>
+            <div class="req-confirm" id="req-confirm">✅ Solicitação enviada! O time responde em até 1 dia útil.</div>
+          </form>
+        </div>
+
+        <div class="card reveal">
+          <div class="card-h"><div class="card-ht"><div class="card-hd"></div>Histórico de solicitações</div><span class="chip" id="req-chip">—</span></div>
+          <div id="request-list"></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ================= PÁGINA: AGENDAMENTO ================= -->
+    <div class="page" id="page-agendamento">
+      <div class="grid g-2-even">
+        <div class="card reveal">
+          <div class="card-h"><div class="card-ht"><div class="card-hd"></div>Sua hora mensal com um humano</div></div>
+          <div class="hours-card" id="hours-card"></div>
+          <div class="next-session" id="next-session"></div>
+        </div>
+
+        <div class="card reveal">
+          <div class="card-h"><div class="card-ht"><div class="card-hd"></div>Agendar conversa</div></div>
+          <div class="cal-head"><span class="cal-month" id="cal-month">—</span><span class="chip" id="cal-hint">clique num dia disponível</span></div>
+          <div class="calendar" id="calendar"></div>
+          <div class="slot-section" id="slot-section" style="display:none">
+            <div class="slot-section-title" id="slot-section-title">Horários disponíveis</div>
+            <div class="slot-list" id="slot-list"></div>
+            <button class="btn btn-block" id="confirm-btn" disabled>Confirmar agendamento</button>
+            <div class="confirm-banner" id="confirm-banner">✅ Sessão agendada com sucesso!</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ================= PÁGINA: RELATÓRIOS ================= -->
+    <div class="page" id="page-relatorios">
+      <div class="card reveal">
+        <div class="card-h">
+          <div class="card-ht"><div class="card-hd"></div>Histórico de relatórios mensais</div>
+          <span class="chip" id="report-chip">—</span>
+        </div>
+        <div id="report-list"></div>
+      </div>
+    </div>
+
+    <!-- ================= PÁGINA: CONTRATAR SERVIÇOS ================= -->
+    <div class="page" id="page-contratar">
+      <div class="info-banner reveal">
+        <span class="ib-icon">🛍️</span>
+        <span><b>Contratar é simples, sem burocracia.</b> Escolha um serviço abaixo. Nosso time comercial entra em contato pra alinhar escopo e valores antes de ativar. Nada é cobrado automaticamente.</span>
+      </div>
+      <div class="grid" id="catalog-grid" style="grid-template-columns:repeat(auto-fit,minmax(260px,1fr))"></div>
+    </div>
+
+    <!-- ================= PÁGINA: FINANCEIRO (conta, não por empresa) ================= -->
+    <div class="page" id="page-financeiro">
+      <div class="info-banner reveal">
+        <span class="ib-icon">💳</span>
+        <span><b>Financeiro é da sua conta, não desta empresa.</b> A assinatura e as faturas abaixo somam todas as empresas que você gerencia pelo Viskoo, e trocar de empresa no menu superior não muda o que aparece aqui.</span>
+      </div>
+
+      <div class="grid g-2-even">
+        <div class="card reveal">
+          <div class="card-h"><div class="card-ht"><div class="card-hd"></div>Plano atual</div></div>
+          <div class="plan-card" id="plan-card"></div>
+        </div>
+        <div class="card reveal">
+          <div class="card-h"><div class="card-ht"><div class="card-hd"></div>Forma de pagamento</div></div>
+          <div class="pm-card" id="pm-card"></div>
+        </div>
+      </div>
+
+      <div class="card reveal">
+        <div class="card-h">
+          <div class="card-ht"><div class="card-hd"></div>Histórico de faturas</div>
+          <span class="chip" id="invoice-chip">—</span>
+        </div>
+        <div id="invoice-list"></div>
+      </div>
+    </div>
+
+    <footer class="app-footer">
+      <div class="footer-text">Viskoo Marketing © 2026 · Painel do Cliente</div>
+      <div class="footer-text" id="footer-updated">—</div>
+    </footer>
+  </main>
+</div>
+
+<!-- ======================================================================
+     MODAL — visualização de relatório
+     ====================================================================== -->
+<div class="modal-overlay" id="report-modal">
+  <div class="modal-box">
+    <div class="modal-h"><b id="modal-title">Relatório</b><button class="modal-close" id="modal-close">✕</button></div>
+    <div class="modal-b" id="modal-body"></div>
+    <div class="modal-f">
+      <button class="btn btn-ghost btn-sm" id="modal-cancel">Fechar</button>
+      <button class="btn btn-sm" id="modal-download">⬇ Baixar PDF</button>
+    </div>
+  </div>
+</div>
+
+<script>
+/* =====================================================================
+   DATA — única fonte de dados do painel. Estrutura pensada para ser
+   substituída por chamadas reais às APIs do Meta Ads e do Google Ads,
+   além do banco de dados interno da agência. Cada bloco de renderização
+   abaixo traz um comentário "INTEGRAÇÃO:" indicando de onde o dado real
+   viria.
+   ===================================================================== */
+// catálogo de serviços que a agência oferece — usado no grid do Dashboard,
+// nas tags dos entregáveis, no formulário "Adicionar empresa" e na página
+// "Contratar serviços".
+const SERVICOS_CONFIG = {
+  "trafego-pago": { label: "Tráfego Pago",       icon: "📣", desc: "Anúncios pagos no Meta Ads e Google Ads, com gestão humana e otimização contínua." },
+  "site":         { label: "Site Institucional", icon: "🌐", desc: "Site profissional para apresentar sua empresa e gerar credibilidade." },
+  "landing-page": { label: "Landing Page",       icon: "🚀", desc: "Página focada em conversão para campanhas, lançamentos e promoções específicas." },
+  "loja-virtual": { label: "Loja Virtual",       icon: "🛒", desc: "E-commerce completo, com gestão de pedidos, produtos e pagamentos." },
+  "hospedagem":   { label: "Hospedagem Web",     icon: "🖥️", desc: "Hospedagem gerenciada, com monitoramento de uptime e certificado SSL." },
+  "social-media": { label: "Social Media",       icon: "📱", desc: "Produção e publicação de conteúdo para redes sociais." }
+};
+
+// status possíveis de um serviço contratado, reutilizado em qualquer tipo
+// (tráfego pago, site, loja virtual etc.) — cada serviço define seu próprio
+// texto de resumo, só o rótulo/cor/ícone vêm daqui.
+const STATUS_CONFIG = {
+  ativo:      { label: "Ativo",           cor: "var(--green)",  corDim: "var(--green-dim)",  icon: "▶️" },
+  pausado:    { label: "Pausado",         cor: "var(--gray)",   corDim: "var(--gray-dim)",   icon: "⏸️" },
+  otimizacao: { label: "Em otimização",   cor: "var(--yellow)", corDim: "var(--yellow-dim)", icon: "⚙️" },
+  producao:   { label: "Em produção",     cor: "var(--yellow)", corDim: "var(--yellow-dim)", icon: "🛠️" },
+  planejado:  { label: "Em planejamento", cor: "var(--gray)",   corDim: "var(--gray-dim)",   icon: "📝" },
+  manutencao: { label: "Em manutenção",   cor: "var(--blue)",   corDim: "var(--blue-dim)",   icon: "🔧" }
+};
+
+const DATA = {
+  // o usuário logado — pode ter várias empresas/clientes na mesma conta
+  // (ex.: um gestor cuidando de 10 contas a partir do mesmo login).
+  cliente: {
+    nome: "Ana Ribeiro",
+    email: "ana@nordestebikes.com.br",
+    iniciais: "AR"
+  },
+
+  // INTEGRAÇÃO: cada objeto de "empresas" corresponde a um workspace no banco
+  // interno (tabela companies, vinculada via user_companies). Cada chave dentro
+  // de "servicos" representa um serviço contratado da agência (tabela
+  // company_services) — nem toda empresa tem os mesmos serviços.
+  empresas: [
+    {
+      id: "nordeste-bikes", nome: "Loja Nordeste Bikes", iniciais: "NB", segmento: "E-commerce",
+      servicos: {
+        // INTEGRAÇÃO: Meta Ads Marketing API (GET /act_{ad_account_id}/insights)
+        // e Google Ads API (GoogleAdsService.SearchStream, métricas do mês corrente)
+        "trafego-pago": {
+          status: "ativo", resumo: "Veiculando normalmente em Meta Ads e Google Ads.",
+          progresso: { label: "Orçamento usado no mês", pct: 84.5 },
+          statTiles: [
+            { icon:"💰", label:"Investimento do mês", value:"R$ 8.450", delta:null, accent:true },
+            { icon:"🎯", label:"CPL médio", value:"R$ 18,40", delta:-6.2, invert:true },
+            { icon:"🖱️", label:"Cliques", value:"12.480", delta:9.1 },
+            { icon:"✅", label:"Conversões", value:"459", delta:14.3 },
+            { icon:"📡", label:"Alcance", value:"186.200", delta:4.8 }
+          ],
+          chartMetrics: {
+            investimento: { label:"Investimento", color:"var(--accent)", fmt:v=>fmtBRL(v) },
+            cliques:      { label:"Cliques",      color:"var(--blue)",   fmt:v=>fmtInt(v) },
+            conversoes:   { label:"Conversões",   color:"var(--green)",  fmt:v=>fmtInt(v) }
+          },
+          // INTEGRAÇÃO: série temporal — Meta Ads Insights API (time_increment=1) +
+          // Google Ads API (segments.date). Aqui: últimas 8 semanas.
+          performance: [
+            { label:"Sem 1", investimento:1620, cliques:2040, conversoes:61 },
+            { label:"Sem 2", investimento:1780, cliques:2210, conversoes:68 },
+            { label:"Sem 3", investimento:1540, cliques:1890, conversoes:55 },
+            { label:"Sem 4", investimento:1910, cliques:2380, conversoes:74 },
+            { label:"Sem 5", investimento:2050, cliques:2510, conversoes:79 },
+            { label:"Sem 6", investimento:1870, cliques:2290, conversoes:71 },
+            { label:"Sem 7", investimento:2120, cliques:2640, conversoes:84 },
+            { label:"Sem 8", investimento:2260, cliques:2790, conversoes:91 }
+          ]
+        },
+        // INTEGRAÇÃO: plataforma de e-commerce (Shopify/Nuvemshop/VTEX API) —
+        // pedidos, faturamento, catálogo de produtos.
+        "loja-virtual": {
+          status: "ativo", resumo: "Loja publicada e recebendo pedidos normalmente.",
+          statTiles: [
+            { icon:"🛒", label:"Pedidos no mês", value:"214", delta:12.4, accent:true },
+            { icon:"💰", label:"Faturamento", value:"R$ 38.900", delta:8.1 },
+            { icon:"🎯", label:"Ticket médio", value:"R$ 181,80", delta:-2.3, invert:true },
+            { icon:"📦", label:"Produtos ativos", value:"96", delta:null }
+          ],
+          chartMetrics: {
+            pedidos:     { label:"Pedidos",     color:"var(--green)",  fmt:v=>fmtInt(v) },
+            faturamento: { label:"Faturamento", color:"var(--accent)", fmt:v=>fmtBRL(v) }
+          },
+          performance: [
+            { label:"Sem 1", pedidos:46, faturamento:8200 },
+            { label:"Sem 2", pedidos:51, faturamento:9100 },
+            { label:"Sem 3", pedidos:44, faturamento:7800 },
+            { label:"Sem 4", pedidos:58, faturamento:10600 },
+            { label:"Sem 5", pedidos:53, faturamento:9700 },
+            { label:"Sem 6", pedidos:62, faturamento:11200 }
+          ]
+        },
+        // INTEGRAÇÃO: Meta/Instagram Graph API (insights de página e posts).
+        "social-media": {
+          status: "ativo", resumo: "Calendário de conteúdo em dia, publicando 4-5x por semana.",
+          statTiles: [
+            { icon:"👥", label:"Seguidores", value:"12.400", delta:3.2, accent:true },
+            { icon:"📸", label:"Posts no mês", value:"18", delta:null },
+            { icon:"❤️", label:"Engajamento médio", value:"4.6%", delta:0.8 },
+            { icon:"📈", label:"Alcance mensal", value:"89.200", delta:15.1 }
+          ],
+          chartMetrics: {
+            seguidores: { label:"Seguidores", color:"var(--yellow)", fmt:v=>fmtInt(v) },
+            alcance:    { label:"Alcance",    color:"var(--purple)", fmt:v=>fmtInt(v) }
+          },
+          performance: [
+            { label:"Sem 1", seguidores:11980, alcance:14200 },
+            { label:"Sem 2", seguidores:12050, alcance:15800 },
+            { label:"Sem 3", seguidores:12140, alcance:13100 },
+            { label:"Sem 4", seguidores:12210, alcance:16900 },
+            { label:"Sem 5", seguidores:12310, alcance:14700 },
+            { label:"Sem 6", seguidores:12400, alcance:15100 }
+          ]
+        }
+      },
+
+      // INTEGRAÇÃO: Meta Ads API (creative{image_url,thumbnail_url,video_id}) +
+      // Google Ads API (asset_group_asset) para itens de tráfego pago; CMS
+      // interno / Asana para páginas de site e posts de social media.
+      criativos: [
+        { nome: "Carrossel: Linha Urbana", tipo: "imagem", status: "ativo", servico: "trafego-pago", ctr: 4.8, conversoes: 132, cor: "var(--orange)" },
+        { nome: "Vídeo: Bastidores da Loja", tipo: "video", status: "ativo", servico: "trafego-pago", ctr: 6.1, conversoes: 178, cor: "var(--blue)" },
+        { nome: "Estático: Promoção MTB", tipo: "imagem", status: "producao", servico: "trafego-pago", ctr: 0, conversoes: 0, cor: "var(--purple)" },
+        { nome: "Reels: Test Ride", tipo: "video", status: "ativo", servico: "social-media", ctr: 3.9, conversoes: 96, cor: "var(--green)" },
+        { nome: "Estático: Frete Grátis", tipo: "imagem", status: "pausado", servico: "trafego-pago", ctr: 2.1, conversoes: 34, cor: "var(--gray)" },
+        { nome: "Post: Lançamento Coleção Aro 29", tipo: "imagem", status: "producao", servico: "social-media", ctr: 0, conversoes: 0, cor: "var(--yellow)" }
+      ],
+
+      // INTEGRAÇÃO: banco de dados interno da agência (tabela project_milestones)
+      // ou API do Asana (get_projects / get_tasks) filtrada pelo projeto do cliente.
+      timeline: [
+        { data: "03 Mai 2026", titulo: "Onboarding e briefing estratégico", desc: "Levantamento de persona, oferta e metas de CPL.", status: "done" },
+        { data: "12 Mai 2026", titulo: "Estrutura de campanhas criada", desc: "Meta Ads e Google Ads configurados com pixel e conversões.", status: "done" },
+        { data: "28 Mai 2026", titulo: "Primeiro lote de criativos no ar", desc: "4 criativos em veiculação, testes A/B iniciados.", status: "done" },
+        { data: "Em andamento", titulo: "Otimização de públicos e lances", desc: "Ajuste de segmentação com base nas 3 primeiras semanas de dados.", status: "andamento" },
+        { data: "Planejado (Jul 2026)", titulo: "Expansão para Google Performance Max", desc: "Novo canal de aquisição a partir da 2ª quinzena do mês.", status: "planejado" },
+        { data: "Planejado (Ago 2026)", titulo: "Revisão trimestral de estratégia", desc: "Análise de resultados e replanejamento de verba.", status: "planejado" }
+      ],
+
+      // INTEGRAÇÃO: banco de dados interno (tabela client_requests). Mudança de status
+      // (analise/aprovada/recusada) e o campo "resposta" são escritos pelo time humano
+      // num painel interno de aprovação — o cliente aqui só lê e cria novas solicitações.
+      solicitacoes: [
+        { tipo: "Aumentar investimento", servico: "trafego-pago", mensagem: "Podemos subir o orçamento diário em 20%? Teremos uma campanha de inverno.",
+          data: "05/07/2026", status: "aprovada", resposta: "Aprovado: orçamento diário ajustado de R$280 para R$336 a partir de 07/07.", respondidoPor: "João, gestor de tráfego" },
+        { tipo: "Trocar/atualizar criativo", servico: "trafego-pago", mensagem: "O criativo 'Frete Grátis' está com CTR baixo, dá pra trocar por outro?",
+          data: "02/07/2026", status: "analise", resposta: null, respondidoPor: null },
+        { tipo: "Ajustar público-alvo", servico: "trafego-pago", mensagem: "Será que dá pra testar público só de Recife e região?",
+          data: "08/07/2026", status: "pendente", resposta: null, respondidoPor: null },
+        { tipo: "Pausar campanha", servico: "trafego-pago", mensagem: "Precisamos pausar por 3 dias por causa de um problema no estoque.",
+          data: "22/06/2026", status: "recusada", resposta: "Pausar agora derruba o aprendizado do algoritmo. Sugiro reduzir orçamento em vez de pausar, te chamo pra combinar.", respondidoPor: "João, gestor de tráfego" }
+      ],
+
+      // INTEGRAÇÃO: horasUsadasMin viria do banco de dados interno (tabela client_sessions);
+      // disponibilidade real via Google Calendar API / Calendly API.
+      agendamento: {
+        horasContratadasMin: 60, horasUsadasMin: 25, proximaSessao: null,
+        ano: 2026, mes: 6, // julho/2026 (mês 0-indexado)
+        slotsPorDia: {
+          13: ["09:00", "11:00", "15:00"], 15: ["10:00", "14:00"],
+          17: ["09:00", "13:30", "16:00"], 22: ["11:00", "15:30"],
+          24: ["09:00", "10:00", "14:00"]
+        }
+      },
+
+      // INTEGRAÇÃO: banco de dados interno (tabela monthly_reports) com link assinado
+      // para o PDF armazenado (S3 / Supabase Storage).
+      relatorios: [
+        { mes: "Junho 2026", servico: "trafego-pago", data: "01/07/2026", investimento: 8120, conversoes: 421, cpl: 19.29 },
+        { mes: "Maio 2026", servico: "trafego-pago", data: "01/06/2026", investimento: 7460, conversoes: 358, cpl: 20.84 },
+        { mes: "Abril 2026", servico: "trafego-pago", data: "01/05/2026", investimento: 6980, conversoes: 301, cpl: 23.19 },
+        { mes: "Março 2026", servico: "trafego-pago", data: "01/04/2026", investimento: 5200, conversoes: 212, cpl: 24.53 }
+      ],
+      // INTEGRAÇÃO: gerado a partir dos mesmos eventos que alimentam solicitações,
+      // agendamento e relatórios — não é uma tabela própria, é uma trilha de eventos
+      // (banco interno: tabela notifications, ou fan-out via websocket/push).
+      notificacoes: [
+        { icone:"✅", cor:"var(--green)", corDim:"var(--green-dim)", titulo:"Solicitação aprovada", desc:"Aumentar investimento: orçamento diário ajustado.", data:"05/07/2026 14:32", lida:true, page:"solicitacoes" },
+        { icone:"🔎", cor:"var(--blue)", corDim:"var(--blue-dim)", titulo:"Solicitação em análise", desc:"Trocar/atualizar criativo está sendo avaliada pelo time.", data:"02/07/2026 09:10", lida:true, page:"solicitacoes" },
+        { icone:"📁", cor:"var(--accent)", corDim:"var(--accent-dim)", titulo:"Novo relatório disponível", desc:"Relatório de Junho 2026 já pode ser baixado.", data:"01/07/2026 08:00", lida:false, page:"relatorios" }
+      ]
+    },
+    {
+      id: "clinica-vitta", nome: "Clínica Vitta Odonto", iniciais: "CV", segmento: "Serviços de saúde",
+      servicos: {
+        "trafego-pago": {
+          status: "otimizacao", resumo: "Time ajustando públicos, lances e criativos.",
+          progresso: { label: "Orçamento usado no mês", pct: 70 },
+          statTiles: [
+            { icon:"💰", label:"Investimento do mês", value:"R$ 4.200", delta:null, accent:true },
+            { icon:"🎯", label:"CPL médio", value:"R$ 32,10", delta:3.4, invert:true },
+            { icon:"🖱️", label:"Cliques", value:"5.210", delta:-2.1 },
+            { icon:"✅", label:"Conversões", value:"131", delta:5.6 },
+            { icon:"📡", label:"Alcance", value:"76.500", delta:8.9 }
+          ],
+          chartMetrics: {
+            investimento: { label:"Investimento", color:"var(--accent)", fmt:v=>fmtBRL(v) },
+            cliques:      { label:"Cliques",      color:"var(--blue)",   fmt:v=>fmtInt(v) },
+            conversoes:   { label:"Conversões",   color:"var(--green)",  fmt:v=>fmtInt(v) }
+          },
+          performance: [
+            { label:"Sem 1", investimento:460, cliques:590, conversoes:12 },
+            { label:"Sem 2", investimento:510, cliques:640, conversoes:14 },
+            { label:"Sem 3", investimento:480, cliques:610, conversoes:13 },
+            { label:"Sem 4", investimento:560, cliques:700, conversoes:17 },
+            { label:"Sem 5", investimento:540, cliques:670, conversoes:15 },
+            { label:"Sem 6", investimento:590, cliques:730, conversoes:19 },
+            { label:"Sem 7", investimento:520, cliques:640, conversoes:16 },
+            { label:"Sem 8", investimento:540, cliques:630, conversoes:15 }
+          ]
+        },
+        // INTEGRAÇÃO: Google Analytics 4 API / Search Console para tráfego e
+        // uptime via monitor externo (ex.: UptimeRobot).
+        "site": {
+          status: "ativo", resumo: "Site no ar, sem incidentes registrados neste mês.",
+          statTiles: [
+            { icon:"🌐", label:"Visitas no mês", value:"3.240", delta:6.7, accent:true },
+            { icon:"⏱️", label:"Tempo médio no site", value:"2min 14s", delta:null },
+            { icon:"📄", label:"Páginas publicadas", value:"12", delta:null },
+            { icon:"✅", label:"Uptime do mês", value:"99.98%", delta:null }
+          ],
+          chartMetrics: { visitas: { label:"Visitas", color:"var(--blue)", fmt:v=>fmtInt(v) } },
+          performance: [
+            { label:"Sem 1", visitas:720 }, { label:"Sem 2", visitas:810 },
+            { label:"Sem 3", visitas:690 }, { label:"Sem 4", visitas:860 },
+            { label:"Sem 5", visitas:790 }, { label:"Sem 6", visitas:840 }
+          ]
+        }
+      },
+      criativos: [
+        { nome: "Estático: Avaliação Gratuita", tipo: "imagem", status: "ativo", servico: "trafego-pago", ctr: 3.2, conversoes: 44, cor: "var(--blue)" },
+        { nome: "Vídeo: Depoimento de Paciente", tipo: "video", status: "ativo", servico: "trafego-pago", ctr: 5.4, conversoes: 61, cor: "var(--green)" },
+        { nome: "Carrossel: Clareamento Dental", tipo: "imagem", status: "producao", servico: "trafego-pago", ctr: 0, conversoes: 0, cor: "var(--purple)" },
+        { nome: "Página: Nova seção Ortodontia", tipo: "imagem", status: "ativo", servico: "site", ctr: 0, conversoes: 0, cor: "var(--gray)" }
+      ],
+      timeline: [
+        { data: "10 Jun 2026", titulo: "Onboarding e briefing estratégico", desc: "Definição de persona e procedimentos prioritários.", status: "done" },
+        { data: "19 Jun 2026", titulo: "Site publicado", desc: "Site institucional no ar com pixel de agendamento instalado.", status: "done" },
+        { data: "Em andamento", titulo: "Testes de criativo com depoimentos", desc: "Validando qual formato gera mais agendamentos.", status: "andamento" },
+        { data: "Planejado (Ago 2026)", titulo: "Entrada em Google Ads", desc: "Expansão para busca, captar demanda ativa por 'dentista perto de mim'.", status: "planejado" }
+      ],
+      solicitacoes: [
+        { tipo: "Trocar/atualizar criativo", servico: "trafego-pago", mensagem: "Podemos tirar o criativo de ortodontia do ar? A agenda desse procedimento está cheia.",
+          data: "06/07/2026", status: "analise", resposta: null, respondidoPor: null },
+        { tipo: "Solicitar acesso à conta de anúncios", servico: "trafego-pago", mensagem: "Preciso que o financeiro tenha acesso de leitura à conta pra conferir a fatura.",
+          data: "28/06/2026", status: "aprovada", resposta: "Acesso de leitura liberado para o e-mail informado.", respondidoPor: "Marina, gestora de tráfego" }
+      ],
+      agendamento: {
+        horasContratadasMin: 60, horasUsadasMin: 60, proximaSessao: null,
+        ano: 2026, mes: 6,
+        slotsPorDia: { 16: ["09:00", "11:30"], 20: ["14:00"] }
+      },
+      relatorios: [
+        { mes: "Junho 2026", servico: "trafego-pago", data: "01/07/2026", investimento: 3980, conversoes: 118, cpl: 33.73 },
+        { mes: "Maio 2026", servico: "trafego-pago", data: "01/06/2026", investimento: 3510, conversoes: 96, cpl: 36.56 }
+      ],
+      notificacoes: [
+        { icone:"✅", cor:"var(--green)", corDim:"var(--green-dim)", titulo:"Acesso liberado", desc:"Acesso de leitura à conta de anúncios foi liberado.", data:"28/06/2026 16:20", lida:true, page:"solicitacoes" },
+        { icone:"⏰", cor:"var(--yellow)", corDim:"var(--yellow-dim)", titulo:"Hora mensal esgotada", desc:"Você já usou toda sua 1h de conversa este mês.", data:"01/07/2026 10:00", lida:false, page:"agendamento" }
+      ]
+    },
+    {
+      id: "construtora-alfa", nome: "Construtora Alfa", iniciais: "CA", segmento: "Imobiliário",
+      servicos: {
+        // INTEGRAÇÃO: sistema interno de projetos (Asana) — % de entrega do site.
+        "site": {
+          status: "producao", resumo: "Site em desenvolvimento, previsão de entrega em agosto/2026.",
+          progresso: { label: "Progresso da entrega", pct: 38 },
+          statTiles: [
+            { icon:"📄", label:"Páginas entregues", value:"3 de 8", delta:null, accent:true },
+            { icon:"🎨", label:"Layout", value:"Aprovado", delta:null }
+          ]
+        },
+        // INTEGRAÇÃO: painel do provedor de hospedagem (cPanel API / cloud
+        // provider API) — uptime, armazenamento, domínio e SSL.
+        "hospedagem": {
+          status: "ativo", resumo: "Hospedagem ativa, aguardando finalização do site para apontar o domínio.",
+          statTiles: [
+            { icon:"✅", label:"Uptime (30 dias)", value:"99.95%", delta:null, accent:true },
+            { icon:"💾", label:"Armazenamento usado", value:"2.1 GB de 10 GB", delta:null },
+            { icon:"🔒", label:"Certificado SSL", value:"Válido até 12/2026", delta:null },
+            { icon:"🌐", label:"Domínio", value:"construtoraalfa.com.br", delta:null }
+          ]
+        },
+        "landing-page": {
+          status: "planejado", resumo: "Landing page ainda em criação, sem dados de veiculação.",
+          statTiles: [
+            { icon:"👁️", label:"Visitas", value:"—", delta:null },
+            { icon:"🎯", label:"Leads gerados", value:"—", delta:null }
+          ]
+        }
+      },
+      criativos: [
+        { nome: "Wireframe: Home do site", tipo: "imagem", status: "producao", servico: "site", ctr: 0, conversoes: 0, cor: "var(--yellow)" }
+      ],
+      timeline: [
+        { data: "08 Jul 2026", titulo: "Onboarding iniciado", desc: "Aguardando briefing e materiais de marca para o site.", status: "andamento" },
+        { data: "Planejado (Jul 2026)", titulo: "Wireframes e layout do site", desc: "Primeira entrega de telas para aprovação do cliente.", status: "planejado" },
+        { data: "Planejado (Ago 2026)", titulo: "Publicação do site e landing page", desc: "Site institucional e landing de lançamento no ar.", status: "planejado" }
+      ],
+      solicitacoes: [],
+      agendamento: {
+        horasContratadasMin: 60, horasUsadasMin: 0, proximaSessao: null,
+        ano: 2026, mes: 6,
+        slotsPorDia: { 14: ["10:00"], 21: ["14:00", "15:00"] }
+      },
+      relatorios: [],
+      notificacoes: [
+        { icone:"🛠️", cor:"var(--yellow)", corDim:"var(--yellow-dim)", titulo:"Onboarding iniciado", desc:"Seu time de projeto já está trabalhando no site.", data:"08/07/2026 11:00", lida:false, page:"projeto" }
+      ]
+    },
+    {
+      // empresa recém-criada — mesmo formato que o fluxo "Adicionar empresa" gera
+      // sozinho. Mostra o primeiro contato do cliente com o painel: nada rodando
+      // ainda, nada solicitado, só o onboarding começando.
+      id: "studio-fit", nome: "Studio Fit Academia", iniciais: "SF", segmento: "Academia / Fitness",
+      servicos: {
+        "trafego-pago": {
+          status: "planejado", resumo: "Serviço contratado, aguardando início pelo time.",
+          statTiles: [ { icon:"📣", label:"Status", value:"Onboarding", delta:null } ]
+        },
+        "social-media": {
+          status: "planejado", resumo: "Serviço contratado, aguardando início pelo time.",
+          statTiles: [ { icon:"📱", label:"Status", value:"Onboarding", delta:null } ]
+        }
+      },
+      criativos: [],
+      timeline: [
+        { data: "09 Jul 2026", titulo: "Onboarding iniciado", desc: "Aguardando briefing e acesso às contas necessárias.", status: "andamento" }
+      ],
+      solicitacoes: [],
+      agendamento: {
+        horasContratadasMin: 60, horasUsadasMin: 0, proximaSessao: null,
+        ano: 2026, mes: 6,
+        slotsPorDia: {}
+      },
+      relatorios: [],
+      notificacoes: [
+        { icone:"👋", cor:"var(--accent)", corDim:"var(--accent-dim)", titulo:"Bem-vindo(a) à Viskoo!", desc:"Sua empresa foi cadastrada. Em breve o time entra em contato pra dar início aos serviços.", data:"09/07/2026 09:00", lida:false, page:"projeto" }
+      ]
+    }
+  ],
+
+  // INTEGRAÇÃO: cobrança real via provedor de pagamentos (Stripe / Asaas / Iugu),
+  // vinculada ao user_id da conta — não à empresa. Assinatura, forma de pagamento
+  // e faturas ficam nesse nível mesmo quando o usuário troca de empresa no menu.
+  financeiro: {
+    plano: { nome: "Gestão Multi-Contas", descricao: "Inclui gestão de até 5 empresas nesta conta", mensalidade: 1200, empresasIncluidas: 5 },
+    formaPagamento: { tipo: "Cartão de crédito", bandeira: "Mastercard", final: "4231", validade: "08/29" },
+    faturas: [
+      { mes: "Junho 2026", data: "05/07/2026", valor: 1200, status: "paga",
+        detalhamento: [ { empresa: "Loja Nordeste Bikes", valor: 500 }, { empresa: "Clínica Vitta Odonto", valor: 400 }, { empresa: "Construtora Alfa", valor: 300 } ] },
+      { mes: "Maio 2026", data: "05/06/2026", valor: 900, status: "paga",
+        detalhamento: [ { empresa: "Loja Nordeste Bikes", valor: 500 }, { empresa: "Clínica Vitta Odonto", valor: 400 } ] },
+      { mes: "Julho 2026", data: "05/08/2026", valor: 1200, status: "pendente",
+        detalhamento: [ { empresa: "Loja Nordeste Bikes", valor: 500 }, { empresa: "Clínica Vitta Odonto", valor: 400 }, { empresa: "Construtora Alfa", valor: 300 } ] }
+    ]
+  }
+};
+
+let currentEmpresaId = DATA.empresas[0].id;
+const emp = () => DATA.empresas.find(e => e.id === currentEmpresaId);
+
+// serviço em foco no Dashboard da empresa atual — cada empresa pode ter um
+// mix diferente de serviços contratados (tráfego pago, site, loja virtual...).
+let activeServiceId = Object.keys(emp().servicos)[0];
+const svc = () => emp().servicos[activeServiceId];
+
+const fmtBRL = n => n.toLocaleString('pt-BR', { style:'currency', currency:'BRL', maximumFractionDigits: n>=1000?0:2 });
+const fmtInt = n => n.toLocaleString('pt-BR');
+
+/* =====================================================================
+   TEMA (dark / light) — funciona antes e depois do login.
+   ===================================================================== */
+// padrão é sempre escuro. Só grava no localStorage quando o usuário realmente
+// clica no switch (persist=true) — carregar a página nunca "escolhe" um tema
+// por conta própria, só lê o que o usuário já tinha escolhido antes.
+function applyTheme(theme, persist){
+  document.documentElement.setAttribute('data-theme', theme);
+  if(persist !== false){ try{ localStorage.setItem('viskoo-theme', theme); }catch(e){} }
+  document.querySelectorAll('.theme-switch').forEach(el => el.classList.toggle('is-light', theme==='light'));
+}
+function toggleTheme(){
+  const current = document.documentElement.getAttribute('data-theme') || 'dark';
+  applyTheme(current === 'light' ? 'dark' : 'light');
+}
+document.querySelectorAll('.theme-toggle').forEach(btn => btn.addEventListener('click', toggleTheme));
+applyTheme(document.documentElement.getAttribute('data-theme') || 'dark', false);
+
+/* =====================================================================
+   LOGIN
+   ===================================================================== */
+document.getElementById('login-form').addEventListener('submit', function(e){
+  e.preventDefault();
+  const email = document.getElementById('login-email').value.trim();
+  const pass = document.getElementById('login-pass').value.trim();
+  const err = document.getElementById('login-error');
+  // INTEGRAÇÃO: substituir por chamada real de autenticação (POST /auth/login).
+  // Aqui apenas validamos que os campos não estão vazios para simular a sessão.
+  if(!email || !pass){ err.style.display = 'block'; return; }
+  err.style.display = 'none';
+  document.getElementById('user-avatar').textContent = DATA.cliente.iniciais;
+  document.getElementById('user-name').textContent = DATA.cliente.nome;
+  document.getElementById('user-email').textContent = DATA.cliente.email;
+  document.getElementById('login-screen').style.display = 'none';
+  goToEmpresaScreen();
+});
+
+function backToLogin(){
+  document.getElementById('app-shell').classList.remove('active');
+  document.getElementById('empresa-screen').classList.remove('active');
+  document.getElementById('login-screen').style.display = 'flex';
+}
+document.getElementById('logout-btn').addEventListener('click', backToLogin);
+document.getElementById('es-logout-btn').addEventListener('click', backToLogin);
+
+/* =====================================================================
+   SELEÇÃO / TROCA DE EMPRESA — a mesma conta pode reunir várias empresas,
+   cada uma com seu próprio painel de campanha (dados isolados em DATA.empresas).
+   ===================================================================== */
+function goToEmpresaScreen(){
+  document.getElementById('app-shell').classList.remove('active');
+  document.getElementById('empresa-screen').classList.add('active');
+  renderEmpresaScreen();
+}
+
+function renderEmpresaScreen(){
+  document.getElementById('es-count').textContent = DATA.empresas.length;
+  document.getElementById('empresa-grid').innerHTML = DATA.empresas.map(e => {
+    const servicoIcones = Object.keys(e.servicos).map(k => SERVICOS_CONFIG[k].icon).join(' ');
+    const n = Object.keys(e.servicos).length;
+    return `
+    <div class="empresa-card reveal" data-empresa="${e.id}">
+      <div class="avatar">${e.iniciais}</div>
+      <div class="ec-name">${e.nome}</div>
+      <div class="ec-seg">${e.segmento}</div>
+      <div class="ec-foot">
+        <span class="badge badge-default">${servicoIcones} ${n} serviço${n===1?'':'s'}</span>
+        <span style="font-size:13px;color:var(--text-muted)">Entrar →</span>
+      </div>
+    </div>`;
+  }).join('') + `
+    <div class="empresa-card add-new" id="empresa-add-card">
+      <div class="plus">＋</div>
+      <div>Adicionar nova empresa</div>
+    </div>
+  `;
+  document.querySelectorAll('.empresa-card[data-empresa]').forEach(card=>{
+    card.addEventListener('click', ()=> enterEmpresa(card.dataset.empresa));
+  });
+  document.getElementById('empresa-add-card').addEventListener('click', openEmpresaModal);
+}
+
+function enterEmpresa(id){
+  currentEmpresaId = id;
+  activeServiceId = Object.keys(emp().servicos)[0];
+  document.getElementById('empresa-screen').classList.remove('active');
+  document.getElementById('app-shell').classList.add('active');
+  switchPage('dashboard');
+  boot();
+}
+
+function selectService(serviceId){
+  activeServiceId = serviceId;
+  renderServicesGrid();
+  renderStatTiles();
+  renderStatusCard();
+  renderChart(svc().chartMetrics ? Object.keys(svc().chartMetrics)[0] : null);
+}
+
+/* =====================================================================
+   NOTIFICAÇÕES — fecha o loop das ações que dependem de aprovação humana
+   (solicitações, agendamento, contratação de serviço).
+   ===================================================================== */
+function renderNotifications(){
+  const list = emp().notificacoes || [];
+  const unread = list.filter(n => !n.lida).length;
+  const badge = document.getElementById('notif-badge');
+  badge.style.display = unread > 0 ? 'flex' : 'none';
+  badge.textContent = unread > 9 ? '9+' : unread;
+
+  document.getElementById('notif-list').innerHTML = list.length ? list.map((n,i) => `
+    <div class="notif-item ${n.lida?'':'unread'}" data-notif="${i}">
+      <div class="notif-icon" style="background:${n.corDim};color:${n.cor}">${n.icone}</div>
+      <div class="notif-body">
+        <div class="notif-title">${n.titulo}</div>
+        <div class="notif-desc">${n.desc}</div>
+        <div class="notif-time">${n.data}</div>
+      </div>
+      ${n.lida?'':'<span class="notif-dot"></span>'}
+    </div>
+  `).join('') : '<div class="notif-empty">Nenhuma notificação por aqui.</div>';
+
+  document.querySelectorAll('#notif-list [data-notif]').forEach(el=>{
+    el.addEventListener('click', ()=>{
+      const n = list[el.dataset.notif];
+      n.lida = true;
+      renderNotifications();
+      document.getElementById('notif-dropdown').classList.remove('active');
+      if(n.page) switchPage(n.page);
+    });
+  });
+}
+
+// INTEGRAÇÃO: em produção isso seria empurrado por WebSocket/push do backend
+// (quando o time humano muda o status de algo) em vez de gerado no cliente.
+function pushNotification(n){
+  if(!emp().notificacoes) emp().notificacoes = [];
+  emp().notificacoes.unshift(Object.assign({
+    lida: false,
+    data: new Date().toLocaleDateString('pt-BR') + ' ' + new Date().toLocaleTimeString('pt-BR',{hour:'2-digit',minute:'2-digit'})
+  }, n));
+  renderNotifications();
+}
+
+document.getElementById('notif-btn').addEventListener('click', function(e){
+  e.stopPropagation();
+  document.getElementById('notif-dropdown').classList.toggle('active');
+});
+document.getElementById('notif-markall').addEventListener('click', function(e){
+  e.stopPropagation();
+  (emp().notificacoes||[]).forEach(n => n.lida = true);
+  renderNotifications();
+});
+document.addEventListener('click', function(e){
+  const dd = document.getElementById('notif-dropdown');
+  if(dd.classList.contains('active') && !e.target.closest('#notif-wrap')) dd.classList.remove('active');
+});
+
+function renderWorkspaceSwitcher(){
+  const current = emp();
+  document.getElementById('ws-avatar').textContent = current.iniciais;
+  document.getElementById('ws-name').textContent = current.nome;
+  document.getElementById('ws-sub').textContent = current.segmento;
+  document.getElementById('ws-dropdown-list').innerHTML = DATA.empresas.map(e => `
+    <div class="ws-item ${e.id===currentEmpresaId?'current':''}" data-empresa="${e.id}">
+      <span class="avatar">${e.iniciais}</span>
+      <span class="ws-item-name">${e.nome}</span>
+    </div>
+  `).join('');
+  document.querySelectorAll('.ws-item[data-empresa]').forEach(item=>{
+    item.addEventListener('click', ()=>{
+      document.getElementById('ws-dropdown').classList.remove('active');
+      if(item.dataset.empresa !== currentEmpresaId) enterEmpresa(item.dataset.empresa);
+    });
+  });
+}
+
+document.getElementById('ws-btn').addEventListener('click', function(e){
+  e.stopPropagation();
+  document.getElementById('ws-dropdown').classList.toggle('active');
+});
+document.addEventListener('click', function(e){
+  const dd = document.getElementById('ws-dropdown');
+  if(dd.classList.contains('active') && !e.target.closest('.workspace-switcher')) dd.classList.remove('active');
+});
+document.getElementById('ws-all-btn').addEventListener('click', function(){
+  document.getElementById('ws-dropdown').classList.remove('active');
+  goToEmpresaScreen();
+});
+document.getElementById('ws-add-btn').addEventListener('click', function(){
+  document.getElementById('ws-dropdown').classList.remove('active');
+  openEmpresaModal();
+});
+
+function openEmpresaModal(){
+  document.getElementById('empresa-form').reset();
+  document.getElementById('servico-check-grid').innerHTML = Object.keys(SERVICOS_CONFIG).map(key => {
+    const s = SERVICOS_CONFIG[key];
+    return `<span class="chip toggle" data-servico-check="${key}">${s.icon} ${s.label}</span>`;
+  }).join('');
+  document.querySelectorAll('[data-servico-check]').forEach(chip=>{
+    chip.addEventListener('click', ()=> chip.classList.toggle('active'));
+  });
+  document.getElementById('empresa-modal').classList.add('active');
+}
+function closeEmpresaModal(){ document.getElementById('empresa-modal').classList.remove('active'); }
+document.getElementById('empresa-modal-close').addEventListener('click', closeEmpresaModal);
+document.getElementById('empresa-modal-cancel').addEventListener('click', closeEmpresaModal);
+document.getElementById('empresa-modal').addEventListener('click', e => { if(e.target.id==='empresa-modal') closeEmpresaModal(); });
+
+document.getElementById('empresa-form').addEventListener('submit', function(e){
+  e.preventDefault();
+  const nome = document.getElementById('empresa-nome').value.trim();
+  const segmento = document.getElementById('empresa-segmento').value.trim();
+  const servicosEscolhidos = Array.from(document.querySelectorAll('[data-servico-check].active')).map(c => c.dataset.servicoCheck);
+  if(!nome || !segmento || servicosEscolhidos.length === 0){
+    alert('Preencha nome, segmento e escolha pelo menos um serviço.');
+    return;
+  }
+  // INTEGRAÇÃO: POST /companies — cria o registro no banco interno, vincula ao
+  // usuário logado (user_companies), grava os serviços escolhidos em
+  // company_services e dispara o onboarding de cada um (ex.: criação de conta
+  // de anúncio, provisionamento de hospedagem etc.) com o time responsável.
+  const id = nome.toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g,'').replace(/[^a-z0-9]+/g,'-').replace(/(^-|-$)/g,'') + '-' + Date.now();
+  const iniciais = nome.split(' ').filter(Boolean).slice(0,2).map(w=>w[0].toUpperCase()).join('');
+  const servicos = {};
+  servicosEscolhidos.forEach(key => {
+    servicos[key] = {
+      status: 'planejado',
+      resumo: 'Serviço contratado, aguardando início pelo time.',
+      statTiles: [ { icon: SERVICOS_CONFIG[key].icon, label: 'Status', value: 'Onboarding', delta: null } ]
+    };
+  });
+  DATA.empresas.push({
+    id, nome, iniciais: iniciais || 'EM', segmento, servicos,
+    criativos: [],
+    timeline: [{ data: new Date().toLocaleDateString('pt-BR'), titulo: 'Onboarding iniciado', desc: 'Aguardando briefing e acesso às contas necessárias.', status: 'andamento' }],
+    solicitacoes: [],
+    agendamento: { horasContratadasMin: 60, horasUsadasMin: 0, proximaSessao: null, ano: 2026, mes: 6, slotsPorDia: {} },
+    relatorios: [],
+    notificacoes: [
+      { icone:"👋", cor:"var(--accent)", corDim:"var(--accent-dim)", titulo:"Empresa criada", desc:"Onboarding iniciado. Em breve o time entra em contato.", data:new Date().toLocaleDateString('pt-BR') + ' ' + new Date().toLocaleTimeString('pt-BR',{hour:'2-digit',minute:'2-digit'}), lida:false, page:"projeto" }
+    ]
+  });
+  closeEmpresaModal();
+  enterEmpresa(id);
+});
+
+/* =====================================================================
+   NAVEGAÇÃO ENTRE PÁGINAS
+   ===================================================================== */
+const pageMeta = {
+  dashboard:  { title: "Dashboard",              sub: "Visão geral dos seus serviços contratados" },
+  criativos:  { title: "Entregáveis",             sub: "Peças e páginas em produção ou já publicadas" },
+  projeto:    { title: "Projeto",                 sub: "O que já foi entregue e o que está em andamento" },
+  solicitacoes:{ title: "Solicitações",           sub: "Peça mudanças na campanha: um humano aprova antes de aplicar" },
+  agendamento:{ title: "Agendamento",             sub: "1h mensal de conversa com um especialista humano" },
+  relatorios: { title: "Central de Relatórios",   sub: "Histórico de relatórios mensais" },
+  contratar:  { title: "Contratar Serviços",      sub: "Amplie o que a agência faz por esta empresa" },
+  financeiro: { title: "Financeiro",              sub: "Da sua conta, mesmo se você trocar de empresa" }
+};
+
+function switchPage(page){
+  document.querySelectorAll('.nav-item').forEach(n => n.classList.toggle('active', n.dataset.page===page));
+  document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+  document.getElementById('page-' + page).classList.add('active');
+  document.getElementById('topbar-title').textContent = pageMeta[page].title;
+  document.getElementById('topbar-sub').textContent = pageMeta[page].sub;
+}
+
+document.getElementById('nav-list').addEventListener('click', function(e){
+  const item = e.target.closest('.nav-item');
+  if(!item) return;
+  switchPage(item.dataset.page);
+});
+
+/* =====================================================================
+   BOOT — dispara todas as renderizações após login
+   ===================================================================== */
+function boot(){
+  document.getElementById('footer-updated').textContent = 'Atualizado agora · ' + new Date().toLocaleTimeString('pt-BR',{hour:'2-digit',minute:'2-digit'});
+
+  renderWorkspaceSwitcher();
+  renderNotifications();
+  renderServicesGrid();
+  renderStatTiles();
+  renderStatusCard();
+  renderChart(svc().chartMetrics ? Object.keys(svc().chartMetrics)[0] : null);
+  renderCreatives('todos');
+  renderTimeline();
+  renderReqServicoOptions();
+  renderSolicitacoes();
+  renderAgendamento();
+  renderReports();
+  renderFinanceiro();
+  renderCatalog();
+}
+
+/* ---- serviços contratados (grid no topo do Dashboard) ---- */
+function renderServicesGrid(){
+  document.getElementById('service-grid').innerHTML = Object.keys(emp().servicos).map((key,i) => {
+    const s = SERVICOS_CONFIG[key];
+    const st = STATUS_CONFIG[emp().servicos[key].status];
+    return `
+    <div class="service-card reveal ${key===activeServiceId?'active':''}" style="animation-delay:${i*.04}s" data-servico="${key}">
+      <div class="sc-icon">${s.icon}</div>
+      <div class="sc-name">${s.label}</div>
+      <span class="badge badge-default"><span class="badge-dot" style="color:${st.cor}"></span>${st.label}</span>
+    </div>`;
+  }).join('');
+  document.querySelectorAll('.service-card[data-servico]').forEach(card=>{
+    card.addEventListener('click', ()=> selectService(card.dataset.servico));
+  });
+}
+
+/* ---- stat tiles (do serviço em foco) ---- */
+function renderStatTiles(){
+  const tiles = svc().statTiles;
+  document.getElementById('stat-tiles').innerHTML = tiles.map((t,i)=>{
+    let deltaHtml = '';
+    if(t.delta !== null && t.delta !== undefined){
+      const up = t.invert ? t.delta < 0 : t.delta > 0;
+      const cls = t.delta === 0 ? 'flat' : (up ? 'up' : 'down');
+      const arrow = t.delta === 0 ? '·' : (t.delta > 0 ? '↑' : '↓');
+      deltaHtml = `<div class="stat-delta ${cls}">${arrow} ${Math.abs(t.delta)}% vs. mês anterior</div>`;
+    }
+    return `
+    <div class="stat-card reveal ${t.accent?'accent':''}" style="animation-delay:${i*.04}s">
+      <div class="stat-icon">${t.icon}</div>
+      <div class="stat-value">${t.value}</div>
+      <div class="stat-label">${t.label}</div>
+      ${deltaHtml}
+    </div>`;
+  }).join('');
+}
+
+/* ---- status do serviço em foco ---- */
+function renderStatusCard(){
+  const s = svc();
+  const st = STATUS_CONFIG[s.status];
+  document.getElementById('status-card-title').textContent = 'Status: ' + SERVICOS_CONFIG[activeServiceId].label;
+  const progressoHtml = s.progresso ? `
+    <div style="min-width:220px;flex:1;max-width:320px">
+      <div style="display:flex;justify-content:space-between;font-size:13px;color:var(--text-muted);margin-bottom:6px">
+        <span>${s.progresso.label}</span><span style="font-family:var(--font-mono);color:var(--text-secondary)">${s.progresso.pct.toFixed(0)}%</span>
+      </div>
+      <div class="progress-wrap"><div class="progress-bar" style="width:${s.progresso.pct}%"></div></div>
+    </div>` : '<div style="flex:1"></div>';
+  document.getElementById('status-card').innerHTML = `
+    <div class="status-left">
+      <div class="status-ring" style="background:${st.corDim};color:${st.cor}">${st.icon}</div>
+      <div>
+        <div class="status-name">${st.label}</div>
+        <div class="status-desc">${s.resumo}</div>
+      </div>
+    </div>
+    ${progressoHtml}
+    <button class="btn btn-ghost btn-sm" id="status-req-btn">📝 Solicitar alteração</button>
+  `;
+  document.getElementById('status-req-btn').addEventListener('click', ()=>{
+    switchPage('solicitacoes');
+    // pré-seleciona o serviço que estava em foco no Dashboard, já filtrando os
+    // tipos de solicitação válidos pra ele (ver renderReqTipoOptions).
+    document.getElementById('req-servico').value = activeServiceId;
+    renderReqTipoOptions(activeServiceId);
+  });
+
+  // conta só solicitações do serviço em foco — uma pendência de Site não deve
+  // aparecer no card de status do Tráfego Pago.
+  const pendentes = emp().solicitacoes.filter(r => r.servico === activeServiceId && (r.status==='pendente' || r.status==='analise')).length;
+  const reqChip = document.getElementById('status-req-chip');
+  if(pendentes > 0){
+    reqChip.style.display = 'inline-flex';
+    reqChip.textContent = `${pendentes} solicitação(ões) aguardando aprovação`;
+    reqChip.onclick = ()=> switchPage('solicitacoes');
+  } else {
+    reqChip.style.display = 'none';
+  }
+}
+
+/* ---- gráfico de performance (SVG, sem libs) — parametrizado pelo serviço em foco ---- */
+function renderChart(metric){
+  const s = svc();
+  const chartCard = document.getElementById('chart-card');
+  if(!s.performance || !s.chartMetrics){
+    chartCard.style.display = 'none';
+    return;
+  }
+  chartCard.style.display = 'block';
+  const chartMetrics = s.chartMetrics;
+
+  document.getElementById('chart-toolbar').innerHTML = Object.keys(chartMetrics).map(k => `
+    <span class="chip toggle ${k===metric?'active':''}" data-metric="${k}">${chartMetrics[k].label}</span>
+  `).join('');
+  document.querySelectorAll('#chart-toolbar .chip').forEach(chip=>{
+    chip.addEventListener('click', ()=> renderChart(chip.dataset.metric));
+  });
+
+  const values = s.performance.map(p => p[metric]);
+  const w = 1000, h = 220, pad = 32;
+  const max = Math.max(...values) * 1.2 || 1;
+  const stepX = (w - pad*2) / (values.length - 1);
+  const pts = values.map((v,i)=>{
+    const x = pad + i*stepX;
+    const y = h - pad - (v/max) * (h - pad*2);
+    return [x,y];
+  });
+  const line = pts.map((p,i)=> (i===0?'M':'L') + p[0].toFixed(1) + ',' + p[1].toFixed(1)).join(' ');
+  const area = line + ` L${pts[pts.length-1][0].toFixed(1)},${h-pad} L${pts[0][0].toFixed(1)},${h-pad} Z`;
+  const gridLines = [0.25,0.5,0.75].map(f => h - pad - f*(h-pad*2));
+  const color = chartMetrics[metric].color;
+
+  const svg = `
+  <svg viewBox="0 0 ${w} ${h}" preserveAspectRatio="none">
+    <defs>
+      <linearGradient id="chartFill" x1="0" y1="0" x2="0" y2="1">
+        <stop offset="0%" stop-color="${color}" stop-opacity=".35"/>
+        <stop offset="100%" stop-color="${color}" stop-opacity="0"/>
+      </linearGradient>
+    </defs>
+    ${gridLines.map(y=>`<line x1="${pad}" y1="${y}" x2="${w-pad}" y2="${y}" stroke="var(--border)" stroke-width="1"/>`).join('')}
+    <path d="${area}" fill="url(#chartFill)"/>
+    <path d="${line}" fill="none" stroke="${color}" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+    ${pts.map((p,i)=>`<circle cx="${p[0]}" cy="${p[1]}" r="${i===pts.length-1?5:3}" fill="${i===pts.length-1?color:'var(--bg-surface)'}" stroke="${color}" stroke-width="2"/>`).join('')}
+    ${s.performance.map((d,i)=>`<text x="${pts[i][0]}" y="${h-6}" text-anchor="middle" class="chart-axis-label">${d.label}</text>`).join('')}
+  </svg>`;
+  document.getElementById('chart-wrap').innerHTML = svg;
+
+  const total = values.reduce((a,b)=>a+b,0);
+  const last = values[values.length-1];
+  document.getElementById('chart-legend').innerHTML = `
+    <span>Total no período: <b>${chartMetrics[metric].fmt(total)}</b></span>
+    <span>Última semana: <b>${chartMetrics[metric].fmt(last)}</b></span>
+  `;
+}
+
+/* ---- criativos ---- */
+const creativeStatusMap = {
+  producao: { label: "Em produção",              badge: "badge-warning" },
+  ativo:    { label: "Publicado / Em veiculação", badge: "badge-success" },
+  pausado:  { label: "Pausado",                   badge: "badge-default" }
+};
+function renderCreatives(filter){
+  document.getElementById('creative-filters').innerHTML = ['todos','producao','ativo','pausado'].map(f => `
+    <span class="chip toggle ${f===filter?'active':''}" data-filter="${f}">${f==='todos'?'Todos':creativeStatusMap[f].label}</span>
+  `).join('');
+  document.querySelectorAll('#creative-filters .chip').forEach(chip=>{
+    chip.addEventListener('click', ()=> renderCreatives(chip.dataset.filter));
+  });
+
+  const list = emp().criativos.filter(c => filter==='todos' || c.status===filter);
+  const topCtr = Math.max(...emp().criativos.filter(c=>c.ctr>0).map(c=>c.ctr));
+
+  if(list.length === 0){
+    document.getElementById('gallery-grid').innerHTML = '<div style="padding:28px 4px;color:var(--text-muted);font-size:14px">Nenhum entregável nessa categoria ainda.</div>';
+    return;
+  }
+  // CTR/conversões só fazem sentido pra peças de mídia paga/conteúdo (anúncio,
+  // post). Uma página de site ou wireframe não tem CTR — mostrar "—" ali seria
+  // confuso, então a linha de métricas nem aparece pra esses serviços.
+  const servicosComPerformance = ["trafego-pago", "social-media"];
+
+  document.getElementById('gallery-grid').innerHTML = list.map((c,i)=>{
+    const s = creativeStatusMap[c.status];
+    const sv = SERVICOS_CONFIG[c.servico];
+    const temPerformance = servicosComPerformance.includes(c.servico);
+    const isTop = temPerformance && c.ctr === topCtr && c.ctr > 0;
+    return `
+    <div class="creative-card reveal" style="animation-delay:${i*.04}s">
+      <div class="creative-thumb" style="background:linear-gradient(135deg, ${c.cor}, var(--bg-elevated) 140%)">
+        ${isTop?'<span class="creative-crown">🏆 melhor desempenho</span>':''}
+        <span class="creative-type">${c.tipo==='video'?'🎬 vídeo':'🖼️ imagem'}</span>
+        ${c.tipo==='video' ? '🎬' : '🖼️'}
+      </div>
+      <div class="creative-body">
+        <div class="creative-name">${c.nome}</div>
+        <div style="display:flex;gap:6px;flex-wrap:wrap;margin-bottom:8px">
+          <span class="badge ${s.badge}"><span class="badge-dot"></span>${s.label}</span>
+          <span class="service-tag">${sv.icon} ${sv.label}</span>
+        </div>
+        ${temPerformance ? `
+        <div class="creative-meta">
+          <span>CTR: <b>${c.ctr>0?c.ctr.toFixed(1)+'%':'—'}</b></span>
+          <span>Conversões: <b>${c.conversoes>0?c.conversoes:'—'}</b></span>
+        </div>` : ''}
+      </div>
+    </div>`;
+  }).join('');
+}
+
+/* ---- timeline do projeto ---- */
+function renderTimeline(){
+  const emDia = emp().timeline.filter(t=>t.status==='done').length;
+  document.getElementById('timeline-chip').textContent = `${emDia}/${emp().timeline.length} entregues`;
+  const iconMap = { done:'✓', andamento:'', planejado:'○' };
+  document.getElementById('timeline').innerHTML = emp().timeline.map(t => `
+    <div class="timeline-item reveal">
+      <div class="timeline-dot ${t.status}">${iconMap[t.status]}</div>
+      <div class="timeline-content">
+        <div class="t-date">${t.data}</div>
+        <div class="t-title">${t.titulo} ${t.status==='andamento'?'<span class="badge badge-warning">em andamento</span>':''} ${t.status==='planejado'?'<span class="badge badge-default">planejado</span>':''}</div>
+        <div class="t-desc">${t.desc}</div>
+      </div>
+    </div>
+  `).join('');
+}
+
+/* ---- solicitações ---- */
+const reqStatusMap = {
+  pendente: { label: "Aguardando aprovação", badge: "badge-warning", icon: "🕘" },
+  analise:  { label: "Em análise pelo time",  badge: "badge-info",    icon: "🔎" },
+  aprovada: { label: "Aprovada e aplicada",   badge: "badge-success", icon: "✅" },
+  recusada: { label: "Não aprovada",          badge: "badge-danger",  icon: "✕" }
+};
+
+function renderSolicitacoes(){
+  document.getElementById('req-chip').textContent = emp().solicitacoes.length + ' no total';
+  if(emp().solicitacoes.length === 0){
+    document.getElementById('request-list').innerHTML = '<div style="padding:28px 20px;color:var(--text-muted);font-size:14px">Nenhuma solicitação enviada ainda para esta empresa.</div>';
+    return;
+  }
+  document.getElementById('request-list').innerHTML = emp().solicitacoes.map((r,i) => {
+    const s = reqStatusMap[r.status];
+    const sv = r.servico ? SERVICOS_CONFIG[r.servico] : null;
+    return `
+    <div class="request-item reveal" style="animation-delay:${i*.04}s">
+      <div class="request-top">
+        <div>
+          <div class="request-type">${r.tipo}</div>
+          <div class="request-date">Enviada em ${r.data}${sv ? ' · ' + sv.icon + ' ' + sv.label : ''}</div>
+        </div>
+        <span class="badge ${s.badge}"><span class="badge-dot"></span>${s.label}</span>
+      </div>
+      ${r.prazo ? `<div class="request-meta">Prazo desejável: <b>${r.prazo}</b></div>` : ''}
+      <div class="request-msg">"${r.mensagem}"</div>
+      ${r.imagem ? `<div class="request-attachment"><img src="${r.imagem}" alt="Anexo da solicitação"></div>` : ''}
+      ${r.resposta ? `
+      <div class="request-response">
+        <span class="rr-icon">${s.icon}</span>
+        <span class="rr-text">${r.resposta}<br><b>${r.respondidoPor}</b></span>
+      </div>` : ''}
+    </div>`;
+  }).join('');
+}
+
+// Tipos de solicitação válidos POR SERVIÇO — evita, por ex., pedir aumento de verba
+// de mídia num serviço de Site (que não tem orçamento de anúncio) ou pedir troca de
+// criativo de anúncio numa Hospedagem. "Geral" é comum a todos os serviços.
+const REQUEST_TIPOS = {
+  "trafego-pago": {
+    "Orçamento e investimento": ["Aumentar investimento","Reduzir investimento","Pausar campanha","Retomar campanha","Redistribuir orçamento entre campanhas"],
+    "Criativos": ["Trocar/atualizar criativo","Sugerir novo criativo","Aprovar criativo em produção","Remover criativo do ar"],
+    "Público e segmentação": ["Ajustar público-alvo","Incluir/excluir região geográfica","Criar público de remarketing/lookalike"],
+    "Estrutura da campanha": ["Criar nova campanha","Testar novo canal (TikTok, LinkedIn etc.)","Alterar objetivo da campanha"],
+    "Conta e acesso": ["Solicitar acesso à conta de anúncios","Atualizar forma de pagamento da conta"]
+  },
+  "site": {
+    "Conteúdo": ["Atualizar conteúdo do site","Publicar nova página","Trocar imagens/textos de uma página"],
+    "Técnico": ["Problema técnico no site","Alterar layout/design de uma página","Integrar formulário/ferramenta nova"],
+    "Acesso": ["Solicitar acesso ao painel do site"]
+  },
+  "landing-page": {
+    "Conteúdo e oferta": ["Atualizar oferta/promoção da página","Trocar textos/imagens","Criar nova landing page"],
+    "Técnico": ["Problema técnico na página","Ajustar formulário de captura","Integrar com ferramenta de e-mail marketing"]
+  },
+  "loja-virtual": {
+    "Catálogo": ["Cadastrar novo produto","Atualizar preço/estoque","Remover produto do catálogo"],
+    "Operação": ["Problema em pedido/pagamento","Configurar frete/promoção","Integrar meio de pagamento novo"],
+    "Acesso": ["Solicitar acesso ao painel da loja"]
+  },
+  "hospedagem": {
+    "Infraestrutura": ["Renovar domínio","Aumentar espaço de armazenamento","Migrar e-mail/domínio","Reportar site fora do ar"],
+    "Segurança": ["Renovar certificado SSL","Reportar problema de segurança"]
+  },
+  "social-media": {
+    "Conteúdo": ["Publicar novo conteúdo","Sugerir pauta/tema","Aprovar conteúdo em produção","Remover post do ar"],
+    "Estratégia": ["Ajustar linha editorial","Testar novo formato (Reels, Carrossel etc.)"],
+    "Acesso": ["Solicitar acesso às redes sociais"]
+  }
+};
+const REQUEST_TIPOS_GERAL = ["Solicitar relatório extra","Tirar dúvida sobre uma métrica","Solicitação urgente","Outro"];
+
+function renderReqTipoOptions(servicoKey){
+  const grupos = REQUEST_TIPOS[servicoKey] || {};
+  let html = Object.keys(grupos).map(label => `
+    <optgroup label="${label}">${grupos[label].map(t=>`<option value="${t}">${t}</option>`).join('')}</optgroup>
+  `).join('');
+  html += `<optgroup label="Geral">${REQUEST_TIPOS_GERAL.map(t=>`<option value="${t}">${t}</option>`).join('')}</optgroup>`;
+  document.getElementById('req-tipo').innerHTML = html;
+}
+document.getElementById('req-servico').addEventListener('change', function(){
+  renderReqTipoOptions(this.value);
+});
+
+function renderReqServicoOptions(){
+  const keys = Object.keys(emp().servicos);
+  document.getElementById('req-servico').innerHTML = keys.map(key => {
+    const s = SERVICOS_CONFIG[key];
+    return `<option value="${key}">${s.icon} ${s.label}</option>`;
+  }).join('');
+  renderReqTipoOptions(keys[0]);
+}
+
+document.getElementById('req-prazo').addEventListener('change', function(){
+  document.getElementById('req-urgent-note').style.display = this.value === 'Urgente (até 24h)' ? 'flex' : 'none';
+});
+
+// INTEGRAÇÃO: hoje o preview é só local (FileReader, base64 em memória). No backend
+// real, o arquivo selecionado deve subir pra um storage (S3 / Supabase Storage) e a
+// solicitação guardar só a URL assinada, não o base64.
+let pendingImagem = null;
+document.getElementById('req-imagem').addEventListener('change', function(e){
+  const file = e.target.files[0];
+  if(!file) return;
+  const reader = new FileReader();
+  reader.onload = function(ev){
+    pendingImagem = ev.target.result;
+    document.getElementById('req-file-thumb').src = pendingImagem;
+    document.getElementById('req-file-name').textContent = file.name;
+    document.getElementById('req-file-preview').style.display = 'flex';
+  };
+  reader.readAsDataURL(file);
+});
+document.getElementById('req-file-remove').addEventListener('click', function(){
+  pendingImagem = null;
+  document.getElementById('req-imagem').value = '';
+  document.getElementById('req-file-preview').style.display = 'none';
+});
+
+document.getElementById('req-form').addEventListener('submit', function(e){
+  e.preventDefault();
+  const servico = document.getElementById('req-servico').value;
+  const tipo = document.getElementById('req-tipo').value;
+  const msg = document.getElementById('req-msg').value.trim();
+  const prazo = document.getElementById('req-prazo').value;
+  if(!msg) return;
+  // INTEGRAÇÃO: POST /client_requests — dispara notificação pro time humano aprovar.
+  // Prazos marcados como urgentes entram numa fila de triagem: o time confirma se a
+  // urgência é real ou se é reflexo de prazo/informação desorganizada do cliente —
+  // nesse segundo caso a solicitação volta para o prazo mínimo viável padrão.
+  emp().solicitacoes.unshift({
+    tipo, servico, mensagem: msg, prazo, imagem: pendingImagem,
+    data: new Date().toLocaleDateString('pt-BR'),
+    status: 'pendente', resposta: null, respondidoPor: null
+  });
+  document.getElementById('req-msg').value = '';
+  document.getElementById('req-imagem').value = '';
+  document.getElementById('req-file-preview').style.display = 'none';
+  document.getElementById('req-urgent-note').style.display = 'none';
+  document.getElementById('req-prazo').value = 'Sem urgência';
+  pendingImagem = null;
+  document.getElementById('req-confirm').style.display = 'flex';
+  renderSolicitacoes();
+  renderStatusCard();
+  pushNotification({ icone:"📝", cor:"var(--accent)", corDim:"var(--accent-dim)", titulo:"Solicitação enviada", desc: tipo + ": aguardando aprovação do time.", page:"solicitacoes" });
+  setTimeout(()=> document.getElementById('req-confirm').style.display = 'none', 4000);
+});
+
+/* ---- agendamento ---- */
+const monthNames = ["Janeiro","Fevereiro","Março","Abril","Maio","Junho","Julho","Agosto","Setembro","Outubro","Novembro","Dezembro"];
+let selectedDay = null, selectedSlot = null;
+
+function renderAgendamento(){
+  const a = emp().agendamento;
+  const pct = Math.min(100, a.horasUsadasMin / a.horasContratadasMin * 100);
+  const restante = a.horasContratadasMin - a.horasUsadasMin;
+  document.getElementById('hours-card').innerHTML = `
+    <div class="hours-top">
+      <div class="hours-value">${a.horasUsadasMin}min <span class="of">/ ${a.horasContratadasMin}min usados</span></div>
+      <div style="font-family:var(--font-mono);font-size:15px;color:var(--accent)">${pct.toFixed(0)}%</div>
+    </div>
+    <div class="progress-wrap"><div class="progress-bar" style="width:${pct}%"></div></div>
+    <div class="hours-foot"><span>Direito mensal: <b>1h com um especialista humano</b></span><span>Restam <b>${restante}min</b></span></div>
+  `;
+  renderNextSession();
+  renderCalendar();
+}
+
+function renderNextSession(){
+  const s = emp().agendamento.proximaSessao;
+  if(!s){
+    document.getElementById('next-session').innerHTML = `
+      <div class="ns-icon">🕘</div>
+      <div><div class="ns-title">Nenhuma sessão agendada</div><div class="ns-sub">Escolha um dia no calendário ao lado.</div></div>
+    `;
+    return;
+  }
+  const pendente = s.status === 'pendente';
+  document.getElementById('next-session').innerHTML = `
+    <div class="ns-icon">${pendente ? '🕘' : '📅'}</div>
+    <div style="flex:1">
+      <div class="ns-title">${pendente ? 'Horário solicitado, aguardando confirmação' : 'Próxima sessão confirmada'}</div>
+      <div class="ns-sub">${s.dia} de ${monthNames[emp().agendamento.mes]} às ${s.hora}</div>
+    </div>
+    <span class="badge ${pendente?'badge-warning':'badge-success'}"><span class="badge-dot"></span>${pendente?'A confirmar':'Confirmada'}</span>
+  `;
+}
+
+function renderCalendar(){
+  const a = emp().agendamento;
+  document.getElementById('cal-month').textContent = `${monthNames[a.mes]} / ${a.ano}`;
+  const first = new Date(a.ano, a.mes, 1);
+  const daysInMonth = new Date(a.ano, a.mes+1, 0).getDate();
+  const startWeekday = first.getDay();
+  const today = new Date();
+  const isCurrentMonth = today.getFullYear()===a.ano && today.getMonth()===a.mes;
+
+  let cells = ['D','S','T','Q','Q','S','S'].map(d=>`<div class="cal-dow">${d}</div>`).join('');
+  for(let i=0;i<startWeekday;i++) cells += `<div class="cal-day empty"></div>`;
+  for(let d=1; d<=daysInMonth; d++){
+    const hasSlot = !!a.slotsPorDia[d];
+    const isPast = isCurrentMonth && d < today.getDate();
+    const isToday = isCurrentMonth && d === today.getDate();
+    const cls = ['cal-day'];
+    if(isPast) cls.push('past');
+    else if(hasSlot) cls.push('has-slot');
+    if(isToday) cls.push('today');
+    if(selectedDay===d) cls.push('selected');
+    cells += `<div class="${cls.join(' ')}" ${hasSlot && !isPast ? `data-day="${d}"` : ''}>${d}</div>`;
+  }
+  document.getElementById('calendar').innerHTML = cells;
+  document.querySelectorAll('.cal-day[data-day]').forEach(el=>{
+    el.addEventListener('click', ()=> selectDay(parseInt(el.dataset.day)));
+  });
+}
+
+function selectDay(day){
+  selectedDay = day; selectedSlot = null;
+  renderCalendar();
+  const slots = emp().agendamento.slotsPorDia[day] || [];
+  const section = document.getElementById('slot-section');
+  section.style.display = 'block';
+  document.getElementById('slot-section-title').textContent = `Horários disponíveis: ${day} de ${monthNames[emp().agendamento.mes]}`;
+  document.getElementById('slot-list').innerHTML = slots.map(h => `<span class="slot-chip" data-hora="${h}">${h}</span>`).join('');
+  document.getElementById('confirm-banner').style.display = 'none';
+  document.getElementById('confirm-btn').disabled = true;
+  document.querySelectorAll('.slot-chip').forEach(chip=>{
+    chip.addEventListener('click', ()=>{
+      document.querySelectorAll('.slot-chip').forEach(c=>c.classList.remove('selected'));
+      chip.classList.add('selected');
+      selectedSlot = chip.dataset.hora;
+      document.getElementById('confirm-btn').disabled = false;
+    });
+  });
+}
+
+document.getElementById('confirm-btn').addEventListener('click', function(){
+  if(!selectedDay || !selectedSlot) return;
+  // INTEGRAÇÃO: registrar solicitação de horário no banco interno (client_sessions,
+  // status='pendente') e notificar o time humano, que confirma via Google Calendar API /
+  // Calendly API. Assim como as solicitações de campanha, o horário só vira compromisso
+  // definitivo depois que alguém do time confirma disponibilidade.
+  emp().agendamento.proximaSessao = { dia: selectedDay, hora: selectedSlot, status: 'pendente' };
+  document.getElementById('confirm-banner').innerHTML = '🕘 Horário solicitado! O time confirma em até 1 dia útil.';
+  this.disabled = true;
+  renderAgendamento();
+  document.getElementById('slot-section').style.display = 'block';
+  document.getElementById('confirm-banner').style.display = 'flex';
+  pushNotification({ icone:"🕘", cor:"var(--yellow)", corDim:"var(--yellow-dim)", titulo:"Horário solicitado", desc: selectedDay + " de " + monthNames[emp().agendamento.mes] + " às " + selectedSlot + ", aguardando confirmação do time.", page:"agendamento" });
+});
+
+/* ---- relatórios ---- */
+function renderReports(){
+  document.getElementById('report-chip').textContent = emp().relatorios.length + ' relatórios disponíveis';
+  if(emp().relatorios.length === 0){
+    document.getElementById('report-list').innerHTML = '<div style="padding:28px 20px;color:var(--text-muted);font-size:14px">Nenhum relatório fechado ainda. O primeiro mês desta empresa ainda está em andamento.</div>';
+    return;
+  }
+  document.getElementById('report-list').innerHTML = emp().relatorios.map((r,i) => {
+    const sv = r.servico ? SERVICOS_CONFIG[r.servico] : null;
+    // relatório de tráfego pago tem investimento/conversões; outros serviços podem
+    // não ter (ex.: relatório de site) — nesse caso cai no campo "resumo" livre.
+    const resumo = r.investimento !== undefined
+      ? `Investimento ${fmtBRL(r.investimento)} · ${r.conversoes} conversões`
+      : (r.resumo || 'Relatório disponível');
+    return `
+    <div class="report-row reveal" style="animation-delay:${i*.04}s">
+      <div><div class="report-name">Relatório de ${r.mes}</div><div class="report-sub">${sv?sv.icon+' '+sv.label+' · ':''}${resumo}</div></div>
+      <div class="report-date">Gerado em ${r.data}</div>
+      <button class="btn btn-ghost btn-sm" data-view="${i}">Visualizar</button>
+      <button class="btn btn-sm" data-download="${i}">⬇ PDF</button>
+    </div>`;
+  }).join('');
+
+  document.querySelectorAll('[data-view]').forEach(btn=>{
+    btn.addEventListener('click', ()=> openReportModal(emp().relatorios[btn.dataset.view]));
+  });
+  document.querySelectorAll('[data-download]').forEach(btn=>{
+    btn.addEventListener('click', ()=> downloadReport(emp().relatorios[btn.dataset.download]));
+  });
+}
+
+/* ---- financeiro (nível de conta — não muda ao trocar de empresa) ---- */
+/* ---- contratar novos serviços (catálogo por empresa) ---- */
+function renderCatalog(){
+  document.getElementById('catalog-grid').innerHTML = Object.keys(SERVICOS_CONFIG).map((key,i) => {
+    const s = SERVICOS_CONFIG[key];
+    const contratado = !!emp().servicos[key];
+    return `
+    <div class="catalog-card reveal" style="animation-delay:${i*.04}s">
+      <div class="cc-icon">${s.icon}</div>
+      <div class="cc-name">${s.label}</div>
+      <div class="cc-desc">${s.desc}</div>
+      ${contratado
+        ? `<span class="badge badge-success"><span class="badge-dot"></span>Já contratado</span>`
+        : `<button class="btn btn-block btn-sm" data-hire="${key}">Contratar</button>`}
+    </div>`;
+  }).join('');
+  document.querySelectorAll('[data-hire]').forEach(btn=>{
+    btn.addEventListener('click', ()=> hireService(btn.dataset.hire));
+  });
+}
+
+function hireService(key){
+  const s = SERVICOS_CONFIG[key];
+  // INTEGRAÇÃO: cria um lead/oportunidade no CRM comercial (pipeline de upsell) e
+  // notifica o time de vendas — contratar aqui não ativa o serviço automaticamente,
+  // só registra o interesse pra alguém do time entrar em contato.
+  emp().solicitacoes.unshift({
+    tipo: 'Contratar novo serviço: ' + s.label, servico: null,
+    mensagem: 'Quero contratar o serviço de ' + s.label + ' para esta empresa.',
+    prazo: 'Sem urgência', imagem: null,
+    data: new Date().toLocaleDateString('pt-BR'),
+    status: 'pendente', resposta: null, respondidoPor: null
+  });
+  alert('Interesse registrado! Nosso time comercial vai te chamar pra alinhar escopo e valores de ' + s.label + '.');
+  renderCatalog();
+  renderSolicitacoes();
+  renderStatusCard();
+  pushNotification({ icone:"🛍️", cor:"var(--accent)", corDim:"var(--accent-dim)", titulo:"Interesse registrado", desc:"Time comercial vai entrar em contato sobre " + s.label + ".", page:"contratar" });
+}
+
+function renderFinanceiro(){
+  const f = DATA.financeiro;
+  document.getElementById('plan-card').innerHTML = `
+    <div>
+      <div class="plan-name">${f.plano.nome}</div>
+      <div class="plan-desc">${f.plano.descricao}</div>
+    </div>
+    <div class="plan-price">${fmtBRL(f.plano.mensalidade)}<span>/mês</span></div>
+  `;
+  document.getElementById('pm-card').innerHTML = `
+    <div class="pm-icon">💳</div>
+    <div class="pm-info">
+      <div class="pm-title">${f.formaPagamento.bandeira} •••• ${f.formaPagamento.final}</div>
+      <div class="pm-sub">${f.formaPagamento.tipo} · válido até ${f.formaPagamento.validade}</div>
+    </div>
+    <button class="btn btn-ghost btn-sm" id="pm-update-btn">Atualizar</button>
+  `;
+  // INTEGRAÇÃO: abrir fluxo real do provedor de pagamentos (ex.: Stripe Customer Portal).
+  document.getElementById('pm-update-btn').addEventListener('click', ()=> alert('Fluxo simulado: abriria o portal de pagamento do provedor (ex.: Stripe).'));
+
+  const statusMap = { paga: { label: 'Paga', badge: 'badge-success' }, pendente: { label: 'Pendente', badge: 'badge-warning' } };
+  document.getElementById('invoice-chip').textContent = f.faturas.length + ' faturas';
+  document.getElementById('invoice-list').innerHTML = f.faturas.map((inv,i) => {
+    const s = statusMap[inv.status];
+    return `
+    <div class="invoice-item reveal" style="animation-delay:${i*.04}s">
+      <div class="invoice-top">
+        <div><div class="invoice-name">Fatura de ${inv.mes}</div><div class="invoice-date">Emitida em ${inv.data}</div></div>
+        <div style="text-align:right">
+          <div class="invoice-value">${fmtBRL(inv.valor)}</div>
+          <span class="badge ${s.badge}"><span class="badge-dot"></span>${s.label}</span>
+        </div>
+      </div>
+      <div class="invoice-breakdown">
+        ${inv.detalhamento.map(d => `<span class="invoice-chip">${d.empresa}: ${fmtBRL(d.valor)}</span>`).join('')}
+      </div>
+    </div>`;
+  }).join('');
+}
+
+function openReportModal(r){
+  document.getElementById('modal-title').textContent = 'Relatório de ' + r.mes;
+  // cada linha só aparece se o dado existir — um relatório de Site, por exemplo,
+  // não tem CPL nem conversões de anúncio, então essas linhas somem em vez de
+  // mostrar "R$ NaN".
+  let rows = '';
+  if(r.investimento !== undefined) rows += `<div class="m-row"><span>Investimento total</span><b>${fmtBRL(r.investimento)}</b></div>`;
+  if(r.conversoes !== undefined) rows += `<div class="m-row"><span>Conversões</span><b>${r.conversoes}</b></div>`;
+  if(r.cpl !== undefined) rows += `<div class="m-row"><span>CPL médio</span><b>${fmtBRL(r.cpl)}</b></div>`;
+  if(r.resumo) rows += `<div class="m-row"><span>Resumo</span><b style="font-family:var(--font-body);font-weight:400">${r.resumo}</b></div>`;
+  rows += `<div class="m-row"><span>Gerado em</span><b>${r.data}</b></div>`;
+  document.getElementById('modal-body').innerHTML = rows;
+  document.getElementById('modal-download').onclick = ()=> downloadReport(r);
+  document.getElementById('report-modal').classList.add('active');
+}
+function closeModal(){ document.getElementById('report-modal').classList.remove('active'); }
+document.getElementById('modal-close').addEventListener('click', closeModal);
+document.getElementById('modal-cancel').addEventListener('click', closeModal);
+document.getElementById('report-modal').addEventListener('click', e => { if(e.target.id==='report-modal') closeModal(); });
+
+function downloadReport(r){
+  // INTEGRAÇÃO: substituir por link assinado do arquivo real (S3 / Supabase Storage)
+  // apontando para o PDF gerado do relatório mensal.
+  alert('Download simulado: Relatório de ' + r.mes + '.pdf');
+}
+</script>
+
+<!-- ======================================================================
+     VÍDEO EM PIP — fica visível em qualquer tela (login, seleção de
+     empresa, painel). A veiculação real depende do dono do vídeo permitir
+     incorporação (embed) no YouTube.
+     ====================================================================== -->
+<div class="pip-widget" id="pip-widget">
+  <div class="pip-controls">
+    <button class="pip-btn" id="pip-mute-btn" title="Ativar som">🔇</button>
+    <button class="pip-btn" id="pip-close-btn" title="Fechar">✕</button>
+  </div>
+  <span class="pip-label">ao vivo</span>
+  <iframe id="pip-iframe"
+    src="https://www.youtube.com/embed/XnEmNq6t6LU?autoplay=1&mute=1&loop=1&playlist=XnEmNq6t6LU&controls=0&modestbranding=1&rel=0&playsinline=1&showinfo=0"
+    allow="autoplay; encrypted-media; picture-in-picture" allowfullscreen title="Vídeo"></iframe>
+</div>
+
+<!-- ======================================================================
+     CHAT DE SUPORTE — INTEGRAÇÃO: substituir por widget real (Intercom,
+     Crisp, Zendesk Chat) ou canal próprio via WebSocket ligado à fila de
+     atendimento humano do time.
+     ====================================================================== -->
+<button class="chat-fab" id="chat-fab" type="button" title="Falar com o suporte">
+  💬
+  <span class="chat-badge" id="chat-badge">1</span>
+</button>
+
+<div class="chat-panel" id="chat-panel">
+  <div class="chat-head">
+    <div class="avatar">JV</div>
+    <div>
+      <div class="chat-head-title">Suporte Viskoo</div>
+      <div class="chat-head-status">Online agora</div>
+    </div>
+    <button class="chat-close" id="chat-close">✕</button>
+  </div>
+  <div class="chat-body" id="chat-body">
+    <div class="chat-msg in">Oi! 👋 Sou do time de suporte da Viskoo. Como posso ajudar?</div>
+  </div>
+  <form class="chat-foot" id="chat-form">
+    <input type="text" class="chat-input" id="chat-input" placeholder="Escreva sua mensagem..." autocomplete="off">
+    <button type="submit" class="chat-send">➤</button>
+  </form>
+</div>
+
+<script>
+(function(){
+  const widget = document.getElementById('pip-widget');
+  const iframe = document.getElementById('pip-iframe');
+  const muteBtn = document.getElementById('pip-mute-btn');
+  const closeBtn = document.getElementById('pip-close-btn');
+  const baseSrc = 'https://www.youtube.com/embed/XnEmNq6t6LU?autoplay=1&loop=1&playlist=XnEmNq6t6LU&controls=0&modestbranding=1&rel=0&playsinline=1&showinfo=0';
+  let muted = true;
+  muteBtn.addEventListener('click', function(){
+    muted = !muted;
+    iframe.src = baseSrc + (muted ? '&mute=1' : '&mute=0');
+    muteBtn.textContent = muted ? '🔇' : '🔊';
+  });
+  closeBtn.addEventListener('click', function(){ widget.style.display = 'none'; });
+})();
+
+(function(){
+  const fab = document.getElementById('chat-fab');
+  const badge = document.getElementById('chat-badge');
+  const panel = document.getElementById('chat-panel');
+  const closeBtn = document.getElementById('chat-close');
+  const body = document.getElementById('chat-body');
+  const form = document.getElementById('chat-form');
+  const input = document.getElementById('chat-input');
+
+  const autoReplies = [
+    "Já acionei o time responsável, um especialista já te retorna por aqui.",
+    "Entendi! Vou verificar isso com o gestor da sua conta e já te aviso.",
+    "Perfeito, registrei sua mensagem. Normalmente respondemos em poucos minutos."
+  ];
+
+  fab.addEventListener('click', function(){
+    panel.classList.toggle('active');
+    if(panel.classList.contains('active')){ badge.style.display = 'none'; input.focus(); }
+  });
+  closeBtn.addEventListener('click', ()=> panel.classList.remove('active'));
+
+  form.addEventListener('submit', function(e){
+    e.preventDefault();
+    const text = input.value.trim();
+    if(!text) return;
+    appendMsg(text, 'out');
+    input.value = '';
+    showTyping();
+    // INTEGRAÇÃO: enviar via WebSocket/API real para a fila de atendimento humano.
+    setTimeout(function(){
+      removeTyping();
+      appendMsg(autoReplies[Math.floor(Math.random()*autoReplies.length)], 'in');
+    }, 1400 + Math.random()*900);
+  });
+
+  function appendMsg(text, dir){
+    const div = document.createElement('div');
+    div.className = 'chat-msg ' + dir;
+    div.textContent = text;
+    body.appendChild(div);
+    body.scrollTop = body.scrollHeight;
+  }
+  function showTyping(){
+    const div = document.createElement('div');
+    div.className = 'chat-typing';
+    div.id = 'chat-typing-indicator';
+    div.innerHTML = '<span></span><span></span><span></span>';
+    body.appendChild(div);
+    body.scrollTop = body.scrollHeight;
+  }
+  function removeTyping(){
+    const el = document.getElementById('chat-typing-indicator');
+    if(el) el.remove();
+  }
+})();
+</script>
+</body>
+</html>
