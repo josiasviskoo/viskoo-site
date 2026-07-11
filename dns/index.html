@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="icon" type="image/svg+xml" href="../assets/img/viskoo-logo-favicon.svg">
+<title id="page-title">DNS da Viskoo para o seu domínio | Viskoo</title>
+<meta name="description" content="Servidores DNS (NS) da Viskoo para configurar seu domínio no registrador.">
+<meta name="robots" content="noindex, nofollow">
+<link rel="canonical" href="https://viskoo.com.br/dns/">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Mono:ital,wght@0,300;0,400;0,500;1,300&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;1,9..40,300&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../index.css">
+<style>
+  .dns-hero { text-align: center; max-width: 620px; margin: 0 auto var(--space-8); }
+  .dns-hero .hero-eyebrow { margin-bottom: var(--space-4); }
+  .dns-hero h1 { margin-bottom: var(--space-3); }
+  .dns-hero p { color: var(--text-secondary); font-size: 15.5px; line-height: 1.7; margin: 0 auto; }
+
+  .dns-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: var(--space-4); max-width: 760px; margin: 0 auto; }
+  @media (max-width: 640px) { .dns-grid { grid-template-columns: 1fr; } }
+
+  .dns-card { padding: var(--space-6); }
+  .dns-card-top { display: flex; align-items: center; justify-content: space-between; margin-bottom: var(--space-5); }
+  .dns-card-label { display: flex; align-items: center; gap: var(--space-3); }
+  .dns-card-num { width: 36px; height: 36px; border-radius: var(--r-md); background: var(--accent-dim); border: 1px solid rgba(244,131,34,0.3); color: var(--accent); font-family: var(--font-mono); font-size: 13px; font-weight: 600; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+  .dns-card-title { font-size: 13px; font-weight: 600; color: var(--text-primary); letter-spacing: -0.01em; }
+
+  .dns-field { margin-bottom: var(--space-3); }
+  .dns-field:last-child { margin-bottom: 0; }
+  .dns-field-label { font-size: 10px; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; color: var(--text-muted); margin-bottom: 6px; }
+  .dns-field-row { display: flex; align-items: center; gap: var(--space-2); background: var(--bg-elevated); border: 1px solid var(--border); border-radius: var(--r-md); padding: 10px 12px; }
+  .dns-field-value { font-family: var(--font-mono); font-size: 13.5px; color: var(--text-primary); overflow-wrap: anywhere; flex: 1; }
+  .dns-copy-btn { background: transparent; border: none; color: var(--text-muted); cursor: pointer; padding: 4px; border-radius: var(--r-sm); display: flex; align-items: center; justify-content: center; flex-shrink: 0; transition: color var(--duration-fast) var(--ease-out), background var(--duration-fast) var(--ease-out); }
+  .dns-copy-btn:hover { color: var(--accent); background: var(--accent-dim); }
+  .dns-copy-btn.copied { color: #30d158; }
+
+  .dns-help { max-width: 760px; margin: var(--space-8) auto 0; }
+  .dns-help h2 { font-size: 15px; font-weight: 600; margin-bottom: var(--space-3); }
+  .dns-help ol { padding-left: 20px; color: var(--text-secondary); font-size: 14px; line-height: 1.8; }
+  .dns-help li strong { color: var(--text-primary); }
+</style>
+</head>
+<body>
+
+<nav class="nav">
+  <div class="nav-inner">
+    <a href="../" class="nav-logo">
+      <img src="../assets/img/viskoo-branco.svg" alt="Viskoo Logo" height="24">
+    </a>
+    <ul class="nav-links">
+      <li><a href="../">Início</a></li>
+      <li><a href="https://wa.me/5516993438187?text=Ol%C3%A1%21%20Estou%20na%20p%C3%A1gina%20de%20DNS%20e%20preciso%20de%20ajuda." class="nav-cta">Falar no WhatsApp</a></li>
+    </ul>
+  </div>
+</nav>
+
+<main class="page">
+<section class="section">
+  <div class="container">
+
+    <div class="dns-hero">
+      <span class="hero-eyebrow">✦ DNS</span>
+      <h1 class="t-h1">DNS da Viskoo para <span class="t-accent" id="dns-title-domain">o seu domínio</span></h1>
+      <p>Acesse o painel do registrador do domínio <strong id="dns-intro-domain" style="color:var(--text-primary)">o seu domínio</strong> e configure os 4 servidores de nomes (NS) abaixo.</p>
+    </div>
+
+    <div class="dns-grid" id="dns-grid"></div>
+
+    <div class="dns-help card">
+      <div class="card-body">
+        <h2>Como configurar</h2>
+        <ol>
+          <li>Acesse o painel do registrador onde o domínio foi comprado (Registro.br, GoDaddy, Hostinger etc.);</li>
+          <li>Localize a opção <strong>"Servidores DNS" / "Nameservers" / "DNS"</strong>;</li>
+          <li>Substitua os servidores atuais pelos 4 servidores listados acima;</li>
+          <li>Salve. A propagação pode levar até 24h.</li>
+        </ol>
+      </div>
+    </div>
+
+  </div>
+</section>
+</main>
+
+<footer class="footer"><div class="container"><div class="footer-bottom"><p>2026 &copy; Todos os direitos reservados. Viskoo. CNPJ 15676116000112.</p><a href="../privacidade/" style="color: var(--text-muted); text-decoration: none; font-size: 13px;">Política de Privacidade</a></div></div></footer>
+
+<script>
+  const SERVERS = [
+    { n: 1, prefix: 'ns1', ip: '108.181.92.91' },
+    { n: 2, prefix: 'ns2', ip: '108.181.92.92' },
+    { n: 3, prefix: 'ns3', ip: '108.181.224.22' },
+    { n: 4, prefix: 'ns4', ip: '51.222.204.82' },
+  ];
+
+  const params  = new URLSearchParams(window.location.search);
+  const dominio = (params.get('dominio') || '').trim().toLowerCase().replace(/^https?:\/\//, '').replace(/\/$/, '') || 'seudominio.com.br';
+
+  document.getElementById('dns-title-domain').textContent = dominio;
+  document.getElementById('dns-intro-domain').textContent = dominio;
+  document.getElementById('page-title').textContent = `DNS da Viskoo para ${dominio} | Viskoo`;
+
+  const svgCopy  = '<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>';
+  const svgCheck = '<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>';
+
+  function copyValue(btn, value) {
+    navigator.clipboard.writeText(value).then(() => {
+      btn.innerHTML = svgCheck;
+      btn.classList.add('copied');
+      setTimeout(() => { btn.innerHTML = svgCopy; btn.classList.remove('copied'); }, 1500);
+    });
+  }
+
+  function field(label, value) {
+    const wrap = document.createElement('div');
+    wrap.className = 'dns-field';
+
+    const lbl = document.createElement('div');
+    lbl.className = 'dns-field-label';
+    lbl.textContent = label;
+
+    const row = document.createElement('div');
+    row.className = 'dns-field-row';
+
+    const val = document.createElement('span');
+    val.className = 'dns-field-value';
+    val.textContent = value;
+
+    const btn = document.createElement('button');
+    btn.type = 'button';
+    btn.className = 'dns-copy-btn';
+    btn.innerHTML = svgCopy;
+    btn.setAttribute('aria-label', `Copiar ${label}`);
+    btn.addEventListener('click', () => copyValue(btn, value));
+
+    row.appendChild(val);
+    row.appendChild(btn);
+    wrap.appendChild(lbl);
+    wrap.appendChild(row);
+    return wrap;
+  }
+
+  const grid = document.getElementById('dns-grid');
+
+  SERVERS.forEach(server => {
+    const card = document.createElement('div');
+    card.className = 'card dns-card';
+
+    const top = document.createElement('div');
+    top.className = 'dns-card-top';
+    top.innerHTML = `
+      <div class="dns-card-label">
+        <span class="dns-card-num">${server.n}</span>
+        <span class="dns-card-title">Servidor ${server.n}</span>
+      </div>
+    `;
+
+    const body = document.createElement('div');
+    body.appendChild(field('Nameserver', `${server.prefix}.${dominio}`));
+    body.appendChild(field('IP', server.ip));
+
+    card.appendChild(top);
+    card.appendChild(body);
+    grid.appendChild(card);
+  });
+</script>
+
+</body>
+</html>
