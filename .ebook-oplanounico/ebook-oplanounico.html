@@ -1,0 +1,715 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>OPlanoÚnico™ - O Método que Organiza seu Marketing</title>
+<style>
+  @page{
+    size:A4;
+    margin:20mm 16mm 24mm;
+  }
+  @page :first{
+    margin:0;
+  }
+
+  :root{
+    --paper:#ffffff;
+    --canvas:#141414;
+    --ink:#1d1d1d;
+    --muted:#5a5a5a;
+    --muted-2:#838383;
+    --orange:#d9670f;
+    --orange-bright:#f5821f;
+    --card:#f7f4ee;
+    --card-border:#e4ddce;
+    --line:#d8d2c4;
+    --serif: Georgia, 'Times New Roman', serif;
+    --sans: -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif;
+  }
+  *{box-sizing:border-box;}
+  html,body{
+    margin:0;background:var(--canvas);color:var(--ink);
+    font-family:var(--sans);line-height:1.6;font-size:11pt;
+    -webkit-print-color-adjust:exact;print-color-adjust:exact;
+  }
+  img{max-width:100%;display:block;}
+  h1,h2,h3,h4{font-family:var(--serif);font-weight:400;color:#141414;}
+  p{margin:0 0 12px;orphans:3;widows:3;}
+  h2,h3,h4{break-after:avoid;}
+
+  /* ============ COVER (screen preview as its own A4 sheet) ============ */
+  .cover-sheet{
+    width:210mm;min-height:297mm;margin:14px auto 0;
+    background:
+      radial-gradient(ellipse 700px 420px at 50% -6%, rgba(245,130,31,0.30), transparent 60%),
+      linear-gradient(180deg,#000000 0%,#161616 100%);
+    color:#f2f2f0;
+    display:flex;flex-direction:column;align-items:center;justify-content:center;
+    text-align:center;padding:26mm 20mm;
+    break-after:page;page-break-after:always;
+  }
+  .cover-sheet .kicker{
+    color:var(--orange-bright);text-transform:uppercase;letter-spacing:.22em;
+    font-size:9pt;font-weight:700;margin-bottom:20px;
+  }
+  .cover-sheet .logo-big{width:78%;max-width:420px;margin:0 auto 14px;}
+  .cover-sheet h1{
+    font-size:22pt;margin:8px 0 16px;max-width:150mm;color:#fff;line-height:1.35;
+  }
+  .cover-sheet p.sub{color:#c2c2c2;max-width:135mm;font-size:11pt;margin:0 auto 30px;}
+  .cover-sheet .pillars-strip{display:flex;gap:8px;flex-wrap:wrap;justify-content:center;}
+  .cover-sheet .pillars-strip span{
+    border:1px solid #3a3a3a;color:#d4d4d4;padding:5px 12px;border-radius:999px;font-size:8.5pt;
+  }
+  .cover-sheet .author-row{
+    margin-top:44px;display:flex;align-items:center;gap:12px;color:#9a9a9a;font-size:9.5pt;
+  }
+  .cover-sheet .author-row img{
+    width:38px;height:38px;border-radius:50%;object-fit:cover;object-position:top center;
+    border:2px solid var(--orange-bright);
+  }
+
+  /* ============ BOOK SHEET (paper look, single flowing document) ============ */
+  .book-sheet{
+    width:210mm;min-height:297mm;margin:0 auto 14px;
+    background:var(--paper);padding:20mm 18mm;
+    box-shadow:0 0 18px rgba(0,0,0,0.18);
+  }
+
+  .eyebrow{
+    color:var(--orange);text-transform:uppercase;letter-spacing:.14em;font-size:8.5pt;font-weight:700;margin-bottom:10px;
+  }
+  h2.title{font-size:18pt;margin:0 0 14px;}
+  p.lead{color:var(--muted);font-size:10.5pt;max-width:150mm;}
+
+  .chapter{break-before:page;page-break-before:always;padding-top:2mm;}
+  .chapter:first-of-type{break-before:auto;page-break-before:auto;}
+
+  blockquote{
+    border-left:3px solid var(--orange);margin:14px 0;padding:2px 0 2px 16px;
+    font-family:var(--serif);font-size:12.5pt;font-style:italic;color:#2a2a2a;
+  }
+
+  /* ===== TOC ===== */
+  .toc-list{list-style:none;margin:16px 0 0;padding:0;counter-reset:toc;}
+  .toc-list li{
+    counter-increment:toc;display:flex;gap:14px;align-items:baseline;
+    padding:11px 0;border-bottom:1px solid var(--line);break-inside:avoid;
+  }
+  .toc-list li::before{
+    content:counter(toc,decimal-leading-zero);color:var(--orange);font-weight:700;
+    font-family:var(--serif);font-size:11pt;min-width:22px;
+  }
+  .toc-list .ttl{font-weight:700;color:#181818;font-size:10.5pt;}
+  .toc-list .desc{display:block;color:var(--muted-2);font-size:9pt;font-weight:400;margin-top:2px;}
+
+  /* ===== GRIDS / BOXES ===== */
+  .grid2{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-top:14px;}
+  .box{background:var(--card);border:1px solid var(--card-border);border-radius:10px;padding:16px 18px;break-inside:avoid;}
+  .box h3{margin:0 0 8px;font-size:10.5pt;font-family:var(--sans);font-weight:700;color:#181818;}
+  .box ul{margin:0;padding-left:18px;color:var(--muted);font-size:9.5pt;}
+  .box ul li{margin-bottom:6px;}
+
+  /* ===== PILARES ===== */
+  .pilar-head{display:flex;align-items:flex-start;gap:16px;margin-bottom:16px;break-inside:avoid;}
+  .pilar-num{font-family:var(--serif);font-size:30pt;color:var(--orange);line-height:1;font-weight:700;min-width:52px;}
+  .pilar-head h2{margin:0 0 4px;font-size:15pt;}
+  .pilar-head p{margin:0;color:var(--muted);font-size:10pt;}
+  h4.sub{
+    color:var(--orange);text-transform:uppercase;font-size:8.5pt;letter-spacing:.1em;
+    margin:20px 0 8px;font-weight:700;font-family:var(--sans);break-after:avoid;
+  }
+  .pilar p, .pilar ul{color:#2b2b2b;font-size:10.2pt;}
+  .pilar ul{padding-left:18px;}
+  .pilar ul li{margin-bottom:6px;}
+  .tip{
+    background:var(--card);border:1px solid var(--card-border);border-left:3px solid var(--orange);
+    border-radius:6px;padding:12px 15px;margin:12px 0;font-size:9.8pt;color:#3a2b17;break-inside:avoid;
+  }
+  .tip b{color:var(--orange);}
+  .funnel-row{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin:12px 0 4px;break-inside:avoid;}
+  .funnel-cell{background:var(--card);border:1px solid var(--card-border);border-radius:8px;padding:10px 12px;text-align:center;}
+  .funnel-cell .k{color:var(--orange);font-weight:700;font-size:8.5pt;text-transform:uppercase;letter-spacing:.05em;}
+  .funnel-cell p{margin:4px 0 0;font-size:8.8pt;color:var(--muted);}
+
+  /* ===== EXERCÍCIO (linhas para preencher à mão) ===== */
+  .exercise{margin-top:20px;background:var(--card);border:1px solid var(--card-border);border-radius:10px;padding:16px 18px;break-inside:avoid;}
+  .exercise .tag{
+    display:inline-block;background:var(--orange);color:#fff;font-weight:700;font-size:8pt;
+    text-transform:uppercase;letter-spacing:.06em;padding:3px 10px;border-radius:999px;margin-bottom:10px;
+  }
+  .exercise ol{padding-left:18px;color:#2b2b2b;font-size:10pt;margin:0;}
+  .exercise ol li{margin-bottom:14px;}
+  .write-lines{
+    margin-top:6px;height:52px;
+    background-image:repeating-linear-gradient(to bottom, transparent, transparent 16px, var(--line) 17px);
+  }
+
+  /* ===== DIFERENCIAIS ===== */
+  .diff-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-top:16px;}
+  .diff-card{background:var(--card);border:1px solid var(--card-border);border-radius:10px;padding:14px;break-inside:avoid;}
+  .diff-card .n{color:var(--orange);font-family:var(--serif);font-size:13pt;margin-bottom:4px;display:block;}
+  .diff-card h3{margin:0 0 5px;font-size:9.5pt;font-family:var(--sans);font-weight:700;color:#181818;}
+  .diff-card p{margin:0;color:var(--muted);font-size:8.5pt;}
+
+  /* ===== CASO REAL ===== */
+  .funnel-steps{display:flex;flex-wrap:wrap;align-items:center;gap:6px;margin:16px 0;}
+  .funnel-steps .step{background:var(--card);border:1px solid var(--card-border);border-radius:8px;padding:8px 10px;font-size:8.3pt;}
+  .funnel-steps .step b{display:block;color:var(--orange);font-size:10pt;}
+  .funnel-steps .arrow{color:var(--muted-2);}
+  .stat-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin:16px 0;}
+  .stat{background:var(--card);border:1px solid var(--card-border);border-radius:8px;padding:12px 8px;text-align:center;break-inside:avoid;}
+  .stat .num{color:var(--orange);font-family:var(--serif);font-size:13pt;font-weight:700;}
+  .stat .lbl{color:var(--muted);font-size:7.6pt;margin-top:3px;}
+  table.leads{width:100%;border-collapse:collapse;margin-top:12px;font-size:9pt;break-inside:avoid;}
+  table.leads th,table.leads td{border:1px solid var(--card-border);padding:7px 8px;text-align:center;}
+  table.leads th{background:var(--card);color:var(--orange);font-weight:700;}
+  table.leads tr{break-inside:avoid;}
+  .source-note{color:var(--muted-2);font-size:8pt;margin-top:8px;}
+
+  /* ===== CHECKLIST ===== */
+  .checklist{list-style:none;margin:0;padding:0;}
+  .checklist li{display:flex;gap:10px;align-items:flex-start;padding:9px 0;border-bottom:1px solid var(--line);break-inside:avoid;}
+  .chk{
+    width:12px;height:12px;border:1.4px solid var(--ink);border-radius:2px;flex-shrink:0;margin-top:2px;display:inline-block;
+  }
+  .checklist .qtext{color:#2b2b2b;font-size:9.8pt;}
+  .checklist .qtext small{display:block;color:var(--muted-2);margin-top:2px;font-size:8.4pt;}
+  .score-box{margin-top:16px;padding:14px 16px;background:var(--card);border-left:3px solid var(--orange);border-radius:6px;font-size:9.5pt;color:#3a2b17;break-inside:avoid;}
+
+  /* ===== PLANO DE AÇÃO ===== */
+  table.plano{width:100%;border-collapse:collapse;margin-top:8px;font-size:8.6pt;break-inside:avoid;}
+  table.plano th{background:var(--card);color:var(--orange);text-transform:uppercase;font-size:7.2pt;letter-spacing:.05em;padding:8px 6px;border:1px solid var(--card-border);text-align:left;}
+  table.plano td{border:1px solid var(--card-border);padding:6px;vertical-align:top;height:34px;}
+  table.plano td.pilarname{color:var(--orange);font-weight:700;white-space:nowrap;}
+  table.plano tr{break-inside:avoid;}
+
+  /* ===== DEPOIMENTOS ===== */
+  .testi-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:16px;}
+  .testi{background:var(--card);border:1px solid var(--card-border);border-radius:10px;padding:14px;break-inside:avoid;}
+  .testi .stars{color:var(--orange);letter-spacing:2px;margin-bottom:6px;font-size:9pt;}
+  .testi p{color:#2b2b2b;font-size:9.3pt;font-style:italic;margin:0 0 8px;}
+  .testi .who{color:var(--muted-2);font-size:7.8pt;text-transform:uppercase;letter-spacing:.04em;}
+
+  /* ===== AUTOR ===== */
+  .author-grid{display:grid;grid-template-columns:52mm 1fr;gap:18px;align-items:center;margin-top:16px;}
+  .author-grid img{width:100%;filter:drop-shadow(0 8px 20px rgba(0,0,0,0.15));}
+  .setores{display:flex;flex-wrap:wrap;gap:6px;margin-top:10px;}
+  .setores span{border:1px solid var(--card-border);color:var(--muted);font-size:8.3pt;padding:4px 10px;border-radius:999px;background:var(--card);}
+
+  /* ===== FOOTER ===== */
+  .colophon{text-align:center;padding-top:30px;margin-top:20px;border-top:1px solid var(--line);}
+  .colophon .logo-chip{
+    display:inline-block;background:#000;padding:10px 18px;border-radius:8px;margin:0 auto 12px;
+  }
+  .colophon .logo-chip img{height:18px;margin:0;}
+  .colophon p{color:var(--muted-2);font-size:8.3pt;margin:0;}
+
+  /* ===== PRINT ===== */
+  @media print{
+    html,body{background:#fff;}
+    .cover-sheet{margin:0;width:auto;min-height:auto;}
+    .book-sheet{box-shadow:none;width:auto;min-height:auto;margin:0;padding:0;}
+  }
+</style>
+</head>
+<body>
+
+<!-- ===================== CAPA ===================== -->
+<section class="cover-sheet">
+  <div class="kicker">Método validado &middot; Viskoo</div>
+  <img class="logo-big" src="logo-oplanounico.png" alt="OPlanoÚnico™">
+  <h1>Organize o marketing da sua empresa com o método que tira negócios do improviso e coloca no caminho da previsibilidade.</h1>
+  <p class="sub">Em 5 pilares, este ebook mostra exatamente o que fazer antes de anunciar, postar ou contratar qualquer ferramenta - pra você parar de testar ação solta e começar a vender todos os dias.</p>
+  <div class="pillars-strip">
+    <span>1 · Mensagem Base</span>
+    <span>2 · Base Receptiva</span>
+    <span>3 · Ponto de Decisão</span>
+    <span>4 · Aquisição Ativa</span>
+    <span>5 · Painel de Decisão</span>
+  </div>
+  <div class="author-row">
+    <img src="foto-josias-viskoo.png" alt="Josias Viskoo">
+    <span>Josias Viskoo - criador do OPlanoÚnico™ &amp; fundador da Viskoo</span>
+  </div>
+</section>
+
+<!-- ===================== MIOLO DO LIVRO ===================== -->
+<article class="book-sheet">
+
+  <!-- INTRODUÇÃO -->
+  <div class="chapter">
+    <div class="eyebrow">Introdução</div>
+    <h2 class="title">A estrutura é a chave para vender todos os dias</h2>
+    <p class="lead">Imagine se sua empresa parasse de depender de sorte, indicação ou "mês bom" pra vender. Que cada real investido em anúncio, post ou site tivesse uma função clara dentro de um plano. E você soubesse exatamente onde está o gargalo: mensagem, base receptiva, conversão, aquisição ou dados - com um caminho claro pra corrigir isso, sem precisar testar ação solta esperando dar certo.</p>
+    <blockquote>É isso que o OPlanoÚnico™ ensina: organizar antes de escalar.</blockquote>
+    <p class="lead">Este não é mais um curso de 10 horas de teoria genérica. É um método nascido da prática - o mesmo que a Viskoo aplica lado a lado com clientes reais, todos os dias, há mais de 10 anos, pra organizar mensagem, tráfego, página e dados em um único plano. Cada capítulo termina com um exercício pra você aplicar na sua empresa ainda essa semana.</p>
+  </div>
+
+  <!-- SUMÁRIO -->
+  <div class="chapter">
+    <div class="eyebrow">Sumário</div>
+    <h2 class="title">O que você vai encontrar neste ebook</h2>
+    <ul class="toc-list">
+      <li><div><span class="ttl">Para quem é o OPlanoÚnico™</span><span class="desc">Entenda se o seu momento de negócio se encaixa no método</span></div></li>
+      <li><div><span class="ttl">Os 5 Pilares do OPlanoÚnico™</span><span class="desc">Mensagem Base, Base Receptiva, Ponto de Decisão, Aquisição Ativa e Painel de Decisão</span></div></li>
+      <li><div><span class="ttl">Diferenciais do método</span><span class="desc">Por que este material é diferente de curso genérico</span></div></li>
+      <li><div><span class="ttl">Estudo de caso real</span><span class="desc">Números reais de uma implementação completa</span></div></li>
+      <li><div><span class="ttl">Checklist de diagnóstico rápido</span><span class="desc">Descubra qual pilar está travando seu crescimento</span></div></li>
+      <li><div><span class="ttl">Plano de ação editável</span><span class="desc">Modelo pronto pra registrar o que muda primeiro</span></div></li>
+      <li><div><span class="ttl">Resultados de quem aplicou</span><span class="desc">Empresas de estética, odontologia, e-commerce e serviços</span></div></li>
+      <li><div><span class="ttl">Sobre Josias Viskoo</span><span class="desc">Quem criou o método e por quê</span></div></li>
+    </ul>
+  </div>
+
+  <!-- PARA QUEM -->
+  <div class="chapter">
+    <div class="eyebrow">Antes de começar</div>
+    <h2 class="title">Para quem é (e para quem não é) este método</h2>
+    <p class="lead">O OPlanoÚnico™ foi criado, testado e refinado ao longo de mais de 10 anos aplicando na prática com dezenas de clientes reais - não é teoria de quem nunca vendeu. Ele é um plano de posicionamento e aquisição para <b>negócios validados</b>: empresas que já vendem, já têm uma estrutura base e precisam apertar parafusos específicos pra vender com previsibilidade.</p>
+    <div class="grid2">
+      <div class="box">
+        <h3>✓ Este método funciona pra você se…</h3>
+        <ul>
+          <li>Sua empresa já fez vendas e já tem um período de mercado (não precisa ser muito tempo).</li>
+          <li>Você já tem produto, oferta e algum canal ativo, mesmo que desorganizado.</li>
+          <li>Você quer parar de testar "ação solta" e passar a agir com plano.</li>
+          <li>Você está pronto pra investir em tráfego pago como acelerador - não como muleta.</li>
+        </ul>
+      </div>
+      <div class="box">
+        <h3>✕ Ainda não é o seu momento se…</h3>
+        <ul>
+          <li>Sua empresa ainda não vende e está em fase de estruturação inicial.</li>
+          <li>Você não tem nenhum produto ou oferta definida.</li>
+          <li>Ainda assim, vale a leitura: entender os processos agora evita erros caros lá na frente, quando o negócio começar a andar.</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <!-- OS 5 PILARES - INTRO -->
+  <div class="chapter">
+    <div class="eyebrow">O método</div>
+    <h2 class="title">Os 5 Pilares do OPlanoÚnico™</h2>
+    <p class="lead">Todo negócio que não vende todos os dias tem o mesmo problema: um gargalo em um (ou mais) desses cinco pontos. O método organiza a sua operação nesta ordem exata - porque cada pilar depende do anterior pra funcionar.</p>
+    <div class="funnel-row">
+      <div class="funnel-cell"><div class="k">1 → 2</div><p>A mensagem certa só funciona se a base que recebe o cliente estiver pronta.</p></div>
+      <div class="funnel-cell"><div class="k">2 → 3</div><p>Uma base receptiva bem construída não converte sozinha sem um ponto de decisão sem fricção.</p></div>
+      <div class="funnel-cell"><div class="k">3 → 4 → 5</div><p>Só depois de validar a conversão faz sentido acelerar com aquisição - e tudo isso se mede no painel.</p></div>
+    </div>
+  </div>
+
+  <!-- PILAR 1 -->
+  <div class="chapter">
+    <div class="pilar-head">
+      <div class="pilar-num">1</div>
+      <div>
+        <h2>Mensagem Base</h2>
+        <p>Defina o que atrai o cliente certo, sem depender de sorte na comunicação.</p>
+      </div>
+    </div>
+    <div class="pilar">
+      <p>Antes de qualquer anúncio, post ou ferramenta, existe uma pergunta que a maioria das empresas nunca respondeu por escrito: <b>o que exatamente estamos vendendo, pra quem, e por que essa pessoa deveria comprar de nós e não do concorrente?</b> Essa resposta é a Mensagem Base - o coração de toda a estratégia. Sem ela, qualquer investimento em tráfego ou conteúdo é aposta, não plano.</p>
+
+      <h4 class="sub">Você não vende produto, vende transformação</h4>
+      <p>A sua mídia social e sua página de venda são, na prática, uma vitrine. Tudo que você publica expõe seus produtos de uma forma que precisa deixar claro, em segundos, exatamente o que você vende e exatamente quem você está procurando. Isso significa nunca abrir falando do produto - comece pela pessoa: o que ela vive hoje, o que ela quer transformar, o que ela vai conquistar. O produto entra depois, como o caminho até essa transformação.</p>
+
+      <h4 class="sub">Defina seu ICP (cliente ideal) antes de escrever qualquer frase</h4>
+      <p>Toda narrativa forte nasce de um briefing bem feito: entender o seu momento de negócio, o seu ticket, o comportamento do seu cliente ideal (ICP). É esse ICP que orienta o tom, o vocabulário, a estética e os gatilhos que você vai usar - e que serve pra <b>filtrar quem não é o seu cliente</b>. Uma mensagem que tenta agradar todo mundo não atrai ninguém com urgência de comprar.</p>
+      <div class="tip"><b>Na prática:</b> se seu produto é sofisticado ou high ticket, o layout, o vocabulário e a ambientação da sua comunicação precisam refletir isso. Se você quer atingir médicos, sua narrativa precisa "cheirar" a ambiente médico. A pessoa certa se reconhece na sua comunicação em poucos segundos.</div>
+
+      <h4 class="sub">Os gatilhos que toda mensagem base precisa carregar</h4>
+      <ul>
+        <li><b>Curiosidade</b> - revele uma pequena parte da informação pra gerar interesse em saber o resto.</li>
+        <li><b>Budget e valor</b> - sua mensagem precisa deixar claro (direta ou indiretamente) o investimento esperado, pra atrair quem tem capacidade de pagar.</li>
+        <li><b>Urgência real</b> - mostre por que resolver isso agora importa, sem apelar pra escassez falsa.</li>
+        <li><b>Autoridade</b> - mostre que você domina o assunto antes de pedir a venda.</li>
+      </ul>
+
+      <h4 class="sub">O mecanismo único: sua oferta como "frame" que vence o mercado</h4>
+      <p>Quando a Mensagem Base está bem construída, ela vira um mecanismo único de posicionamento - um jeito específico de resolver o problema que só a sua empresa entrega daquela forma. Esse mecanismo precisa ser embalado num formato de produto (mesmo que você venda serviço), com nome, promessa e narrativa sexy o suficiente pra fazer o cliente sentir que seria bobagem não comprar de você.</p>
+
+      <div class="exercise">
+        <span class="tag">Exercício de aplicação</span>
+        <p style="margin-bottom:10px;">Responda com clareza - isso vira a base de toda a sua comunicação daqui pra frente:</p>
+        <ol>
+          <li>Quem é o seu cliente ideal (ICP)? Descreva idade, momento de vida ou negócio, dor principal e capacidade de investimento.
+            <div class="write-lines"></div>
+          </li>
+          <li>Qual transformação você vende - não o produto, a mudança real na vida ou negócio do cliente?
+            <div class="write-lines"></div>
+          </li>
+          <li>Qual é o seu mecanismo único - o que você faz diferente de qualquer concorrente?
+            <div class="write-lines"></div>
+          </li>
+        </ol>
+      </div>
+    </div>
+  </div>
+
+  <!-- PILAR 2 -->
+  <div class="chapter">
+    <div class="pilar-head">
+      <div class="pilar-num">2</div>
+      <div>
+        <h2>Base Receptiva</h2>
+        <p>Prepare site, redes e atendimento pra quem te encontrar já confiar e comprar.</p>
+      </div>
+    </div>
+    <div class="pilar">
+      <p>Todo real investido em anúncio leva a pessoa até algum lugar: seu perfil, seu site, seu WhatsApp. Se esse lugar não estiver preparado pra receber com uma boa narrativa, você paga pelo clique e perde a pessoa mesmo assim. A Base Receptiva é o conjunto de perfil, feed, stories, destaques e página de venda que precisa gerar confiança rápido - antes mesmo da conversa com um vendedor começar.</p>
+
+      <h4 class="sub">O feed: sua vitrine, organizada por camadas de funil</h4>
+      <p>Todo conteúdo publicado no feed precisa seguir uma proporção testada em campo:</p>
+      <div class="funnel-row">
+        <div class="funnel-cell"><div class="k">50%</div><p>Autoridade técnica - mostre que você domina o processo e sabe fazer.</p></div>
+        <div class="funnel-cell"><div class="k">30%</div><p>Dor - nomeie o problema real que seu cliente enfrenta hoje, sem rodeio.</p></div>
+        <div class="funnel-cell"><div class="k">10% + 10%</div><p>Prova social (o método funciona) e conexão / lifestyle (humaniza a marca).</p></div>
+      </div>
+      <p>Nessa camada de nutrição você <b>não vende diretamente</b>. Aqui o objetivo é gerar valor e confiança - quem vende é o anúncio, não o post orgânico. Misturar oferta direta na nutrição quebra a confiança que você está construindo.</p>
+
+      <h4 class="sub">Stories: onde a conexão acontece de verdade</h4>
+      <p>Os stories têm 24 horas de vida e são o espaço pra mostrar bastidores, método, resultados do dia a dia e como você trabalha. É aqui que o seguidor entende como você pensa - e a conexão que se cria nos stories reduz drasticamente a fricção quando a venda direta acontecer depois.</p>
+
+      <h4 class="sub">Recompensa digital: acelerando a confiança de 0 a 50%</h4>
+      <p>Materiais gratuitos ou pagos (um PDF, uma planilha, um mini curso, este próprio ebook) geram uma curva de confiança muito rápida, porque a pessoa passa a entender o processo, a intenção e a forma de trabalho antes mesmo de falar com você. Use recompensas digitais como isca pra alimentar sua base receptiva continuamente.</p>
+
+      <h4 class="sub">Sua página de venda: o que ela precisa (e não pode) ter</h4>
+      <ul>
+        <li><b>Headline clara</b> - a pessoa entende em segundos o que você resolve.</li>
+        <li><b>Identificação e empatia</b> - nomeie o problema que ela vive.</li>
+        <li><b>Mecanismo único como solução</b> - a resposta pro problema apresentado.</li>
+        <li><b>Autoridade</b> - tempo de mercado, credibilidade, tradição.</li>
+        <li><b>Prova social</b> - depoimentos reais do seu depósito de elogios.</li>
+        <li><b>Oferta irresistível</b> - o que a pessoa recebe ao comprar.</li>
+        <li><b>Garantia</b> - reversão de risco clara.</li>
+        <li><b>Quebra de objeção</b> - responda antes que perguntem.</li>
+        <li><b>Chamada única e direta</b> - um só caminho de conversão.</li>
+      </ul>
+      <div class="tip"><b>Erros que destroem conversão:</b> pontos de fuga (menus, links de rede social dentro da página), escassez falsa (contadores que zeram e recomeçam), linguagem corporativa vazia gerada sem revisão, e falar do produto antes de falar da pessoa.</div>
+
+      <div class="exercise">
+        <span class="tag">Exercício de aplicação</span>
+        <ol>
+          <li>Audite seu feed atual: qual % hoje é autoridade, dor, prova social e conexão? Está desequilibrado?
+            <div class="write-lines"></div>
+          </li>
+          <li>Liste 3 pontos de fuga que existem hoje na sua página de venda ou perfil e que precisam sair.
+            <div class="write-lines"></div>
+          </li>
+          <li>Que recompensa digital você pode criar essa semana pra alimentar sua base receptiva?
+            <div class="write-lines"></div>
+          </li>
+        </ol>
+      </div>
+    </div>
+  </div>
+
+  <!-- PILAR 3 -->
+  <div class="chapter">
+    <div class="pilar-head">
+      <div class="pilar-num">3</div>
+      <div>
+        <h2>Ponto de Decisão</h2>
+        <p>Reduza a fricção na hora da conversão e venda mais sem gastar mais em anúncio.</p>
+      </div>
+    </div>
+    <div class="pilar">
+      <p>O Ponto de Decisão é o momento exato em que o lead decide agir: clicar, chamar no WhatsApp, agendar uma reunião, comprar. Se o marketing anterior (pilares 1 e 2) foi bem feito, esse lead já chega convencido - o vendedor não precisa convencer ninguém, só fechar. Se o fechador precisa convencer na reunião, o problema não é o vendedor: é a mensagem ou a base receptiva que estão falhas.</p>
+
+      <h4 class="sub">Três formatos de oferta, pra atingir três perfis de lead</h4>
+      <div class="funnel-row">
+        <div class="funnel-cell"><div class="k">Vídeo (Reels)</div><p>Pra quem prefere assistir. Gancho nos 3 primeiros segundos, transformação no meio, chamada curta no final.</p></div>
+        <div class="funnel-cell"><div class="k">Carrossel</div><p>Pra quem gosta de ler, passando slide a slide os detalhes da oferta.</p></div>
+        <div class="funnel-cell"><div class="k">Estático</div><p>Pra quem decide rápido, sem ler nem assistir - a mensagem precisa estar clara numa imagem só.</p></div>
+      </div>
+
+      <h4 class="sub">O funil comercial: qualificação e fechamento, cada um com seu papel</h4>
+      <p>Reduzir fricção também é operacional. Quem faz a <b>pré-venda</b> filtra os leads que chegam, identifica indicadores de qualificação - verba disponível, urgência, alinhamento com a oferta - e só então agenda a reunião. Quem <b>fecha</b> não vende: fecha um contrato que já chega quase decidido, porque toda a narrativa de confiança já foi construída antes da reunião. Esse desenho separa "convencer" (que já aconteceu no conteúdo) de "fechar" (que é lógica e roteiro).</p>
+      <div class="tip"><b>Regra prática:</b> se o fechamento passa de 30 minutos, geralmente o lead está enrolando - algo na qualificação falhou antes. Um roteiro de vendas bem desenhado entende o cliente, quebra objeções pontuais e fecha; ele não precisa reconstruir a confiança do zero.</div>
+
+      <h4 class="sub">A janela de acompanhamento de 10 dias</h4>
+      <p>Nem todo lead fecha na primeira conversa. Mantenha contato ativo por até 10 dias - depois disso, o lead esfria e volta pra base de nutrição, onde outro conteúdo pode reaquecê-lo mais adiante. Isso evita perder oportunidades por falta de acompanhamento, sem forçar contato depois que o interesse já esfriou de verdade.</p>
+
+      <h4 class="sub">Qual caminho usar: perfil, WhatsApp ou página de venda?</h4>
+      <p>Não existe regra fixa - existe teste. Um botão de "visitar perfil" muitas vezes converte melhor que "chamar no WhatsApp" direto, porque quem visita o perfil pode virar seguidor e receber mais nutrição antes de decidir. Teste os três caminhos (perfil, WhatsApp, página de venda) e deixe os números do Pilar 5 apontarem o vencedor pro seu negócio.</p>
+
+      <div class="exercise">
+        <span class="tag">Exercício de aplicação</span>
+        <ol>
+          <li>Hoje, quem qualifica seus leads antes da venda? Existe um processo ou isso recai tudo sobre você?
+            <div class="write-lines"></div>
+          </li>
+          <li>Quais são as 3 objeções mais comuns que aparecem na hora do fechamento - e qual resposta pronta você vai usar pra cada uma?
+            <div class="write-lines"></div>
+          </li>
+          <li>Defina sua janela de acompanhamento e o gatilho que vai reativar leads frios.
+            <div class="write-lines"></div>
+          </li>
+        </ol>
+      </div>
+    </div>
+  </div>
+
+  <!-- PILAR 4 -->
+  <div class="chapter">
+    <div class="pilar-head">
+      <div class="pilar-num">4</div>
+      <div>
+        <h2>Aquisição Ativa</h2>
+        <p>Torne cada real investido em anúncio mais eficiente, com direção clara.</p>
+      </div>
+    </div>
+    <div class="pilar">
+      <p>Tráfego pago não é muleta - é acelerador. Ele só funciona bem quando os três primeiros pilares já estão de pé, porque sua função é levar mais gente, mais rápido, pra uma estrutura que já sabe converter. Usar tráfego pago pra "empurrar venda" sobre uma base fraca só acelera o prejuízo.</p>
+
+      <h4 class="sub">Topo, meio e fundo de funil - a lógica da vitrine</h4>
+      <div class="funnel-row">
+        <div class="funnel-cell"><div class="k">Topo</div><p>Grande massa passando na frente da vitrine. Anúncios leves, curiosidade, sem venda direta.</p></div>
+        <div class="funnel-cell"><div class="k">Meio</div><p>A pessoa parou, está olhando os produtos. Conteúdo de nutrição, ainda sem oferta.</p></div>
+        <div class="funnel-cell"><div class="k">Fundo</div><p>Ela entrou na loja interessada. Aqui sim: oferta direta, retomada de contato.</p></div>
+      </div>
+
+      <h4 class="sub">Ângulos de oferta: teste, valide, escale</h4>
+      <p>Cada "ângulo" é uma forma diferente de comunicar a mesma oferta - outro cenário, outro gancho, outro tipo de pessoa retratada. Teste vários ângulos em paralelo. O que performar melhor vira o <b>criativo vencedor</b>: você faz variações dele mudando o gancho e mantendo a essência, escala o investimento nele, e pausa ou exclui os que não performam.</p>
+
+      <h4 class="sub">Como validar investimento sem queimar dinheiro</h4>
+      <ul>
+        <li><b>Ciclo 1 (3 dias):</b> valide com o mínimo - em torno de R$20/dia - se a oferta e o criativo têm potencial.</li>
+        <li><b>Ciclo 2 (7 dias):</b> faça a análise de conversão completa. Aí você decide: parar ou continuar escalando.</li>
+        <li><b>Regra de ouro:</b> nunca pare de vez uma estrutura validada - se está dando retorno, o objetivo é sempre seguir otimizando, não zerar o investimento.</li>
+      </ul>
+
+      <h4 class="sub">Atração e prospecção trabalhando juntas</h4>
+      <p>A atração é o motor de "cliente todo dia": tráfego pago atrai, o perfil nutre, e o lead chega até você. A prospecção ativa - procurar quem comentou, quem chamou no inbox, prospecção externa - complementa, mas não substitui essa estrutura de atração. É a atração bem construída que tira você da dependência de ficar correndo atrás de cliente.</p>
+
+      <div class="tip"><b>Mentalidade da Aquisição Ativa:</b> o objetivo não é "ter algum lead" - é ter mais demanda do que capacidade de atender, pra você poder escolher quem atender e não aceitar qualquer cliente por medo de ficar sem trabalho.</div>
+
+      <div class="exercise">
+        <span class="tag">Exercício de aplicação</span>
+        <ol>
+          <li>Qual orçamento diário você pode dedicar ao ciclo de validação de 3+7 dias este mês?
+            <div class="write-lines"></div>
+          </li>
+          <li>Liste 3 ângulos diferentes de oferta que você pode testar pro seu produto principal.
+            <div class="write-lines"></div>
+          </li>
+          <li>Hoje você depende mais de atração ativa ou de correr atrás do cliente? O que precisa mudar?
+            <div class="write-lines"></div>
+          </li>
+        </ol>
+      </div>
+    </div>
+  </div>
+
+  <!-- PILAR 5 -->
+  <div class="chapter">
+    <div class="pilar-head">
+      <div class="pilar-num">5</div>
+      <div>
+        <h2>Painel de Decisão</h2>
+        <p>Pare de adivinhar. Decida com base em dado, não em achismo.</p>
+      </div>
+    </div>
+    <div class="pilar">
+      <p>Se você não tem número, não consegue escalar marketing - só consegue torcer. O Painel de Decisão é o hábito de ler as métricas certas, entender o que cada uma indica, e usar isso pra decidir onde cortar e onde investir mais, em vez de decidir no feeling.</p>
+
+      <h4 class="sub">As métricas que realmente importam</h4>
+      <ul>
+        <li><b>CTR</b> (taxa de clique) - seu anúncio está gerando curiosidade suficiente?</li>
+        <li><b>CPC</b> (custo por clique) e <b>CPA</b> (custo por aquisição) - quanto custa cada etapa do funil?</li>
+        <li><b>Conversão por etapa</b> - visitante → seguidor, seguidor → qualificado, qualificado → reunião, reunião → venda. Cada etapa é uma conversão separada, e cada uma pode ter um gargalo diferente.</li>
+        <li><b>LTV</b> (tempo/valor de vida do cliente) - o quanto cada cliente vale ao longo do relacionamento, contando venda adicional, recompra e indicação.</li>
+      </ul>
+
+      <h4 class="sub">O ciclo de melhoria contínua</h4>
+      <p>Coleta de dados → leitura de métricas → identificação do que está ruim ou bom → refinamento → renovação. Esse ciclo se repete sempre. Não é uma etapa que se faz uma vez - é um hábito semanal ou mensal de olhar o painel e ajustar o que precisa.</p>
+
+      <div class="tip"><b>Prova social como ativo do painel:</b> cada resultado de cliente vira munição pro próprio marketing - depoimentos e cases entram na página de venda, no feed e nos anúncios, reduzindo o esforço de convencimento nas próximas vendas. Guarde sempre um "depósito de elogios" com prints e depoimentos.</div>
+
+      <h4 class="sub">Uma referência de mercado pra calibrar sua meta</h4>
+      <p>Uma taxa saudável de qualificação de leads gira em torno de <b>30%</b>. Estruturas bem otimizadas, com tempo de ajuste fino, podem chegar a <b>50–60%</b> - é o que você verá no estudo de caso a seguir.</p>
+
+      <div class="exercise">
+        <span class="tag">Exercício de aplicação</span>
+        <ol>
+          <li>Quais métricas você acompanha hoje? Quais dessa lista estão faltando no seu painel?
+            <div class="write-lines"></div>
+          </li>
+          <li>Olhando sua última semana, em qual etapa do funil (visitante → seguidor → qualificado → reunião → venda) está o maior gargalo?
+            <div class="write-lines"></div>
+          </li>
+          <li>Com que frequência você vai revisar esse painel a partir de agora?
+            <div class="write-lines"></div>
+          </li>
+        </ol>
+      </div>
+    </div>
+  </div>
+
+  <!-- DIFERENCIAIS -->
+  <div class="chapter">
+    <div class="eyebrow">Por que este método</div>
+    <h2 class="title">Diferenciais do OPlanoÚnico™</h2>
+    <p class="lead">Não é mais um curso de 10 horas de teoria genérica que você compra, assiste pela metade e esquece.</p>
+    <div class="diff-grid">
+      <div class="diff-card"><span class="n">01</span><h3>Foco na prática</h3><p>Cada pilar vem com o passo a passo pra você aplicar na sua empresa ainda essa semana.</p></div>
+      <div class="diff-card"><span class="n">02</span><h3>Direto ao ponto</h3><p>Sem enrolação. Uma leitura objetiva, pensada pra quem tem empresa pra tocar, não tempo sobrando.</p></div>
+      <div class="diff-card"><span class="n">03</span><h3>Exercícios de aplicação</h3><p>Ao final de cada pilar, exercícios práticos pra registrar exatamente o que ajustar na sua empresa.</p></div>
+      <div class="diff-card"><span class="n">04</span><h3>Diagnóstico rápido incluso</h3><p>Um checklist pra você descobrir, hoje, qual dos 5 pilares está travando o crescimento.</p></div>
+      <div class="diff-card"><span class="n">05</span><h3>Plano de ação editável</h3><p>Um modelo pronto pra registrar o que precisa mudar primeiro, pilar por pilar.</p></div>
+      <div class="diff-card"><span class="n">06</span><h3>Criado por quem aplica</h3><p>Escrito pela Viskoo, agência que aplica o OPlanoÚnico™ todos os dias com clientes reais.</p></div>
+    </div>
+  </div>
+
+  <!-- CASO REAL -->
+  <div class="chapter">
+    <div class="eyebrow">Prova em números</div>
+    <h2 class="title">Estudo de caso: o método aplicado do início ao fim</h2>
+    <p class="lead">Um dos clientes da Viskoo passou pela estrutura completa dos 5 pilares. Estes são os números reais dessa implementação - do investimento em tráfego até o caixa gerado.</p>
+
+    <div class="funnel-steps">
+      <div class="step"><b>R$ 2.500</b>investidos</div><span class="arrow">→</span>
+      <div class="step"><b>16.000</b>visitas</div><span class="arrow">→</span>
+      <div class="step"><b>9%</b>conversão</div><span class="arrow">→</span>
+      <div class="step"><b>1.436</b>seguidores</div><span class="arrow">→</span>
+      <div class="step"><b>60%</b>qualificados</div><span class="arrow">→</span>
+      <div class="step"><b>11%</b>chamados p/ reunião</div><span class="arrow">→</span>
+      <div class="step"><b>97</b>leads em reunião</div><span class="arrow">→</span>
+      <div class="step"><b>84</b>fechamentos</div>
+    </div>
+
+    <div class="stat-grid">
+      <div class="stat"><div class="num">R$ 119 mil</div><div class="lbl">Caixa líquido gerado nesse ciclo</div></div>
+      <div class="stat"><div class="num">52%</div><div class="lbl">Taxa de qualificação de leads (média de mercado: 30%)</div></div>
+      <div class="stat"><div class="num">R$ 700 mil</div><div class="lbl">Faturados em 2 horas com uma ação específica, usando a mesma base já estruturada</div></div>
+      <div class="stat"><div class="num">30 dias</div><div class="lbl">Tempo médio pra implementar a estrutura completa</div></div>
+    </div>
+
+    <h4 class="sub">Uma semana real de leads, depois da estrutura implementada</h4>
+    <table class="leads">
+      <tr><th>Dia</th><th>Segunda</th><th>Terça</th><th>Quarta</th><th>Quinta</th><th>Sexta</th></tr>
+      <tr><td>Leads recebidos</td><td>15</td><td>13</td><td>13</td><td>27</td><td>20</td></tr>
+      <tr><td>Qualificados</td><td>5</td><td>12</td><td>—</td><td>—</td><td>—</td></tr>
+    </table>
+    <p class="source-note">Fonte: aplicação real do método OPlanoÚnico™ por um cliente Viskoo. Resultados variam conforme nicho, ticket e verba disponível - os números aqui servem de referência de padrão saudável, não de garantia.</p>
+  </div>
+
+  <!-- DIAGNÓSTICO -->
+  <div class="chapter">
+    <div class="eyebrow">Checklist</div>
+    <h2 class="title">Diagnóstico rápido: qual pilar está travando o seu crescimento?</h2>
+    <p class="lead">Marque cada afirmação que já é verdade pra sua empresa hoje. No final, o grupo com menos marcações indica onde está o seu gargalo prioritário.</p>
+
+    <h4 class="sub" style="margin-top:22px;">Pilar 1 - Mensagem Base</h4>
+    <ul class="checklist">
+      <li><span class="chk"></span><span class="qtext">Tenho o perfil do meu cliente ideal (ICP) escrito, não só na cabeça.<small>Idade, dor, capacidade de investir e comportamento de compra.</small></span></li>
+      <li><span class="chk"></span><span class="qtext">Minha comunicação fala primeiro da transformação do cliente, não do meu produto.</span></li>
+      <li><span class="chk"></span><span class="qtext">Consigo explicar meu mecanismo único em uma frase.</span></li>
+    </ul>
+
+    <h4 class="sub">Pilar 2 - Base Receptiva</h4>
+    <ul class="checklist">
+      <li><span class="chk"></span><span class="qtext">Meu feed segue uma proporção clara de autoridade, dor, prova social e conexão.</span></li>
+      <li><span class="chk"></span><span class="qtext">Uso stories quase todos os dias pra mostrar bastidores e resultados.</span></li>
+      <li><span class="chk"></span><span class="qtext">Minha página de venda não tem pontos de fuga nem escassez falsa.</span></li>
+    </ul>
+
+    <h4 class="sub">Pilar 3 - Ponto de Decisão</h4>
+    <ul class="checklist">
+      <li><span class="chk"></span><span class="qtext">Existe alguém (ou um processo) que qualifica o lead antes da conversa de venda.</span></li>
+      <li><span class="chk"></span><span class="qtext">Tenho um roteiro de vendas com respostas prontas pras objeções mais comuns.</span></li>
+      <li><span class="chk"></span><span class="qtext">Tenho uma régua de acompanhamento definida pra quem não fecha na hora.</span></li>
+    </ul>
+
+    <h4 class="sub">Pilar 4 - Aquisição Ativa</h4>
+    <ul class="checklist">
+      <li><span class="chk"></span><span class="qtext">Uso tráfego pago com um ciclo de teste e validação definido (não é "solto").</span></li>
+      <li><span class="chk"></span><span class="qtext">Já testei mais de um ângulo de oferta nos últimos 30 dias.</span></li>
+      <li><span class="chk"></span><span class="qtext">Tenho mais demanda de leads do que capacidade de atender.</span></li>
+    </ul>
+
+    <h4 class="sub">Pilar 5 - Painel de Decisão</h4>
+    <ul class="checklist">
+      <li><span class="chk"></span><span class="qtext">Acompanho CTR, CPC e CPA regularmente, não só "se vendeu ou não".</span></li>
+      <li><span class="chk"></span><span class="qtext">Sei em qual etapa do funil está o meu maior gargalo hoje.</span></li>
+      <li><span class="chk"></span><span class="qtext">Reviso minhas métricas em uma rotina fixa (semanal ou mensal).</span></li>
+    </ul>
+
+    <div class="score-box">
+      <b>Como ler seu resultado:</b> o pilar com menos caixas marcadas é o seu gargalo prioritário - é ali que você deve concentrar o exercício de aplicação primeiro. Corrigir o pilar 4 (Aquisição) sem resolver o pilar 1 ou 2 antes só acelera o problema, não o resultado.
+    </div>
+  </div>
+
+  <!-- PLANO DE AÇÃO -->
+  <div class="chapter">
+    <div class="eyebrow">Modelo editável</div>
+    <h2 class="title">Seu plano de ação, pilar por pilar</h2>
+    <p class="lead">Preencha à mão, priorizando primeiro o pilar identificado no diagnóstico acima.</p>
+    <table class="plano">
+      <tr><th style="width:16%">Pilar</th><th style="width:22%">O que ajustar primeiro</th><th style="width:12%">Prazo</th><th style="width:16%">Responsável</th><th>Como vou saber que funcionou</th></tr>
+      <tr><td class="pilarname">1. Mensagem Base</td><td></td><td></td><td></td><td></td></tr>
+      <tr><td class="pilarname">2. Base Receptiva</td><td></td><td></td><td></td><td></td></tr>
+      <tr><td class="pilarname">3. Ponto de Decisão</td><td></td><td></td><td></td><td></td></tr>
+      <tr><td class="pilarname">4. Aquisição Ativa</td><td></td><td></td><td></td><td></td></tr>
+      <tr><td class="pilarname">5. Painel de Decisão</td><td></td><td></td><td></td><td></td></tr>
+    </table>
+    <p class="source-note">Dica: este plano é vivo. Revise-o toda vez que revisar seu Painel de Decisão (Pilar 5).</p>
+  </div>
+
+  <!-- DEPOIMENTOS -->
+  <div class="chapter">
+    <div class="eyebrow">Método validado</div>
+    <h2 class="title">O que dizem empresas que já aplicaram o método</h2>
+    <div class="testi-grid">
+      <div class="testi">
+        <div class="stars">★★★★★</div>
+        <p>"Antes eu vivia testando post e anúncio solto sem saber o motivo. Depois que organizei o marketing com esse método, cada ação passou a ter função clara e parei de queimar dinheiro no escuro."</p>
+        <div class="who">Cliente Viskoo - Estética</div>
+      </div>
+      <div class="testi">
+        <div class="stars">★★★★★</div>
+        <p>"O que mais mudou foi a clareza. Eu não sabia se o problema era mensagem, site ou atendimento. Organizando pelos pilares, ficou óbvio onde estava travando a conversão."</p>
+        <div class="who">Cliente Viskoo - Odontologia</div>
+      </div>
+      <div class="testi">
+        <div class="stars">★★★★★</div>
+        <p>"Parei de depender de 'mês bom' pra vender. Com o painel de decisão certo, hoje eu sei exatamente onde cortar e onde investir mais."</p>
+        <div class="who">Cliente Viskoo - E-commerce</div>
+      </div>
+      <div class="testi">
+        <div class="stars">★★★★★</div>
+        <p>"Antes era tentativa atrás de tentativa. Depois de organizar o plano, cada real investido em anúncio passou a ter um caminho claro até a venda."</p>
+        <div class="who">Cliente Viskoo - Serviços</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- AUTOR -->
+  <div class="chapter">
+    <div class="eyebrow">Quem criou o método</div>
+    <h2 class="title">Josias Viskoo</h2>
+    <div class="author-grid">
+      <img src="foto-josias-viskoo.png" alt="Josias Viskoo, fundador da Viskoo">
+      <div>
+        <p class="lead">Sou Josias Viskoo, fundador da Viskoo, agência de marketing focada em estruturar o crescimento de empresas - não em vender ferramenta ou tarefa solta.</p>
+        <p class="lead">O OPlanoÚnico™ nasceu da prática: é o mesmo método que a Viskoo aplica lado a lado com clientes reais, todos os dias, há mais de 10 anos, pra organizar mensagem, tráfego, página e dados em um só plano. Foi construído com o time e refinado a cada cliente, com processos mapeados e documentados pra cada uma das etapas.</p>
+        <p style="color:var(--muted);font-size:9.5pt;margin-top:12px;">Setores onde o método já foi aplicado:</p>
+        <div class="setores">
+          <span>Estética</span><span>Saúde</span><span>Educação</span><span>Varejo</span><span>Serviços</span><span>E-commerce</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="colophon">
+    <div class="logo-chip"><img src="logo-oplanounico.png" alt="OPlanoÚnico"></div>
+    <p>OPlanoÚnico™ - o método que organiza seu marketing.<br>Todos os Direitos Reservados | Viskoo</p>
+  </div>
+
+</article>
+
+</body>
+</html>
