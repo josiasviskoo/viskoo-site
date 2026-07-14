@@ -1472,6 +1472,52 @@ body.prices-revealed .planos-only { display: block; }
 .plan-list li.off { opacity: 0.35; }
 .plan-list li.off::before { content: '✕'; color: var(--text-secondary); }
 
+/* =============================================
+   COMPARE TABLE
+   ============================================= */
+.table-scroll { overflow-x: auto; -webkit-overflow-scrolling: touch; }
+.compare-table {
+  width: 100%;
+  min-width: 640px;
+  border-collapse: collapse;
+  background: var(--bg-surface);
+  border: 1px solid var(--border);
+  border-radius: var(--r-lg);
+  overflow: hidden;
+  font-size: 14px;
+}
+.compare-table th,
+.compare-table td { padding: var(--space-4); text-align: left; border-bottom: 1px solid var(--border); }
+.compare-table thead th {
+  color: var(--text-secondary);
+  font-weight: 500;
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  background: var(--bg-overlay);
+  white-space: nowrap;
+}
+.compare-table thead th.col-accent { color: var(--accent); }
+.compare-table tbody th[scope="row"] { color: var(--text-primary); font-weight: 500; white-space: nowrap; }
+.compare-table tbody tr:last-child th,
+.compare-table tbody tr:last-child td { border-bottom: none; }
+.compare-table td.cell-yes { color: var(--text-primary); }
+.compare-table td.cell-no { color: var(--text-muted); }
+.compare-table td.diff { color: var(--accent); font-weight: 600; }
+.compare-table td .t-xs { display: block; font-weight: 400; margin-top: 2px; }
+
+/* =============================================
+   INVESTMENT FORECAST CARD
+   ============================================= */
+.invest-card {
+  border-style: dashed;
+  border-color: var(--border-hover);
+  background: transparent;
+}
+.invest-step { text-align: center; }
+.invest-step .invest-value { font-size: 20px; font-weight: 700; letter-spacing: -0.02em; }
+.invest-arrow { color: var(--text-muted); align-self: center; font-size: 14px; }
+
 /* Mobile nav toggle */
 .nav-toggle {
   display: none;
