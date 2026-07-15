@@ -6,3 +6,5 @@ git pull --rebase --autostash origin $(git branch --show-current)
 
 git add -A && git commit -m "Sync" && git pull --rebase --autostash origin $(git branch --show-current) && git push origin $(git branch --show-current)
 
+
+
