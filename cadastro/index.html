@@ -399,12 +399,26 @@ src="https://www.facebook.com/tr?id=612024205136097&ev=PageView&noscript=1"
   // Preenche campos via URL params
   const params = new URLSearchParams(window.location.search);
 
-  const descricao = params.get('descricao');
-  const valor     = params.get('valor');
-  const parcela   = params.get('parcelamento');
+  const projeto    = params.get('projeto');
+  const valortotal = params.get('valortotal');
+  const parcela    = params.get('parcelamento');
 
-  if (descricao) document.getElementById('descricao').value = descricao;
-  if (valor)     document.getElementById('valor').value      = valor.replace(',', '.');
+  if (projeto) document.getElementById('descricao').value = projeto;
+
+  if (valortotal) {
+    const selectValor = document.getElementById('valor');
+
+    const inputValor = document.createElement('input');
+    inputValor.type = 'text';
+    inputValor.id = 'valor';
+    inputValor.name = 'valor';
+    inputValor.className = 'input';
+    inputValor.value = valortotal;
+    inputValor.readOnly = true;
+    inputValor.required = true;
+
+    selectValor.replaceWith(inputValor);
+  }
 
   if (parcela) {
     const selectParcelamento = document.getElementById('parcelamento');
