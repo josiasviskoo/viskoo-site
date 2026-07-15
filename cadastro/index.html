@@ -400,7 +400,7 @@ src="https://www.facebook.com/tr?id=612024205136097&ev=PageView&noscript=1"
   const params = new URLSearchParams(window.location.search);
 
   const projeto    = params.get('projeto');
-  const valortotal = params.get('valortotal');
+  const valortotal = params.get('valortotal') || params.get('valor');
   const parcela    = params.get('parcelamento');
 
   if (projeto) document.getElementById('descricao').value = projeto;
@@ -420,7 +420,7 @@ src="https://www.facebook.com/tr?id=612024205136097&ev=PageView&noscript=1"
     selectValor.replaceWith(inputValor);
   }
 
-  if (parcela) {
+  if (parcela && parcela.trim() !== '') {
     const selectParcelamento = document.getElementById('parcelamento');
 
     const inputParcelamento = document.createElement('input');
