@@ -146,6 +146,33 @@
     background-image:repeating-linear-gradient(to bottom, transparent, transparent 16px, var(--line) 17px);
   }
 
+  /* ===== PROMO MINI-CURSO ===== */
+  .promo-card{
+    background:var(--canvas);color:#f2f2f0;border:1px solid #2c2c2c;border-radius:14px;
+    padding:26px 24px;margin-top:10px;break-inside:avoid;position:relative;overflow:hidden;
+  }
+  .promo-card::before{
+    content:"";position:absolute;inset:0;
+    background:radial-gradient(ellipse 420px 260px at 100% 0%, rgba(245,130,31,0.22), transparent 60%);
+    pointer-events:none;
+  }
+  .promo-card .promo-kicker{
+    color:var(--orange-bright);text-transform:uppercase;letter-spacing:.16em;font-size:8.5pt;font-weight:700;
+    display:block;margin-bottom:10px;position:relative;
+  }
+  .promo-card h2{color:#fff;font-size:16pt;margin:0 0 10px;position:relative;}
+  .promo-card p.promo-lead{color:#c2c2c2;font-size:10pt;margin:0 0 16px;max-width:150mm;position:relative;}
+  .promo-list{list-style:none;margin:0 0 18px;padding:0;position:relative;}
+  .promo-list li{
+    border-left:2px solid var(--orange-bright);padding:6px 0 6px 12px;margin-bottom:8px;
+    font-size:9.6pt;color:#e6e6e6;
+  }
+  .promo-list li b{color:var(--orange-bright);}
+  .promo-cta{
+    display:inline-block;background:var(--orange-bright);color:#141414;font-weight:700;font-size:9.5pt;
+    padding:10px 18px;border-radius:999px;position:relative;
+  }
+
   /* ===== DIFERENCIAIS ===== */
   .diff-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-top:16px;}
   .diff-card{background:var(--card);border:1px solid var(--card-border);border-radius:10px;padding:14px;break-inside:avoid;}
@@ -221,7 +248,7 @@
   <div class="kicker">Método validado &middot; Viskoo</div>
   <img class="logo-big" src="logo-oplanounico.png" alt="OPlanoÚnico™">
   <h1>Organize o marketing da sua empresa com o método que tira negócios do improviso e coloca no caminho da previsibilidade.</h1>
-  <p class="sub">Em 5 pilares, este ebook mostra exatamente o que fazer antes de anunciar, postar ou contratar qualquer ferramenta - pra você parar de testar ação solta e começar a vender todos os dias.</p>
+  <p class="sub">Em 5 pilares, este ebook mostra exatamente o que fazer antes de anunciar, postar ou contratar qualquer ferramenta, pra você parar de testar ação solta e começar a vender todos os dias.</p>
   <div class="pillars-strip">
     <span>1 · Mensagem Base</span>
     <span>2 · Base Receptiva</span>
@@ -242,9 +269,9 @@
   <div class="chapter">
     <div class="eyebrow">Introdução</div>
     <h2 class="title">A estrutura é a chave para vender todos os dias</h2>
-    <p class="lead">Imagine se sua empresa parasse de depender de sorte, indicação ou "mês bom" pra vender. Que cada real investido em anúncio, post ou site tivesse uma função clara dentro de um plano. E você soubesse exatamente onde está o gargalo: mensagem, base receptiva, conversão, aquisição ou dados - com um caminho claro pra corrigir isso, sem precisar testar ação solta esperando dar certo.</p>
+    <p class="lead">Sua empresa não devia depender de sorte, indicação ou "mês bom" pra vender. Cada real investido em anúncio, post ou site precisa ter uma função clara dentro de um plano, e você precisa saber exatamente onde está o gargalo: mensagem, base receptiva, conversão, aquisição ou dados. Só assim dá pra corrigir sem ficar testando ação solta na esperança de dar certo.</p>
     <blockquote>É isso que o OPlanoÚnico™ ensina: organizar antes de escalar.</blockquote>
-    <p class="lead">Este não é mais um curso de 10 horas de teoria genérica. É um método nascido da prática - o mesmo que a Viskoo aplica lado a lado com clientes reais, todos os dias, há mais de 10 anos, pra organizar mensagem, tráfego, página e dados em um único plano. Cada capítulo termina com um exercício pra você aplicar na sua empresa ainda essa semana.</p>
+    <p class="lead">Este não é curso de teoria genérica. É método nascido da prática: a Viskoo aplica ele com clientes reais, todos os dias, há mais de 10 anos, pra organizar mensagem, tráfego, página e dados em um único plano. Cada capítulo termina com um exercício pra você aplicar na sua empresa ainda essa semana.</p>
   </div>
 
   <!-- SUMÁRIO -->
@@ -267,7 +294,7 @@
   <div class="chapter">
     <div class="eyebrow">Antes de começar</div>
     <h2 class="title">Para quem é (e para quem não é) este método</h2>
-    <p class="lead">O OPlanoÚnico™ foi criado, testado e refinado ao longo de mais de 10 anos aplicando na prática com dezenas de clientes reais - não é teoria de quem nunca vendeu. Ele é um plano de posicionamento e aquisição para <b>negócios validados</b>: empresas que já vendem, já têm uma estrutura base e precisam apertar parafusos específicos pra vender com previsibilidade.</p>
+    <p class="lead">O OPlanoÚnico™ foi criado, testado e refinado ao longo de mais de 10 anos aplicando na prática com dezenas de clientes reais. Não é teoria de quem nunca vendeu. Ele é um plano de posicionamento e aquisição para <b>negócios validados</b>: empresas que já vendem, já têm uma estrutura base e precisam apertar parafusos específicos pra vender com previsibilidade.</p>
     <div class="grid2">
       <div class="box">
         <h3>✓ Este método funciona pra você se…</h3>
@@ -275,7 +302,7 @@
           <li>Sua empresa já fez vendas e já tem um período de mercado (não precisa ser muito tempo).</li>
           <li>Você já tem produto, oferta e algum canal ativo, mesmo que desorganizado.</li>
           <li>Você quer parar de testar "ação solta" e passar a agir com plano.</li>
-          <li>Você está pronto pra investir em tráfego pago como acelerador - não como muleta.</li>
+          <li>Você está pronto pra investir em tráfego pago como acelerador, não como muleta.</li>
         </ul>
       </div>
       <div class="box">
@@ -293,11 +320,11 @@
   <div class="chapter">
     <div class="eyebrow">O método</div>
     <h2 class="title">Os 5 Pilares do OPlanoÚnico™</h2>
-    <p class="lead">Todo negócio que não vende todos os dias tem o mesmo problema: um gargalo em um (ou mais) desses cinco pontos. O método organiza a sua operação nesta ordem exata - porque cada pilar depende do anterior pra funcionar.</p>
+    <p class="lead">Todo negócio que não vende todos os dias tem o mesmo problema: um gargalo em um (ou mais) desses cinco pontos. O método organiza a sua operação nesta ordem exata, porque cada pilar depende do anterior pra funcionar.</p>
     <div class="funnel-row">
       <div class="funnel-cell"><div class="k">1 → 2</div><p>A mensagem certa só funciona se a base que recebe o cliente estiver pronta.</p></div>
       <div class="funnel-cell"><div class="k">2 → 3</div><p>Uma base receptiva bem construída não converte sozinha sem um ponto de decisão sem fricção.</p></div>
-      <div class="funnel-cell"><div class="k">3 → 4 → 5</div><p>Só depois de validar a conversão faz sentido acelerar com aquisição - e tudo isso se mede no painel.</p></div>
+      <div class="funnel-cell"><div class="k">3 → 4 → 5</div><p>Só depois de validar a conversão faz sentido acelerar com aquisição, e tudo isso se mede no painel.</p></div>
     </div>
   </div>
 
@@ -311,13 +338,13 @@
       </div>
     </div>
     <div class="pilar">
-      <p>Antes de qualquer anúncio, post ou ferramenta, existe uma pergunta que a maioria das empresas nunca respondeu por escrito: <b>o que exatamente estamos vendendo, pra quem, e por que essa pessoa deveria comprar de nós e não do concorrente?</b> Essa resposta é a Mensagem Base - o coração de toda a estratégia. Sem ela, qualquer investimento em tráfego ou conteúdo é aposta, não plano.</p>
+      <p>Antes de qualquer anúncio, post ou ferramenta, existe uma pergunta que a maioria das empresas nunca respondeu por escrito: <b>o que exatamente estamos vendendo, pra quem, e por que essa pessoa deveria comprar de nós e não do concorrente?</b> Essa resposta é a Mensagem Base, o coração de toda a estratégia. Sem ela, qualquer investimento em tráfego ou conteúdo é aposta, não plano.</p>
 
       <h4 class="sub">Você não vende produto, vende transformação</h4>
-      <p>A sua mídia social e sua página de venda são, na prática, uma vitrine. Tudo que você publica expõe seus produtos de uma forma que precisa deixar claro, em segundos, exatamente o que você vende e exatamente quem você está procurando. Isso significa nunca abrir falando do produto - comece pela pessoa: o que ela vive hoje, o que ela quer transformar, o que ela vai conquistar. O produto entra depois, como o caminho até essa transformação.</p>
+      <p>A sua mídia social e sua página de venda são, na prática, uma vitrine. Tudo que você publica expõe seus produtos de uma forma que precisa deixar claro, em segundos, exatamente o que você vende e exatamente quem você está procurando. Isso significa nunca abrir falando do produto. Comece pela pessoa: o que ela vive hoje, o que ela quer transformar, o que ela vai conquistar. O produto entra depois, como o caminho até essa transformação.</p>
 
       <h4 class="sub">Defina seu ICP (cliente ideal) antes de escrever qualquer frase</h4>
-      <p>Toda narrativa forte nasce de um briefing bem feito: entender o seu momento de negócio, o seu ticket, o comportamento do seu cliente ideal (ICP). É esse ICP que orienta o tom, o vocabulário, a estética e os gatilhos que você vai usar - e que serve pra <b>filtrar quem não é o seu cliente</b>. Uma mensagem que tenta agradar todo mundo não atrai ninguém com urgência de comprar.</p>
+      <p>Toda narrativa forte nasce de um briefing bem feito: entender o seu momento de negócio, o seu ticket, o comportamento do seu cliente ideal (ICP). É esse ICP que orienta o tom, o vocabulário, a estética e os gatilhos que você vai usar, e que serve pra <b>filtrar quem não é o seu cliente</b>. Uma mensagem que tenta agradar todo mundo não atrai ninguém com urgência de comprar.</p>
       <div class="tip"><b>Na prática:</b> se seu produto é sofisticado ou high ticket, o layout, o vocabulário e a ambientação da sua comunicação precisam refletir isso. Se você quer atingir médicos, sua narrativa precisa "cheirar" a ambiente médico. A pessoa certa se reconhece na sua comunicação em poucos segundos.</div>
 
       <h4 class="sub">Os gatilhos que toda mensagem base precisa carregar</h4>
@@ -329,19 +356,19 @@
       </ul>
 
       <h4 class="sub">O mecanismo único: sua oferta como "frame" que vence o mercado</h4>
-      <p>Quando a Mensagem Base está bem construída, ela vira um mecanismo único de posicionamento - um jeito específico de resolver o problema que só a sua empresa entrega daquela forma. Esse mecanismo precisa ser embalado num formato de produto (mesmo que você venda serviço), com nome, promessa e narrativa sexy o suficiente pra fazer o cliente sentir que seria bobagem não comprar de você.</p>
+      <p>Quando a Mensagem Base está bem construída, ela vira um mecanismo único de posicionamento: um jeito específico de resolver o problema que só a sua empresa entrega daquela forma. Esse mecanismo precisa ser embalado num formato de produto (mesmo que você venda serviço), com nome, promessa e narrativa sexy o suficiente pra fazer o cliente sentir que seria bobagem não comprar de você.</p>
 
       <div class="exercise">
         <span class="tag">Exercício de aplicação</span>
-        <p style="margin-bottom:10px;">Responda com clareza - isso vira a base de toda a sua comunicação daqui pra frente:</p>
+        <p style="margin-bottom:10px;">Responda com clareza: isso vira a base de toda a sua comunicação daqui pra frente:</p>
         <ol>
           <li>Quem é o seu cliente ideal (ICP)? Descreva idade, momento de vida ou negócio, dor principal e capacidade de investimento.
             <div class="write-lines"></div>
           </li>
-          <li>Qual transformação você vende - não o produto, a mudança real na vida ou negócio do cliente?
+          <li>Qual transformação você vende, não o produto, a mudança real na vida ou negócio do cliente?
             <div class="write-lines"></div>
           </li>
-          <li>Qual é o seu mecanismo único - o que você faz diferente de qualquer concorrente?
+          <li>Qual é o seu mecanismo único, o que você faz diferente de qualquer concorrente?
             <div class="write-lines"></div>
           </li>
         </ol>
@@ -359,19 +386,19 @@
       </div>
     </div>
     <div class="pilar">
-      <p>Todo real investido em anúncio leva a pessoa até algum lugar: seu perfil, seu site, seu WhatsApp. Se esse lugar não estiver preparado pra receber com uma boa narrativa, você paga pelo clique e perde a pessoa mesmo assim. A Base Receptiva é o conjunto de perfil, feed, stories, destaques e página de venda que precisa gerar confiança rápido - antes mesmo da conversa com um vendedor começar.</p>
+      <p>Todo real investido em anúncio leva a pessoa até algum lugar: seu perfil, seu site, seu WhatsApp. Se esse lugar não estiver preparado pra receber com uma boa narrativa, você paga pelo clique e perde a pessoa mesmo assim. A Base Receptiva é o conjunto de perfil, feed, stories, destaques e página de venda que precisa gerar confiança rápido, antes mesmo da conversa com um vendedor começar.</p>
 
       <h4 class="sub">O feed: sua vitrine, organizada por camadas de funil</h4>
       <p>Todo conteúdo publicado no feed precisa seguir uma proporção testada em campo:</p>
       <div class="funnel-row">
-        <div class="funnel-cell"><div class="k">50%</div><p>Autoridade técnica - mostre que você domina o processo e sabe fazer.</p></div>
-        <div class="funnel-cell"><div class="k">30%</div><p>Dor - nomeie o problema real que seu cliente enfrenta hoje, sem rodeio.</p></div>
+        <div class="funnel-cell"><div class="k">50%</div><p>Autoridade técnica: mostre que você domina o processo e sabe fazer.</p></div>
+        <div class="funnel-cell"><div class="k">30%</div><p>Dor: nomeie o problema real que seu cliente enfrenta hoje, sem rodeio.</p></div>
         <div class="funnel-cell"><div class="k">10% + 10%</div><p>Prova social (o método funciona) e conexão / lifestyle (humaniza a marca).</p></div>
       </div>
-      <p>Nessa camada de nutrição você <b>não vende diretamente</b>. Aqui o objetivo é gerar valor e confiança - quem vende é o anúncio, não o post orgânico. Misturar oferta direta na nutrição quebra a confiança que você está construindo.</p>
+      <p>Nessa camada de nutrição você <b>não vende diretamente</b>. Aqui o objetivo é gerar valor e confiança: quem vende é o anúncio, não o post orgânico. Misturar oferta direta na nutrição quebra a confiança que você está construindo.</p>
 
       <h4 class="sub">Stories: onde a conexão acontece de verdade</h4>
-      <p>Os stories têm 24 horas de vida e são o espaço pra mostrar bastidores, método, resultados do dia a dia e como você trabalha. É aqui que o seguidor entende como você pensa - e a conexão que se cria nos stories reduz drasticamente a fricção quando a venda direta acontecer depois.</p>
+      <p>Os stories têm 24 horas de vida e são o espaço pra mostrar bastidores, método, resultados do dia a dia e como você trabalha. É aqui que o seguidor entende como você pensa, e a conexão que se cria nos stories reduz drasticamente a fricção quando a venda direta acontecer depois.</p>
 
       <h4 class="sub">Recompensa digital: acelerando a confiança de 0 a 50%</h4>
       <p>Materiais gratuitos ou pagos (um PDF, uma planilha, um mini curso, este próprio ebook) geram uma curva de confiança muito rápida, porque a pessoa passa a entender o processo, a intenção e a forma de trabalho antes mesmo de falar com você. Use recompensas digitais como isca pra alimentar sua base receptiva continuamente.</p>
@@ -417,24 +444,24 @@
       </div>
     </div>
     <div class="pilar">
-      <p>O Ponto de Decisão é o momento exato em que o lead decide agir: clicar, chamar no WhatsApp, agendar uma reunião, comprar. Se o marketing anterior (pilares 1 e 2) foi bem feito, esse lead já chega convencido - o vendedor não precisa convencer ninguém, só fechar. Se o fechador precisa convencer na reunião, o problema não é o vendedor: é a mensagem ou a base receptiva que estão falhas.</p>
+      <p>O Ponto de Decisão é o momento exato em que o lead decide agir: clicar, chamar no WhatsApp, agendar uma reunião, comprar. Se o marketing anterior (pilares 1 e 2) foi bem feito, esse lead já chega convencido: o vendedor não precisa convencer ninguém, só fechar. Se o fechador precisa convencer na reunião, o problema não é o vendedor: é a mensagem ou a base receptiva que estão falhas.</p>
 
       <h4 class="sub">Três formatos de oferta, pra atingir três perfis de lead</h4>
       <div class="funnel-row">
         <div class="funnel-cell"><div class="k">Vídeo (Reels)</div><p>Pra quem prefere assistir. Gancho nos 3 primeiros segundos, transformação no meio, chamada curta no final.</p></div>
         <div class="funnel-cell"><div class="k">Carrossel</div><p>Pra quem gosta de ler, passando slide a slide os detalhes da oferta.</p></div>
-        <div class="funnel-cell"><div class="k">Estático</div><p>Pra quem decide rápido, sem ler nem assistir - a mensagem precisa estar clara numa imagem só.</p></div>
+        <div class="funnel-cell"><div class="k">Estático</div><p>Pra quem decide rápido, sem ler nem assistir, a mensagem precisa estar clara numa imagem só.</p></div>
       </div>
 
       <h4 class="sub">O funil comercial: qualificação e fechamento, cada um com seu papel</h4>
-      <p>Reduzir fricção também é operacional. Quem faz a <b>pré-venda</b> filtra os leads que chegam, identifica indicadores de qualificação - verba disponível, urgência, alinhamento com a oferta - e só então agenda a reunião. Quem <b>fecha</b> não vende: fecha um contrato que já chega quase decidido, porque toda a narrativa de confiança já foi construída antes da reunião. Esse desenho separa "convencer" (que já aconteceu no conteúdo) de "fechar" (que é lógica e roteiro).</p>
-      <div class="tip"><b>Regra prática:</b> se o fechamento passa de 30 minutos, geralmente o lead está enrolando - algo na qualificação falhou antes. Um roteiro de vendas bem desenhado entende o cliente, quebra objeções pontuais e fecha; ele não precisa reconstruir a confiança do zero.</div>
+      <p>Reduzir fricção também é operacional. Quem faz a <b>pré-venda</b> filtra os leads que chegam, identifica indicadores de qualificação (verba disponível, urgência, alinhamento com a oferta) e só então agenda a reunião. Quem <b>fecha</b> não vende: fecha um contrato que já chega quase decidido, porque toda a narrativa de confiança já foi construída antes da reunião. Esse desenho separa "convencer" (que já aconteceu no conteúdo) de "fechar" (que é lógica e roteiro).</p>
+      <div class="tip"><b>Regra prática:</b> se o fechamento passa de 30 minutos, geralmente o lead está enrolando: algo na qualificação falhou antes. Um roteiro de vendas bem desenhado entende o cliente, quebra objeções pontuais e fecha; ele não precisa reconstruir a confiança do zero.</div>
 
       <h4 class="sub">A janela de acompanhamento de 10 dias</h4>
-      <p>Nem todo lead fecha na primeira conversa. Mantenha contato ativo por até 10 dias - depois disso, o lead esfria e volta pra base de nutrição, onde outro conteúdo pode reaquecê-lo mais adiante. Isso evita perder oportunidades por falta de acompanhamento, sem forçar contato depois que o interesse já esfriou de verdade.</p>
+      <p>Nem todo lead fecha na primeira conversa. Mantenha contato ativo por até 10 dias. Depois disso, o lead esfria e volta pra base de nutrição, onde outro conteúdo pode reaquecê-lo mais adiante. Isso evita perder oportunidades por falta de acompanhamento, sem forçar contato depois que o interesse já esfriou de verdade.</p>
 
       <h4 class="sub">Qual caminho usar: perfil, WhatsApp ou página de venda?</h4>
-      <p>Não existe regra fixa - existe teste. Um botão de "visitar perfil" muitas vezes converte melhor que "chamar no WhatsApp" direto, porque quem visita o perfil pode virar seguidor e receber mais nutrição antes de decidir. Teste os três caminhos (perfil, WhatsApp, página de venda) e deixe os números do Pilar 5 apontarem o vencedor pro seu negócio.</p>
+      <p>Não existe regra fixa. Existe teste. Um botão de "visitar perfil" muitas vezes converte melhor que "chamar no WhatsApp" direto, porque quem visita o perfil pode virar seguidor e receber mais nutrição antes de decidir. Teste os três caminhos (perfil, WhatsApp, página de venda) e deixe os números do Pilar 5 apontarem o vencedor pro seu negócio.</p>
 
       <div class="exercise">
         <span class="tag">Exercício de aplicação</span>
@@ -442,7 +469,7 @@
           <li>Hoje, quem qualifica seus leads antes da venda? Existe um processo ou isso recai tudo sobre você?
             <div class="write-lines"></div>
           </li>
-          <li>Quais são as 3 objeções mais comuns que aparecem na hora do fechamento - e qual resposta pronta você vai usar pra cada uma?
+          <li>Quais são as 3 objeções mais comuns que aparecem na hora do fechamento, e qual resposta pronta você vai usar pra cada uma?
             <div class="write-lines"></div>
           </li>
           <li>Defina sua janela de acompanhamento e o gatilho que vai reativar leads frios.
@@ -450,6 +477,21 @@
           </li>
         </ol>
       </div>
+    </div>
+  </div>
+
+  <!-- PROMO MINI-CURSO -->
+  <div class="chapter">
+    <div class="promo-card">
+      <span class="promo-kicker">Pra sair do papel</span>
+      <h2>Mini-curso em vídeo: OPlanoÚnico™ na prática</h2>
+      <p class="promo-lead">Este ebook mostra o método. O mini-curso mostra a mão na massa: aula por aula, mostrando como montar cada pilar dentro da sua empresa, com as ferramentas que a Viskoo usa todos os dias com cliente real.</p>
+      <ul class="promo-list">
+        <li><b>Processos completos em vídeo</b> - cada pilar explicado passo a passo, com exemplo real de aplicação.</li>
+        <li><b>Prompts de IA atualizados constantemente</b> - pra você gerar mensagem, criativo e roteiro de venda mais rápido, sem começar do zero.</li>
+        <li><b>CRM de WhatsApp da Viskoo incluso</b> - organize lead, qualificação e acompanhamento num só lugar, sem planilha solta.</li>
+      </ul>
+      <span class="promo-cta">Fale com a Viskoo no WhatsApp e garanta seu acesso</span>
     </div>
   </div>
 
@@ -463,9 +505,9 @@
       </div>
     </div>
     <div class="pilar">
-      <p>Tráfego pago não é muleta - é acelerador. Ele só funciona bem quando os três primeiros pilares já estão de pé, porque sua função é levar mais gente, mais rápido, pra uma estrutura que já sabe converter. Usar tráfego pago pra "empurrar venda" sobre uma base fraca só acelera o prejuízo.</p>
+      <p>Tráfego pago não é muleta. É acelerador. Ele só funciona bem quando os três primeiros pilares já estão de pé, porque sua função é levar mais gente, mais rápido, pra uma estrutura que já sabe converter. Usar tráfego pago pra "empurrar venda" sobre uma base fraca só acelera o prejuízo.</p>
 
-      <h4 class="sub">Topo, meio e fundo de funil - a lógica da vitrine</h4>
+      <h4 class="sub">Topo, meio e fundo de funil: a lógica da vitrine</h4>
       <div class="funnel-row">
         <div class="funnel-cell"><div class="k">Topo</div><p>Grande massa passando na frente da vitrine. Anúncios leves, curiosidade, sem venda direta.</p></div>
         <div class="funnel-cell"><div class="k">Meio</div><p>A pessoa parou, está olhando os produtos. Conteúdo de nutrição, ainda sem oferta.</p></div>
@@ -473,19 +515,19 @@
       </div>
 
       <h4 class="sub">Ângulos de oferta: teste, valide, escale</h4>
-      <p>Cada "ângulo" é uma forma diferente de comunicar a mesma oferta - outro cenário, outro gancho, outro tipo de pessoa retratada. Teste vários ângulos em paralelo. O que performar melhor vira o <b>criativo vencedor</b>: você faz variações dele mudando o gancho e mantendo a essência, escala o investimento nele, e pausa ou exclui os que não performam.</p>
+      <p>Cada "ângulo" é uma forma diferente de comunicar a mesma oferta: outro cenário, outro gancho, outro tipo de pessoa retratada. Teste vários ângulos em paralelo. O que performar melhor vira o <b>criativo vencedor</b>: você faz variações dele mudando o gancho e mantendo a essência, escala o investimento nele, e pausa ou exclui os que não performam.</p>
 
       <h4 class="sub">Como validar investimento sem queimar dinheiro</h4>
       <ul>
-        <li><b>Ciclo 1 (3 dias):</b> valide com o mínimo - em torno de R$20/dia - se a oferta e o criativo têm potencial.</li>
+        <li><b>Ciclo 1 (3 dias):</b> valide com o mínimo, em torno de R$20/dia, se a oferta e o criativo têm potencial.</li>
         <li><b>Ciclo 2 (7 dias):</b> faça a análise de conversão completa. Aí você decide: parar ou continuar escalando.</li>
-        <li><b>Regra de ouro:</b> nunca pare de vez uma estrutura validada - se está dando retorno, o objetivo é sempre seguir otimizando, não zerar o investimento.</li>
+        <li><b>Regra de ouro:</b> nunca pare de vez uma estrutura validada. Se está dando retorno, o objetivo é sempre seguir otimizando, não zerar o investimento.</li>
       </ul>
 
       <h4 class="sub">Atração e prospecção trabalhando juntas</h4>
-      <p>A atração é o motor de "cliente todo dia": tráfego pago atrai, o perfil nutre, e o lead chega até você. A prospecção ativa - procurar quem comentou, quem chamou no inbox, prospecção externa - complementa, mas não substitui essa estrutura de atração. É a atração bem construída que tira você da dependência de ficar correndo atrás de cliente.</p>
+      <p>A atração é o motor de "cliente todo dia": tráfego pago atrai, o perfil nutre, e o lead chega até você. A prospecção ativa (procurar quem comentou, quem chamou no inbox, prospecção externa) complementa, mas não substitui essa estrutura de atração. É a atração bem construída que tira você da dependência de ficar correndo atrás de cliente.</p>
 
-      <div class="tip"><b>Mentalidade da Aquisição Ativa:</b> o objetivo não é "ter algum lead" - é ter mais demanda do que capacidade de atender, pra você poder escolher quem atender e não aceitar qualquer cliente por medo de ficar sem trabalho.</div>
+      <div class="tip"><b>Mentalidade da Aquisição Ativa:</b> o objetivo não é "ter algum lead", é ter mais demanda do que capacidade de atender, pra você poder escolher quem atender e não aceitar qualquer cliente por medo de ficar sem trabalho.</div>
 
       <div class="exercise">
         <span class="tag">Exercício de aplicação</span>
@@ -514,7 +556,7 @@
       </div>
     </div>
     <div class="pilar">
-      <p>Se você não tem número, não consegue escalar marketing - só consegue torcer. O Painel de Decisão é o hábito de ler as métricas certas, entender o que cada uma indica, e usar isso pra decidir onde cortar e onde investir mais, em vez de decidir no feeling.</p>
+      <p>Se você não tem número, não consegue escalar marketing. Só consegue torcer. O Painel de Decisão é o hábito de ler as métricas certas, entender o que cada uma indica, e usar isso pra decidir onde cortar e onde investir mais, em vez de decidir no feeling.</p>
 
       <h4 class="sub">As métricas que realmente importam</h4>
       <ul>
@@ -525,12 +567,12 @@
       </ul>
 
       <h4 class="sub">O ciclo de melhoria contínua</h4>
-      <p>Coleta de dados → leitura de métricas → identificação do que está ruim ou bom → refinamento → renovação. Esse ciclo se repete sempre. Não é uma etapa que se faz uma vez - é um hábito semanal ou mensal de olhar o painel e ajustar o que precisa.</p>
+      <p>Coleta de dados → leitura de métricas → identificação do que está ruim ou bom → refinamento → renovação. Esse ciclo se repete sempre. Não é uma etapa que se faz uma vez. É um hábito semanal ou mensal de olhar o painel e ajustar o que precisa.</p>
 
-      <div class="tip"><b>Prova social como ativo do painel:</b> cada resultado de cliente vira munição pro próprio marketing - depoimentos e cases entram na página de venda, no feed e nos anúncios, reduzindo o esforço de convencimento nas próximas vendas. Guarde sempre um "depósito de elogios" com prints e depoimentos.</div>
+      <div class="tip"><b>Prova social como ativo do painel:</b> cada resultado de cliente vira munição pro próprio marketing: depoimentos e cases entram na página de venda, no feed e nos anúncios, reduzindo o esforço de convencimento nas próximas vendas. Guarde sempre um "depósito de elogios" com prints e depoimentos.</div>
 
       <h4 class="sub">Uma referência de mercado pra calibrar sua meta</h4>
-      <p>Uma taxa saudável de qualificação de leads gira em torno de <b>30%</b>. Estruturas bem otimizadas, com tempo de ajuste fino, podem chegar a <b>50–60%</b> - é o que você verá no estudo de caso a seguir.</p>
+      <p>Uma taxa saudável de qualificação de leads gira em torno de <b>30%</b>. Estruturas bem otimizadas, com tempo de ajuste fino, podem chegar a <b>50–60%</b>, e é o que você verá no estudo de caso a seguir.</p>
 
       <div class="exercise">
         <span class="tag">Exercício de aplicação</span>
@@ -553,7 +595,7 @@
   <div class="chapter">
     <div class="eyebrow">Por que este método</div>
     <h2 class="title">Diferenciais do OPlanoÚnico™</h2>
-    <p class="lead">Não é mais um curso de 10 horas de teoria genérica que você compra, assiste pela metade e esquece.</p>
+    <p class="lead">Nada de slides genéricos que você compra, assiste pela metade e esquece.</p>
     <div class="diff-grid">
       <div class="diff-card"><span class="n">01</span><h3>Foco na prática</h3><p>Cada pilar vem com o passo a passo pra você aplicar na sua empresa ainda essa semana.</p></div>
       <div class="diff-card"><span class="n">02</span><h3>Direto ao ponto</h3><p>Sem enrolação. Uma leitura objetiva, pensada pra quem tem empresa pra tocar, não tempo sobrando.</p></div>
@@ -568,7 +610,7 @@
   <div class="chapter">
     <div class="eyebrow">Prova em números</div>
     <h2 class="title">Estudo de caso: o método aplicado do início ao fim</h2>
-    <p class="lead">Um dos clientes da Viskoo passou pela estrutura completa dos 5 pilares. Estes são os números reais dessa implementação - do investimento em tráfego até o caixa gerado.</p>
+    <p class="lead">Um dos clientes da Viskoo passou pela estrutura completa dos 5 pilares. Estes são os números reais dessa implementação, do investimento em tráfego até o caixa gerado.</p>
 
     <div class="funnel-steps">
       <div class="step"><b>R$ 2.500</b>investidos</div><span class="arrow">→</span>
@@ -594,7 +636,7 @@
       <tr><td>Leads recebidos</td><td>15</td><td>13</td><td>13</td><td>27</td><td>20</td></tr>
       <tr><td>Qualificados</td><td>5</td><td>12</td><td>—</td><td>—</td><td>—</td></tr>
     </table>
-    <p class="source-note">Fonte: aplicação real do método OPlanoÚnico™ por um cliente Viskoo. Resultados variam conforme nicho, ticket e verba disponível - os números aqui servem de referência de padrão saudável, não de garantia.</p>
+    <p class="source-note">Fonte: aplicação real do método OPlanoÚnico™ por um cliente Viskoo. Resultados variam conforme nicho, ticket e verba disponível. Os números aqui servem de referência de padrão saudável, não de garantia.</p>
   </div>
 
   <!-- DIAGNÓSTICO -->
@@ -639,7 +681,7 @@
     </ul>
 
     <div class="score-box">
-      <b>Como ler seu resultado:</b> o pilar com menos caixas marcadas é o seu gargalo prioritário - é ali que você deve concentrar o exercício de aplicação primeiro. Corrigir o pilar 4 (Aquisição) sem resolver o pilar 1 ou 2 antes só acelera o problema, não o resultado.
+      <b>Como ler seu resultado:</b> o pilar com menos caixas marcadas é o seu gargalo prioritário: é ali que você deve concentrar o exercício de aplicação primeiro. Corrigir o pilar 4 (Aquisição) sem resolver o pilar 1 ou 2 antes só acelera o problema, não o resultado.
     </div>
   </div>
 
@@ -694,8 +736,8 @@
     <div class="author-grid">
       <img src="foto-josias-viskoo.png" alt="Josias Viskoo, fundador da Viskoo">
       <div>
-        <p class="lead">Sou Josias Viskoo, fundador da Viskoo, agência de marketing focada em estruturar o crescimento de empresas - não em vender ferramenta ou tarefa solta.</p>
-        <p class="lead">O OPlanoÚnico™ nasceu da prática: é o mesmo método que a Viskoo aplica lado a lado com clientes reais, todos os dias, há mais de 10 anos, pra organizar mensagem, tráfego, página e dados em um só plano. Foi construído com o time e refinado a cada cliente, com processos mapeados e documentados pra cada uma das etapas.</p>
+        <p class="lead">Sou Josias Viskoo, fundador da Viskoo, agência de marketing focada em estruturar o crescimento de empresas, não em vender ferramenta ou tarefa solta.</p>
+        <p class="lead">O OPlanoÚnico™ nasceu da prática, ao longo de mais de 10 anos aplicando com clientes reais da Viskoo. Foi construído com o time e refinado a cada cliente, com processos mapeados e documentados pra cada etapa.</p>
         <p style="color:var(--muted);font-size:9.5pt;margin-top:12px;">Setores onde o método já foi aplicado:</p>
         <div class="setores">
           <span>Estética</span><span>Saúde</span><span>Educação</span><span>Varejo</span><span>Serviços</span><span>E-commerce</span>
