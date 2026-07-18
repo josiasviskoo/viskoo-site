@@ -6,12 +6,12 @@
   --bg-alt: #151515;
   --card: #1c1c1c;
   --card-alt: #202020;
-  --gold: #e8ab63;
-  --gold-light: #f6cf9a;
-  --gold-dark: #c9812f;
+  --gold: #f48322;
+  --gold-light: #ffb347;
+  --gold-dark: #c3691b;
   --text: #f2f0ec;
   --muted: #a9a6a1;
-  --gradient-gold: linear-gradient(90deg, #f7d9a8, #eba85c 55%, #d98a3d);
+  --gradient-gold: linear-gradient(90deg, #ffb347, #f48322 55%, #c3691b);
   --font-head: 'DM Sans', sans-serif;
   --font-body: 'DM Sans', sans-serif;
 }
@@ -84,7 +84,7 @@ h1, h2, h3, h4 {
   letter-spacing: 0.3px;
   transition: transform .25s ease, box-shadow .25s ease;
 }
-.btn:hover { transform: translateY(-2px); box-shadow: 0 10px 25px rgba(232,171,99,0.35); }
+.btn:hover { transform: translateY(-2px); box-shadow: 0 10px 25px rgba(244,131,34,0.35); }
 .btn.full { width: 100%; justify-content: center; margin: 18px 0 14px; }
 .btn.small { padding: 12px 22px; font-size: 0.85rem; }
 
@@ -109,7 +109,7 @@ h1, h2, h3, h4 {
 /* ===== Decorative rings ===== */
 .ring {
   position: absolute;
-  border: 1px solid rgba(232,171,99,0.15);
+  border: 1px solid rgba(244,131,34,0.15);
   border-radius: 50%;
   pointer-events: none;
   z-index: 1;
@@ -124,7 +124,7 @@ h1, h2, h3, h4 {
   margin: auto;
   width: 70%;
   height: 70%;
-  background: radial-gradient(circle, rgba(232,171,99,0.45), transparent 70%);
+  background: radial-gradient(circle, rgba(244,131,34,0.45), transparent 70%);
   filter: blur(30px);
   animation: pulse 4s ease-in-out infinite;
   z-index: 0;
