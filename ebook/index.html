@@ -234,48 +234,16 @@
       <h2>Veja o que dizem empresas que já aplicaram o método</h2>
     </div>
 
-    <div class="depo-carousel">
-      <button class="depo-arrow depo-prev" aria-label="Anterior">&lsaquo;</button>
-      <div class="depo-track">
-
-        <div class="depo-card reveal">
-          <div class="depo-top">
-            <span class="wa-signal">●●●</span>
-            <span class="wa-name">Cliente Viskoo | Estética</span>
-          </div>
-          <p>Antes eu vivia testando post e anúncio solto sem saber o motivo. Depois que organizei o marketing com esse método, cada ação passou a ter função clara e parei de queimar dinheiro no escuro.</p>
-          <span class="wa-time">18:53</span>
-        </div>
-
-        <div class="depo-card reveal">
-          <div class="depo-top">
-            <span class="wa-signal">●●●</span>
-            <span class="wa-name">Cliente Viskoo | Odontologia</span>
-          </div>
-          <p>O que mais mudou foi a clareza. Eu não sabia se o problema era mensagem, site ou atendimento. Organizando pelos pilares, ficou óbvio onde estava travando a conversão.</p>
-          <span class="wa-time">18:59</span>
-        </div>
-
-        <div class="depo-card reveal">
-          <div class="depo-top">
-            <span class="wa-signal">●●●</span>
-            <span class="wa-name">Cliente Viskoo | E-commerce</span>
-          </div>
-          <p>Parei de depender de "mês bom" pra vender. Com o painel de decisão certo, hoje eu sei exatamente onde cortar e onde investir mais.</p>
-          <span class="wa-time">19:14</span>
-        </div>
-
-        <div class="depo-card reveal">
-          <div class="depo-top">
-            <span class="wa-signal">●●●</span>
-            <span class="wa-name">Cliente Viskoo | Serviços</span>
-          </div>
-          <p>Antes era tentativa atrás de tentativa. Depois de organizar o plano, cada real investido em anúncio passou a ter um caminho claro até a venda.</p>
-          <span class="wa-time">19:08</span>
-        </div>
-
+    <div class="proof-slider-wrap reveal">
+      <div class="proof-slider-track" id="proofSlider">
+        <div class="proof-slide"><img src="../assets/img/cliente-todo-dia-02.jpg" alt="Resultado Cliente Todo Dia" onclick="openProofLightbox(0)"></div>
+        <div class="proof-slide"><img src="../assets/img/cliente-todo-dia-01.jpg" alt="Resultado Cliente Todo Dia" onclick="openProofLightbox(1)"></div>
+        <div class="proof-slide"><img src="../assets/img/ps02-1.png" alt="Prova Social 1" onclick="openProofLightbox(2)"></div>
+        <div class="proof-slide"><img src="../assets/img/ps04.png" alt="Prova Social 2" onclick="openProofLightbox(3)"></div>
+        <div class="proof-slide"><img src="../assets/img/ps05.png" alt="Prova Social 3" onclick="openProofLightbox(4)"></div>
+        <div class="proof-slide"><img src="../assets/img/ps07.png" alt="Prova Social 4" onclick="openProofLightbox(5)"></div>
+        <div class="proof-slide"><img src="../assets/img/depoimento-marina-resultado.png" alt="Depoimento Marina" onclick="openProofLightbox(6)"></div>
       </div>
-      <button class="depo-arrow depo-next" aria-label="Próximo">&rsaquo;</button>
     </div>
 
     <div class="cta-wrap reveal">
@@ -409,6 +377,16 @@
     <a href="#preco" class="btn btn-primary shine small">Adquira o ebook <span>&uarr;</span></a>
   </div>
 </footer>
+
+<!-- Lightbox Overlay -->
+<div id="proof-lightbox-overlay" class="proof-lightbox-overlay" onclick="closeProofLightbox()">
+  <button onclick="navigateProofLightbox(-1, event)" class="proof-lightbox-nav proof-lightbox-prev" aria-label="Anterior">&#8249;</button>
+  <div onclick="event.stopPropagation()" class="proof-lightbox-inner">
+    <button onclick="closeProofLightbox()" class="proof-lightbox-close" aria-label="Fechar">&times;</button>
+    <img id="proof-lightbox-img" src="" alt="">
+  </div>
+  <button onclick="navigateProofLightbox(1, event)" class="proof-lightbox-nav proof-lightbox-next" aria-label="Próximo">&#8250;</button>
+</div>
 
 <script src="assets/js/script.js"></script>
 </body>

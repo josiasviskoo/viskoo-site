@@ -360,46 +360,62 @@ h1, h2, h3, h4 {
 .badge-seal img, .badge-seal svg { width: 130px; border-radius: 50%; animation: spin 30s linear infinite; }
 .depo-header h2 { font-size: clamp(1.4rem, 2.6vw, 2rem); max-width: 700px; margin: 0 auto; }
 
-.depo-carousel { display: flex; align-items: center; gap: 14px; margin-top: 50px; }
-.depo-track {
+.proof-slider-wrap { overflow: hidden; border-radius: 14px; margin-top: 50px; }
+.proof-slider-track {
   display: flex;
-  gap: 20px;
+  gap: 16px;
   overflow-x: auto;
   scroll-snap-type: x mandatory;
-  scroll-behavior: smooth;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: none;
   padding: 6px;
-  flex: 1;
+  cursor: grab;
 }
-.depo-track::-webkit-scrollbar { display: none; }
-.depo-card {
+.proof-slider-track::-webkit-scrollbar { display: none; }
+.proof-slider-track.dragging { cursor: grabbing; }
+.proof-slide {
   scroll-snap-align: start;
-  background: #ede9e0;
-  color: #222;
-  border-radius: 10px;
-  padding: 20px;
-  min-width: 260px;
-  max-width: 260px;
-  text-align: left;
+  flex: 0 0 260px;
+  border-radius: 14px;
+  overflow: hidden;
   box-shadow: 0 12px 24px rgba(0,0,0,.4);
-  flex-shrink: 0;
 }
-.wa-top, .depo-top { display: flex; align-items: center; gap: 8px; margin-bottom: 10px; font-size: 0.8rem; color: #555; }
-.wa-signal { letter-spacing: -2px; font-size: 0.6rem; }
-.wa-name { font-weight: 700; color: #333; }
-.depo-card p { font-size: 0.8rem; color: #333; margin-bottom: 10px; }
-.wa-time { font-size: 0.7rem; color: #888; display: block; text-align: right; }
-
-.depo-arrow {
-  background: var(--gradient-gold);
-  border: none;
-  width: 40px; height: 40px;
-  border-radius: 50%;
-  font-size: 1.3rem;
+.proof-slide img {
+  width: 100%;
+  aspect-ratio: 1;
+  object-fit: cover;
+  display: block;
   cursor: pointer;
-  flex-shrink: 0;
-  transition: transform .2s ease;
 }
-.depo-arrow:hover { transform: scale(1.1); }
+
+.proof-lightbox-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.85);
+  z-index: 9999;
+  display: none;
+  align-items: center;
+  justify-content: center;
+}
+.proof-lightbox-overlay.open { display: flex; }
+.proof-lightbox-inner { position: relative; max-width: 96vw; max-height: 92vh; }
+.proof-lightbox-inner img { max-width: 100%; max-height: 92vh; border-radius: 10px; object-fit: contain; }
+.proof-lightbox-close { position: absolute; top: -40px; right: 0; background: transparent; border: none; color: #fff; font-size: 30px; cursor: pointer; }
+.proof-lightbox-nav {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 44px; height: 44px;
+  border-radius: 50%;
+  border: 1px solid rgba(255,255,255,0.18);
+  background: rgba(0,0,0,0.18);
+  color: #fff;
+  font-size: 28px;
+  line-height: 1;
+  cursor: pointer;
+}
+.proof-lightbox-prev { left: 16px; }
+.proof-lightbox-next { right: 16px; }
 
 /* ===== Stats ===== */
 .stats { background: var(--gradient-gold); padding: 50px 0; color: #1a1200; }
@@ -542,7 +558,7 @@ h1, h2, h3, h4 {
   .mais-curso { grid-template-columns: 1fr; padding: 28px; }
   .diferenciais-grid { grid-template-columns: 1fr; }
   .stats-grid { grid-template-columns: 1fr; }
-  .depo-card { min-width: 220px; max-width: 220px; }
+  .proof-slide { flex: 0 0 220px; }
   .footer-inner { flex-direction: column; text-align: center; }
   .ring-1, .ring-2 { display: none; }
 }
