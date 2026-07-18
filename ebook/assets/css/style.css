@@ -12,8 +12,8 @@
   --text: #f2f0ec;
   --muted: #a9a6a1;
   --gradient-gold: linear-gradient(90deg, #f7d9a8, #eba85c 55%, #d98a3d);
-  --font-head: 'Poppins', sans-serif;
-  --font-body: 'Inter', sans-serif;
+  --font-head: 'DM Sans', sans-serif;
+  --font-body: 'DM Sans', sans-serif;
 }
 
 html { scroll-behavior: smooth; }
