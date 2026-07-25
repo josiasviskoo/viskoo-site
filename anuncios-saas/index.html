@@ -1,0 +1,2697 @@
+<!DOCTYPE html>
+<html lang="pt-BR" data-theme="dark">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>Viskoo · Painel de Performance</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;0,9..40,800;1,9..40,500&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg-base:#0A0C10;
+    --bg-panel:#12151B;
+    --bg-panel-elevated:#181C24;
+    --bg-panel-hover:#1D222B;
+    --border:#232833;
+    --border-soft:#1A1E26;
+    --text-primary:#F4F2ED;
+    --text-secondary:#9AA1AE;
+    --text-muted:#5B6270;
+    --accent:#F48322;
+    --accent-2:#FFA85C;
+    --accent-soft:rgba(244,131,34,.13);
+    --accent-soft-2:rgba(244,131,34,.28);
+    --success:#48D18A;
+    --success-soft:rgba(72,209,138,.13);
+    --warning:#F5B94A;
+    --warning-soft:rgba(245,185,74,.13);
+    --danger:#F2695E;
+    --danger-soft:rgba(242,105,94,.13);
+    --locked:#3A3F49;
+    --radius-lg:16px;
+    --radius-md:12px;
+    --radius-sm:8px;
+    --shadow-soft:0 8px 24px -12px rgba(0,0,0,.55);
+    --font-display:'DM Sans',sans-serif;
+    --font-mono:'JetBrains Mono',monospace;
+    --glow-1:rgba(244,131,34,.10);
+    --glow-2:rgba(244,131,34,.06);
+    --avatar-grad:linear-gradient(135deg,#3E4453,#20242D);
+    --scrim:rgba(10,12,16,.86);
+    --pip-bg-1:#14171d;
+    --pip-bg-2:#171b21;
+    --pip-cc-bg:rgba(10,12,16,.72);
+    --topbar-bg:rgba(10,12,16,.82);
+    color-scheme:dark;
+  }
+
+  html[data-theme="light"]{
+    --bg-base:#F6F4EF;
+    --bg-panel:#FFFFFF;
+    --bg-panel-elevated:#F1EEE7;
+    --bg-panel-hover:#EAE5DB;
+    --border:#E5E0D6;
+    --border-soft:#EDE9E0;
+    --text-primary:#1B1D22;
+    --text-secondary:#63697A;
+    --text-muted:#9497A2;
+    --accent:#E8760F;
+    --accent-2:#C55E0A;
+    --accent-soft:rgba(232,118,15,.10);
+    --accent-soft-2:rgba(232,118,15,.22);
+    --success:#1B9A5C;
+    --success-soft:rgba(27,154,92,.10);
+    --warning:#AD7207;
+    --warning-soft:rgba(173,114,7,.10);
+    --danger:#CF4335;
+    --danger-soft:rgba(207,67,53,.10);
+    --locked:#CFCABE;
+    --shadow-soft:0 8px 22px -14px rgba(30,25,15,.22);
+    --glow-1:rgba(232,118,15,.07);
+    --glow-2:rgba(232,118,15,.05);
+    --avatar-grad:linear-gradient(135deg,#DAD4C6,#C6BFAE);
+    --scrim:rgba(246,244,239,.88);
+    --pip-bg-1:#EFEAE0;
+    --pip-bg-2:#E9E3D6;
+    --pip-cc-bg:rgba(255,255,255,.82);
+    --topbar-bg:rgba(246,244,239,.86);
+    color-scheme:light;
+  }
+
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{
+    margin:0;
+    background:
+      radial-gradient(1100px 480px at 84% -8%, var(--glow-1), transparent 60%),
+      radial-gradient(900px 420px at -10% 8%, var(--glow-2), transparent 55%),
+      var(--bg-base);
+    color:var(--text-primary);
+    font-family:var(--font-display);
+    -webkit-font-smoothing:antialiased;
+    line-height:1.4;
+    transition:background-color .25s, color .25s;
+  }
+  ::selection{background:var(--accent-soft-2);}
+  a{color:inherit;}
+  button{font-family:inherit;cursor:pointer;}
+  ::-webkit-scrollbar{height:7px;width:7px;}
+  ::-webkit-scrollbar-thumb{background:var(--border);border-radius:8px;}
+  ::-webkit-scrollbar-track{background:transparent;}
+
+  @media (prefers-reduced-motion: reduce){
+    *{animation-duration:.001ms !important; animation-iteration-count:1 !important; transition-duration:.001ms !important; scroll-behavior:auto !important;}
+  }
+
+  .wrap{max-width:1180px;margin:0 auto;padding:0 24px 80px;}
+
+  /* ---------- HEADER ---------- */
+  .topbar{
+    position:sticky;top:0;z-index:40;
+    background:var(--topbar-bg);
+    backdrop-filter:blur(14px);
+    border-bottom:1px solid var(--border-soft);
+  }
+  .topbar-inner{
+    max-width:1180px;margin:0 auto;padding:12px 24px;
+    display:flex;align-items:center;justify-content:space-between;gap:14px;
+  }
+  .brand{display:flex;align-items:center;gap:9px;}
+  .brand-mark{
+    width:28px;height:28px;border-radius:8px;
+    background:linear-gradient(150deg,var(--accent),#C85E10);
+    display:flex;align-items:center;justify-content:center;
+    font-weight:800;font-size:12.5px;color:#0A0C10;letter-spacing:-.5px;
+    box-shadow:0 5px 12px -4px rgba(244,131,34,.5);
+    flex-shrink:0;
+  }
+  .brand-name{font-weight:700;font-size:13.5px;letter-spacing:-.2px;}
+  .brand-sub{font-size:10.5px;color:var(--text-muted);font-family:var(--font-mono);}
+  .topbar-right{display:flex;align-items:center;gap:9px;}
+  .client-chip{
+    display:flex;align-items:center;gap:8px;
+    background:var(--bg-panel);border:1px solid var(--border);
+    padding:5px 12px 5px 6px;border-radius:100px;font-size:12px;
+  }
+  .client-avatar{
+    width:20px;height:20px;border-radius:50%;
+    background:var(--avatar-grad);
+    display:flex;align-items:center;justify-content:center;
+    font-size:9px;font-weight:700;color:var(--text-secondary);
+  }
+  .status-pill{
+    display:flex;align-items:center;gap:6px;
+    background:color-mix(in srgb, var(--status-color, var(--success)) 15%, transparent);
+    color:var(--status-color, var(--success));
+    border:1px solid color-mix(in srgb, var(--status-color, var(--success)) 30%, transparent);
+    padding:5px 11px;border-radius:100px;font-size:11.5px;font-weight:600;
+    transition:background .2s, color .2s, border-color .2s;
+  }
+  .status-dot{width:5px;height:5px;border-radius:50%;background:var(--status-color, var(--success));}
+  body.admin-mode .status-pill{cursor:pointer;}
+  body.admin-mode .status-pill:hover{filter:brightness(1.15);}
+
+  .color-swatches{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:4px;}
+  .color-swatch{
+    width:26px;height:26px;border-radius:50%;border:2px solid transparent;flex-shrink:0;
+    transition:transform .15s, border-color .15s;
+  }
+  .color-swatch:hover{transform:scale(1.1);}
+  .color-swatch.active{border-color:var(--text-primary);}
+  .color-picker-row{display:flex;align-items:center;gap:10px;}
+  .color-picker-row input[type="color"]{
+    width:38px;height:32px;border-radius:8px;border:1px solid var(--border);
+    background:var(--bg-panel-elevated);padding:2px;cursor:pointer;
+  }
+  .color-picker-row span{font-size:11.5px;color:var(--text-secondary);}
+
+  .plans-btn{
+    display:flex;align-items:center;gap:6px;
+    background:var(--bg-panel);border:1px solid var(--border);color:var(--text-secondary);
+    padding:7px 13px;border-radius:100px;font-size:11.5px;font-weight:700;
+    transition:all .18s;
+  }
+  .plans-btn:hover{border-color:var(--accent-soft-2);color:var(--text-primary);}
+  .plans-btn svg{color:var(--accent);flex-shrink:0;}
+
+  .theme-toggle{
+    display:flex;align-items:center;background:var(--bg-panel);
+    border:1px solid var(--border);border-radius:100px;padding:3px;gap:2px;
+  }
+  .theme-btn{
+    width:26px;height:26px;border-radius:50%;border:none;background:transparent;
+    display:flex;align-items:center;justify-content:center;color:var(--text-muted);
+    transition:all .2s;
+  }
+  .theme-btn.active{background:var(--accent);color:#0A0C10;}
+
+  /* ---------- HERO / TITLE ---------- */
+  .page-head{padding:26px 0 20px;}
+  .eyebrow{
+    font-family:var(--font-mono);font-size:10.5px;letter-spacing:.13em;
+    text-transform:uppercase;color:var(--accent);font-weight:600;
+    display:flex;align-items:center;gap:7px;margin-bottom:9px;
+  }
+  .eyebrow::before{content:'';width:14px;height:1px;background:var(--accent);}
+  .page-head h1{font-size:clamp(20px,2.8vw,27px);font-weight:800;letter-spacing:-.7px;margin:0 0 6px;}
+  .page-head p{color:var(--text-secondary);font-size:13.5px;max-width:560px;margin:0;}
+
+  /* ---------- DISCREET TOPBAR ICON BUTTON ---------- */
+  .icon-btn{
+    width:30px;height:30px;border-radius:9px;flex-shrink:0;
+    border:1px solid var(--border);background:var(--bg-panel);color:var(--text-secondary);
+    display:flex;align-items:center;justify-content:center;transition:all .18s;
+  }
+  .icon-btn:hover{color:var(--accent);border-color:var(--accent-soft-2);background:var(--accent-soft);}
+
+  /* ---------- CONTACT DATA (inside modal) ---------- */
+  .contact-rows{display:flex;flex-direction:column;gap:8px;margin-bottom:6px;}
+  .contact-row{
+    display:flex;align-items:center;gap:12px;
+    background:var(--bg-panel-elevated);border:1px solid var(--border-soft);
+    border-radius:10px;padding:10px 12px;
+  }
+  .contact-row-icon{
+    width:32px;height:32px;border-radius:9px;flex-shrink:0;
+    background:var(--accent-soft);color:var(--accent);
+    display:flex;align-items:center;justify-content:center;
+  }
+  .contact-row-body{flex:1;min-width:0;}
+  .contact-row-label{font-size:10px;color:var(--text-muted);font-weight:700;text-transform:uppercase;letter-spacing:.04em;}
+  .contact-row-value{
+    font-size:13px;color:var(--text-primary);font-family:var(--font-mono);margin-top:2px;
+    overflow:hidden;text-overflow:ellipsis;white-space:nowrap;
+  }
+  .contact-row-value.empty{color:var(--text-muted);font-family:var(--font-display);font-style:italic;}
+
+  /* ---------- FLIGHT PATH TIMELINE ---------- */
+  .runway{
+    position:relative;
+    background:var(--bg-panel);
+    border:1px solid var(--border);
+    border-radius:var(--radius-lg);
+    padding:18px 22px 16px;
+    overflow:hidden;
+    box-shadow:var(--shadow-soft);
+  }
+  .runway-top{display:flex;align-items:center;justify-content:space-between;margin-bottom:16px;flex-wrap:wrap;gap:8px;}
+  .runway-title{font-size:12px;font-weight:700;display:flex;align-items:center;gap:7px;}
+  .runway-title svg{color:var(--accent);}
+  .runway-meta{font-family:var(--font-mono);font-size:11px;color:var(--text-muted);}
+  .runway-meta b{color:var(--text-secondary);}
+
+  .track{position:relative;padding:0 4px;}
+  .track-line{
+    position:absolute;top:14px;left:4px;right:4px;height:2px;
+    background-image:linear-gradient(90deg, var(--border) 0, var(--border) 6px, transparent 6px, transparent 12px);
+    background-size:12px 2px;
+  }
+  .track-fill{
+    position:absolute;top:14px;left:4px;height:2px;
+    background:linear-gradient(90deg,var(--accent),var(--accent-2));
+    transition:width .8s cubic-bezier(.65,0,.35,1);
+  }
+  .steps{position:relative;display:flex;justify-content:space-between;gap:4px;}
+  .step{display:flex;flex-direction:column;align-items:center;text-align:center;width:104px;flex-shrink:0;}
+  .step-node{
+    width:29px;height:29px;border-radius:50%;
+    background:var(--bg-panel-elevated);border:2px solid var(--border);
+    display:flex;align-items:center;justify-content:center;
+    margin-bottom:8px;position:relative;z-index:2;flex-shrink:0;
+    transition:all .3s;
+  }
+  .step.done .step-node{background:var(--accent);border-color:var(--accent);color:#0A0C10;}
+  .step.current .step-node{
+    background:var(--bg-base);border-color:var(--accent);color:var(--accent);
+    box-shadow:0 0 0 4px var(--accent-soft);
+    animation:pulse-ring 2.2s ease-in-out infinite;
+  }
+  @keyframes pulse-ring{
+    0%,100%{box-shadow:0 0 0 4px var(--accent-soft);}
+    50%{box-shadow:0 0 0 7px var(--accent-soft);}
+  }
+  .step.todo .step-node{color:var(--text-muted);}
+  .step-label{font-size:10.5px;font-weight:600;color:var(--text-secondary);line-height:1.25;}
+  .step.done .step-label{color:var(--text-primary);}
+  .step.current .step-label{color:var(--accent);}
+  .step.todo .step-label{color:var(--text-muted);}
+  .step-date{font-family:var(--font-mono);font-size:9.5px;color:var(--text-muted);margin-top:2px;}
+
+  body.admin-mode .step{cursor:pointer;border-radius:8px;transition:background .15s;}
+  body.admin-mode .step:hover{background:var(--accent-soft);}
+
+  .step.ongoing .step-node{color:var(--accent);}
+  .step.ongoing.done .step-node, .step.ongoing.current .step-node{color:#0A0C10;}
+  .step.ongoing .step-date{color:var(--accent);font-weight:700;}
+
+  .step-add{
+    background:transparent;border:none;padding:0;font-family:inherit;
+    display:none;flex-direction:column;align-items:center;text-align:center;width:104px;flex-shrink:0;
+  }
+  body.admin-mode .step-add{display:flex;}
+  .step-add .step-node{
+    width:29px;height:29px;border-radius:50%;
+    border:2px dashed var(--border);background:transparent;color:var(--text-muted);
+    display:flex;align-items:center;justify-content:center;margin-bottom:8px;transition:all .2s;
+  }
+  .step-add:hover .step-node{border-color:var(--accent);color:var(--accent);background:var(--accent-soft);}
+  .step-add .step-label{font-size:10.5px;font-weight:600;color:var(--text-muted);}
+  .step-add:hover .step-label{color:var(--accent);}
+
+  /* ---------- SECTION LABELS ---------- */
+  .section-head{display:flex;align-items:flex-end;justify-content:space-between;margin:34px 0 13px;gap:12px;flex-wrap:wrap;}
+  .section-head h2{font-size:16.5px;font-weight:800;letter-spacing:-.3px;margin:0 0 3px;}
+  .section-head p{font-size:12.5px;color:var(--text-secondary);margin:0;}
+  .section-num{
+    font-family:var(--font-mono);font-size:10px;color:var(--accent);font-weight:700;
+    letter-spacing:.08em;margin-bottom:4px;display:block;
+  }
+
+  /* ---------- MODULES GRID (single row on desktop) ---------- */
+  .modules{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;align-items:stretch;}
+  .module-card{
+    position:relative;
+    background:var(--bg-panel);border:1px solid var(--border);
+    border-radius:var(--radius-md);padding:14px 14px 13px;
+    display:flex;flex-direction:column;gap:9px;
+    transition:border-color .25s, transform .2s, background .25s;
+    min-width:0;
+  }
+  .module-card:not(.locked):hover{border-color:var(--accent-soft-2);background:var(--bg-panel-hover);transform:translateY(-1px);}
+  .module-card.locked{opacity:.55;}
+  .module-top{display:flex;align-items:flex-start;justify-content:space-between;gap:8px;}
+  .module-lead{display:flex;align-items:center;gap:9px;}
+  .module-num{
+    width:20px;height:20px;border-radius:50%;flex-shrink:0;
+    background:var(--accent);color:#0A0C10;font-family:var(--font-mono);
+    font-size:10.5px;font-weight:800;display:flex;align-items:center;justify-content:center;
+  }
+  .owner-badge{
+    display:inline-flex;align-items:center;gap:5px;width:fit-content;
+    font-size:9.5px;font-weight:700;padding:3px 9px;border-radius:100px;
+  }
+  .owner-badge svg{flex-shrink:0;}
+  .owner-badge.client{background:var(--accent-soft);color:var(--accent);}
+  .owner-badge.agency{background:var(--bg-panel-elevated);border:1px solid var(--border);color:var(--text-secondary);}
+  .module-icon{
+    width:32px;height:32px;border-radius:9px;flex-shrink:0;
+    display:flex;align-items:center;justify-content:center;
+    background:var(--accent-soft);color:var(--accent);
+  }
+  .module-card.locked .module-icon{background:var(--bg-panel-elevated);color:var(--locked);}
+  .module-card.done .module-icon{background:var(--success-soft);color:var(--success);}
+  .module-badge{
+    font-size:9.5px;font-weight:700;padding:3px 8px;border-radius:100px;
+    text-transform:uppercase;letter-spacing:.04em;white-space:nowrap;
+  }
+  .module-badge.done{background:var(--success-soft);color:var(--success);}
+  .module-badge.progress{background:var(--accent-soft);color:var(--accent);}
+  .module-badge.locked{background:var(--bg-panel-elevated);color:var(--text-muted);}
+  .module-badge.review{background:var(--warning-soft);color:var(--warning);}
+  .module-card h3{font-size:13.5px;font-weight:700;margin:0;letter-spacing:-.1px;}
+  .module-card p{font-size:11.5px;color:var(--text-secondary);margin:0;line-height:1.5;}
+
+  .checklist{display:flex;flex-direction:column;gap:5px;margin-top:1px;}
+  .check-item{display:flex;align-items:center;gap:7px;font-size:11px;color:var(--text-secondary);}
+  .check-item svg{flex-shrink:0;}
+  .check-item.on{color:var(--text-primary);}
+  .check-item.on svg{color:var(--success);}
+  .check-item.off svg{color:var(--border);}
+
+  .progress-bar{height:4px;border-radius:100px;background:var(--border-soft);overflow:hidden;margin-top:1px;}
+  .progress-bar > span{display:block;height:100%;background:linear-gradient(90deg,var(--accent),var(--accent-2));border-radius:100px;}
+
+  .module-foot{display:flex;align-items:center;justify-content:space-between;margin-top:auto;padding-top:4px;gap:6px;}
+  .module-count{font-family:var(--font-mono);font-size:10px;color:var(--text-muted);}
+  .btn{
+    display:inline-flex;align-items:center;gap:5px;
+    font-size:11px;font-weight:700;padding:7px 11px;border-radius:8px;
+    border:1px solid transparent;transition:all .2s;white-space:nowrap;
+  }
+  .btn-primary{background:var(--accent);color:#0A0C10;}
+  .btn-primary:hover{background:var(--accent-2);}
+  .btn-ghost{background:transparent;border-color:var(--border);color:var(--text-secondary);}
+  .btn-ghost:hover{border-color:var(--accent-soft-2);color:var(--text-primary);}
+  .btn-locked{background:var(--bg-panel-elevated);color:var(--text-muted);cursor:not-allowed;}
+  .btn-danger{background:var(--danger-soft);color:var(--danger);border-color:var(--danger-soft);}
+  .btn-danger:hover{background:var(--danger);color:#fff;}
+  .btn svg{width:12px;height:12px;}
+
+  .lock-note{
+    display:flex;align-items:center;gap:6px;font-size:10.5px;color:var(--text-muted);
+    background:var(--bg-panel-elevated);border:1px dashed var(--border);border-radius:7px;padding:7px 9px;
+  }
+
+  /* upload / review specifics */
+  .file-row{
+    display:flex;align-items:center;justify-content:space-between;gap:8px;
+    background:var(--bg-panel-elevated);border:1px solid var(--border-soft);
+    border-radius:8px;padding:6px 9px;font-size:10.8px;
+  }
+  .file-row .fname{display:flex;align-items:center;gap:7px;min-width:0;}
+  .file-row .fname span{overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
+  .tag{font-size:9.5px;font-weight:700;padding:2px 7px;border-radius:100px;white-space:nowrap;}
+  .tag.approved{background:var(--success-soft);color:var(--success);}
+  .tag.review{background:var(--warning-soft);color:var(--warning);}
+  .tag.rejected{background:var(--danger-soft);color:var(--danger);}
+  .reject-note{
+    font-size:10.8px;color:var(--danger);background:var(--danger-soft);
+    border:1px solid var(--danger-soft);border-radius:8px;padding:8px 9px;
+    display:flex;gap:6px;align-items:flex-start;
+  }
+  body.admin-mode .reject-note{display:flex !important;}
+  .files-scroll{display:flex;flex-direction:column;gap:5px;max-height:118px;overflow-y:auto;padding-right:2px;}
+
+  /* ---------- CREATIVE APPROVAL CARDS (module 04) ---------- */
+  .creative-list{display:flex;flex-direction:column;gap:8px;}
+  .creative-item{
+    background:var(--bg-panel-elevated);border:1px solid var(--border-soft);
+    border-radius:10px;padding:9px;display:flex;flex-direction:column;gap:7px;
+  }
+  .creative-item-top{display:flex;align-items:center;gap:7px;}
+  .creative-thumb{
+    width:26px;height:26px;border-radius:7px;flex-shrink:0;
+    background:var(--accent-soft);color:var(--accent);
+    display:flex;align-items:center;justify-content:center;
+  }
+  .creative-name{flex:1;min-width:0;font-size:11px;font-weight:600;color:var(--text-primary);overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
+  .creative-status{font-size:9px;font-weight:700;padding:2px 7px;border-radius:100px;flex-shrink:0;white-space:nowrap;}
+  .creative-status.pending{background:var(--warning-soft);color:var(--warning);}
+  .creative-status.approved{background:var(--success-soft);color:var(--success);}
+  .creative-status.commented{background:var(--accent-soft);color:var(--accent);}
+  .creative-actions{display:flex;gap:6px;}
+  .creative-btn{
+    flex:1;display:flex;align-items:center;justify-content:center;gap:5px;
+    font-size:10px;font-weight:700;padding:6px 6px;border-radius:7px;
+    border:1px solid var(--border);background:var(--bg-panel);color:var(--text-secondary);
+    transition:all .15s;font-family:inherit;
+  }
+  .creative-btn:hover{border-color:var(--accent-soft-2);color:var(--text-primary);}
+  .creative-btn.approve-btn.active{background:var(--success-soft);color:var(--success);border-color:var(--success-soft);}
+  .creative-btn.comment-btn.active{background:var(--accent-soft);color:var(--accent);border-color:var(--accent-soft-2);}
+  .creative-comment-box{display:none;flex-direction:column;gap:6px;}
+  .creative-comment-box.show{display:flex;}
+  .creative-comment-box textarea{
+    width:100%;font-size:11px;padding:7px 8px;border-radius:7px;
+    border:1px solid var(--border);background:var(--bg-panel);color:var(--text-primary);
+    resize:vertical;min-height:52px;font-family:inherit;
+  }
+  .creative-comment-saved{
+    display:none;font-size:10.5px;color:var(--text-secondary);
+    background:var(--bg-panel);border:1px solid var(--border-soft);border-radius:7px;
+    padding:6px 8px;font-style:italic;
+  }
+
+  /* ---------- FUNNEL SECTION ---------- */
+  .funnel-panel{
+    background:var(--bg-panel);border:1px solid var(--border);
+    border-radius:var(--radius-lg);padding:18px 20px 20px;box-shadow:var(--shadow-soft);
+  }
+  .month-select{display:flex;align-items:center;gap:6px;overflow-x:auto;padding-bottom:2px;margin-bottom:18px;}
+  .month-pill{
+    flex-shrink:0;font-family:var(--font-mono);font-size:11px;font-weight:600;
+    padding:6px 13px;border-radius:100px;border:1px solid var(--border);
+    background:var(--bg-panel-elevated);color:var(--text-secondary);white-space:nowrap;
+    transition:all .18s;
+  }
+  .month-pill:hover{border-color:var(--accent-soft-2);color:var(--text-primary);}
+  .month-pill.active{background:var(--accent);border-color:var(--accent);color:#0A0C10;}
+  .month-pill .no-data-dot{width:4px;height:4px;border-radius:50%;background:var(--text-muted);display:inline-block;margin-left:5px;}
+
+  .funnel-body{position:relative;}
+  .no-data-overlay{
+    position:absolute;inset:-8px;z-index:30;
+    background:var(--scrim);backdrop-filter:blur(3px);
+    border-radius:14px;
+    display:none;flex-direction:column;align-items:center;justify-content:center;gap:8px;text-align:center;
+  }
+  .no-data-overlay.show{display:flex;}
+  .no-data-overlay .nd-icon{
+    width:38px;height:38px;border-radius:50%;background:var(--bg-panel-elevated);
+    border:1px solid var(--border);display:flex;align-items:center;justify-content:center;color:var(--text-muted);
+  }
+  .no-data-overlay h4{margin:0;font-size:13px;font-weight:700;}
+  .no-data-overlay p{margin:0;font-size:11.5px;color:var(--text-muted);max-width:220px;}
+
+  /* keywords */
+  .subhead{display:flex;align-items:center;gap:8px;margin-bottom:11px;}
+  .subhead h3{font-size:13px;font-weight:700;margin:0;}
+  .subhead .count{
+    font-family:var(--font-mono);font-size:10px;color:var(--text-muted);
+    background:var(--bg-panel-elevated);border:1px solid var(--border-soft);
+    padding:2px 8px;border-radius:100px;
+  }
+  .kw-table{width:100%;border-collapse:collapse;font-size:11.8px;}
+  .kw-table thead th{
+    text-align:left;font-family:var(--font-mono);font-size:9.5px;text-transform:uppercase;
+    letter-spacing:.05em;color:var(--text-muted);font-weight:600;padding:0 10px 8px;border-bottom:1px solid var(--border-soft);
+  }
+  .kw-table thead th.num, .kw-table td.num{text-align:right;}
+  .kw-table tbody td{padding:9px 10px;border-bottom:1px solid var(--border-soft);color:var(--text-secondary);vertical-align:middle;}
+  .kw-table tbody tr:last-child td{border-bottom:none;}
+  .kw-table tbody tr:hover td{background:var(--bg-panel-elevated);}
+  .kw-name{color:var(--text-primary);font-weight:600;}
+  .kw-table td.num{font-family:var(--font-mono);color:var(--text-secondary);}
+  .kw-status{display:inline-flex;align-items:center;gap:5px;font-size:10px;font-weight:700;padding:3px 9px;border-radius:100px;}
+  .kw-status.aprovada{background:var(--success-soft);color:var(--success);}
+  .kw-status.pendente{background:var(--warning-soft);color:var(--warning);}
+  .kw-status.rejeitada{background:var(--danger-soft);color:var(--danger);}
+  .kw-table-wrap{overflow-x:auto;margin-bottom:12px;-webkit-overflow-scrolling:touch;}
+
+  .add-row-btn{
+    display:none;align-items:center;justify-content:center;gap:7px;
+    width:100%;padding:10px;border-radius:10px;border:1.5px dashed var(--border);
+    background:transparent;color:var(--text-muted);font-size:11.5px;font-weight:700;font-family:inherit;
+    transition:all .18s;margin-bottom:26px;
+  }
+  body.admin-mode .add-row-btn{display:flex;}
+  .add-row-btn:hover{border-color:var(--accent);color:var(--accent);background:var(--accent-soft);}
+
+  /* funnel visual */
+  .funnel-grid{display:grid;grid-template-columns:1.15fr .85fr;gap:24px;align-items:start;}
+  .funnel-visual{display:flex;flex-direction:column;align-items:center;gap:0;padding-top:2px;}
+  .funnel-stage{
+    position:relative;width:100%;display:flex;flex-direction:column;align-items:center;
+    padding:11px 18px;margin-bottom:2px;
+    color:#0A0C10;font-weight:700;
+    clip-path:polygon(var(--l1) 0, calc(100% - var(--l1)) 0, calc(100% - var(--l2)) 100%, var(--l2) 100%);
+    transition:clip-path .4s cubic-bezier(.2,.7,.2,1);
+  }
+  .funnel-stage .fs-label{font-size:10px;text-transform:uppercase;letter-spacing:.05em;font-weight:700;opacity:.75;font-family:var(--font-mono);}
+  .funnel-stage .fs-value{font-size:17px;font-weight:800;font-family:var(--font-mono);letter-spacing:-.4px;}
+  .funnel-drop{
+    font-family:var(--font-mono);font-size:9.5px;color:var(--text-muted);
+    display:flex;align-items:center;gap:4px;margin:1px 0 2px;
+  }
+  .funnel-drop svg{color:var(--text-muted);}
+
+  .metrics-col{display:flex;flex-direction:column;gap:9px;}
+  .metric-card{
+    background:var(--bg-panel-elevated);border:1px solid var(--border-soft);
+    border-radius:11px;padding:12px 14px;
+  }
+  .metric-card .m-label{font-size:10.5px;color:var(--text-muted);display:flex;align-items:center;justify-content:space-between;margin-bottom:6px;}
+  .metric-card .m-value{font-family:var(--font-mono);font-size:20px;font-weight:700;letter-spacing:-.4px;}
+  .metric-card .m-sub{font-size:10.5px;color:var(--text-secondary);margin-top:3px;}
+  .metric-card.spend .m-value{color:var(--accent-2);}
+  .metric-card.available .m-value{color:var(--success);}
+  .budget-bar{height:6px;border-radius:100px;background:var(--border-soft);overflow:hidden;margin-top:8px;}
+  .budget-bar>span{display:block;height:100%;background:linear-gradient(90deg,var(--accent),var(--accent-2));}
+  .trend{display:flex;align-items:center;gap:3px;font-size:10px;font-weight:700;}
+  .trend.up{color:var(--success);}
+  .trend.down{color:var(--danger);}
+
+  /* ---------- PiP FLOATING BOX ---------- */
+  .pip{
+    position:fixed;right:20px;bottom:20px;z-index:100;
+    width:260px;background:var(--bg-panel-elevated);
+    border:1px solid var(--border);border-radius:14px;
+    box-shadow:0 16px 40px -14px rgba(0,0,0,.45);
+    overflow:hidden;
+    transition:width .25s, height .25s, transform .25s;
+  }
+  .pip-head{
+    display:flex;align-items:center;justify-content:space-between;
+    padding:8px 10px;background:var(--bg-panel);border-bottom:1px solid var(--border-soft);
+  }
+  .pip-head-l{display:flex;align-items:center;gap:7px;min-width:0;}
+  .pip-drag{color:var(--text-muted);flex-shrink:0;}
+  .pip-title{font-size:10.5px;font-weight:700;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
+  .pip-sub{font-size:9px;color:var(--accent);font-family:var(--font-mono);}
+  .pip-actions{display:flex;gap:4px;flex-shrink:0;}
+  .pip-btn{
+    width:21px;height:21px;border-radius:6px;border:1px solid var(--border);
+    background:transparent;color:var(--text-secondary);display:flex;align-items:center;justify-content:center;
+  }
+  .pip-btn:hover{background:var(--bg-panel-hover);color:var(--text-primary);}
+  .pip-video{
+    position:relative;aspect-ratio:16/9;overflow:hidden;
+    background:
+      radial-gradient(circle at 30% 20%, var(--accent-soft), transparent 55%),
+      repeating-linear-gradient(115deg, var(--pip-bg-1) 0 2px, var(--pip-bg-2) 2px 4px);
+    display:flex;align-items:center;justify-content:center;
+  }
+  .pip-thumb-img{
+    position:absolute;inset:0;width:100%;height:100%;object-fit:cover;
+    filter:saturate(1.02);
+  }
+  .pip-thumb-shade{
+    position:absolute;inset:0;
+    background:linear-gradient(180deg, rgba(0,0,0,.05) 0%, rgba(0,0,0,.35) 100%);
+  }
+  .pip-iframe{position:absolute;inset:0;width:100%;height:100%;border:0;z-index:2;}
+  .pip-play{
+    position:relative;z-index:3;
+    width:42px;height:42px;border-radius:50%;background:rgba(244,131,34,.92);
+    display:flex;align-items:center;justify-content:center;color:#0A0C10;
+    box-shadow:0 6px 16px -6px rgba(244,131,34,.7);
+    border:none;transition:transform .18s;
+  }
+  .pip-play:hover{transform:scale(1.07);}
+  .pip-play svg{margin-left:2px;}
+  .pip-cc{
+    position:absolute;bottom:8px;left:8px;right:8px;z-index:3;
+    background:var(--pip-cc-bg);border-radius:7px;padding:6px 8px;
+    font-size:9.5px;color:var(--text-secondary);line-height:1.4;
+  }
+  .pip-steps{padding:9px 10px 10px;display:flex;flex-direction:column;gap:6px;}
+  .pip-step{
+    display:flex;align-items:center;gap:7px;font-size:10.5px;color:var(--text-secondary);
+    cursor:pointer;padding:4px 5px;border-radius:6px;margin:-4px -5px;transition:background .15s,color .15s;
+    border:none;background:transparent;text-align:left;width:calc(100% + 10px);font-family:inherit;
+  }
+  .pip-step:hover{background:var(--bg-panel-hover);color:var(--text-primary);}
+  .pip-step .n{
+    width:15px;height:15px;border-radius:50%;background:var(--bg-panel);border:1px solid var(--border);
+    display:flex;align-items:center;justify-content:center;font-size:8.5px;font-family:var(--font-mono);
+    color:var(--text-muted);flex-shrink:0;
+  }
+  .pip-step.active{color:var(--text-primary);font-weight:600;background:var(--accent-soft);}
+  .pip-step.active .n{background:var(--accent);border-color:var(--accent);color:#0A0C10;}
+
+  .pip.collapsed{width:auto;}
+  .pip.collapsed .pip-video, .pip.collapsed .pip-steps{display:none;}
+  .pip.collapsed .pip-head{border-bottom:none;padding:9px 11px;}
+  .pip.collapsed .pip-title{max-width:130px;}
+
+  .pip-bubble{
+    display:none;position:fixed;right:20px;bottom:20px;z-index:100;
+    width:46px;height:46px;border-radius:50%;
+    background:var(--accent);color:#0A0C10;
+    align-items:center;justify-content:center;
+    box-shadow:0 8px 20px -8px rgba(244,131,34,.6);border:none;
+  }
+  .pip-bubble .dot{
+    position:absolute;top:1px;right:1px;width:9px;height:9px;border-radius:50%;
+    background:var(--danger);border:2px solid var(--bg-base);
+  }
+  .pip.hidden{display:none;}
+
+  /* ---------- FOOTER ---------- */
+  .foot{margin-top:40px;padding-top:16px;border-top:1px solid var(--border-soft);display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:8px;}
+  .foot span{font-size:10.5px;color:var(--text-muted);font-family:var(--font-mono);}
+
+  /* ---------- PLANS MODAL ---------- */
+  .plans-overlay{
+    position:fixed;inset:0;z-index:200;
+    background:var(--scrim);backdrop-filter:blur(4px);
+    display:none;align-items:center;justify-content:center;padding:20px;
+  }
+  .plans-overlay.show{display:flex;}
+  .plans-modal{
+    width:100%;max-width:900px;max-height:88vh;overflow-y:auto;
+    background:var(--bg-panel);border:1px solid var(--border);
+    border-radius:var(--radius-lg);box-shadow:0 30px 70px -20px rgba(0,0,0,.5);
+    padding:22px 22px 24px;
+    animation:modal-rise .3s cubic-bezier(.2,.7,.2,1) both;
+  }
+  @keyframes modal-rise{from{opacity:0;transform:translateY(10px) scale(.98);}to{opacity:1;transform:translateY(0) scale(1);}}
+  .plans-modal-head{display:flex;align-items:flex-start;justify-content:space-between;gap:12px;margin-bottom:20px;}
+  .plans-modal-head h2{font-size:18px;font-weight:800;letter-spacing:-.4px;margin:0 0 5px;}
+  .plans-modal-head p{font-size:12.5px;color:var(--text-secondary);margin:0;max-width:440px;}
+  .plans-close{
+    width:30px;height:30px;border-radius:9px;border:1px solid var(--border);
+    background:var(--bg-panel-elevated);color:var(--text-secondary);flex-shrink:0;
+    display:flex;align-items:center;justify-content:center;transition:all .18s;
+  }
+  .plans-close:hover{color:var(--text-primary);border-color:var(--accent-soft-2);}
+
+  .plans-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;}
+  .plan-card{
+    position:relative;
+    background:var(--bg-panel-elevated);border:1px solid var(--border);
+    border-radius:var(--radius-md);padding:18px 17px 16px;
+    display:flex;flex-direction:column;gap:12px;
+    transition:border-color .2s, transform .2s;
+  }
+  .plan-card.current{border-color:var(--accent);box-shadow:0 0 0 1px var(--accent);}
+  .plan-card:not(.current):hover{transform:translateY(-2px);border-color:var(--accent-soft-2);}
+  .plan-current-tag{
+    position:absolute;top:-11px;left:17px;
+    background:var(--accent);color:#0A0C10;font-size:9.5px;font-weight:800;
+    padding:3px 10px;border-radius:100px;letter-spacing:.03em;text-transform:uppercase;
+  }
+  .plan-name{font-size:13px;font-weight:700;color:var(--text-secondary);text-transform:uppercase;letter-spacing:.04em;}
+  .plan-price{display:flex;align-items:baseline;gap:4px;}
+  .plan-price .val{font-family:var(--font-mono);font-size:26px;font-weight:800;letter-spacing:-.6px;}
+  .plan-price .per{font-size:11.5px;color:var(--text-muted);}
+  .plan-desc{font-size:11.5px;color:var(--text-secondary);line-height:1.5;min-height:34px;}
+  .plan-feats{display:flex;flex-direction:column;gap:7px;margin:2px 0;}
+  .plan-feat{display:flex;align-items:flex-start;gap:7px;font-size:11.8px;color:var(--text-secondary);}
+  .plan-feat svg{flex-shrink:0;margin-top:2px;color:var(--success);}
+  .plan-feat.off{color:var(--text-muted);}
+  .plan-feat.off svg{color:var(--locked);}
+  .plan-cta{
+    margin-top:auto;width:100%;text-align:center;justify-content:center;
+    padding:10px 14px;border-radius:9px;font-size:12px;font-weight:700;border:1px solid transparent;
+    transition:all .2s;
+  }
+  .plan-cta.current-cta{background:var(--accent-soft);color:var(--accent);border-color:var(--accent-soft-2);cursor:default;}
+  .plan-cta.switch-cta{background:var(--accent);color:#0A0C10;}
+  .plan-cta.switch-cta:hover{background:var(--accent-2);}
+  .plans-footnote{
+    margin-top:16px;font-size:11px;color:var(--text-muted);
+    display:flex;align-items:center;gap:7px;
+  }
+
+  /* ---------- ADMIN MODE ---------- */
+  .admin-only{display:none;}
+  body.admin-mode .admin-only{display:flex;}
+  .admin-switch{
+    display:flex;align-items:center;gap:7px;
+    background:var(--bg-panel);border:1px solid var(--border);
+    padding:5px 11px 5px 5px;border-radius:100px;font-size:11px;font-weight:700;color:var(--text-secondary);
+  }
+  .admin-switch svg{color:var(--text-muted);flex-shrink:0;}
+  body.admin-mode .admin-switch{color:var(--accent);border-color:var(--accent-soft-2);}
+  body.admin-mode .admin-switch svg{color:var(--accent);}
+  .switch-track{
+    position:relative;width:30px;height:17px;border-radius:100px;background:var(--border);
+    transition:background .2s;flex-shrink:0;
+  }
+  .switch-track::after{
+    content:'';position:absolute;top:2px;left:2px;width:13px;height:13px;border-radius:50%;
+    background:var(--bg-panel);box-shadow:0 1px 3px rgba(0,0,0,.3);transition:transform .2s;
+  }
+  body.admin-mode .switch-track{background:var(--accent);}
+  body.admin-mode .switch-track::after{transform:translateX(13px);background:#0A0C10;}
+
+  .eye-toggle{
+    width:30px;height:30px;border-radius:9px;border:1px solid var(--border);
+    background:var(--bg-panel);color:var(--text-secondary);align-items:center;justify-content:center;
+    transition:all .18s;
+  }
+  .eye-toggle:hover{border-color:var(--accent-soft-2);color:var(--text-primary);}
+
+  body.admin-mode .plans-btn.admin-hidden{opacity:.4;outline:1px dashed var(--danger);}
+  body:not(.admin-mode) .plans-btn.admin-hidden{display:none;}
+
+  body.admin-mode .admin-editable{cursor:pointer;border-radius:6px;transition:background .15s, box-shadow .15s;}
+  body.admin-mode .admin-editable:hover{background:var(--accent-soft);box-shadow:0 0 0 1px var(--accent-soft-2);}
+  body.admin-mode .kw-table tbody tr.admin-editable:hover td{background:var(--accent-soft);}
+  body.admin-mode .funnel-stage.admin-editable:hover{filter:brightness(1.1);}
+  body.admin-mode .file-row.admin-editable:hover{background:var(--accent-soft);box-shadow:0 0 0 1px var(--accent-soft-2);}
+  body.admin-mode .client-chip{cursor:pointer;transition:all .18s;}
+  body.admin-mode .client-chip:hover{background:var(--accent-soft);border-color:var(--accent-soft-2);}
+
+  /* ---------- GENERIC MODAL (shared by admin edit / link / wizard) ---------- */
+  .modal-overlay{
+    position:fixed;inset:0;z-index:250;
+    background:var(--scrim);backdrop-filter:blur(4px);
+    display:none;align-items:center;justify-content:center;padding:20px;
+  }
+  .modal-overlay.show{display:flex;}
+  .modal-box{
+    width:100%;max-width:400px;
+    background:var(--bg-panel);border:1px solid var(--border);
+    border-radius:var(--radius-lg);box-shadow:0 30px 70px -20px rgba(0,0,0,.5);
+    padding:20px;animation:modal-rise .25s cubic-bezier(.2,.7,.2,1) both;
+  }
+  .modal-box.wide{max-width:460px;}
+  .modal-head{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-bottom:14px;}
+  .modal-head h3{font-size:14.5px;font-weight:800;margin:0;letter-spacing:-.2px;}
+  .modal-head .tag{background:var(--accent-soft);color:var(--accent);}
+  .modal-close{
+    width:26px;height:26px;border-radius:8px;border:1px solid var(--border);
+    background:var(--bg-panel-elevated);color:var(--text-secondary);flex-shrink:0;
+    display:flex;align-items:center;justify-content:center;transition:all .18s;
+  }
+  .modal-close:hover{color:var(--text-primary);border-color:var(--accent-soft-2);}
+  .field-group{display:flex;flex-direction:column;gap:5px;margin-bottom:12px;}
+  .field-group label{font-size:11px;font-weight:700;color:var(--text-secondary);}
+  .field-group input, .field-group select, .field-group textarea{
+    background:var(--bg-panel-elevated);border:1px solid var(--border);color:var(--text-primary);
+    border-radius:8px;padding:9px 11px;font-size:12.5px;font-family:inherit;width:100%;
+  }
+  .field-group input:focus, .field-group select:focus, .field-group textarea:focus{
+    outline:none;border-color:var(--accent);box-shadow:0 0 0 3px var(--accent-soft);
+  }
+  .field-group textarea{resize:vertical;min-height:64px;line-height:1.5;}
+  .modal-foot{display:flex;justify-content:space-between;align-items:center;gap:8px;margin-top:16px;}
+  .modal-foot-right{display:flex;gap:8px;margin-left:auto;}
+
+  /* ---------- COMPANY LINK MODAL ---------- */
+  .day-options{display:flex;gap:8px;margin-bottom:14px;}
+  .day-chip{
+    flex:1;text-align:center;padding:10px 6px;border-radius:9px;
+    border:1px solid var(--border);background:var(--bg-panel-elevated);color:var(--text-secondary);
+    font-size:12.5px;font-weight:700;transition:all .18s;
+  }
+  .day-chip.active{background:var(--accent);border-color:var(--accent);color:#0A0C10;}
+  .link-result{
+    display:none;align-items:center;gap:8px;
+    background:var(--bg-panel-elevated);border:1px solid var(--border-soft);
+    border-radius:9px;padding:9px 10px;margin-top:4px;
+  }
+  .link-result.show{display:flex;}
+  .link-result input{
+    flex:1;border:none;background:transparent;color:var(--text-secondary);
+    font-family:var(--font-mono);font-size:11px;outline:none;min-width:0;
+  }
+  .link-copy-btn{
+    flex-shrink:0;width:28px;height:28px;border-radius:7px;border:1px solid var(--border);
+    background:var(--bg-panel);color:var(--text-secondary);display:flex;align-items:center;justify-content:center;
+  }
+  .link-copy-btn:hover{color:var(--accent);border-color:var(--accent-soft-2);}
+  .link-note{font-size:10.5px;color:var(--text-muted);margin-top:8px;}
+
+  /* ---------- BRIEFING WIZARD ---------- */
+  .wizard-progress{margin-bottom:16px;}
+  .wizard-progress-bar{height:5px;border-radius:100px;background:var(--border-soft);overflow:hidden;}
+  .wizard-progress-bar>span{display:block;height:100%;background:linear-gradient(90deg,var(--accent),var(--accent-2));transition:width .3s;}
+  .wizard-progress-label{
+    font-family:var(--font-mono);font-size:10.5px;color:var(--text-muted);margin-top:6px;
+    display:flex;justify-content:space-between;
+  }
+  .wizard-question{font-size:14.5px;font-weight:700;margin:0 0 10px;letter-spacing:-.2px;}
+  .wizard-nav{display:flex;justify-content:space-between;gap:8px;margin-top:16px;}
+  .wizard-dots{display:flex;gap:5px;justify-content:center;margin-top:14px;}
+  .wizard-dot{width:6px;height:6px;border-radius:50%;background:var(--border);transition:all .2s;}
+  .wizard-dot.on{background:var(--accent);width:16px;}
+  .wizard-done{display:flex;flex-direction:column;align-items:center;text-align:center;gap:10px;padding:10px 0 4px;}
+  .wizard-done-icon{
+    width:44px;height:44px;border-radius:50%;background:var(--success-soft);color:var(--success);
+    display:flex;align-items:center;justify-content:center;
+  }
+  .wizard-done h4{margin:0;font-size:14.5px;font-weight:800;}
+  .wizard-done p{margin:0;font-size:12px;color:var(--text-secondary);max-width:280px;}
+
+  /* ---------- PDF FILE ROWS (module 02) ---------- */
+  .file-pdf-icon{color:var(--danger);flex-shrink:0;}
+  .file-dl-btn{
+    flex-shrink:0;width:22px;height:22px;border-radius:6px;border:1px solid var(--border);
+    background:var(--bg-panel);color:var(--text-secondary);display:flex;align-items:center;justify-content:center;
+    transition:all .18s;
+  }
+  .file-dl-btn:hover{color:var(--accent);border-color:var(--accent-soft-2);}
+  .file-del-btn{
+    flex-shrink:0;width:22px;height:22px;border-radius:6px;border:1px solid var(--border);
+    background:var(--bg-panel);color:var(--text-secondary);align-items:center;justify-content:center;
+    transition:all .18s;
+  }
+  .file-del-btn:hover{color:var(--danger);border-color:var(--danger-soft);background:var(--danger-soft);}
+  .file-size{font-family:var(--font-mono);font-size:9.5px;color:var(--text-muted);flex-shrink:0;}
+
+  /* ---------- RESPONSIVE ---------- */
+  @media (max-width:1080px){
+    .modules{grid-template-columns:repeat(2,1fr);}
+  }
+  @media (max-width:980px){
+    .funnel-grid{grid-template-columns:1fr;}
+  }
+  @media (max-width:720px){
+    .plans-grid{grid-template-columns:1fr;}
+    .plans-modal{padding:18px 15px 20px;}
+  }
+
+  @media (max-width:640px){
+    .wrap{padding:0 14px 90px;}
+    .topbar-inner{padding:10px 14px;}
+    .client-chip span.long{display:none;}
+    .page-head{padding:20px 0 16px;}
+    .runway{padding:15px 13px 14px;}
+    .track{overflow-x:auto;padding-bottom:4px;}
+    .steps{min-width:600px;}
+    .modules{grid-template-columns:1fr;}
+    .section-head{margin:28px 0 11px;}
+    .funnel-panel{padding:15px 13px 16px;}
+    .kw-table{font-size:11px;}
+    .kw-table thead th, .kw-table tbody td{padding:8px 6px;}
+    .pip{right:12px;bottom:12px;width:min(84vw,260px);}
+    .pip.collapsed{right:12px;bottom:12px;}
+    .brand-sub{display:none;}
+    .status-pill span.long{display:none;}
+    .plans-btn span.long{display:none;}
+    .plans-btn{padding:7px 10px;}
+    .admin-switch span.long{display:none;}
+    .modal-box{max-width:100%;}
+    .day-options{flex-wrap:wrap;}
+  }
+
+  .reveal{animation:rise .5s cubic-bezier(.2,.7,.2,1) both;}
+  @keyframes rise{from{opacity:0;transform:translateY(8px);}to{opacity:1;transform:translateY(0);}}
+</style>
+</head>
+<body>
+
+<header class="topbar">
+  <div class="topbar-inner">
+    <div class="brand">
+      <div class="brand-mark">Vk</div>
+      <div>
+        <div class="brand-name">Viskoo · Painel</div>
+        <div class="brand-sub">tráfego pago / performance</div>
+      </div>
+    </div>
+    <div class="topbar-right">
+      <div class="client-chip" id="clientChip" title="Clique para gerar link temporário (admin)">
+        <div class="client-avatar">NF</div>
+        <span class="long">NovaFit Studio</span>
+      </div>
+      <div class="status-pill" id="statusPill" title="Clique para editar (admin)">
+        <span class="status-dot" id="statusDot"></span>
+        <span class="long" id="statusLabel">Campanha ativa</span>
+      </div>
+      <button class="icon-btn" id="contactInfoBtn" title="Dados de contato">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="4" width="20" height="16" rx="2.5"/><circle cx="9" cy="10" r="2"/><path d="M6 16c.5-1.6 1.7-2.5 3-2.5s2.5.9 3 2.5"/><path d="M14 9h4M14 12.5h4"/></svg>
+      </button>
+      <button class="plans-btn" id="plansBtn">
+        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="16" rx="2.5"/><path d="M3 9h18"/><path d="M8 14h3"/></svg>
+        <span class="long">Planos</span>
+      </button>
+      <button class="eye-toggle admin-only" id="togglePlansBtn" title="Mostrar/ocultar botão Planos para o cliente">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round"><path d="M1 12s4-7 11-7 11 7 11 7-4 7-11 7-11-7-11-7Z"/><circle cx="12" cy="12" r="3"/></svg>
+      </button>
+      <div class="theme-toggle" id="themeToggle">
+        <button class="theme-btn" data-theme-btn="dark" title="Modo escuro">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.8A9 9 0 1 1 11.2 3 7 7 0 0 0 21 12.8Z"/></svg>
+        </button>
+        <button class="theme-btn" data-theme-btn="light" title="Modo claro">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4.2"/><path d="M12 3v1.6M12 19.4V21M4.9 4.9l1.15 1.15M17.95 17.95l1.15 1.15M3 12h1.6M19.4 12H21M4.9 19.1l1.15-1.15M17.95 6.05l1.15-1.15"/></svg>
+        </button>
+      </div>
+      <button class="admin-switch" id="adminSwitch" title="Ativar modo administrador">
+        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2 4 5v6c0 5 3.4 8.7 8 10 4.6-1.3 8-5 8-10V5l-8-3Z"/></svg>
+        <span class="long">Admin</span>
+        <span class="switch-track"></span>
+      </button>
+    </div>
+  </div>
+</header>
+
+<div class="wrap">
+
+  <div class="page-head reveal">
+    <div class="eyebrow">Fluxo de ativação</div>
+    <h1>Sua campanha em andamento</h1>
+    <p>Acompanhe cada etapa até a estratégia entrar em veiculação. Complete os módulos abaixo na ordem: cada um libera o próximo.</p>
+  </div>
+
+  <!-- ============ TIMELINE ("RUNWAY") ============ -->
+  <section class="runway reveal">
+    <div class="runway-top">
+      <div class="runway-title">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M2 16l7-7 4 4 9-9"/><path d="M17 4h5v5"/></svg>
+        Linha do tempo da ativação
+      </div>
+      <div class="runway-meta" id="runwayMeta">Etapa <b>3 de 8</b> · início <b>02/06</b></div>
+    </div>
+
+    <div class="track">
+      <div class="track-line"></div>
+      <div class="track-fill" id="trackFill" style="width:29%"></div>
+      <div class="steps" id="stepsContainer"></div>
+    </div>
+  </section>
+
+  <!-- ============ MODULES ============ -->
+  <div class="section-head">
+    <div>
+      <span class="section-num">MÓDULOS · 03</span>
+      <h2>O que falta resolver</h2>
+      <p>Cada módulo só abre depois do anterior estar concluído.</p>
+    </div>
+  </div>
+
+  <div class="modules">
+
+    <!-- MODULE 1 - BRIEFING (done) -->
+    <div class="module-card done">
+      <div class="module-top">
+        <div class="module-lead">
+          <span class="module-num">1</span>
+          <div class="module-icon">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 3v4a1 1 0 0 0 1 1h4"/><path d="M17 21H7a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h7l5 5v11a2 2 0 0 1-2 2Z"/><path d="M9 13h6M9 17h4"/></svg>
+          </div>
+        </div>
+        <span class="module-badge done">Concluído</span>
+      </div>
+      <h3 class="admin-editable" data-edit-type="text" data-edit-label="Título do módulo">Briefing</h3>
+      <span class="owner-badge client">
+        <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="4"/><path d="M4 21c1.5-4 5-6 8-6s6.5 2 8 6"/></svg>
+        Preenchido pelo cliente
+      </span>
+      <p class="admin-editable" data-edit-type="text" data-edit-label="Descrição do módulo">Objetivos, público-alvo, diferenciais e verba registrados.</p>
+      <div class="checklist">
+        <div class="check-item on"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round"><polyline points="20 6 9 17 4 12"/></svg> Objetivo e público</div>
+        <div class="check-item on"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round"><polyline points="20 6 9 17 4 12"/></svg> Verba e prazos</div>
+      </div>
+      <div class="module-foot">
+        <span class="module-count">2/2 itens</span>
+        <button class="btn btn-ghost" id="briefingBtn">Ver perguntas <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M9 18l6-6-6-6"/></svg></button>
+      </div>
+    </div>
+
+    <!-- MODULE 2 - ROTEIROS (done) -->
+    <div class="module-card done">
+      <div class="module-top">
+        <div class="module-lead">
+          <span class="module-num">2</span>
+          <div class="module-icon">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2Z"/><path d="M9 7h7M9 11h7"/></svg>
+          </div>
+        </div>
+        <span class="module-badge done">Concluído</span>
+      </div>
+      <h3 class="admin-editable" data-edit-type="text" data-edit-label="Título do módulo">Roteiros</h3>
+      <span class="owner-badge agency">
+        <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="7" width="20" height="14" rx="2"/><path d="M8 7V5a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/></svg>
+        Entregue pela agência
+      </span>
+      <p class="admin-editable" data-edit-type="text" data-edit-label="Descrição do módulo">5 roteiros de gravação aprovados, com cena, fala e tempo por vídeo.</p>
+      <div class="files-scroll" id="roteiroFiles">
+        <div class="file-row">
+          <div class="fname">
+            <svg class="file-pdf-icon" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8Z"/><path d="M14 2v6h6"/><path d="M9 15h1M9 12h6M9 18h6"/></svg>
+            <span>roteiro-01-abertura.pdf</span>
+          </div>
+          <button class="file-dl-btn" data-pdf-name="roteiro-01-abertura.pdf" data-pdf-title="Roteiro 01 - Abertura" title="Baixar PDF">
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v12M7 10l5 5 5-5M5 21h14"/></svg>
+          </button>
+          <button class="file-del-btn admin-only" title="Remover PDF">
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round"><path d="M3 6h18M8 6V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2m3 0-1 14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2L4 6"/></svg>
+          </button>
+        </div>
+        <div class="file-row">
+          <div class="fname">
+            <svg class="file-pdf-icon" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8Z"/><path d="M14 2v6h6"/><path d="M9 15h1M9 12h6M9 18h6"/></svg>
+            <span>roteiro-02-depoimento.pdf</span>
+          </div>
+          <button class="file-dl-btn" data-pdf-name="roteiro-02-depoimento.pdf" data-pdf-title="Roteiro 02 - Depoimento" title="Baixar PDF">
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v12M7 10l5 5 5-5M5 21h14"/></svg>
+          </button>
+          <button class="file-del-btn admin-only" title="Remover PDF">
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round"><path d="M3 6h18M8 6V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2m3 0-1 14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2L4 6"/></svg>
+          </button>
+        </div>
+        <div class="file-row">
+          <div class="fname">
+            <svg class="file-pdf-icon" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8Z"/><path d="M14 2v6h6"/><path d="M9 15h1M9 12h6M9 18h6"/></svg>
+            <span>roteiro-03-bastidores.pdf</span>
+          </div>
+          <button class="file-dl-btn" data-pdf-name="roteiro-03-bastidores.pdf" data-pdf-title="Roteiro 03 - Bastidores" title="Baixar PDF">
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v12M7 10l5 5 5-5M5 21h14"/></svg>
+          </button>
+          <button class="file-del-btn admin-only" title="Remover PDF">
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round"><path d="M3 6h18M8 6V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2m3 0-1 14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2L4 6"/></svg>
+          </button>
+        </div>
+        <div class="file-row">
+          <div class="fname">
+            <svg class="file-pdf-icon" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8Z"/><path d="M14 2v6h6"/><path d="M9 15h1M9 12h6M9 18h6"/></svg>
+            <span>roteiro-04-resultado.pdf</span>
+          </div>
+          <button class="file-dl-btn" data-pdf-name="roteiro-04-resultado.pdf" data-pdf-title="Roteiro 04 - Resultado" title="Baixar PDF">
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v12M7 10l5 5 5-5M5 21h14"/></svg>
+          </button>
+          <button class="file-del-btn admin-only" title="Remover PDF">
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round"><path d="M3 6h18M8 6V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2m3 0-1 14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2L4 6"/></svg>
+          </button>
+        </div>
+        <div class="file-row">
+          <div class="fname">
+            <svg class="file-pdf-icon" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8Z"/><path d="M14 2v6h6"/><path d="M9 15h1M9 12h6M9 18h6"/></svg>
+            <span>roteiro-05-cta-final.pdf</span>
+          </div>
+          <button class="file-dl-btn" data-pdf-name="roteiro-05-cta-final.pdf" data-pdf-title="Roteiro 05 - CTA final" title="Baixar PDF">
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v12M7 10l5 5 5-5M5 21h14"/></svg>
+          </button>
+          <button class="file-del-btn admin-only" title="Remover PDF">
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round"><path d="M3 6h18M8 6V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2m3 0-1 14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2L4 6"/></svg>
+          </button>
+        </div>
+      </div>
+      <button class="add-row-btn admin-only" id="addPdfBtn" type="button" style="margin-bottom:0;margin-top:8px;">
+        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg>
+        Adicionar PDF
+      </button>
+      <input type="file" id="pdfFileInput" accept="application/pdf,.pdf" style="display:none;">
+      <div class="module-foot">
+        <span class="module-count" id="roteiroCount">5/5 roteiros</span>
+        <button class="btn btn-ghost">Ver <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M9 18l6-6-6-6"/></svg></button>
+      </div>
+    </div>
+
+    <!-- MODULE 3 - UPLOAD DE VIDEOS (in review) -->
+    <div class="module-card">
+      <div class="module-top">
+        <div class="module-lead">
+          <span class="module-num">3</span>
+          <div class="module-icon">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="5" width="15" height="14" rx="2"/><path d="M17 10l5-3v10l-5-3"/></svg>
+          </div>
+        </div>
+        <span class="module-badge review">Em análise</span>
+      </div>
+      <h3 class="admin-editable" data-edit-type="text" data-edit-label="Título do módulo">Upload de vídeos</h3>
+      <p class="admin-editable" data-edit-type="text" data-edit-label="Descrição do módulo">Envie os vídeos conforme os critérios de cada roteiro aprovado.</p>
+      <div class="progress-bar"><span style="width:60%"></span></div>
+      <div class="files-scroll" id="videoFiles">
+        <div class="file-row admin-editable" data-edit-type="file-status" data-status="approved">
+          <div class="fname"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M23 7l-7 5 7 5V7z"/><rect x="1" y="5" width="15" height="14" rx="2"/></svg><span>roteiro-01-abertura.mp4</span></div>
+          <span class="tag approved">Aprovado</span>
+        </div>
+        <div class="file-row admin-editable" data-edit-type="file-status" data-status="approved">
+          <div class="fname"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M23 7l-7 5 7 5V7z"/><rect x="1" y="5" width="15" height="14" rx="2"/></svg><span>roteiro-02-depoimento.mp4</span></div>
+          <span class="tag approved">Aprovado</span>
+        </div>
+        <div class="file-row admin-editable" data-edit-type="file-status" data-status="review">
+          <div class="fname"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M23 7l-7 5 7 5V7z"/><rect x="1" y="5" width="15" height="14" rx="2"/></svg><span>roteiro-03-bastidores.mp4</span></div>
+          <span class="tag review">Em análise</span>
+        </div>
+        <div class="file-row admin-editable" data-edit-type="file-status" data-status="rejected" data-reason="Ruído de fundo e enquadramento vertical incorreto no roteiro 04. Reenvie.">
+          <div class="fname"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M23 7l-7 5 7 5V7z"/><rect x="1" y="5" width="15" height="14" rx="2"/></svg><span>roteiro-04-resultado.mp4</span></div>
+          <span class="tag rejected">Reprovado</span>
+        </div>
+      </div>
+      <div class="reject-note" id="rejectNote">
+        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3" style="flex-shrink:0;margin-top:1px;"><circle cx="12" cy="12" r="10"/><path d="M12 8v5M12 16h.01"/></svg>
+        <span id="rejectNoteText" class="admin-editable" data-edit-type="text" data-edit-label="Alerta do módulo">Ruído de fundo e enquadramento vertical incorreto no roteiro 04. Reenvie.</span>
+      </div>
+      <input type="file" id="uploadFileInput" accept="video/*,application/pdf,.pdf" style="display:none;" multiple>
+      <div class="module-foot">
+        <span class="module-count" id="videoCount">3/5 vídeos</span>
+        <button class="btn btn-primary" id="uploadBtn">Enviar <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg></button>
+      </div>
+    </div>
+
+    <!-- MODULE 4 - APROVAÇÃO DE CRIATIVOS (locked) -->
+    <div class="module-card locked">
+      <div class="module-top">
+        <div class="module-lead">
+          <span class="module-num">4</span>
+          <div class="module-icon">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="5" width="18" height="14" rx="2"/><circle cx="9" cy="11" r="2.2"/><path d="M21 16l-4.5-4.5a2 2 0 0 0-2.8 0L7 18"/></svg>
+          </div>
+        </div>
+        <span class="module-badge locked">Bloqueado</span>
+      </div>
+      <h3 class="admin-editable" data-edit-type="text" data-edit-label="Título do módulo">Aprovação de criativos</h3>
+      <p class="admin-editable" data-edit-type="text" data-edit-label="Descrição do módulo">Revise os vídeos e imagens finalizados. Aprove ou deixe um comentário em cada um.</p>
+
+      <div class="creative-list" id="creativeList">
+        <div class="creative-item" data-status="approved">
+          <div class="creative-item-top">
+            <div class="creative-thumb">
+              <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M23 7l-7 5 7 5V7z"/><rect x="1" y="5" width="15" height="14" rx="2"/></svg>
+            </div>
+            <span class="creative-name admin-editable" data-edit-type="text" data-edit-label="Nome do criativo">Vídeo final, roteiro 01</span>
+            <span class="creative-status approved">Aprovado</span>
+            <button class="file-del-btn admin-only" title="Remover criativo">
+              <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round"><path d="M3 6h18M8 6V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2m3 0-1 14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2L4 6"/></svg>
+            </button>
+          </div>
+          <div class="creative-actions">
+            <button class="creative-btn approve-btn active" type="button">
+              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+              Aprovado
+            </button>
+            <button class="creative-btn comment-btn" type="button">
+              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round"><path d="M21 11.5a8.4 8.4 0 0 1-8.9 8.4 8.6 8.6 0 0 1-3.2-.6L3 21l1.7-5.1a8.3 8.3 0 0 1-.9-3.9 8.4 8.4 0 0 1 8.9-8.4 8.4 8.4 0 0 1 8.3 8.9Z"/></svg>
+              Comentar
+            </button>
+          </div>
+          <div class="creative-comment-box">
+            <textarea placeholder="Escreva o que gostaria de ajustar..."></textarea>
+            <button class="btn btn-primary creative-save-comment" type="button" style="align-self:flex-end;">Salvar comentário</button>
+          </div>
+          <div class="creative-comment-saved" style="display:none;"></div>
+        </div>
+
+        <div class="creative-item" data-status="pending">
+          <div class="creative-item-top">
+            <div class="creative-thumb">
+              <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="M21 15l-5-5L5 21"/></svg>
+            </div>
+            <span class="creative-name admin-editable" data-edit-type="text" data-edit-label="Nome do criativo">Imagem final, anúncio estático</span>
+            <span class="creative-status pending">Pendente</span>
+            <button class="file-del-btn admin-only" title="Remover criativo">
+              <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round"><path d="M3 6h18M8 6V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2m3 0-1 14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2L4 6"/></svg>
+            </button>
+          </div>
+          <div class="creative-actions">
+            <button class="creative-btn approve-btn" type="button">
+              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+              Aprovar
+            </button>
+            <button class="creative-btn comment-btn" type="button">
+              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round"><path d="M21 11.5a8.4 8.4 0 0 1-8.9 8.4 8.6 8.6 0 0 1-3.2-.6L3 21l1.7-5.1a8.3 8.3 0 0 1-.9-3.9 8.4 8.4 0 0 1 8.9-8.4 8.4 8.4 0 0 1 8.3 8.9Z"/></svg>
+              Comentar
+            </button>
+          </div>
+          <div class="creative-comment-box">
+            <textarea placeholder="Escreva o que gostaria de ajustar..."></textarea>
+            <button class="btn btn-primary creative-save-comment" type="button" style="align-self:flex-end;">Salvar comentário</button>
+          </div>
+          <div class="creative-comment-saved" style="display:none;"></div>
+        </div>
+      </div>
+
+      <button class="add-row-btn admin-only" id="addCreativeBtn" type="button" style="margin-top:8px;margin-bottom:0;">
+        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg>
+        Adicionar criativo
+      </button>
+
+      <div class="lock-note">
+        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><rect x="4" y="10" width="16" height="10" rx="2"/><path d="M8 10V7a4 4 0 0 1 8 0v3"/></svg>
+        Libera após aprovação total do módulo anterior
+      </div>
+      <div class="module-foot">
+        <span class="module-count" id="creativeCount">1/2 aprovados</span>
+      </div>
+    </div>
+    </div>
+
+  <!-- ============ FUNIL DE PERFORMANCE ============ -->
+  <div class="section-head">
+    <div>
+      <span class="section-num">PERFORMANCE · 04</span>
+      <h2>Funil de performance da estratégia</h2>
+      <p>Palavras-chave, funil de mídia e investimento, mês a mês.</p>
+    </div>
+  </div>
+
+  <section class="funnel-panel reveal">
+
+    <div class="month-select" id="monthSelect">
+      <button class="month-pill" data-has-data="0">Jan 2026<span class="no-data-dot"></span></button>
+      <button class="month-pill" data-has-data="0">Fev 2026<span class="no-data-dot"></span></button>
+      <button class="month-pill" data-has-data="0">Mar 2026<span class="no-data-dot"></span></button>
+      <button class="month-pill" data-has-data="1">Abr 2026</button>
+      <button class="month-pill" data-has-data="1">Mai 2026</button>
+      <button class="month-pill active" data-has-data="1">Jun 2026</button>
+    </div>
+
+    <div class="funnel-body" id="funnelBody">
+
+      <div class="no-data-overlay" id="noDataOverlay">
+        <div class="nd-icon">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 3v18h18"/><path d="M7 15l4-4 3 3 5-6"/><line x1="4" y1="21" x2="21" y2="4" stroke-dasharray="2 3"/></svg>
+        </div>
+        <h4>Sem dados</h4>
+        <p>Mês anterior ao início da campanha ou sem veiculação registrada.</p>
+      </div>
+
+      <div class="subhead">
+        <h3>Palavras-chave monitoradas</h3>
+        <span class="count" id="kwCount">10 termos</span>
+      </div>
+      <div class="kw-table-wrap">
+        <table class="kw-table">
+          <thead>
+            <tr>
+              <th>Palavra-chave</th>
+              <th>Status</th>
+              <th class="num">Cliques</th>
+              <th class="num">CPC médio</th>
+            </tr>
+          </thead>
+          <tbody id="kwTableBody">
+            <tr class="admin-editable" data-edit-type="keyword-row"><td class="kw-name">academia perto de mim</td><td><span class="kw-status aprovada">Aprovada</span></td><td class="num">14.800</td><td class="num">R$ 2,10</td></tr>
+            <tr class="admin-editable" data-edit-type="keyword-row"><td class="kw-name">personal trainer</td><td><span class="kw-status aprovada">Aprovada</span></td><td class="num">9.200</td><td class="num">R$ 3,40</td></tr>
+            <tr class="admin-editable" data-edit-type="keyword-row"><td class="kw-name">pilates studio</td><td><span class="kw-status aprovada">Aprovada</span></td><td class="num">6.500</td><td class="num">R$ 2,75</td></tr>
+            <tr class="admin-editable" data-edit-type="keyword-row"><td class="kw-name">treino funcional</td><td><span class="kw-status aprovada">Aprovada</span></td><td class="num">5.100</td><td class="num">R$ 1,95</td></tr>
+            <tr class="admin-editable" data-edit-type="keyword-row"><td class="kw-name">musculação para iniciantes</td><td><span class="kw-status pendente">Pendente</span></td><td class="num">3.900</td><td class="num">R$ 1,60</td></tr>
+            <tr class="admin-editable" data-edit-type="keyword-row"><td class="kw-name">academia com nutricionista</td><td><span class="kw-status pendente">Pendente</span></td><td class="num">2.700</td><td class="num">R$ 2,05</td></tr>
+            <tr class="admin-editable" data-edit-type="keyword-row"><td class="kw-name">avaliação física gratuita</td><td><span class="kw-status aprovada">Aprovada</span></td><td class="num">2.200</td><td class="num">R$ 1,40</td></tr>
+            <tr class="admin-editable" data-edit-type="keyword-row"><td class="kw-name">studio de dança fitness</td><td><span class="kw-status rejeitada">Rejeitada</span></td><td class="num">1.850</td><td class="num">R$ 3,90</td></tr>
+            <tr class="admin-editable" data-edit-type="keyword-row"><td class="kw-name">crossfit box</td><td><span class="kw-status aprovada">Aprovada</span></td><td class="num">4.400</td><td class="num">R$ 2,30</td></tr>
+            <tr class="admin-editable" data-edit-type="keyword-row"><td class="kw-name">plano academia mensal</td><td><span class="kw-status pendente">Pendente</span></td><td class="num">3.100</td><td class="num">R$ 1,85</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <button class="add-row-btn" id="addKeywordBtn" type="button">
+        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg>
+        Adicionar palavra-chave
+      </button>
+
+      <div class="funnel-grid">
+        <div>
+          <div class="subhead"><h3>Funil de mídia</h3></div>
+          <div class="funnel-visual" id="funnelVisual">
+            <div class="funnel-stage admin-editable" data-edit-type="funnel-stage" style="--l1:0%; --l2:8%; background:#F5B94A;">
+              <span class="fs-label">Visualizações</span>
+              <span class="fs-value">184.320</span>
+            </div>
+            <div class="funnel-drop"><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M12 5v14M6 13l6 6 6-6"/></svg> 47,6% alcançado</div>
+
+            <div class="funnel-stage admin-editable" data-edit-type="funnel-stage" style="--l1:8%; --l2:20%; background:#F48322;">
+              <span class="fs-label">Alcance</span>
+              <span class="fs-value">96.540</span>
+            </div>
+            <div class="funnel-drop"><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M12 5v14M6 13l6 6 6-6"/></svg> 4,98% clicou</div>
+
+            <div class="funnel-stage admin-editable" data-edit-type="funnel-stage" style="--l1:20%; --l2:34%; background:#E8703A;">
+              <span class="fs-label">Cliques</span>
+              <span class="fs-value">4.812</span>
+            </div>
+            <div class="funnel-drop"><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M12 5v14M6 13l6 6 6-6"/></svg> 6,49% converteu</div>
+
+            <div class="funnel-stage admin-editable" data-edit-type="funnel-stage" style="--l1:34%; --l2:34%; background:#D65A4F; padding:11px 18px;">
+              <span class="fs-label">Resultados</span>
+              <span class="fs-value">312</span>
+            </div>
+            <button class="add-row-btn" id="addFunnelBtn" type="button" style="margin-top:8px;margin-bottom:0;">
+              <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg>
+              Adicionar etapa do funil
+            </button>
+          </div>
+        </div>
+
+        <div class="metrics-col">
+          <div class="metric-card">
+            <div class="m-label">Custo por resultado (CPA)<span class="trend down"><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M6 9l6 6 6-6"/></svg> -8,2%</span></div>
+            <div class="m-value admin-editable" data-edit-type="text" data-edit-label="Custo por resultado (CPA)">R$ 38,40</div>
+            <div class="m-sub">vs. R$ 41,80 no mês anterior</div>
+          </div>
+          <div class="metric-card">
+            <div class="m-label">Taxa de conversão do funil</div>
+            <div class="m-value admin-editable" data-edit-type="text" data-edit-label="Taxa de conversão do funil">0,169%</div>
+            <div class="m-sub">visualização → resultado</div>
+          </div>
+          <div class="metric-card spend">
+            <div class="m-label">Valor investido nesse mês</div>
+            <div class="m-value admin-editable" data-edit-type="text" data-edit-label="Valor investido nesse mês">R$ 11.980</div>
+            <div class="budget-bar"><span style="width:99.8%"></span></div>
+            <div class="m-sub">99,8% do orçamento de R$ 12.000</div>
+          </div>
+          <div class="metric-card available">
+            <div class="m-label">Valor disponível para investir no mês</div>
+            <div class="m-value admin-editable" data-edit-type="text" data-edit-label="Valor disponível para investir no mês">R$ 12.000</div>
+            <div class="m-sub">limite mensal definido para a campanha</div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <div class="foot">
+    <span>viskoo.com.br · painel do cliente</span>
+    <span>atualizado em 25 jul 2026, 09:14</span>
+  </div>
+
+</div>
+
+<!-- ============ PiP FLOATING GUIDE ============ -->
+<div class="pip" id="pip">
+  <div class="pip-head">
+    <div class="pip-head-l">
+      <svg class="pip-drag" width="12" height="12" viewBox="0 0 24 24" fill="currentColor"><circle cx="8" cy="6" r="1.6"/><circle cx="16" cy="6" r="1.6"/><circle cx="8" cy="12" r="1.6"/><circle cx="16" cy="12" r="1.6"/><circle cx="8" cy="18" r="1.6"/><circle cx="16" cy="18" r="1.6"/></svg>
+      <div>
+        <div class="pip-title">Como enviar o vídeo</div>
+        <div class="pip-sub">guia · módulo 03</div>
+      </div>
+    </div>
+    <div class="pip-actions">
+      <button class="pip-btn" id="pipMin" title="Minimizar">
+        <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round"><path d="M5 12h14"/></svg>
+      </button>
+      <button class="pip-btn" id="pipClose" title="Fechar">
+        <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M6 6l12 12M18 6L6 18"/></svg>
+      </button>
+    </div>
+  </div>
+  <div class="pip-video" id="pipVideo">
+    <img class="pip-thumb-img" src="https://img.youtube.com/vi/XnEmNq6t6LU/hqdefault.jpg" alt="Miniatura do vídeo tutorial: como enviar o vídeo">
+    <div class="pip-thumb-shade"></div>
+    <button class="pip-play" id="pipPlayBtn" title="Reproduzir vídeo" aria-label="Reproduzir vídeo tutorial">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>
+    </button>
+    <div class="pip-cc">Onde clicar no painel para reenviar o vídeo reprovado do roteiro 04.</div>
+  </div>
+  <div class="pip-steps" id="pipSteps">
+    <button class="pip-step" data-video-id="XnEmNq6t6LU"><span class="n">1</span> Abra o módulo Upload de vídeos</button>
+    <button class="pip-step active" data-video-id="XnEmNq6t6LU"><span class="n">2</span> Toque em "Enviar"</button>
+    <button class="pip-step" data-video-id="XnEmNq6t6LU"><span class="n">3</span> Selecione o arquivo corrigido</button>
+    <button class="pip-step" data-video-id="XnEmNq6t6LU"><span class="n">4</span> Aguarde a análise da equipe</button>
+  </div>
+</div>
+
+<button class="pip-bubble" id="pipBubble" title="Abrir guia">
+  <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>
+  <span class="dot"></span>
+</button>
+
+<!-- ============ PLANS MODAL ============ -->
+<div class="plans-overlay" id="plansOverlay">
+  <div class="plans-modal">
+    <div class="plans-modal-head">
+      <div>
+        <h2>Seu plano</h2>
+        <p>Compare os planos disponíveis e mude quando quiser. As mudanças valem a partir do próximo ciclo.</p>
+      </div>
+      <button class="plans-close" id="plansClose" title="Fechar">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M6 6l12 12M18 6L6 18"/></svg>
+      </button>
+    </div>
+
+    <div class="plans-grid" id="plansGrid">
+
+      <div class="plan-card current" data-plan="essencial">
+        <span class="plan-current-tag">Plano atual</span>
+        <div class="plan-name">Essencial</div>
+        <div class="plan-price"><span class="val">R$ 497</span><span class="per">/mês</span></div>
+        <div class="plan-desc">Gestão feita pela equipe Viskoo, sem atendimento humano direto.</div>
+        <div class="plan-feats">
+          <div class="plan-feat"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round"><polyline points="20 6 9 17 4 12"/></svg> Até 1 campanha ativa</div>
+          <div class="plan-feat"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round"><polyline points="20 6 9 17 4 12"/></svg> Equipe por trás da operação</div>
+          <div class="plan-feat"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round"><polyline points="20 6 9 17 4 12"/></svg> Painel de acompanhamento</div>
+          <div class="plan-feat off"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M6 6l12 12M18 6L6 18"/></svg> Sem atendimento humano direto</div>
+          <div class="plan-feat off"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M6 6l12 12M18 6L6 18"/></svg> Sem reunião mensal</div>
+        </div>
+        <button class="btn plan-cta current-cta" disabled>Plano atual</button>
+      </div>
+
+      <div class="plan-card" data-plan="atendimento">
+        <div class="plan-name">Atendimento</div>
+        <div class="plan-price"><span class="val">R$ 897</span><span class="per">/mês</span></div>
+        <div class="plan-desc">Mesma operação, com atendimento mensal e mais campanhas simultâneas.</div>
+        <div class="plan-feats">
+          <div class="plan-feat"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round"><polyline points="20 6 9 17 4 12"/></svg> Até 2 campanhas simultâneas</div>
+          <div class="plan-feat"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round"><polyline points="20 6 9 17 4 12"/></svg> Meta Ads e Google Ads</div>
+          <div class="plan-feat"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round"><polyline points="20 6 9 17 4 12"/></svg> Atendimento mensal</div>
+          <div class="plan-feat"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round"><polyline points="20 6 9 17 4 12"/></svg> Painel de acompanhamento</div>
+          <div class="plan-feat off"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M6 6l12 12M18 6L6 18"/></svg> Sem reunião mensal</div>
+        </div>
+        <button class="btn plan-cta switch-cta" data-switch="atendimento">Mudar para este plano</button>
+      </div>
+
+      <div class="plan-card" data-plan="performance">
+        <div class="plan-name">Performance</div>
+        <div class="plan-price"><span class="val">R$ 2.200</span><span class="per">/mês</span></div>
+        <div class="plan-desc">Acompanhamento próximo, com reunião mensal e mais campanhas rodando ao mesmo tempo.</div>
+        <div class="plan-feats">
+          <div class="plan-feat"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round"><polyline points="20 6 9 17 4 12"/></svg> Até 5 campanhas simultâneas</div>
+          <div class="plan-feat"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round"><polyline points="20 6 9 17 4 12"/></svg> Meta Ads e Google Ads</div>
+          <div class="plan-feat"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round"><polyline points="20 6 9 17 4 12"/></svg> Reunião mensal via Meet · 1h</div>
+          <div class="plan-feat"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round"><polyline points="20 6 9 17 4 12"/></svg> Painel de acompanhamento</div>
+        </div>
+        <button class="btn plan-cta switch-cta" data-switch="performance">Mudar para este plano</button>
+      </div>
+
+    </div>
+
+    <div class="plans-footnote">
+      <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 16v-5M12 8h.01"/></svg>
+      O painel de acompanhamento é o mesmo em todos os planos. O que muda é o número de campanhas simultâneas e o tipo de atendimento.
+    </div>
+  </div>
+</div>
+
+<!-- ============ ADMIN EDIT MODAL (generic) ============ -->
+<div class="modal-overlay" id="editOverlay">
+  <div class="modal-box">
+    <div class="modal-head">
+      <h3 id="editModalTitle">Editar</h3>
+      <button class="modal-close" id="editModalClose">
+        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M6 6l12 12M18 6L6 18"/></svg>
+      </button>
+    </div>
+    <div id="editModalFields"></div>
+    <div class="modal-foot">
+      <button class="btn btn-danger" id="editModalDelete" style="display:none;">Excluir etapa</button>
+      <div class="modal-foot-right">
+        <button class="btn btn-ghost" id="editModalCancel">Cancelar</button>
+        <button class="btn btn-primary" id="editModalSave">Salvar</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ============ COMPANY TEMP LINK MODAL (admin) ============ -->
+<div class="modal-overlay" id="linkOverlay">
+  <div class="modal-box">
+    <div class="modal-head">
+      <h3>Link temporário de visualização</h3>
+      <button class="modal-close" id="linkModalClose">
+        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M6 6l12 12M18 6L6 18"/></svg>
+      </button>
+    </div>
+    <div class="field-group">
+      <label>Validade do acesso</label>
+      <div class="day-options" id="dayOptions">
+        <button class="day-chip active" data-days="7">7 dias</button>
+        <button class="day-chip" data-days="15">15 dias</button>
+        <button class="day-chip" data-days="30">30 dias</button>
+      </div>
+    </div>
+    <button class="btn btn-primary" id="generateLinkBtn" style="width:100%;justify-content:center;">Gerar link</button>
+    <div class="link-result" id="linkResult">
+      <input type="text" id="linkResultInput" readonly>
+      <button class="link-copy-btn" id="linkCopyBtn" title="Copiar link">
+        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="12" height="12" rx="2"/><path d="M5 15V5a2 2 0 0 1 2-2h10"/></svg>
+      </button>
+    </div>
+    <div class="link-note" id="linkNote">O link dá acesso somente leitura ao painel de <b>NovaFit Studio</b>, sem necessidade de login.</div>
+  </div>
+</div>
+
+<!-- ============ BRIEFING WIZARD MODAL ============ -->
+<div class="modal-overlay" id="wizardOverlay">
+  <div class="modal-box wide">
+    <div class="modal-head">
+      <h3>Briefing da campanha</h3>
+      <button class="modal-close" id="wizardModalClose">
+        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M6 6l12 12M18 6L6 18"/></svg>
+      </button>
+    </div>
+
+    <div id="wizardStepView">
+      <div class="wizard-progress">
+        <div class="wizard-progress-bar"><span id="wizardProgressFill" style="width:20%"></span></div>
+        <div class="wizard-progress-label"><span id="wizardStepLabel">Pergunta 1 de 5</span><span id="wizardPercentLabel">20%</span></div>
+      </div>
+      <p class="wizard-question" id="wizardQuestion">Qual o principal objetivo da campanha?</p>
+      <div class="field-group">
+        <textarea id="wizardAnswer" placeholder="Digite sua resposta..." rows="4"></textarea>
+      </div>
+      <div class="wizard-nav">
+        <button class="btn btn-ghost" id="wizardPrev">Voltar</button>
+        <button class="btn btn-primary" id="wizardNext">Avançar</button>
+      </div>
+      <div class="wizard-dots" id="wizardDots"></div>
+    </div>
+
+    <div class="wizard-done" id="wizardDoneView" style="display:none;">
+      <div class="wizard-done-icon">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+      </div>
+      <h4>Respostas registradas</h4>
+      <p>Obrigado! A equipe Viskoo já pode revisar o briefing e seguir para os próximos módulos.</p>
+      <button class="btn btn-ghost" id="wizardDoneClose">Fechar</button>
+    </div>
+  </div>
+</div>
+
+<!-- ============ STATUS PILL EDIT MODAL (admin) ============ -->
+<div class="modal-overlay" id="statusOverlay">
+  <div class="modal-box">
+    <div class="modal-head">
+      <h3>Editar status da campanha</h3>
+      <button class="modal-close" id="statusModalClose">
+        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M6 6l12 12M18 6L6 18"/></svg>
+      </button>
+    </div>
+    <div class="field-group">
+      <label>Texto do status</label>
+      <input type="text" id="fldStatusLabel" placeholder="ex: Campanha ativa" maxlength="40">
+    </div>
+    <div class="field-group">
+      <label>Cor</label>
+      <div class="color-swatches" id="colorSwatches">
+        <button type="button" class="color-swatch" data-color="#48D18A" style="background:#48D18A;" title="Verde"></button>
+        <button type="button" class="color-swatch" data-color="#F5B94A" style="background:#F5B94A;" title="Amarelo"></button>
+        <button type="button" class="color-swatch" data-color="#F2695E" style="background:#F2695E;" title="Vermelho"></button>
+        <button type="button" class="color-swatch" data-color="#F48322" style="background:#F48322;" title="Laranja"></button>
+        <button type="button" class="color-swatch" data-color="#5B9DF2" style="background:#5B9DF2;" title="Azul"></button>
+        <button type="button" class="color-swatch" data-color="#B57BE0" style="background:#B57BE0;" title="Roxo"></button>
+        <button type="button" class="color-swatch" data-color="#9AA1AE" style="background:#9AA1AE;" title="Cinza"></button>
+      </div>
+      <div class="color-picker-row">
+        <input type="color" id="fldStatusColor" value="#48D18A">
+        <span>ou escolha qualquer cor</span>
+      </div>
+    </div>
+    <div class="modal-foot">
+      <div class="modal-foot-right">
+        <button class="btn btn-ghost" id="statusModalCancel">Cancelar</button>
+        <button class="btn btn-primary" id="statusModalSave">Salvar</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ============ CONTACT INFO VIEW MODAL ============ -->
+<div class="modal-overlay" id="contactViewOverlay">
+  <div class="modal-box">
+    <div class="modal-head">
+      <h3>Dados de contato</h3>
+      <button class="modal-close" id="contactViewClose">
+        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M6 6l12 12M18 6L6 18"/></svg>
+      </button>
+    </div>
+    <p style="font-size:12px;color:var(--text-secondary);margin:-6px 0 14px;">Usados pela Viskoo para falar com você sobre a campanha, cobranças e decisões importantes.</p>
+
+    <div class="contact-rows">
+      <div class="contact-row">
+        <div class="contact-row-icon">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+        </div>
+        <div class="contact-row-body">
+          <div class="contact-row-label">E-mail de comunicação</div>
+          <div class="contact-row-value empty" id="emailComm">Não informado</div>
+        </div>
+      </div>
+
+      <div class="contact-row">
+        <div class="contact-row-icon">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="5" width="20" height="14" rx="2"/><path d="M2 10h20"/><path d="M6 15h4"/></svg>
+        </div>
+        <div class="contact-row-body">
+          <div class="contact-row-label">E-mail financeiro</div>
+          <div class="contact-row-value empty" id="emailFin">Não informado</div>
+        </div>
+      </div>
+
+      <div class="contact-row">
+        <div class="contact-row-icon">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2 4 5v6c0 5 3.4 8.7 8 10 4.6-1.3 8-5 8-10V5l-8-3Z"/></svg>
+        </div>
+        <div class="contact-row-body">
+          <div class="contact-row-label">E-mail do administrador / gestor</div>
+          <div class="contact-row-value empty" id="emailManager">Não informado</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="modal-foot">
+      <button class="btn btn-primary admin-only" id="composeEmailBtn">
+        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="M2 6l10 7 10-7"/></svg>
+        Enviar e-mail
+      </button>
+      <div class="modal-foot-right">
+        <button class="btn btn-ghost" id="editContactBtn">
+          Editar dados
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20h9"/><path d="M16.5 3.5a2.1 2.1 0 0 1 3 3L7 19l-4 1 1-4Z"/></svg>
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ============ CONTACT INFO EDIT MODAL ============ -->
+<div class="modal-overlay" id="contactOverlay">
+  <div class="modal-box">
+    <div class="modal-head">
+      <h3>Dados de contato</h3>
+      <button class="modal-close" id="contactModalClose">
+        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M6 6l12 12M18 6L6 18"/></svg>
+      </button>
+    </div>
+    <div class="field-group">
+      <label>E-mail de comunicação</label>
+      <input type="email" id="fldEmailComm" placeholder="contato@empresa.com">
+    </div>
+    <div class="field-group">
+      <label>E-mail financeiro</label>
+      <input type="email" id="fldEmailFin" placeholder="financeiro@empresa.com">
+    </div>
+    <div class="field-group">
+      <label>E-mail do administrador / gestor</label>
+      <input type="email" id="fldEmailManager" placeholder="gestor@empresa.com">
+    </div>
+    <div class="modal-foot">
+      <div class="modal-foot-right">
+        <button class="btn btn-ghost" id="contactModalCancel">Cancelar</button>
+        <button class="btn btn-primary" id="contactModalSave">Salvar</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ============ EMAIL COMPOSER MODAL (admin) ============ -->
+<div class="modal-overlay" id="emailOverlay">
+  <div class="modal-box wide">
+    <div class="modal-head">
+      <h3>Enviar e-mail ao cliente</h3>
+      <button class="modal-close" id="emailModalClose">
+        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M6 6l12 12M18 6L6 18"/></svg>
+      </button>
+    </div>
+    <div class="field-group">
+      <label>Destinatário</label>
+      <select id="fldEmailTo">
+        <option value="comm">E-mail de comunicação</option>
+        <option value="fin">E-mail financeiro</option>
+        <option value="manager">E-mail do administrador / gestor</option>
+      </select>
+      <div class="link-note" id="emailToPreview">Nenhum e-mail cadastrado para este contato ainda.</div>
+    </div>
+    <div class="field-group">
+      <label>Assunto</label>
+      <input type="text" id="fldEmailSubject" placeholder="Assunto do e-mail">
+    </div>
+    <div class="field-group">
+      <label>Mensagem</label>
+      <textarea id="fldEmailBody" rows="6" placeholder="Escreva a mensagem..."></textarea>
+    </div>
+    <div class="link-note">O envio abre seu aplicativo de e-mail padrão com a mensagem pronta para disparo.</div>
+    <div class="modal-foot">
+      <div class="modal-foot-right">
+        <button class="btn btn-ghost" id="emailModalCancel">Cancelar</button>
+        <button class="btn btn-primary" id="emailModalSend">Abrir e-mail</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+  // ---- Theme toggle ----
+  const root = document.documentElement;
+  const themeToggle = document.getElementById('themeToggle');
+  function setTheme(mode){
+    root.setAttribute('data-theme', mode);
+    themeToggle.querySelectorAll('.theme-btn').forEach(b => {
+      b.classList.toggle('active', b.dataset.themeBtn === mode);
+    });
+    try { localStorage.setItem('viskoo-theme', mode); } catch(e) {}
+  }
+  let savedTheme = 'dark';
+  try {
+    savedTheme = localStorage.getItem('viskoo-theme') ||
+      (window.matchMedia && window.matchMedia('(prefers-color-scheme: light)').matches ? 'light' : 'dark');
+  } catch(e) {}
+  setTheme(savedTheme);
+  themeToggle.addEventListener('click', (e) => {
+    const btn = e.target.closest('.theme-btn');
+    if (!btn) return;
+    setTheme(btn.dataset.themeBtn);
+  });
+
+  // ---- PiP guide controls ----
+  const pip = document.getElementById('pip');
+  const pipBubble = document.getElementById('pipBubble');
+  document.getElementById('pipMin').addEventListener('click', () => {
+    pip.classList.toggle('collapsed');
+  });
+  document.getElementById('pipClose').addEventListener('click', () => {
+    pip.classList.add('hidden');
+    pipBubble.style.display = 'flex';
+  });
+  pipBubble.addEventListener('click', () => {
+    pip.classList.remove('hidden');
+    pip.classList.remove('collapsed');
+    pipBubble.style.display = 'none';
+  });
+
+  // ---- PiP video: load the real YouTube tutorial on demand ----
+  const pipVideo = document.getElementById('pipVideo');
+  const pipPlayBtn = document.getElementById('pipPlayBtn');
+  const pipSteps = document.getElementById('pipSteps');
+
+  function loadPipVideo(videoId){
+    if (!videoId) return;
+    pipVideo.innerHTML =
+      '<iframe class="pip-iframe" src="https://www.youtube-nocookie.com/embed/' + videoId + '?autoplay=1&rel=0" ' +
+      'title="Vídeo tutorial" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" ' +
+      'allowfullscreen loading="lazy"></iframe>';
+    if (pip.classList.contains('collapsed')) pip.classList.remove('collapsed');
+  }
+
+  pipPlayBtn.addEventListener('click', () => {
+    const activeStep = pipSteps.querySelector('.pip-step.active') || pipSteps.querySelector('.pip-step');
+    loadPipVideo(activeStep ? activeStep.dataset.videoId : 'XnEmNq6t6LU');
+  });
+
+  pipSteps.addEventListener('click', (e) => {
+    const stepBtn = e.target.closest('.pip-step');
+    if (!stepBtn) return;
+    pipSteps.querySelectorAll('.pip-step').forEach(s => s.classList.remove('active'));
+    stepBtn.classList.add('active');
+    loadPipVideo(stepBtn.dataset.videoId);
+  });
+
+  // ---- Month selector / no-data overlay ----
+  const monthSelect = document.getElementById('monthSelect');
+  const overlay = document.getElementById('noDataOverlay');
+  monthSelect.addEventListener('click', (e) => {
+    const btn = e.target.closest('.month-pill');
+    if (!btn) return;
+    monthSelect.querySelectorAll('.month-pill').forEach(p => p.classList.remove('active'));
+    btn.classList.add('active');
+    const hasData = btn.dataset.hasData === '1';
+    overlay.classList.toggle('show', !hasData);
+  });
+
+  // ---- Plans modal ----
+  const plansBtn = document.getElementById('plansBtn');
+  const plansOverlay = document.getElementById('plansOverlay');
+  const plansClose = document.getElementById('plansClose');
+  const plansGrid = document.getElementById('plansGrid');
+
+  function openPlans(){ plansOverlay.classList.add('show'); }
+  function closePlans(){ plansOverlay.classList.remove('show'); }
+
+  plansBtn.addEventListener('click', openPlans);
+  plansClose.addEventListener('click', closePlans);
+  plansOverlay.addEventListener('click', (e) => { if (e.target === plansOverlay) closePlans(); });
+  document.addEventListener('keydown', (e) => { if (e.key === 'Escape') closePlans(); });
+
+  plansGrid.addEventListener('click', (e) => {
+    const btn = e.target.closest('[data-switch]');
+    if (!btn) return;
+    const targetCard = btn.closest('.plan-card');
+    const targetName = targetCard.querySelector('.plan-name').textContent;
+
+    plansGrid.querySelectorAll('.plan-card').forEach(card => {
+      const isTarget = card === targetCard;
+      card.classList.toggle('current', isTarget);
+      let tag = card.querySelector('.plan-current-tag');
+      const cta = card.querySelector('.plan-cta');
+      if (isTarget){
+        if (!tag){
+          tag = document.createElement('span');
+          tag.className = 'plan-current-tag';
+          tag.textContent = 'Plano atual';
+          card.prepend(tag);
+        }
+        cta.textContent = 'Plano atual';
+        cta.className = 'btn plan-cta current-cta';
+        cta.removeAttribute('data-switch');
+        cta.setAttribute('disabled', 'disabled');
+      } else {
+        if (tag) tag.remove();
+        if (!cta.hasAttribute('data-switch')){
+          cta.textContent = 'Mudar para este plano';
+          cta.className = 'btn plan-cta switch-cta';
+          cta.removeAttribute('disabled');
+          cta.setAttribute('data-switch', card.dataset.plan);
+        }
+      }
+    });
+
+    closePlans();
+  });
+
+  // ---- Admin mode ----
+  const adminSwitch = document.getElementById('adminSwitch');
+  const togglePlansBtn = document.getElementById('togglePlansBtn');
+
+  function setAdminMode(on){
+    document.body.classList.toggle('admin-mode', on);
+    try { localStorage.setItem('viskoo-admin', on ? '1' : '0'); } catch(e) {}
+  }
+  let savedAdmin = false;
+  try { savedAdmin = localStorage.getItem('viskoo-admin') === '1'; } catch(e) {}
+  setAdminMode(savedAdmin);
+  adminSwitch.addEventListener('click', () => {
+    setAdminMode(!document.body.classList.contains('admin-mode'));
+  });
+
+  let savedPlansHidden = false;
+  try { savedPlansHidden = localStorage.getItem('viskoo-plans-hidden') === '1'; } catch(e) {}
+  if (savedPlansHidden) plansBtn.classList.add('admin-hidden');
+  togglePlansBtn.addEventListener('click', () => {
+    const hidden = plansBtn.classList.toggle('admin-hidden');
+    try { localStorage.setItem('viskoo-plans-hidden', hidden ? '1' : '0'); } catch(e) {}
+  });
+
+  // ---- Editable timeline ----
+  const defaultTimeline = [
+    { label: 'Briefing', date: 'concluído em 02/06', state: 'done', ongoing: false },
+    { label: 'Roteiros', date: 'concluído em 08/06', state: 'done', ongoing: false },
+    { label: 'Upload de vídeos', date: 'prazo até 12/07', state: 'current', ongoing: false },
+    { label: 'Aprovação de criativos', date: 'prazo até 18/07', state: 'todo', ongoing: false },
+    { label: 'Aprovação final', date: 'prazo até 22/07', state: 'todo', ongoing: false },
+    { label: 'Config. de mídia', date: 'prazo até 25/07', state: 'todo', ongoing: false },
+    { label: 'Em veiculação', date: 'a partir de 28/07', state: 'todo', ongoing: false },
+    { label: 'Performance', date: 'otimização contínua', state: 'todo', ongoing: true }
+  ];
+  let timelineData = [];
+
+  function loadTimelineData(){
+    try {
+      const raw = localStorage.getItem('viskoo-timeline');
+      if (raw){ timelineData = JSON.parse(raw); return; }
+    } catch(e) {}
+    timelineData = JSON.parse(JSON.stringify(defaultTimeline));
+  }
+  function saveTimelineData(){
+    try { localStorage.setItem('viskoo-timeline', JSON.stringify(timelineData)); } catch(e) {}
+  }
+
+  const stepIcons = {
+    done: '<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>',
+    current: '<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2v4M12 18v4M4.9 4.9l2.8 2.8M16.3 16.3l2.8 2.8M2 12h4M18 12h4M4.9 19.1l2.8-2.8M16.3 7.7l2.8-2.8"/></svg>',
+    todo: '<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><rect x="4" y="4" width="16" height="16" rx="3"/></svg>',
+    ongoing: '<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12a9 9 0 1 1-3-6.7"/><path d="M21 3v5h-5"/></svg>'
+  };
+
+  function renderTimeline(){
+    const container = document.getElementById('stepsContainer');
+    const trackFill = document.getElementById('trackFill');
+    const runwayMeta = document.getElementById('runwayMeta');
+    const total = timelineData.length;
+
+    let currentIdx = timelineData.findIndex(s => s.state === 'current');
+    if (currentIdx === -1){
+      let lastDone = -1;
+      timelineData.forEach((s, i) => { if (s.state === 'done') lastDone = i; });
+      currentIdx = lastDone >= 0 ? lastDone : 0;
+    }
+
+    let html = '';
+    timelineData.forEach((step, i) => {
+      const icon = step.ongoing ? stepIcons.ongoing : stepIcons[step.state];
+      html += '<div class="step ' + step.state + (step.ongoing ? ' ongoing' : '') + ' admin-editable" data-edit-type="timeline-step" data-index="' + i + '">' +
+        '<div class="step-node">' + icon + '</div>' +
+        '<div class="step-label">' + step.label + '</div>' +
+        '<div class="step-date">' + step.date + '</div>' +
+      '</div>';
+    });
+    html += '<button class="step-add" id="addStepBtn" type="button">' +
+      '<div class="step-node"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg></div>' +
+      '<div class="step-label">Nova etapa</div></button>';
+    container.innerHTML = html;
+
+    const fillPct = total > 1 ? (currentIdx / (total - 1)) * 100 : 0;
+    trackFill.style.width = fillPct + '%';
+    runwayMeta.innerHTML = 'Etapa <b>' + (currentIdx + 1) + ' de ' + total + '</b> · início <b>02/06</b>';
+
+    const addBtn = document.getElementById('addStepBtn');
+    if (addBtn) addBtn.addEventListener('click', () => openEditModal(null, 'timeline-step-new'));
+  }
+
+  loadTimelineData();
+  renderTimeline();
+
+  // ---- Generic admin edit modal ----
+  const editOverlay = document.getElementById('editOverlay');
+  const editModalTitle = document.getElementById('editModalTitle');
+  const editModalFields = document.getElementById('editModalFields');
+  const editModalSave = document.getElementById('editModalSave');
+  const editModalDelete = document.getElementById('editModalDelete');
+  let currentEditTarget = null;
+  let currentEditType = null;
+  let currentEditIndex = null;
+
+  function openEditModal(target, type){
+    currentEditTarget = target;
+    currentEditType = type;
+    currentEditIndex = null;
+    editModalDelete.style.display = 'none';
+    editModalFields.innerHTML = '';
+
+    if (type === 'text'){
+      editModalTitle.textContent = target.dataset.editLabel || 'Editar texto';
+      const val = target.textContent.trim();
+      editModalFields.innerHTML =
+        '<div class="field-group"><label>' + (target.dataset.editLabel || 'Valor') + '</label>' +
+        (val.length > 60
+          ? '<textarea id="fld_text" rows="3">' + val.replace(/</g,'&lt;') + '</textarea>'
+          : '<input type="text" id="fld_text" value="' + val.replace(/"/g,'&quot;') + '">') +
+        '</div>';
+    }
+
+    if (type === 'keyword-row'){
+      editModalTitle.textContent = 'Editar palavra-chave';
+      const tds = target.querySelectorAll('td');
+      const kwName = tds[0].textContent.trim();
+      const statusEl = tds[1].querySelector('.kw-status');
+      const status = statusEl.classList.contains('aprovada') ? 'aprovada' : statusEl.classList.contains('pendente') ? 'pendente' : 'rejeitada';
+      const clicks = tds[2].textContent.trim();
+      const cpc = tds[3].textContent.trim();
+      editModalFields.innerHTML =
+        '<div class="field-group"><label>Palavra-chave</label><input type="text" id="fld_kw" value="' + kwName.replace(/"/g,'&quot;') + '"></div>' +
+        '<div class="field-group"><label>Status</label><select id="fld_status">' +
+          '<option value="aprovada"' + (status==='aprovada'?' selected':'') + '>Aprovada</option>' +
+          '<option value="pendente"' + (status==='pendente'?' selected':'') + '>Pendente</option>' +
+          '<option value="rejeitada"' + (status==='rejeitada'?' selected':'') + '>Rejeitada</option>' +
+        '</select></div>' +
+        '<div class="field-group"><label>Cliques</label><input type="text" id="fld_clicks" value="' + clicks.replace(/"/g,'&quot;') + '"></div>' +
+        '<div class="field-group"><label>CPC médio</label><input type="text" id="fld_cpc" value="' + cpc.replace(/"/g,'&quot;') + '"></div>';
+      editModalDelete.textContent = 'Excluir palavra-chave';
+      editModalDelete.style.display = 'inline-flex';
+    }
+
+    if (type === 'funnel-stage'){
+      editModalTitle.textContent = 'Editar etapa do funil';
+      const label = target.querySelector('.fs-label').textContent.trim();
+      const value = target.querySelector('.fs-value').textContent.trim();
+      editModalFields.innerHTML =
+        '<div class="field-group"><label>Nome da etapa</label><input type="text" id="fld_label" value="' + label.replace(/"/g,'&quot;') + '"></div>' +
+        '<div class="field-group"><label>Valor</label><input type="text" id="fld_value" value="' + value.replace(/"/g,'&quot;') + '"></div>';
+      editModalDelete.textContent = 'Excluir etapa do funil';
+      editModalDelete.style.display = 'inline-flex';
+    }
+
+    if (type === 'file-status'){
+      editModalTitle.textContent = 'Status do arquivo';
+      const fname = target.querySelector('.fname span').textContent.trim();
+      const status = target.dataset.status || 'review';
+      const reason = target.dataset.reason || '';
+      editModalFields.innerHTML =
+        '<div class="field-group"><label>Arquivo</label><input type="text" value="' + fname.replace(/"/g,'&quot;') + '" disabled></div>' +
+        '<div class="field-group"><label>Status</label><select id="fld_filestatus">' +
+          '<option value="approved"' + (status==='approved'?' selected':'') + '>Aprovado</option>' +
+          '<option value="review"' + (status==='review'?' selected':'') + '>Em análise</option>' +
+          '<option value="rejected"' + (status==='rejected'?' selected':'') + '>Reprovado</option>' +
+        '</select></div>' +
+        '<div class="field-group" id="fld_reason_group" style="display:' + (status==='rejected'?'flex':'none') + ';">' +
+          '<label>Motivo da reprovação</label><textarea id="fld_reason" rows="3">' + reason.replace(/</g,'&lt;') + '</textarea>' +
+        '</div>';
+      const sel = editModalFields.querySelector('#fld_filestatus');
+      sel.addEventListener('change', () => {
+        editModalFields.querySelector('#fld_reason_group').style.display = sel.value === 'rejected' ? 'flex' : 'none';
+      });
+    }
+
+    if (type === 'timeline-step' || type === 'timeline-step-new'){
+      const isNew = type === 'timeline-step-new';
+      const idx = isNew ? -1 : parseInt(target.dataset.index, 10);
+      const step = isNew ? { label: '', date: '', state: 'todo', ongoing: false } : timelineData[idx];
+      currentEditIndex = isNew ? null : idx;
+      editModalTitle.textContent = isNew ? 'Nova etapa' : 'Editar etapa';
+      editModalFields.innerHTML =
+        '<div class="field-group"><label>Nome da etapa</label><input type="text" id="fld_step_label" value="' + step.label.replace(/"/g,'&quot;') + '" placeholder="ex: Aprovação final"></div>' +
+        '<div class="field-group"><label>Prazo</label><input type="text" id="fld_step_date" value="' + step.date.replace(/"/g,'&quot;') + '" placeholder="ex: prazo até 20/07"></div>' +
+        '<div class="field-group"><label>Situação</label><select id="fld_step_state">' +
+          '<option value="done"' + (step.state==='done'?' selected':'') + '>Concluída</option>' +
+          '<option value="current"' + (step.state==='current'?' selected':'') + '>Etapa atual</option>' +
+          '<option value="todo"' + (step.state==='todo'?' selected':'') + '>Pendente</option>' +
+        '</select></div>' +
+        '<div class="field-group"><label style="display:flex;align-items:center;gap:7px;font-weight:600;color:var(--text-primary);">' +
+          '<input type="checkbox" id="fld_step_ongoing" style="width:auto;"' + (step.ongoing?' checked':'') + '> Etapa contínua, sem prazo fixo (evolução constante)' +
+        '</label></div>';
+      if (!isNew) { editModalDelete.textContent = 'Excluir etapa'; editModalDelete.style.display = 'inline-flex'; }
+    }
+
+    editOverlay.classList.add('show');
+  }
+
+  function closeEditModal(){
+    editOverlay.classList.remove('show');
+    currentEditTarget = null;
+    currentEditType = null;
+  }
+
+  document.getElementById('editModalClose').addEventListener('click', closeEditModal);
+  document.getElementById('editModalCancel').addEventListener('click', closeEditModal);
+  editOverlay.addEventListener('click', (e) => { if (e.target === editOverlay) closeEditModal(); });
+
+  editModalSave.addEventListener('click', () => {
+    if (!currentEditTarget) return;
+
+    if (currentEditType === 'text'){
+      const el = document.getElementById('fld_text');
+      currentEditTarget.textContent = el.value;
+    }
+
+    if (currentEditType === 'keyword-row'){
+      const tds = currentEditTarget.querySelectorAll('td');
+      tds[0].textContent = document.getElementById('fld_kw').value;
+      const statusVal = document.getElementById('fld_status').value;
+      const statusEl = tds[1].querySelector('.kw-status');
+      statusEl.className = 'kw-status ' + statusVal;
+      statusEl.textContent = statusVal.charAt(0).toUpperCase() + statusVal.slice(1);
+      tds[2].textContent = document.getElementById('fld_clicks').value;
+      tds[3].textContent = document.getElementById('fld_cpc').value;
+    }
+
+    if (currentEditType === 'funnel-stage'){
+      currentEditTarget.querySelector('.fs-label').textContent = document.getElementById('fld_label').value;
+      currentEditTarget.querySelector('.fs-value').textContent = document.getElementById('fld_value').value;
+      recomputeFunnelWidths();
+    }
+
+    if (currentEditType === 'file-status'){
+      const statusVal = document.getElementById('fld_filestatus').value;
+      const reasonVal = document.getElementById('fld_reason') ? document.getElementById('fld_reason').value : '';
+      const tag = currentEditTarget.querySelector('.tag');
+      const labels = { approved: 'Aprovado', review: 'Em análise', rejected: 'Reprovado' };
+      const classes = { approved: 'approved', review: 'review', rejected: 'rejected' };
+      tag.className = 'tag ' + classes[statusVal];
+      tag.textContent = labels[statusVal];
+      currentEditTarget.dataset.status = statusVal;
+      currentEditTarget.dataset.reason = reasonVal;
+
+      // update the shared reject note if this row is (or was) the rejected one
+      const rejectNote = document.getElementById('rejectNote');
+      const rejectNoteText = document.getElementById('rejectNoteText');
+      const anyRejected = document.querySelectorAll('#videoFiles [data-status="rejected"]');
+      if (anyRejected.length){
+        rejectNote.style.display = 'flex';
+        rejectNoteText.textContent = anyRejected[0].dataset.reason || 'Arquivo reprovado pela equipe técnica.';
+      } else {
+        rejectNote.style.display = 'none';
+      }
+    }
+
+    if (currentEditType === 'timeline-step' || currentEditType === 'timeline-step-new'){
+      const label = document.getElementById('fld_step_label').value.trim() || 'Nova etapa';
+      const date = document.getElementById('fld_step_date').value.trim();
+      const state = document.getElementById('fld_step_state').value;
+      const ongoing = document.getElementById('fld_step_ongoing').checked;
+      const stepObj = { label: label, date: date, state: state, ongoing: ongoing };
+      if (currentEditType === 'timeline-step-new'){
+        timelineData.push(stepObj);
+      } else {
+        timelineData[currentEditIndex] = stepObj;
+      }
+      saveTimelineData();
+      renderTimeline();
+    }
+
+    closeEditModal();
+  });
+
+  function removeFunnelStage(stageEl){
+    const next = stageEl.nextElementSibling;
+    const prev = stageEl.previousElementSibling;
+    if (next && next.classList.contains('funnel-drop')) next.remove();
+    else if (prev && prev.classList.contains('funnel-drop')) prev.remove();
+    stageEl.remove();
+    recomputeFunnelWidths();
+  }
+
+  // ---- Proportional funnel background: width follows each stage's value ----
+  function parseFunnelValue(raw){
+    const digits = (raw || '').replace(/[^0-9]/g, '');
+    return digits ? parseInt(digits, 10) : 0;
+  }
+
+  function recomputeFunnelWidths(){
+    const visual = document.getElementById('funnelVisual');
+    if (!visual) return;
+    const stages = Array.from(visual.querySelectorAll('.funnel-stage'));
+    if (!stages.length) return;
+
+    const values = stages.map(s => parseFunnelValue(s.querySelector('.fs-value').textContent));
+    const maxValue = Math.max.apply(null, values.concat([1]));
+
+    let prevInset = 0;
+    stages.forEach((stage, i) => {
+      let proportion = maxValue > 0 ? (values[i] / maxValue) * 100 : 100;
+      proportion = Math.max(12, Math.min(100, proportion));
+      const inset = Math.max(0, Math.min(44, (100 - proportion) / 2));
+      stage.style.setProperty('--l1', prevInset + '%');
+      stage.style.setProperty('--l2', inset + '%');
+      prevInset = inset;
+    });
+  }
+
+  recomputeFunnelWidths();
+
+  function updateKwCount(){
+    const tbody = document.getElementById('kwTableBody');
+    const countEl = document.getElementById('kwCount');
+    if (countEl) countEl.textContent = tbody.querySelectorAll('tr').length + ' termos';
+  }
+
+  editModalDelete.addEventListener('click', () => {
+    if (currentEditType === 'timeline-step'){
+      if (currentEditIndex === null || currentEditIndex === undefined) return;
+      if (timelineData.length <= 1) { closeEditModal(); return; }
+      timelineData.splice(currentEditIndex, 1);
+      saveTimelineData();
+      renderTimeline();
+    } else if (currentEditType === 'keyword-row'){
+      if (currentEditTarget) currentEditTarget.remove();
+      updateKwCount();
+    } else if (currentEditType === 'funnel-stage'){
+      if (currentEditTarget) removeFunnelStage(currentEditTarget);
+    }
+    closeEditModal();
+  });
+
+  // ---- Add row: keyword table ----
+  document.getElementById('addKeywordBtn').addEventListener('click', () => {
+    const tbody = document.getElementById('kwTableBody');
+    const tr = document.createElement('tr');
+    tr.className = 'admin-editable';
+    tr.dataset.editType = 'keyword-row';
+    tr.innerHTML =
+      '<td class="kw-name">nova palavra-chave</td>' +
+      '<td><span class="kw-status pendente">Pendente</span></td>' +
+      '<td class="num">0</td>' +
+      '<td class="num">R$ 0,00</td>';
+    tbody.appendChild(tr);
+    updateKwCount();
+    openEditModal(tr, 'keyword-row');
+  });
+
+  // ---- Add row: funnel stage ----
+  document.getElementById('addFunnelBtn').addEventListener('click', () => {
+    const visual = document.getElementById('funnelVisual');
+    const addBtn = document.getElementById('addFunnelBtn');
+    const existingStages = visual.querySelectorAll('.funnel-stage').length;
+    const funnelColors = ['#F5B94A', '#F48322', '#E8703A', '#D65A4F', '#9AA1AE'];
+
+    if (existingStages > 0){
+      const drop = document.createElement('div');
+      drop.className = 'funnel-drop';
+      drop.innerHTML = '<svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M12 5v14M6 13l6 6 6-6"/></svg> nova taxa';
+      visual.insertBefore(drop, addBtn);
+    }
+
+    const stage = document.createElement('div');
+    stage.className = 'funnel-stage admin-editable';
+    stage.dataset.editType = 'funnel-stage';
+    const color = funnelColors[Math.min(existingStages, funnelColors.length - 1)];
+    stage.style.setProperty('--l1', '10%');
+    stage.style.setProperty('--l2', '10%');
+    stage.style.background = color;
+    stage.innerHTML = '<span class="fs-label">Nova etapa</span><span class="fs-value">0</span>';
+    visual.insertBefore(stage, addBtn);
+    recomputeFunnelWidths();
+
+    openEditModal(stage, 'funnel-stage');
+  });
+
+  document.addEventListener('click', (e) => {
+    if (!document.body.classList.contains('admin-mode')) return;
+    const target = e.target.closest('.admin-editable');
+    if (!target) return;
+    e.preventDefault();
+    e.stopPropagation();
+    openEditModal(target, target.dataset.editType);
+  }, true);
+
+  // ---- Company temp link modal (admin only) ----
+  const clientChip = document.getElementById('clientChip');
+  const linkOverlay = document.getElementById('linkOverlay');
+  const dayOptions = document.getElementById('dayOptions');
+  const linkResult = document.getElementById('linkResult');
+  const linkResultInput = document.getElementById('linkResultInput');
+
+  clientChip.addEventListener('click', () => {
+    if (!document.body.classList.contains('admin-mode')) return;
+    linkResult.classList.remove('show');
+    linkOverlay.classList.add('show');
+  });
+  document.getElementById('linkModalClose').addEventListener('click', () => linkOverlay.classList.remove('show'));
+  linkOverlay.addEventListener('click', (e) => { if (e.target === linkOverlay) linkOverlay.classList.remove('show'); });
+
+  dayOptions.addEventListener('click', (e) => {
+    const chip = e.target.closest('.day-chip');
+    if (!chip) return;
+    dayOptions.querySelectorAll('.day-chip').forEach(c => c.classList.remove('active'));
+    chip.classList.add('active');
+  });
+
+  document.getElementById('generateLinkBtn').addEventListener('click', () => {
+    const days = dayOptions.querySelector('.day-chip.active').dataset.days;
+    const token = Math.random().toString(36).slice(2, 10);
+    const url = 'https://viskoo.com.br/view/tmp/' + token + '?exp=' + days + 'd';
+    linkResultInput.value = url;
+    linkResult.classList.add('show');
+  });
+
+  document.getElementById('linkCopyBtn').addEventListener('click', () => {
+    linkResultInput.select();
+    try {
+      navigator.clipboard.writeText(linkResultInput.value);
+    } catch(e) {
+      document.execCommand('copy');
+    }
+  });
+
+  // ---- Briefing wizard ----
+  const wizardQuestions = [
+    'Qual o principal objetivo da campanha?',
+    'Quem é o público-alvo ideal?',
+    'Quais são os diferenciais do seu negócio?',
+    'Qual a verba mensal disponível?',
+    'Existe alguma restrição de criativos (cores, termos, concorrentes)?'
+  ];
+  let wizardIndex = 0;
+  let wizardAnswers = new Array(wizardQuestions.length).fill('');
+
+  const wizardOverlay = document.getElementById('wizardOverlay');
+  const wizardStepView = document.getElementById('wizardStepView');
+  const wizardDoneView = document.getElementById('wizardDoneView');
+  const wizardQuestionEl = document.getElementById('wizardQuestion');
+  const wizardAnswerEl = document.getElementById('wizardAnswer');
+  const wizardProgressFill = document.getElementById('wizardProgressFill');
+  const wizardStepLabel = document.getElementById('wizardStepLabel');
+  const wizardPercentLabel = document.getElementById('wizardPercentLabel');
+  const wizardPrev = document.getElementById('wizardPrev');
+  const wizardNext = document.getElementById('wizardNext');
+  const wizardDots = document.getElementById('wizardDots');
+
+  function renderWizardDots(){
+    wizardDots.innerHTML = '';
+    wizardQuestions.forEach((_, i) => {
+      const dot = document.createElement('span');
+      dot.className = 'wizard-dot' + (i === wizardIndex ? ' on' : '');
+      wizardDots.appendChild(dot);
+    });
+  }
+
+  function renderWizardStep(){
+    const total = wizardQuestions.length;
+    const pct = Math.round(((wizardIndex + 1) / total) * 100);
+    wizardQuestionEl.textContent = wizardQuestions[wizardIndex];
+    wizardAnswerEl.value = wizardAnswers[wizardIndex];
+    wizardProgressFill.style.width = pct + '%';
+    wizardStepLabel.textContent = 'Pergunta ' + (wizardIndex + 1) + ' de ' + total;
+    wizardPercentLabel.textContent = pct + '%';
+    wizardPrev.disabled = wizardIndex === 0;
+    wizardPrev.style.opacity = wizardIndex === 0 ? '.4' : '1';
+    wizardNext.textContent = wizardIndex === total - 1 ? 'Concluir' : 'Avançar';
+    renderWizardDots();
+  }
+
+  function openWizard(){
+    wizardIndex = 0;
+    wizardAnswers = new Array(wizardQuestions.length).fill('');
+    wizardStepView.style.display = 'block';
+    wizardDoneView.style.display = 'none';
+    renderWizardStep();
+    wizardOverlay.classList.add('show');
+  }
+  function closeWizard(){ wizardOverlay.classList.remove('show'); }
+
+  document.getElementById('briefingBtn').addEventListener('click', openWizard);
+  document.getElementById('wizardModalClose').addEventListener('click', closeWizard);
+  document.getElementById('wizardDoneClose').addEventListener('click', closeWizard);
+  wizardOverlay.addEventListener('click', (e) => { if (e.target === wizardOverlay) closeWizard(); });
+
+  wizardPrev.addEventListener('click', () => {
+    wizardAnswers[wizardIndex] = wizardAnswerEl.value;
+    if (wizardIndex > 0){ wizardIndex--; renderWizardStep(); }
+  });
+  wizardNext.addEventListener('click', () => {
+    wizardAnswers[wizardIndex] = wizardAnswerEl.value;
+    if (wizardIndex < wizardQuestions.length - 1){
+      wizardIndex++;
+      renderWizardStep();
+    } else {
+      wizardStepView.style.display = 'none';
+      wizardDoneView.style.display = 'flex';
+    }
+  });
+
+  // ---- Roteiro PDF download ----
+  function buildPdfBlob(title){
+    const content = '%PDF-1.4\n' +
+      '1 0 obj<</Type/Catalog/Pages 2 0 R>>endobj\n' +
+      '2 0 obj<</Type/Pages/Kids[3 0 R]/Count 1>>endobj\n' +
+      '3 0 obj<</Type/Page/Parent 2 0 R/MediaBox[0 0 320 200]/Resources<</Font<</F1 5 0 R>>>>/Contents 4 0 R>>endobj\n' +
+      '4 0 obj<</Length 96>>stream\n' +
+      'BT /F1 16 Tf 24 150 Td (' + title + ') Tj ET\n' +
+      'BT /F1 10 Tf 24 120 Td (Documento gerado pelo painel Viskoo) Tj ET\n' +
+      'endstream\n' +
+      'endobj\n' +
+      '5 0 obj<</Type/Font/Subtype/Type1/BaseFont/Helvetica>>endobj\n' +
+      'trailer<</Root 1 0 R>>\n' +
+      '%%EOF';
+    return new Blob([content], { type: 'application/pdf' });
+  }
+
+  function updateRoteiroCount(){
+    const wrap = document.getElementById('roteiroFiles');
+    const countEl = document.getElementById('roteiroCount');
+    if (countEl) countEl.textContent = wrap.querySelectorAll('.file-row').length + ' roteiros';
+  }
+
+  document.getElementById('roteiroFiles').addEventListener('click', (e) => {
+    const delBtn = e.target.closest('.file-del-btn');
+    if (delBtn){
+      if (!document.body.classList.contains('admin-mode')) return;
+      delBtn.closest('.file-row').remove();
+      updateRoteiroCount();
+      return;
+    }
+    const btn = e.target.closest('.file-dl-btn');
+    if (!btn) return;
+    if (btn.dataset.blobUrl){
+      const a = document.createElement('a');
+      a.href = btn.dataset.blobUrl;
+      a.download = btn.dataset.pdfName || 'roteiro.pdf';
+      document.body.appendChild(a);
+      a.click();
+      document.body.removeChild(a);
+      return;
+    }
+    const blob = buildPdfBlob(btn.dataset.pdfTitle || 'Roteiro Viskoo');
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = btn.dataset.pdfName || 'roteiro.pdf';
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+    setTimeout(() => URL.revokeObjectURL(url), 2000);
+  });
+
+  // ---- Admin: add a real PDF file to Roteiros ----
+  const pdfFileInput = document.getElementById('pdfFileInput');
+  document.getElementById('addPdfBtn').addEventListener('click', () => pdfFileInput.click());
+  pdfFileInput.addEventListener('change', () => {
+    const file = pdfFileInput.files[0];
+    if (!file) return;
+    const url = URL.createObjectURL(file);
+    const row = document.createElement('div');
+    row.className = 'file-row';
+    row.innerHTML =
+      '<div class="fname">' +
+        '<svg class="file-pdf-icon" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8Z"/><path d="M14 2v6h6"/><path d="M9 15h1M9 12h6M9 18h6"/></svg>' +
+        '<span>' + file.name + '</span>' +
+      '</div>' +
+      '<button class="file-dl-btn" data-pdf-name="' + file.name.replace(/"/g,'&quot;') + '" title="Baixar PDF">' +
+        '<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v12M7 10l5 5 5-5M5 21h14"/></svg>' +
+      '</button>' +
+      '<button class="file-del-btn admin-only" title="Remover PDF">' +
+        '<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round"><path d="M3 6h18M8 6V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2m3 0-1 14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2L4 6"/></svg>' +
+      '</button>';
+    row.querySelector('.file-dl-btn').dataset.blobUrl = url;
+    document.getElementById('roteiroFiles').appendChild(row);
+    updateRoteiroCount();
+    pdfFileInput.value = '';
+  });
+  updateRoteiroCount();
+
+  // ---- Client: upload video/PDF files in module 03 (enters review) ----
+  const uploadFileInput = document.getElementById('uploadFileInput');
+  document.getElementById('uploadBtn').addEventListener('click', () => uploadFileInput.click());
+
+  function updateVideoCount(){
+    const wrap = document.getElementById('videoFiles');
+    const countEl = document.getElementById('videoCount');
+    if (!countEl) return;
+    const rows = wrap.querySelectorAll('.file-row');
+    const approved = wrap.querySelectorAll('[data-status="approved"]').length;
+    countEl.textContent = approved + '/' + rows.length + ' aprovados';
+  }
+
+  uploadFileInput.addEventListener('change', () => {
+    const files = Array.from(uploadFileInput.files || []);
+    const wrap = document.getElementById('videoFiles');
+    files.forEach(file => {
+      const isPdf = file.type === 'application/pdf' || /\.pdf$/i.test(file.name);
+      const icon = isPdf
+        ? '<svg class="file-pdf-icon" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8Z"/><path d="M14 2v6h6"/><path d="M9 15h1M9 12h6M9 18h6"/></svg>'
+        : '<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M23 7l-7 5 7 5V7z"/><rect x="1" y="5" width="15" height="14" rx="2"/></svg>';
+      const row = document.createElement('div');
+      row.className = 'file-row admin-editable';
+      row.dataset.editType = 'file-status';
+      row.dataset.status = 'review';
+      row.innerHTML = '<div class="fname">' + icon + '<span>' + file.name + '</span></div><span class="tag review">Em análise</span>';
+      wrap.appendChild(row);
+    });
+    updateVideoCount();
+    uploadFileInput.value = '';
+  });
+  updateVideoCount();
+
+  // ---- Creative approval cards (module 04) ----
+  const creativeList = document.getElementById('creativeList');
+
+  function updateCreativeCount(){
+    const countEl = document.getElementById('creativeCount');
+    if (!countEl) return;
+    const items = creativeList.querySelectorAll('.creative-item');
+    const approved = creativeList.querySelectorAll('.creative-item[data-status="approved"]').length;
+    countEl.textContent = approved + '/' + items.length + ' aprovados';
+  }
+
+  creativeList.addEventListener('click', (e) => {
+    const delBtn = e.target.closest('.file-del-btn');
+    if (delBtn){
+      if (!document.body.classList.contains('admin-mode')) return;
+      delBtn.closest('.creative-item').remove();
+      updateCreativeCount();
+      return;
+    }
+
+    const item = e.target.closest('.creative-item');
+    if (!item) return;
+    const statusEl = item.querySelector('.creative-status');
+    const approveBtn = item.querySelector('.approve-btn');
+    const commentBtn = item.querySelector('.comment-btn');
+    const commentBox = item.querySelector('.creative-comment-box');
+    const savedBox = item.querySelector('.creative-comment-saved');
+
+    if (e.target.closest('.approve-btn')){
+      item.dataset.status = 'approved';
+      statusEl.className = 'creative-status approved';
+      statusEl.textContent = 'Aprovado';
+      approveBtn.classList.add('active');
+      approveBtn.lastChild.textContent = ' Aprovado';
+      commentBtn.classList.remove('active');
+      commentBox.classList.remove('show');
+      updateCreativeCount();
+      return;
+    }
+
+    if (e.target.closest('.comment-btn')){
+      commentBox.classList.toggle('show');
+      if (commentBox.classList.contains('show')){
+        const textarea = commentBox.querySelector('textarea');
+        textarea.value = savedBox.dataset.comment || '';
+        textarea.focus();
+      }
+      return;
+    }
+
+    if (e.target.closest('.creative-save-comment')){
+      const textarea = commentBox.querySelector('textarea');
+      const text = textarea.value.trim();
+      if (!text) return;
+      savedBox.dataset.comment = text;
+      savedBox.textContent = '"' + text + '"';
+      savedBox.style.display = 'block';
+      commentBox.classList.remove('show');
+      if (item.dataset.status !== 'approved'){
+        item.dataset.status = 'commented';
+        statusEl.className = 'creative-status commented';
+        statusEl.textContent = 'Comentado';
+      }
+      commentBtn.classList.add('active');
+      updateCreativeCount();
+    }
+  });
+
+  document.getElementById('addCreativeBtn').addEventListener('click', () => {
+    const item = document.createElement('div');
+    item.className = 'creative-item';
+    item.dataset.status = 'pending';
+    item.innerHTML =
+      '<div class="creative-item-top">' +
+        '<div class="creative-thumb"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="M21 15l-5-5L5 21"/></svg></div>' +
+        '<span class="creative-name admin-editable" data-edit-type="text" data-edit-label="Nome do criativo">Novo criativo</span>' +
+        '<span class="creative-status pending">Pendente</span>' +
+        '<button class="file-del-btn admin-only" title="Remover criativo"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round"><path d="M3 6h18M8 6V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2m3 0-1 14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2L4 6"/></svg></button>' +
+      '</div>' +
+      '<div class="creative-actions">' +
+        '<button class="creative-btn approve-btn" type="button"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg> Aprovar</button>' +
+        '<button class="creative-btn comment-btn" type="button"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round"><path d="M21 11.5a8.4 8.4 0 0 1-8.9 8.4 8.6 8.6 0 0 1-3.2-.6L3 21l1.7-5.1a8.3 8.3 0 0 1-.9-3.9 8.4 8.4 0 0 1 8.9-8.4 8.4 8.4 0 0 1 8.3 8.9Z"/></svg> Comentar</button>' +
+      '</div>' +
+      '<div class="creative-comment-box"><textarea placeholder="Escreva o que gostaria de ajustar..."></textarea><button class="btn btn-primary creative-save-comment" type="button" style="align-self:flex-end;">Salvar comentário</button></div>' +
+      '<div class="creative-comment-saved" style="display:none;"></div>';
+    creativeList.appendChild(item);
+    updateCreativeCount();
+    openEditModal(item.querySelector('.creative-name'), 'text');
+  });
+
+  updateCreativeCount();
+
+  // ---- Contact data (client-editable emails) ----
+  const contactOverlay = document.getElementById('contactOverlay');
+  const contactRowIds = { comm: 'emailComm', fin: 'emailFin', manager: 'emailManager' };
+
+  function loadContactEmails(){
+    let data = { comm: '', fin: '', manager: '' };
+    try {
+      const raw = localStorage.getItem('viskoo-contact-emails');
+      if (raw) data = Object.assign(data, JSON.parse(raw));
+    } catch(e) {}
+    return data;
+  }
+  function saveContactEmails(data){
+    try { localStorage.setItem('viskoo-contact-emails', JSON.stringify(data)); } catch(e) {}
+  }
+  function renderContactEmails(){
+    const data = loadContactEmails();
+    Object.keys(contactRowIds).forEach(role => {
+      const el = document.getElementById(contactRowIds[role]);
+      if (!el) return;
+      if (data[role]){
+        el.textContent = data[role];
+        el.classList.remove('empty');
+      } else {
+        el.textContent = 'Não informado';
+        el.classList.add('empty');
+      }
+    });
+  }
+
+  const contactViewOverlay = document.getElementById('contactViewOverlay');
+  document.getElementById('contactInfoBtn').addEventListener('click', () => {
+    contactViewOverlay.classList.add('show');
+  });
+  document.getElementById('contactViewClose').addEventListener('click', () => contactViewOverlay.classList.remove('show'));
+  contactViewOverlay.addEventListener('click', (e) => { if (e.target === contactViewOverlay) contactViewOverlay.classList.remove('show'); });
+
+  document.getElementById('editContactBtn').addEventListener('click', () => {
+    const data = loadContactEmails();
+    document.getElementById('fldEmailComm').value = data.comm;
+    document.getElementById('fldEmailFin').value = data.fin;
+    document.getElementById('fldEmailManager').value = data.manager;
+    contactViewOverlay.classList.remove('show');
+    contactOverlay.classList.add('show');
+  });
+  document.getElementById('contactModalClose').addEventListener('click', () => contactOverlay.classList.remove('show'));
+  document.getElementById('contactModalCancel').addEventListener('click', () => contactOverlay.classList.remove('show'));
+  contactOverlay.addEventListener('click', (e) => { if (e.target === contactOverlay) contactOverlay.classList.remove('show'); });
+  document.getElementById('contactModalSave').addEventListener('click', () => {
+    const data = {
+      comm: document.getElementById('fldEmailComm').value.trim(),
+      fin: document.getElementById('fldEmailFin').value.trim(),
+      manager: document.getElementById('fldEmailManager').value.trim()
+    };
+    saveContactEmails(data);
+    renderContactEmails();
+    contactOverlay.classList.remove('show');
+  });
+
+  renderContactEmails();
+
+  // ---- Admin: send email to client (opens the default mail app via mailto) ----
+  const emailOverlay = document.getElementById('emailOverlay');
+  const emailRoleLabels = { comm: 'E-mail de comunicação', fin: 'E-mail financeiro', manager: 'E-mail do administrador / gestor' };
+
+  function updateEmailPreview(){
+    const role = document.getElementById('fldEmailTo').value;
+    const data = loadContactEmails();
+    const addr = data[role];
+    const preview = document.getElementById('emailToPreview');
+    preview.innerHTML = addr
+      ? 'Enviar para: <b>' + addr + '</b>'
+      : 'Nenhum e-mail cadastrado para este contato ainda. Edite os dados de contato antes de enviar.';
+    document.getElementById('emailModalSend').disabled = !addr;
+  }
+
+  function openEmailComposer(role){
+    document.getElementById('fldEmailTo').value = role || 'comm';
+    document.getElementById('fldEmailSubject').value = 'Viskoo, atualização da campanha NovaFit Studio';
+    document.getElementById('fldEmailBody').value = '';
+    updateEmailPreview();
+    emailOverlay.classList.add('show');
+  }
+
+  document.getElementById('fldEmailTo').addEventListener('change', updateEmailPreview);
+  document.getElementById('emailModalClose').addEventListener('click', () => emailOverlay.classList.remove('show'));
+  document.getElementById('emailModalCancel').addEventListener('click', () => emailOverlay.classList.remove('show'));
+  emailOverlay.addEventListener('click', (e) => { if (e.target === emailOverlay) emailOverlay.classList.remove('show'); });
+
+  document.getElementById('emailModalSend').addEventListener('click', () => {
+    const role = document.getElementById('fldEmailTo').value;
+    const data = loadContactEmails();
+    const addr = data[role];
+    if (!addr) return;
+    const subject = encodeURIComponent(document.getElementById('fldEmailSubject').value);
+    const body = encodeURIComponent(document.getElementById('fldEmailBody').value);
+    window.location.href = 'mailto:' + addr + '?subject=' + subject + '&body=' + body;
+    emailOverlay.classList.remove('show');
+  });
+
+  document.getElementById('composeEmailBtn').addEventListener('click', () => {
+    contactViewOverlay.classList.remove('show');
+    openEmailComposer('comm');
+  });
+
+  // ---- Status pill (admin: custom text + custom color) ----
+  const statusOverlay = document.getElementById('statusOverlay');
+  const statusPill = document.getElementById('statusPill');
+  const fldStatusColor = document.getElementById('fldStatusColor');
+  const colorSwatches = document.getElementById('colorSwatches');
+
+  function loadStatusData(){
+    let data = { label: 'Campanha ativa', color: '#48D18A' };
+    try {
+      const raw = localStorage.getItem('viskoo-status');
+      if (raw) data = Object.assign(data, JSON.parse(raw));
+    } catch(e) {}
+    return data;
+  }
+  function saveStatusData(data){
+    try { localStorage.setItem('viskoo-status', JSON.stringify(data)); } catch(e) {}
+  }
+  function applyStatusData(){
+    const data = loadStatusData();
+    document.getElementById('statusLabel').textContent = data.label;
+    statusPill.style.setProperty('--status-color', data.color);
+  }
+  function markActiveSwatch(color){
+    colorSwatches.querySelectorAll('.color-swatch').forEach(sw => {
+      sw.classList.toggle('active', sw.dataset.color.toLowerCase() === color.toLowerCase());
+    });
+  }
+
+  applyStatusData();
+
+  statusPill.addEventListener('click', () => {
+    if (!document.body.classList.contains('admin-mode')) return;
+    const data = loadStatusData();
+    document.getElementById('fldStatusLabel').value = data.label;
+    fldStatusColor.value = data.color;
+    markActiveSwatch(data.color);
+    statusOverlay.classList.add('show');
+  });
+  document.getElementById('statusModalClose').addEventListener('click', () => statusOverlay.classList.remove('show'));
+  document.getElementById('statusModalCancel').addEventListener('click', () => statusOverlay.classList.remove('show'));
+  statusOverlay.addEventListener('click', (e) => { if (e.target === statusOverlay) statusOverlay.classList.remove('show'); });
+
+  colorSwatches.addEventListener('click', (e) => {
+    const sw = e.target.closest('.color-swatch');
+    if (!sw) return;
+    fldStatusColor.value = sw.dataset.color;
+    markActiveSwatch(sw.dataset.color);
+  });
+  fldStatusColor.addEventListener('input', () => markActiveSwatch(fldStatusColor.value));
+
+  document.getElementById('statusModalSave').addEventListener('click', () => {
+    const label = document.getElementById('fldStatusLabel').value.trim() || 'Campanha ativa';
+    const color = fldStatusColor.value;
+    saveStatusData({ label: label, color: color });
+    applyStatusData();
+    statusOverlay.classList.remove('show');
+  });
+
+  // ---- Locked module click feedback ----
+  document.querySelectorAll('.module-card.locked').forEach(card => {
+    card.addEventListener('click', () => {
+      card.animate(
+        [{ transform: 'translateX(0)' }, { transform: 'translateX(-4px)' }, { transform: 'translateX(4px)' }, { transform: 'translateX(0)' }],
+        { duration: 260, easing: 'ease-in-out' }
+      );
+    });
+  });
+</script>
+
+</body>
+</html>
