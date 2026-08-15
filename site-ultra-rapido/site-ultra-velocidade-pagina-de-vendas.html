@@ -1,0 +1,467 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Site Ultra Rápido · Viskoo</title>
+<link rel="icon" type="image/svg+xml" href="assets/viskoo-logo-favicon.svg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,700;9..40,900&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#0a0a0a; --bg-elevated:#141414; --bg-card:#181818;
+    --line:#2a2a2a; --orange:#F48322; --orange-dim:#7a4315;
+    --text:#f2f0eb; --text-muted:#8c8a85;
+    --low:#6fa287; --low-dim:#253b31;
+    --high:#c2543f; --high-dim:#3a231d;
+  }
+  *{ box-sizing:border-box; margin:0; padding:0; }
+  html{ scroll-behavior:smooth; }
+  body{ background:var(--bg); color:var(--text); font-family:'DM Sans', sans-serif; line-height:1.55; -webkit-font-smoothing:antialiased; }
+  .mono{ font-family:'IBM Plex Mono', monospace; }
+  .wrap{ max-width:980px; margin:0 auto; padding:0 24px; }
+  a{ color:inherit; }
+  section{ padding:88px 0; }
+
+  .cta-btn{
+    display:inline-flex; align-items:center; gap:10px;
+    background:var(--orange); color:#0a0a0a;
+    font-weight:700; font-size:15.5px;
+    padding:16px 28px; border-radius:10px;
+    text-decoration:none;
+    box-shadow:0 8px 24px rgba(244,131,34,0.25);
+    transition:transform .15s ease;
+  }
+  .cta-btn:hover{ transform:translateY(-2px); }
+  .cta-sub{ font-family:'IBM Plex Mono', monospace; font-size:12px; color:var(--text-muted); margin-top:12px; }
+  .cta-btn-secondary{
+    display:inline-flex; align-items:center; gap:8px;
+    background:none; color:var(--text-muted);
+    font-weight:500; font-size:13px;
+    padding:8px 4px; border-radius:8px;
+    text-decoration:none;
+  }
+  .cta-btn-secondary:hover{ color:var(--text); }
+  .cta-btn-secondary .wa-icon{ width:15px; height:15px; }
+
+  /* ---------- NAV ---------- */
+  nav{ position:sticky; top:0; z-index:50; background:rgba(10,10,10,0.85); backdrop-filter:blur(10px); border-bottom:1px solid var(--line); }
+  nav .wrap{ display:flex; align-items:center; justify-content:space-between; padding:16px 24px; }
+  .brand-mark{ font-weight:900; font-size:16px; letter-spacing:-0.01em; display:flex; align-items:center; gap:9px; }
+  .brand-mark span{ color:var(--orange); }
+  nav .cta-btn{ padding:10px 18px; font-size:13.5px; }
+  .nav-icon{ width:22px; height:22px; }
+  .by-viskoo{ display:flex; align-items:center; gap:8px; font-weight:400; font-size:11px; color:var(--text-muted); }
+  .by-viskoo .divider{ font-style:normal; opacity:0.5; }
+  .viskoo-mini{ height:13px; width:auto; opacity:0.8; }
+  @media (max-width:760px){ .by-viskoo{ display:none; } }
+
+  /* ---------- HERO ---------- */
+  .hero{ padding-top:76px; text-align:center; background: radial-gradient(ellipse 900px 480px at 50% -10%, rgba(244,131,34,0.16), transparent 60%); }
+  .hero-icon{ width:96px; height:96px; margin:0 auto 28px; }
+  .eyebrow{ font-family:'IBM Plex Mono', monospace; font-size:12px; letter-spacing:0.14em; text-transform:uppercase; color:var(--orange); margin-bottom:22px; }
+  .hero h1{ font-size:clamp(32px,5.6vw,54px); font-weight:900; line-height:1.08; letter-spacing:-0.02em; max-width:760px; margin:0 auto; }
+  .hero h1 em{ font-style:normal; color:var(--orange); }
+  .hero .sub{ margin:22px auto 0; max-width:560px; color:var(--text-muted); font-size:17px; }
+  .hero-cta{ margin-top:36px; display:flex; flex-direction:column; align-items:center; gap:14px; }
+
+  .speedbar{ margin-top:56px; display:flex; justify-content:center; gap:40px; flex-wrap:wrap; font-family:'IBM Plex Mono', monospace; font-size:12.5px; color:var(--text-muted); }
+  .speedbar b{ color:var(--orange); font-size:19px; display:block; font-weight:700; }
+
+  /* ---------- INIMIGO ---------- */
+  .enemy{ border-top:1px solid var(--line); }
+  .enemy-grid{ margin-top:40px; display:grid; grid-template-columns:repeat(3,1fr); gap:14px; }
+  .enemy-card{ background:var(--bg-card); border:1px solid var(--high); border-radius:14px; padding:24px 20px; }
+  .enemy-card .ic{ color:var(--high); font-family:'IBM Plex Mono', monospace; font-size:12px; margin-bottom:12px; text-transform:uppercase; letter-spacing:0.06em; }
+  .enemy-card h4{ font-size:15.5px; font-weight:700; margin-bottom:8px; }
+  .enemy-card p{ font-size:13.5px; color:var(--text-muted); }
+
+  .kicker{ font-family:'IBM Plex Mono', monospace; color:var(--orange); font-size:13px; margin-bottom:14px; }
+  h2{ font-size:clamp(24px,3.4vw,32px); font-weight:800; letter-spacing:-0.01em; max-width:640px; }
+  .lede{ color:var(--text-muted); max-width:560px; margin-top:14px; font-size:15.5px; }
+
+  /* ---------- MECANISMO ---------- */
+  .mechanism{ border-top:1px solid var(--line); }
+  .mech-steps{ margin-top:44px; display:grid; grid-template-columns:repeat(3,1fr); gap:16px; }
+  .mstep{ background:var(--bg-card); border:1px solid var(--line); border-radius:14px; padding:26px 22px; }
+  .mstep .num{ font-family:'IBM Plex Mono', monospace; color:var(--orange); font-size:13px; margin-bottom:12px; }
+  .mstep h4{ font-size:16px; font-weight:700; margin-bottom:8px; }
+  .mstep p{ font-size:13.5px; color:var(--text-muted); }
+
+  /* ---------- COMPARATIVO ---------- */
+  .compare{ border-top:1px solid var(--line); }
+  .compare-table{ margin-top:40px; border:1px solid var(--line); border-radius:14px; overflow:hidden; }
+  .crow{ display:grid; grid-template-columns:1.4fr 1fr 1fr; border-bottom:1px solid var(--line); }
+  .crow:last-child{ border-bottom:none; }
+  .crow.head{ background:var(--bg-elevated); font-family:'IBM Plex Mono', monospace; font-size:11.5px; text-transform:uppercase; letter-spacing:0.05em; color:var(--text-muted); }
+  .crow div{ padding:14px 18px; font-size:13.5px; display:flex; align-items:center; }
+  .crow div:not(:first-child){ border-left:1px solid var(--line); justify-content:center; text-align:center; }
+  .crow.head div:nth-child(3){ color:var(--orange); font-weight:600; }
+  .yes{ color:var(--low); font-weight:600; }
+  .no{ color:var(--high); font-weight:600; }
+
+  /* ---------- PLANOS ---------- */
+  .plans{ border-top:1px solid var(--line); text-align:center; }
+  .plans h2{ margin:0 auto; }
+  .plans .lede{ margin-left:auto; margin-right:auto; }
+  .plan-grid{ margin-top:44px; display:grid; grid-template-columns:repeat(3,1fr); gap:16px; text-align:left; }
+  .plan{ background:var(--bg-card); border:1px solid var(--line); border-radius:16px; padding:30px 26px; display:flex; flex-direction:column; gap:16px; position:relative; }
+  .plan.featured{ border-color:var(--orange); background:linear-gradient(180deg, rgba(244,131,34,0.08), var(--bg-card) 40%); }
+  .plan .fbadge{ position:absolute; top:-13px; left:50%; transform:translateX(-50%); background:var(--orange); color:#0a0a0a; font-family:'IBM Plex Mono', monospace; font-size:11px; font-weight:700; padding:5px 14px; border-radius:20px; text-transform:uppercase; letter-spacing:0.04em; }
+  .plan h3{ font-size:17px; font-weight:700; }
+  .plan .price{ font-family:'IBM Plex Mono', monospace; font-size:32px; font-weight:600; color:var(--orange); }
+  .plan .price span{ font-size:13px; color:var(--text-muted); font-weight:400; }
+  .plan .for{ font-size:13px; color:var(--text-muted); }
+  .plan ul{ list-style:none; display:flex; flex-direction:column; gap:10px; }
+  .plan li{ font-size:13.5px; padding-left:20px; position:relative; }
+  .plan li::before{ content:"✓"; position:absolute; left:0; color:var(--low); font-weight:700; }
+  .plan .bonus{ font-family:'IBM Plex Mono', monospace; font-size:11.5px; color:var(--low); background:var(--low-dim); border-radius:8px; padding:8px 10px; }
+  .plan .cta-btn{ justify-content:center; margin-top:auto; width:100%; }
+  .plan.featured .cta-btn{ background:var(--orange); }
+  .plan:not(.featured) .cta-btn{ background:var(--bg-elevated); color:var(--text); border:1px solid var(--line); box-shadow:none; }
+
+  /* ---------- PROVA ---------- */
+  .proof{ border-top:1px solid var(--line); }
+  .proof-top{ display:flex; align-items:center; gap:40px; }
+  .proof-photo{ flex-shrink:0; width:180px; }
+  .proof-photo img{ width:100%; height:auto; display:block; border-radius:16px; }
+  .proof-text{ flex:1; }
+  .proof-grid{ margin-top:40px; display:grid; grid-template-columns:repeat(4,1fr); gap:14px; text-align:center; }
+  .proof-item{ background:var(--bg-card); border:1px solid var(--line); border-radius:14px; padding:26px 16px; }
+  .proof-item .v{ font-family:'IBM Plex Mono', monospace; font-size:24px; color:var(--orange); font-weight:600; }
+  .proof-item .l{ font-size:12px; color:var(--text-muted); margin-top:8px; }
+
+  /* ---------- DEPOIMENTOS ---------- */
+  .testimonials{ border-top:1px solid var(--line); }
+  .testimonial-grid{ margin-top:40px; display:grid; grid-template-columns:repeat(3,1fr); gap:16px; }
+  .testimonial-grid img{ width:100%; height:auto; display:block; border-radius:16px; border:1px solid var(--line); cursor:zoom-in; transition:transform .15s ease, border-color .15s ease; }
+  .testimonial-grid img:hover{ transform:translateY(-3px); border-color:var(--orange); }
+
+  /* ---------- LIGHTBOX ---------- */
+  .lightbox{ display:none; position:fixed; inset:0; background:rgba(10,10,10,0.92); z-index:200; align-items:center; justify-content:center; padding:50px 24px; cursor:zoom-out; }
+  .lightbox.active{ display:flex; }
+  .lightbox img{ max-width:100%; max-height:100%; border-radius:16px; box-shadow:0 24px 70px rgba(0,0,0,0.55); }
+  .lightbox-close{
+    position:absolute; top:20px; right:24px; width:40px; height:40px;
+    background:var(--bg-card); border:1px solid var(--line); border-radius:50%;
+    color:var(--text); font-size:22px; line-height:1; cursor:pointer;
+  }
+  .lightbox-close:hover{ border-color:var(--orange); color:var(--orange); }
+
+  /* ---------- FAQ ---------- */
+  .faq{ border-top:1px solid var(--line); }
+  .faq-list{ margin-top:40px; display:flex; flex-direction:column; }
+  .faq-item{ border-bottom:1px solid var(--line); padding:22px 0; }
+  .faq-item h4{ font-size:15.5px; font-weight:700; margin-bottom:8px; }
+  .faq-item p{ font-size:13.5px; color:var(--text-muted); max-width:640px; }
+
+  /* ---------- FINAL CTA ---------- */
+  .final{ border-top:1px solid var(--line); text-align:center; background: radial-gradient(ellipse 800px 400px at 50% 110%, rgba(244,131,34,0.14), transparent 60%); }
+  .final h2{ margin:0 auto; }
+  .final .lede{ margin-left:auto; margin-right:auto; }
+  .final .hero-cta{ margin-top:32px; }
+
+  footer{ padding:44px 0 70px; text-align:center; color:var(--text-muted); font-size:12px; font-family:'IBM Plex Mono', monospace; border-top:1px solid var(--line); }
+  .footer-logo{ display:block; height:22px; width:auto; margin:0 auto 14px; opacity:0.9; }
+  .wa-icon{ width:17px; height:17px; flex-shrink:0; }
+
+  @media (max-width:760px){
+    .enemy-grid, .mech-steps, .plan-grid{ grid-template-columns:1fr; }
+    .proof-grid{ grid-template-columns:1fr 1fr; }
+    .testimonial-grid{ grid-template-columns:1fr; }
+    .proof-top{ flex-direction:column; text-align:center; gap:24px; }
+    .proof-photo{ width:150px; }
+    .speedbar{ gap:26px; }
+    .crow{ grid-template-columns:1.1fr 1fr 1fr; }
+    .crow div{ padding:12px 10px; font-size:12px; }
+  }
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="wrap">
+    <div class="brand-mark">
+      <svg class="nav-icon" viewBox="0 0 120 120" xmlns="http://www.w3.org/2000/svg">
+        <circle cx="60" cy="60" r="44" fill="none" stroke="#F48322" stroke-width="4"/>
+        <path d="M64 34 L46 66 L58 66 L52 90 L78 56 L64 56 Z" fill="#F48322"/>
+      </svg>
+      Site Ultra<span> Rápido</span>
+      <span class="by-viskoo">
+        <i class="divider">·</i>
+        <img src="viskoo-branco.svg" alt="Viskoo" class="viskoo-mini">
+      </span>
+    </div>
+    <a class="cta-btn" href="#planos">Ver planos</a>
+  </div>
+</nav>
+
+<section class="hero">
+  <div class="wrap">
+    <svg class="hero-icon" viewBox="0 0 120 120" xmlns="http://www.w3.org/2000/svg">
+      <circle cx="60" cy="60" r="46" fill="none" stroke="#F48322" stroke-width="3"/>
+      <circle cx="60" cy="60" r="33" fill="none" stroke="#F48322" stroke-width="2" opacity="0.45"/>
+      <path d="M64 34 L46 66 L58 66 L52 90 L78 56 L64 56 Z" fill="#F48322"/>
+      <line x1="2" y1="46" x2="22" y2="46" stroke="#F48322" stroke-width="4" stroke-linecap="round" opacity="0.85"/>
+      <line x1="-4" y1="60" x2="18" y2="60" stroke="#F48322" stroke-width="4" stroke-linecap="round"/>
+      <line x1="2" y1="74" x2="22" y2="74" stroke="#F48322" stroke-width="4" stroke-linecap="round" opacity="0.85"/>
+    </svg>
+    <div class="eyebrow">Ultra Velocidade · Viskoo</div>
+    <h1>Um site tão rápido que parece que carregou <em>antes</em> do clique.</h1>
+    <p class="sub">Montado do jeito certo pra carregar rápido, servido direto de uma rede global de entrega. Cada página já chega pronta, do jeito que site deveria carregar.</p>
+    <div class="hero-cta">
+      <a class="cta-btn" href="#planos">Ver planos e assinar</a>
+      <div class="cta-sub">Assinatura mensal · cancela quando quiser, sem multa</div>
+      <a class="cta-btn-secondary" href="https://wa.me/55SEUNUMEROAQUI?text=Quero%20saber%20mais%20sobre%20o%20site%20Ultra%20Velocidade" target="_blank"><svg class="wa-icon" viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg"><path d="M12.04 2C6.58 2 2.13 6.45 2.13 11.91c0 1.75.46 3.38 1.26 4.8L2 22l5.42-1.42a9.87 9.87 0 0 0 4.62 1.18h.01c5.46 0 9.9-4.45 9.9-9.91C21.96 6.45 17.5 2 12.04 2Zm0 18.06h-.01a8.14 8.14 0 0 1-4.15-1.14l-.3-.18-3.08.81.82-3-.19-.31a8.13 8.13 0 0 1-1.25-4.33c0-4.5 3.66-8.16 8.17-8.16 2.18 0 4.23.85 5.77 2.39a8.1 8.1 0 0 1 2.39 5.78c0 4.51-3.67 8.16-8.17 8.16Zm4.48-6.13c-.25-.12-1.45-.72-1.68-.8-.22-.08-.39-.12-.55.12-.16.25-.63.8-.77.96-.14.16-.28.18-.53.06-.25-.12-1.06-.39-2.02-1.25-.75-.67-1.25-1.5-1.4-1.75-.15-.25-.02-.38.11-.51.11-.11.25-.28.37-.42.12-.14.16-.25.25-.41.08-.16.04-.31-.02-.43-.06-.12-.55-1.33-.76-1.82-.2-.48-.4-.42-.55-.42h-.47c-.16 0-.42.06-.64.31-.22.25-.84.82-.84 2s.86 2.32.98 2.48c.12.16 1.7 2.6 4.13 3.64.58.25 1.03.4 1.38.51.58.18 1.11.16 1.53.1.47-.07 1.45-.59 1.65-1.16.2-.57.2-1.06.14-1.16-.06-.1-.22-.16-.47-.28Z"/></svg>Tirar dúvidas no WhatsApp</a>
+    </div>
+
+    <div class="speedbar">
+      <div><b>&lt; 1s</b>tempo de carregamento típico</div>
+      <div><b>100%</b>estável, sem ponto de falha por plugin</div>
+      <div><b>CDN</b>global, perto de qualquer visitante</div>
+    </div>
+  </div>
+</section>
+
+<section class="enemy">
+  <div class="wrap">
+    <div class="kicker">O que te faz perder visita</div>
+    <h2>Site lento não espera reclamação, a pessoa só sai</h2>
+    <p class="lede">A maioria dos sites que você vê por aí carrega devagar porque carrega um sistema inteiro por trás (WordPress, plugins, banco de dados, construtores como Wix e Squarespace) só pra mostrar um texto e uma foto. Até os sites feitos com IA saem pesados e parecidos entre si, porque nascem em cima da mesma estrutura genérica.</p>
+
+    <div class="enemy-grid">
+      <div class="enemy-card">
+        <div class="ic">Velocidade</div>
+        <h4>Cada segundo a mais custa visita</h4>
+        <p>Site que demora pra carregar perde gente antes mesmo de mostrar o conteúdo, principalmente no celular com internet ruim.</p>
+      </div>
+      <div class="enemy-card">
+        <div class="ic">Vulnerabilidade</div>
+        <h4>Plugin desatualizado é porta aberta</h4>
+        <p>WordPress precisa de atualização constante porque cada plugin é um ponto a mais de invasão. A estrutura usada pela Viskoo não tem essa porta.</p>
+      </div>
+      <div class="enemy-card">
+        <div class="ic">Ranking</div>
+        <h4>Google também mede velocidade</h4>
+        <p>Velocidade de carregamento é fator direto de posicionamento nas buscas. Site rápido tem vantagem que site lento não recupera só com conteúdo bom.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="mechanism">
+  <div class="wrap">
+    <div class="kicker">Por que é mais rápido</div>
+    <h2>Pronto antes mesmo do clique</h2>
+    <p class="lede">O processo da Viskoo já entrega o site pronto: ele chega montado antes mesmo de alguém acessar, sem nada sendo processado na hora do clique.</p>
+
+    <div class="mech-steps">
+      <div class="mstep">
+        <div class="num">01</div>
+        <h4>Página já pronta pra carregar</h4>
+        <p>O site já entrega a página montada na hora do acesso, sem precisar buscar nada. Isso sozinho já resolve a maior causa de lentidão.</p>
+      </div>
+      <div class="mstep">
+        <div class="num">02</div>
+        <h4>Hospedagem em CDN global</h4>
+        <p>Seu site fica replicado em servidores espalhados pelo mundo, sempre carregando do ponto mais perto de quem está acessando.</p>
+      </div>
+      <div class="mstep">
+        <div class="num">03</div>
+        <h4>Imagens e código otimizados</h4>
+        <p>Tudo já sai comprimido e enxuto, sem excesso de código que a maioria dos temas de WordPress carrega sem você perceber.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="compare">
+  <div class="wrap">
+    <div class="kicker">Lado a lado</div>
+    <h2>Site Ultra x tradicional</h2>
+
+    <div class="compare-table">
+      <div class="crow head"><div>Critério</div><div>WordPress</div><div>Site Ultra</div></div>
+      <div class="crow"><div>Velocidade de carregamento</div><div class="no">Depende de plugin</div><div class="yes">Ultra rápido</div></div>
+      <div class="crow"><div>Risco de invasão por plugin</div><div class="no">Existe</div><div class="yes">Não existe</div></div>
+      <div class="crow"><div>Precisa de atualização constante</div><div class="no">Sim</div><div class="yes">Não</div></div>
+      <div class="crow"><div>Custo de hospedagem</div><div class="no">Mais alto</div><div class="yes">Mais baixo</div></div>
+      <div class="crow"><div>Site trava com pico de acesso</div><div class="no">Pode travar</div><div class="yes">Aguenta o pico</div></div>
+    </div>
+  </div>
+</section>
+
+<section class="plans" id="planos">
+  <div class="wrap">
+    <div class="kicker">Planos</div>
+    <h2>Escolha o nível de site que seu negócio precisa</h2>
+    <p class="lede">Todos rodam na mesma estrutura ultra rápida. A diferença é o tamanho do site e a prioridade de atendimento.</p>
+
+    <div class="plan-grid">
+      <div class="plan">
+        <h3>Ultra Básico</h3>
+        <div class="price">R$97<span>/mês</span></div>
+        <div class="for">Pra quem precisa só de uma presença rápida e segura</div>
+        <ul>
+          <li>Site de até 3 páginas</li>
+          <li>Serve para landing pages e páginas de vendas</li>
+          <li>Hospedagem em CDN global</li>
+          <li>Certificado de segurança incluso</li>
+          <li>Monitoramento de disponibilidade</li>
+        </ul>
+        <div class="bonus">Primeiro mês com diagnóstico completo de velocidade, sem custo extra</div>
+        <a class="cta-btn" href="https://pay.kiwify.com.br/eyClQGi" target="_blank">Quero esse</a>
+      </div>
+
+      <div class="plan featured">
+        <div class="fbadge">Mais escolhido</div>
+        <h3>Ultra Plus</h3>
+        <div class="price">R$197<span>/mês</span></div>
+        <div class="for">Pra quem quer site institucional completo e rápido</div>
+        <ul>
+          <li>Site de até 8 páginas</li>
+          <li>Serve para landing pages e páginas de vendas</li>
+          <li>Tudo do plano Ultra Básico</li>
+          <li>Atualização de conteúdo sazonal (esporádica)</li>
+        </ul>
+        <div class="bonus">Primeiro mês com diagnóstico completo de velocidade, sem custo extra</div>
+        <a class="cta-btn" href="https://pay.kiwify.com.br/iYv6rko" target="_blank">Quero esse</a>
+      </div>
+
+      <div class="plan">
+        <h3>Ultra Prioritário</h3>
+        <div class="price">R$297<span>/mês</span></div>
+        <div class="for">Pra quem depende do site pra vender todo dia</div>
+        <ul>
+          <li>Tudo do plano Ultra Plus</li>
+          <li>Serve para landing pages e páginas de vendas</li>
+          <li>Atualização de conteúdo todo mês</li>
+          <li>Atendimento prioritário, na frente da fila</li>
+          <li>Otimização contínua de performance</li>
+          <li>Canal direto pra pedidos urgentes</li>
+        </ul>
+        <div class="bonus">Primeiro mês com diagnóstico completo de velocidade, sem custo extra</div>
+        <a class="cta-btn" href="https://pay.kiwify.com.br/yUZGP38" target="_blank">Quero esse</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="proof">
+  <div class="wrap">
+    <div class="proof-top">
+      <div class="proof-photo">
+        <img src="assets/josias-viskoo-marketing-819x1024.png" alt="Josias, fundador da Viskoo">
+      </div>
+      <div class="proof-text">
+        <div class="kicker">Quem cuida</div>
+        <h2>A mesma estrutura técnica que já sustenta sites de clientes reais</h2>
+        <p class="lede">Não é uma tecnologia nova sendo testada, é a mesma base que já roda hospedagem pra mais de 100 clientes ativos da Viskoo hoje. Eu mesmo, Josias, acompanho de perto cada site que sai do ar.</p>
+      </div>
+    </div>
+
+    <div class="proof-grid">
+      <div class="proof-item"><div class="v">100+</div><div class="l">clientes ativos hoje</div></div>
+      <div class="proof-item"><div class="v">CDN</div><div class="l">rede global de entrega</div></div>
+      <div class="proof-item"><div class="v">Mensal</div><div class="l">sem contrato de fidelidade</div></div>
+      <div class="proof-item"><div class="v">Direto</div><div class="l">com quem cuida do seu site</div></div>
+    </div>
+  </div>
+</section>
+
+<section class="testimonials">
+  <div class="wrap">
+    <h2>O que os clientes falam depois que o site vai pro ar</h2>
+    <p class="lede">Conversas reais de clientes, com nomes e contatos ocultados. Clique numa imagem pra ampliar.</p>
+
+    <div class="testimonial-grid">
+      <img src="assets/ps01.png" alt="Print de teste de velocidade do site: nota 93 mobile e 89 desktop" loading="lazy">
+      <img src="assets/ps02.png" alt="Depoimento de cliente: equipe amou o site" loading="lazy">
+      <img src="assets/ps03.png" alt="Depoimento de cliente: site ficou sensacional, zero defeitos" loading="lazy">
+    </div>
+  </div>
+</section>
+
+<div class="lightbox" id="lightbox">
+  <button type="button" class="lightbox-close" id="lightboxClose" aria-label="Fechar">&times;</button>
+  <img id="lightboxImg" src="" alt="">
+</div>
+
+<section class="faq">
+  <div class="wrap">
+    <div class="kicker">Perguntas</div>
+    <h2>Antes de assinar</h2>
+
+    <div class="faq-list">
+      <div class="faq-item">
+        <h4>Por que o Site Ultra Rápido carrega mais rápido que WordPress?</h4>
+        <p>Porque o processo da Viskoo já entrega a página pronta, sem precisar montar tudo na hora do acesso. É a diferença entre entregar algo pronto e montar na hora.</p>
+      </div>
+      <div class="faq-item">
+        <h4>Dá pra ter formulário de contato e blog?</h4>
+        <p>Sim, formulário funciona normalmente e blog também é possível dentro da nossa estrutura, sem perder velocidade.</p>
+      </div>
+      <div class="faq-item">
+        <h4>E se eu já tiver um site em WordPress?</h4>
+        <p>A gente migra o conteúdo pro modelo Ultra Rápido. O visual pode ficar igual ou ser refeito, você decide.</p>
+      </div>
+      <div class="faq-item">
+        <h4>Posso cancelar quando quiser?</h4>
+        <p>Sim, é assinatura mensal sem fidelidade. Cancela direto quando não fizer mais sentido pra você. Importante: o site é construído e fica hospedado pela Viskoo enquanto a assinatura está ativa, não é um arquivo entregue pra você. Se cancelar, o site sai do ar.</p>
+      </div>
+      <div class="faq-item">
+        <h4>Preciso saber programar pra pedir alterações?</h4>
+        <p>Não, você só pede o que precisa mudar e a gente ajusta dentro do plano contratado.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="final">
+  <div class="wrap">
+    <div class="kicker">Pronto pra colocar seu site na velocidade certa?</div>
+    <h2>Escolha o plano certo pro seu caso e comece agora</h2>
+    <p class="lede">Sem formulário longo, sem espera. Assinatura já ativa direto após o pagamento, sem precisar esperar retorno.</p>
+    <div class="hero-cta">
+      <a class="cta-btn" href="#planos">Ver planos e assinar</a>
+      <div class="cta-sub">Planos a partir de R$97/mês</div>
+      <a class="cta-btn-secondary" href="https://wa.me/55SEUNUMEROAQUI?text=Quero%20saber%20mais%20sobre%20o%20site%20Ultra%20Velocidade" target="_blank"><svg class="wa-icon" viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg"><path d="M12.04 2C6.58 2 2.13 6.45 2.13 11.91c0 1.75.46 3.38 1.26 4.8L2 22l5.42-1.42a9.87 9.87 0 0 0 4.62 1.18h.01c5.46 0 9.9-4.45 9.9-9.91C21.96 6.45 17.5 2 12.04 2Zm0 18.06h-.01a8.14 8.14 0 0 1-4.15-1.14l-.3-.18-3.08.81.82-3-.19-.31a8.13 8.13 0 0 1-1.25-4.33c0-4.5 3.66-8.16 8.17-8.16 2.18 0 4.23.85 5.77 2.39a8.1 8.1 0 0 1 2.39 5.78c0 4.51-3.67 8.16-8.17 8.16Zm4.48-6.13c-.25-.12-1.45-.72-1.68-.8-.22-.08-.39-.12-.55.12-.16.25-.63.8-.77.96-.14.16-.28.18-.53.06-.25-.12-1.06-.39-2.02-1.25-.75-.67-1.25-1.5-1.4-1.75-.15-.25-.02-.38.11-.51.11-.11.25-.28.37-.42.12-.14.16-.25.25-.41.08-.16.04-.31-.02-.43-.06-.12-.55-1.33-.76-1.82-.2-.48-.4-.42-.55-.42h-.47c-.16 0-.42.06-.64.31-.22.25-.84.82-.84 2s.86 2.32.98 2.48c.12.16 1.7 2.6 4.13 3.64.58.25 1.03.4 1.38.51.58.18 1.11.16 1.53.1.47-.07 1.45-.59 1.65-1.16.2-.57.2-1.06.14-1.16-.06-.1-.22-.16-.47-.28Z"/></svg>Tirar dúvidas no WhatsApp</a>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <img src="viskoo-branco.svg" alt="Viskoo" class="footer-logo">
+  <div>Site Ultra Rápido · gestão da Viskoo</div>
+</footer>
+
+<script>
+  const lightbox = document.getElementById('lightbox');
+  const lightboxImg = document.getElementById('lightboxImg');
+  const lightboxClose = document.getElementById('lightboxClose');
+
+  function closeLightbox(){
+    lightbox.classList.remove('active');
+    lightboxImg.src = '';
+  }
+
+  document.querySelectorAll('.testimonial-grid img').forEach(img => {
+    img.addEventListener('click', () => {
+      lightboxImg.src = img.src;
+      lightboxImg.alt = img.alt;
+      lightbox.classList.add('active');
+    });
+  });
+
+  lightboxClose.addEventListener('click', closeLightbox);
+  lightbox.addEventListener('click', e => {
+    if(e.target === lightbox) closeLightbox();
+  });
+  document.addEventListener('keydown', e => {
+    if(e.key === 'Escape') closeLightbox();
+  });
+</script>
+
+</body>
+</html>
