@@ -1642,6 +1642,7 @@ select.input { appearance: none; cursor: pointer; }
 .process-step {
   flex: 1 1 0;
   min-width: 0;
+  overflow-wrap: break-word;
 }
 
 .process-arrow {
@@ -1659,7 +1660,7 @@ select.input { appearance: none; cursor: pointer; }
   height: 22px;
 }
 
-@media (max-width: 768px) {
+@media (max-width: 1180px) {
   .process-flow {
     flex-direction: column;
   }
