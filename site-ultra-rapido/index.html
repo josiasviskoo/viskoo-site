@@ -83,11 +83,13 @@
 
   /* ---------- MECANISMO ---------- */
   .mechanism{ border-top:1px solid var(--line); }
-  .mech-steps{ margin-top:44px; display:grid; grid-template-columns:repeat(3,1fr); gap:16px; }
-  .mstep{ background:var(--bg-card); border:1px solid var(--line); border-radius:14px; padding:26px 22px; }
+  .mech-steps{ margin-top:44px; display:flex; align-items:center; gap:0; }
+  .mstep{ background:var(--bg-card); border:1px solid var(--line); border-radius:14px; padding:26px 22px; flex:1 1 0; min-width:0; }
   .mstep .num{ font-family:'IBM Plex Mono', monospace; color:var(--orange); font-size:13px; margin-bottom:12px; }
   .mstep h4{ font-size:16px; font-weight:700; margin-bottom:8px; }
   .mstep p{ font-size:13.5px; color:var(--text-muted); }
+  .mstep-arrow{ flex:0 0 auto; display:flex; align-items:center; justify-content:center; width:32px; color:var(--orange); opacity:0.7; }
+  .mstep-arrow svg{ width:20px; height:20px; }
 
   /* ---------- COMPARATIVO ---------- */
   .compare{ border-top:1px solid var(--line); }
@@ -167,7 +169,10 @@
   .wa-icon{ width:17px; height:17px; flex-shrink:0; }
 
   @media (max-width:760px){
-    .enemy-grid, .mech-steps, .plan-grid{ grid-template-columns:1fr; }
+    .enemy-grid, .plan-grid{ grid-template-columns:1fr; }
+    .mech-steps{ flex-direction:column; }
+    .mstep-arrow{ width:100%; height:28px; }
+    .mstep-arrow svg{ transform:rotate(90deg); }
     .proof-grid{ grid-template-columns:1fr 1fr; }
     .testimonial-grid{ grid-template-columns:1fr; }
     .proof-top{ flex-direction:column; text-align:center; gap:24px; }
@@ -262,11 +267,13 @@
         <h4>Página já pronta pra carregar</h4>
         <p>O site já entrega a página montada na hora do acesso, sem precisar buscar nada. Isso sozinho já resolve a maior causa de lentidão.</p>
       </div>
+      <div class="mstep-arrow" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 5 16 12 9 19"></polyline></svg></div>
       <div class="mstep">
         <div class="num">02</div>
         <h4>Hospedagem em CDN global</h4>
         <p>Seu site fica replicado em servidores espalhados pelo mundo, sempre carregando do ponto mais perto de quem está acessando.</p>
       </div>
+      <div class="mstep-arrow" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 5 16 12 9 19"></polyline></svg></div>
       <div class="mstep">
         <div class="num">03</div>
         <h4>Imagens e código otimizados</h4>

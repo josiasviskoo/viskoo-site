@@ -649,6 +649,66 @@ body {
 }
 
 /* =============================================
+   PROCESS FLOW (steps connected by arrows)
+   ============================================= */
+.process-flow-rows {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+}
+
+.process-flow {
+  display: flex;
+  align-items: stretch;
+  gap: 0;
+}
+
+.process-step {
+  flex: 1 1 0;
+  min-width: 0;
+}
+
+.process-arrow {
+  flex: 0 0 auto;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  color: var(--accent);
+  opacity: 0.7;
+}
+
+.process-arrow svg {
+  width: 22px;
+  height: 22px;
+}
+
+.process-arrow-vertical {
+  width: 100%;
+  height: 24px;
+}
+
+.process-arrow-vertical svg {
+  transform: rotate(90deg);
+}
+
+@media (max-width: 768px) {
+  .process-flow {
+    flex-direction: column;
+  }
+  .process-step {
+    flex: 1 1 auto;
+  }
+  .process-arrow {
+    width: 100%;
+    height: 32px;
+  }
+  .process-arrow svg {
+    transform: rotate(90deg);
+  }
+}
+
+/* =============================================
    TYPOGRAPHY
    ============================================= */
 .t-display { font-size: clamp(40px, 8vw, 96px); font-weight: 700; letter-spacing: -0.05em; line-height: 0.95; }
