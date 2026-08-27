@@ -299,16 +299,11 @@ src="https://www.facebook.com/tr?id=612024205136097&ev=PageView&noscript=1"
     startWizard();
   }
 </script>
+<script src="/assets/js/planos-gate.js"></script>
 <script>
 (function() {
   var PRICES_express = [{ value: 'R$ 1.200' }];
-  if (new URLSearchParams(location.search).has('planos')) {
-    document.body.classList.add('prices-revealed');
-    PRICES_express.forEach(function(p, i) {
-      var el = document.getElementById('express-price-' + i);
-      if (el) el.textContent = p.value;
-    });
-  }
+  PlanosGate.reveal(PRICES_express, 'express-price-');
 })();
 </script>
 <script>

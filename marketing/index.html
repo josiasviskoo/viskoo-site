@@ -502,16 +502,11 @@ src="https://www.facebook.com/tr?id=612024205136097&ev=PageView&noscript=1"
     });
   }
 </script>
+<script src="/assets/js/planos-gate.js"></script>
 <script>
 (function() {
   var PRICES_mkt = [{ value: 'R$ 1.200' }, { value: 'R$ 2.400' }, { value: 'R$ 4.000' }];
-  if (new URLSearchParams(location.search).has('planos')) {
-    document.body.classList.add('prices-revealed');
-    PRICES_mkt.forEach(function(p, i) {
-      var el = document.getElementById('mkt-price-' + i);
-      if (el) el.textContent = p.value;
-    });
-  }
+  PlanosGate.reveal(PRICES_mkt, 'mkt-price-');
 })();
 </script>
 <script>
