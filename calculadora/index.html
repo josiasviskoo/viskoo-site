@@ -36,9 +36,9 @@ src="https://www.facebook.com/tr?id=612024205136097&ev=PageView&noscript=1"
 <body>
 <nav class="nav"><div class="nav-inner"><a href="../" class="nav-logo"><img src="../assets/img/viskoo-branco.svg" alt="Viskoo Logo" height="24"></a><button type="button" class="nav-toggle" aria-label="Abrir menu" aria-expanded="false" aria-controls="navLinks"><span></span><span></span><span></span></button><ul class="nav-links" id="navLinks"><li><a href="../produtos/">Produtos</a></li><li><a href="https://wa.me/5516993438187?text=Ol%C3%A1%21%20Estou%20na%20Calculadora%20de%20Or%C3%A7amento%20e%20gostaria%20de%20mais%20informa%C3%A7%C3%B5es." class="nav-cta">Conversar no WhatsApp</a></li></ul></div></nav>
 <main class="page">
-  <section class="hero" style="min-height: 56vh;"><div class="hero-bg"></div><div class="hero-content text-center"><span class="hero-eyebrow">Orçamento</span><h1 class="hero-title">Monte o seu orçamento em poucos cliques.</h1><p class="hero-sub t-body t-secondary" style="max-width: 700px; margin: 0 auto var(--space-6);">Marque os serviços que fazem sentido pro seu negócio e veja 3 pacotes sugeridos — recorrente e de projeto único.</p><a href="#itens" class="btn btn-primary btn-lg">Começar a montar</a></div></section>
+  <section class="hero" style="min-height: 56vh;"><div class="hero-bg"></div><div class="hero-content text-center"><span class="hero-eyebrow">Orçamento</span><h1 class="hero-title">Monte o seu orçamento em poucos cliques.</h1><p class="hero-sub t-body t-secondary" style="max-width: 700px; margin: 0 auto var(--space-6);">Escolha o nível de cada serviço — quantidade de conteúdos, tamanho do projeto, o que fizer sentido — e veja o total mudar na hora.</p><a href="#itens" class="btn btn-primary btn-lg">Começar a montar</a></div></section>
 
-  <section class="section"><div class="container"><div class="grid grid-3"><article class="card card-body"><h3 class="t-h3 mb-2">Sem compromisso</h3><p class="t-sm t-secondary">Marque, desmarque e teste combinações à vontade.</p></article><article class="card card-body"><h3 class="t-h3 mb-2">3 variações</h3><p class="t-sm t-secondary">Cada pacote sai em Essencial, Profissional e Completo.</p></article><article class="card card-body"><h3 class="t-h3 mb-2">Direto no WhatsApp</h3><p class="t-sm t-secondary">Fechou a combinação? Já manda pra gente com um clique.</p></article></div></div></section>
+  <section class="section"><div class="container"><div class="grid grid-3"><article class="card card-body"><h3 class="t-h3 mb-2">Nível por serviço</h3><p class="t-sm t-secondary">Cada linha tem seus próprios níveis reais — nada de pacote genérico.</p></article><article class="card card-body"><h3 class="t-h3 mb-2">Cálculo em tempo real</h3><p class="t-sm t-secondary">O total muda a cada clique, sem recarregar a página.</p></article><article class="card card-body"><h3 class="t-h3 mb-2">Direto no WhatsApp</h3><p class="t-sm t-secondary">Fechou a combinação? Já manda pra gente com um clique.</p></article></div></div></section>
 
   <section class="section" id="itens">
     <div class="container">
@@ -51,17 +51,21 @@ src="https://www.facebook.com/tr?id=612024205136097&ev=PageView&noscript=1"
       <div style="max-width: 760px; margin: var(--space-7) auto 0;">
         <div class="calc-group">
           <div class="calc-group-title"><span class="badge badge-default">Mensais</span> Serviços recorrentes</div>
-          <div class="calc-list" id="listRecurring"></div>
+          <p class="t-sm t-secondary" style="margin: -8px 0 var(--space-4);">Clique no nível desejado em cada linha. Clique de novo para remover o item.</p>
+          <div class="calc-table" id="listRecurring"></div>
         </div>
 
         <div class="calc-group">
           <div class="calc-group-title"><span class="badge badge-accent">Projeto único</span> Projetos e implementações</div>
-          <div class="calc-list" id="listOnetime"></div>
+          <div class="calc-table" id="listOnetime"></div>
         </div>
 
         <div class="calc-summary-bar">
-          <span class="calc-summary-count" id="summaryCount"><strong>0</strong> itens selecionados</span>
-          <a href="#resultado" class="btn btn-secondary btn-md">Ver pacotes ↓</a>
+          <div class="calc-summary-totals">
+            <span class="calc-summary-item">Mensal recorrente<strong id="summaryRecurring">R$ •••</strong></span>
+            <span class="calc-summary-item">Investimento único<strong id="summaryOnetime">R$ •••</strong></span>
+          </div>
+          <a href="#resultado" class="btn btn-secondary btn-md">Ver resumo ↓</a>
         </div>
       </div>
     </div>
@@ -71,17 +75,17 @@ src="https://www.facebook.com/tr?id=612024205136097&ev=PageView&noscript=1"
     <div class="container">
       <div class="section-header text-center">
         <p class="section-label">Resultado</p>
-        <h2 class="section-title">Pacotes sugeridos com base na sua seleção</h2>
-        <p class="section-desc" style="margin: 0 auto;">Os valores completos ficam visíveis com o link do mês vigente.</p>
+        <h2 class="section-title">Seu orçamento, item por item</h2>
+        <p class="section-desc" style="margin: 0 auto;">Os valores ficam visíveis com o link do mês vigente.</p>
       </div>
 
-      <div style="margin-top: var(--space-7);">
-        <div class="calc-result-heading"><h3>Investimento mensal recorrente</h3><span>Soma dos itens marcados em "Serviços recorrentes"</span></div>
+      <div style="max-width: 640px; margin: var(--space-7) auto 0;">
+        <div class="calc-result-heading"><h3>Mensal recorrente</h3></div>
         <div id="resultRecurring"></div>
       </div>
 
-      <div style="margin-top: var(--space-9);">
-        <div class="calc-result-heading"><h3>Investimento único (projeto/implementação)</h3><span>Soma dos itens marcados em "Projetos e implementações"</span></div>
+      <div style="max-width: 640px; margin: var(--space-9) auto 0;">
+        <div class="calc-result-heading"><h3>Investimento único</h3></div>
         <div id="resultOnetime"></div>
       </div>
     </div>
@@ -93,131 +97,208 @@ src="https://www.facebook.com/tr?id=612024205136097&ev=PageView&noscript=1"
 <script>
 (function () {
   var RECURRING = [
-    { id: 'sm', name: 'Social Media', desc: 'Planejamento, design e publicação de conteúdo para redes sociais.', tiers: [800, 1400, 2200] },
-    { id: 'mkt', name: 'Marketing', desc: 'Estratégia de marketing digital, campanhas e posicionamento de marca.', tiers: [1200, 2400, 4000] },
-    { id: 'trafego', name: 'Tráfego Pago', desc: 'Gestão de campanhas de anúncios (Meta, Google) com otimização contínua.', tiers: [797, 897, 2200] },
-    { id: 'seo', name: 'SEO/GEO', desc: 'Otimização para buscadores tradicionais e busca por IA (GEO).', tiers: [700, 1400, 2500] },
-    { id: 'tv', name: 'Viskoo TV', desc: 'Sinalização digital para telas no ponto físico do negócio.', tiers: [250, 450, 700] },
-    { id: 'loja', name: 'Loja Virtual (assinatura)', desc: 'Loja virtual própria, com hospedagem inclusa e suporte mensal.', tiers: [299, 499, 499] },
-    { id: 'lp', name: 'Landing Page (assinatura)', desc: 'Página de conversão dedicada, em modelo de assinatura mensal.', tiers: [220, 370, 600] },
-    { id: 'host', name: 'Hospedagem', desc: 'Infraestrutura para manter sites e sistemas no ar com segurança.', tiers: [79, 119, 149] },
-    { id: 'aut-manut', name: 'Automações — Manutenção', desc: 'Acompanhamento e manutenção mensal de automações já implementadas.', tiers: [450, 450, 450] },
-    { id: 'ai-manut', name: 'Agentes IA — Manutenção', desc: 'Acompanhamento e manutenção mensal de agentes de IA em operação.', tiers: [500, 500, 500] },
-    { id: 'gn-gestao', name: 'Google Negócios — Gestão', desc: 'Gestão mensal do perfil no Google (posts, avaliações, visibilidade).', tiers: [220, 220, 220] }
+    { id: 'sm', name: 'Social Media', desc: 'Planejamento, design e publicação de conteúdo para redes sociais.', tiers: [
+      { label: '4 conteúdos/mês', price: 800 }, { label: '8 conteúdos/mês', price: 1400 }, { label: '12 conteúdos/mês', price: 2200 }
+    ] },
+    { id: 'mkt', name: 'Marketing', desc: 'Estratégia de marketing digital, campanhas e posicionamento de marca.', tiers: [
+      { label: 'Essencial', price: 1200 }, { label: 'Marketing Completo', price: 2400 }, { label: 'Full Service', price: 4000 }
+    ] },
+    { id: 'trafego', name: 'Tráfego Pago', desc: 'Gestão de campanhas de anúncios (Meta, Google) com otimização contínua.', tiers: [
+      { label: 'Nível 01', price: 797 }, { label: 'Nível 02 — Diagnóstico', price: 897 }, { label: 'Nível 03 — Criativo', price: 2200 }
+    ] },
+    { id: 'trafego-parceiro', name: 'Tráfego Pago para Parceiros', desc: 'Gestão de tráfego white-label para parceiros com carteira de clientes.', tiers: [
+      { label: '1 cliente', price: 350 }, { label: 'Até 3 clientes', price: 1000 }, { label: 'Até 5 clientes', price: 1600 }, { label: 'Até 10 clientes', price: 2800 }
+    ] },
+    { id: 'seo', name: 'SEO/GEO', desc: 'Otimização para buscadores tradicionais e busca por IA (GEO).', tiers: [
+      { label: 'SEO Local', price: 700 }, { label: 'Regional + GEO', price: 1400 }, { label: 'Nacional', price: 2500 }
+    ] },
+    { id: 'tv', name: 'Viskoo TV', desc: 'Sinalização digital para telas no ponto físico do negócio.', tiers: [
+      { label: '1 tela', price: 250 }, { label: 'Até 3 telas', price: 450 }, { label: 'Telas ilimitadas', price: 700 }
+    ] },
+    { id: 'loja', name: 'Loja Virtual (assinatura)', desc: 'Loja virtual própria, com hospedagem inclusa e suporte mensal.', tiers: [
+      { label: 'Starter', price: 299 }, { label: 'Completo', price: 499 }
+    ] },
+    { id: 'lp', name: 'Landing Page (assinatura)', desc: 'Página de conversão dedicada, em modelo de assinatura mensal.', tiers: [
+      { label: 'Layout Pronto', price: 220 }, { label: 'Layout Exclusivo', price: 370 }, { label: 'One-Page Completa', price: 600 }
+    ] },
+    { id: 'host', name: 'Hospedagem', desc: 'Infraestrutura para manter sites e sistemas no ar com segurança.', tiers: [
+      { label: '15Gb SSD', price: 79 }, { label: '60Gb SSD', price: 119 }, { label: '80Gb SSD', price: 149 }
+    ] },
+    { id: 'aut-manut', name: 'Automações — Manutenção', desc: 'Acompanhamento e manutenção mensal de automações já implementadas.', tiers: [
+      { label: 'Recorrente', price: 450 }
+    ] },
+    { id: 'ai-manut', name: 'Agentes IA — Manutenção', desc: 'Acompanhamento e manutenção mensal de agentes de IA em operação.', tiers: [
+      { label: 'Recorrente', price: 500 }
+    ] },
+    { id: 'gn-gestao', name: 'Google Negócios — Gestão', desc: 'Gestão mensal do perfil no Google (posts, avaliações, visibilidade).', tiers: [
+      { label: 'Mensal', price: 220 }
+    ] }
   ];
 
   var ONETIME = [
-    { id: 'site', name: 'Site Institucional', desc: 'Site institucional completo, sob medida para o negócio.', tiers: [1800, 3200, 5500] },
-    { id: 'site-express', name: 'Site Express', desc: 'Site institucional simples, pronto em até 7 dias úteis.', tiers: [1200, 1200, 1200] },
-    { id: 'branding', name: 'Branding', desc: 'Identidade visual, do logotipo ao manual de marca completo.', tiers: [2200, 4800, 8500] },
-    { id: 'uiux', name: 'UI/UX', desc: 'Auditoria, redesign ou criação de produto digital do zero.', tiers: [1200, 3000, 6000] },
-    { id: 'apps', name: 'Apps', desc: 'Desenvolvimento de aplicativo mobile, do MVP ao produto completo.', tiers: [5000, 'consulta', 'consulta'] },
-    { id: 'aut-impl', name: 'Automações — Implementação', desc: 'Criação de um fluxo único ou de um pacote completo de automações.', tiers: [700, 2000, 2000] },
-    { id: 'ai-impl', name: 'Agentes IA — Implementação', desc: 'Criação de um agente de IA ou de um time multi-agente.', tiers: [1200, 2500, 2500] },
-    { id: 'gn-setup', name: 'Google Negócios — Setup', desc: 'Configuração completa e otimização inicial do perfil no Google.', tiers: [450, 450, 450] }
+    { id: 'site', name: 'Site Institucional', desc: 'Site institucional completo, sob medida para o negócio.', tiers: [
+      { label: 'Starter', price: 1800 }, { label: 'Profissional', price: 3200 }, { label: 'Premium', price: 5500 }
+    ] },
+    { id: 'site-express', name: 'Site Express', desc: 'Site institucional simples, pronto em até 7 dias úteis.', tiers: [
+      { label: 'Express', price: 1200 }
+    ] },
+    { id: 'branding', name: 'Branding', desc: 'Identidade visual, do logotipo ao manual de marca completo.', tiers: [
+      { label: 'Identidade', price: 2200 }, { label: 'Branding Completo', price: 4800 }, { label: 'Full Brand', price: 8500 }
+    ] },
+    { id: 'uiux', name: 'UI/UX', desc: 'Auditoria, redesign ou criação de produto digital do zero.', tiers: [
+      { label: 'Auditoria UX', price: 1200 }, { label: 'Redesign', price: 3000 }, { label: 'Produto Digital', price: 6000 }
+    ] },
+    { id: 'apps', name: 'Apps', desc: 'Desenvolvimento de aplicativo mobile, do MVP ao produto completo.', tiers: [
+      { label: 'MVP', price: 5000 }, { label: 'Produto Completo', price: 'consulta' }
+    ] },
+    { id: 'aut-impl', name: 'Automações — Implementação', desc: 'Criação de um fluxo único ou de um pacote completo de automações.', tiers: [
+      { label: 'Fluxo Único', price: 700 }, { label: 'Pacote de Automações', price: 2000 }
+    ] },
+    { id: 'ai-impl', name: 'Agentes IA — Implementação', desc: 'Criação de um agente de IA ou de um time multi-agente.', tiers: [
+      { label: '1 Agente', price: 1200 }, { label: 'Multi-agente', price: 2500 }
+    ] },
+    { id: 'gn-setup', name: 'Google Negócios — Setup', desc: 'Configuração completa e otimização inicial do perfil no Google.', tiers: [
+      { label: 'Setup Completo', price: 450 }
+    ] }
   ];
 
-  var TIER_LABELS = ['Essencial', 'Profissional', 'Completo'];
-  var selected = {};
+  var selection = {}; // itemId -> tierIndex
   var revealed = PlanosGate.isRevealed();
 
   function fmtBRL(n) {
     return 'R$ ' + Math.round(n).toLocaleString('pt-BR');
   }
 
-  function waLink(groupLabel, tierLabel, items) {
-    var names = items.map(function (it) { return it.name; }).join(', ');
-    var text = 'Olá! Usei a calculadora da Viskoo e montei um orçamento (' + groupLabel + ' — ' + tierLabel + ') com: ' + names + '. Gostaria de conversar sobre esse pacote.';
+  function priceLabel(price) {
+    if (!revealed) return 'R$ •••';
+    return price === 'consulta' ? 'Sob consulta' : fmtBRL(price);
+  }
+
+  function findItem(id) {
+    var it = RECURRING.filter(function (x) { return x.id === id; })[0];
+    return it || ONETIME.filter(function (x) { return x.id === id; })[0];
+  }
+
+  function computeTotal(items) {
+    var sum = 0, hasConsulta = false, chosen = [];
+    items.forEach(function (it) {
+      var idx = selection[it.id];
+      if (idx === undefined) return;
+      var tier = it.tiers[idx];
+      if (tier.price === 'consulta') hasConsulta = true;
+      else sum += tier.price;
+      chosen.push({ item: it, tier: tier });
+    });
+    return { sum: sum, hasConsulta: hasConsulta, chosen: chosen };
+  }
+
+  function waLink(groupLabel, chosen) {
+    var names = chosen.map(function (c) { return c.item.name + ' (' + c.tier.label + ')'; }).join(', ');
+    var text = 'Olá! Usei a calculadora da Viskoo e montei um orçamento (' + groupLabel + ') com: ' + names + '. Gostaria de conversar sobre esse orçamento.';
     return 'https://wa.me/5516993438187?text=' + encodeURIComponent(text);
   }
 
-  function renderList(container, items) {
+  function renderTable(container, items) {
     items.forEach(function (it) {
-      var row = document.createElement('label');
-      row.className = 'calc-row';
+      var row = document.createElement('div');
+      row.className = 'calc-item';
+      var tiersHtml = it.tiers.map(function (t, i) {
+        return '<button type="button" class="calc-tier" data-item="' + it.id + '" data-tier="' + i + '">' +
+          '<span class="calc-tier-label">' + t.label + '</span>' +
+          '<span class="calc-tier-price">' + priceLabel(t.price) + '</span>' +
+          '</button>';
+      }).join('');
       row.innerHTML =
-        '<input type="checkbox" data-id="' + it.id + '">' +
-        '<div class="calc-row-text">' +
-          '<div class="calc-row-title">' + it.name + '</div>' +
-          '<div class="calc-row-desc">' + it.desc + '</div>' +
-        '</div>';
-      var checkbox = row.querySelector('input');
-      checkbox.addEventListener('change', function () {
-        selected[it.id] = checkbox.checked;
-        row.classList.toggle('is-checked', checkbox.checked);
-        renderAll();
+        '<div class="calc-item-title">' + it.name + '</div>' +
+        '<div class="calc-item-desc">' + it.desc + '</div>' +
+        '<div class="calc-tiers">' + tiersHtml + '</div>';
+
+      row.querySelectorAll('.calc-tier').forEach(function (btn) {
+        btn.addEventListener('click', function () {
+          var tierIdx = Number(btn.getAttribute('data-tier'));
+          if (selection[it.id] === tierIdx) {
+            delete selection[it.id];
+          } else {
+            selection[it.id] = tierIdx;
+          }
+          renderAll();
+        });
       });
+
       container.appendChild(row);
     });
   }
 
-  function renderResults(container, items, groupLabel) {
-    container.innerHTML = '';
-    var checkedItems = items.filter(function (it) { return selected[it.id]; });
+  function refreshTierStates() {
+    document.querySelectorAll('.calc-tier').forEach(function (btn) {
+      var id = btn.getAttribute('data-item');
+      var tierIdx = Number(btn.getAttribute('data-tier'));
+      var isSelected = selection[id] === tierIdx;
+      btn.classList.toggle('is-selected', isSelected);
+      var item = findItem(id);
+      btn.querySelector('.calc-tier-price').textContent = priceLabel(item.tiers[tierIdx].price);
+    });
+    document.querySelectorAll('.calc-item').forEach(function (row) {
+      var id = row.querySelector('.calc-tier').getAttribute('data-item');
+      row.classList.toggle('has-selection', selection[id] !== undefined);
+    });
+  }
 
-    if (checkedItems.length === 0) {
+  function renderResult(container, items, groupLabel) {
+    container.innerHTML = '';
+    var result = computeTotal(items);
+
+    if (result.chosen.length === 0) {
       var empty = document.createElement('div');
       empty.className = 'calc-results-empty';
-      empty.textContent = 'Marque itens acima para ver os pacotes sugeridos aqui.';
+      empty.textContent = 'Marque um nível em algum item acima para ver o resumo aqui.';
       container.appendChild(empty);
       return;
     }
 
-    var grid = document.createElement('div');
-    grid.className = 'grid grid-3';
+    var list = document.createElement('ul');
+    list.className = 'calc-breakdown';
+    list.innerHTML = result.chosen.map(function (c) {
+      return '<li><span class="calc-breakdown-name">' + c.item.name + ' <span class="calc-breakdown-tier">— ' + c.tier.label + '</span></span>' +
+        '<span class="calc-breakdown-price">' + priceLabel(c.tier.price) + '</span></li>';
+    }).join('');
+    container.appendChild(list);
 
-    TIER_LABELS.forEach(function (label, tierIndex) {
-      var sum = 0;
-      var hasConsulta = false;
-      checkedItems.forEach(function (it) {
-        var v = it.tiers[tierIndex];
-        if (v === 'consulta') hasConsulta = true;
-        else sum += v;
-      });
+    var totalRow = document.createElement('div');
+    totalRow.className = 'calc-total-row';
+    var totalText = revealed
+      ? fmtBRL(result.sum) + (result.hasConsulta ? ' <span style="font-size:14px;color:var(--text-secondary);">+ itens sob consulta</span>' : '')
+      : 'R$ •••';
+    totalRow.innerHTML = '<span>Total</span><span>' + totalText + '</span>';
+    container.appendChild(totalRow);
 
-      var isAccent = tierIndex === 1;
-      var card = document.createElement('article');
-      card.className = 'pricing-card card' + (isAccent ? ' card-accent' : '');
-
-      var priceHtml = revealed
-        ? fmtBRL(sum) + (hasConsulta ? ' <span style="font-size:14px;color:var(--text-secondary);">+ itens sob consulta</span>' : '')
-        : 'R$ •••';
-
-      var itemsHtml = checkedItems.map(function (it) {
-        return '<li>' + it.name + '</li>';
-      }).join('');
-
-      card.innerHTML =
-        '<div class="plan-top"><span class="plan-name' + (isAccent ? ' plan-name-accent' : '') + '">' + label + '</span></div>' +
-        '<div class="price-wrap"><div class="price' + (isAccent ? ' price-accent' : '') + '">' + priceHtml + '</div></div>' +
-        '<p class="price-sub">' + checkedItems.length + ' ' + (checkedItems.length === 1 ? 'item selecionado' : 'itens selecionados') + '</p>' +
-        '<ul class="plan-list">' + itemsHtml + '</ul>';
-
-      var cta = document.createElement('a');
-      cta.className = 'btn ' + (isAccent ? 'btn-primary' : 'btn-secondary') + ' btn-md';
-      cta.style.width = '100%';
-      cta.style.marginTop = 'auto';
-      cta.target = '_blank';
-      cta.rel = 'noopener noreferrer';
-      cta.href = waLink(groupLabel, label, checkedItems);
-      cta.innerHTML = '<svg width="17" height="17" viewBox="0 0 32 32" fill="currentColor" style="flex-shrink:0"><path d="M16.03 3.2A12.74 12.74 0 0 0 5.2 22.62L3.6 28.8l6.32-1.55A12.72 12.72 0 1 0 16.03 3.2Zm0 2.27a10.45 10.45 0 0 1 8.86 16.01 10.43 10.43 0 0 1-13.83 3.41l-.45-.27-3.75.92.95-3.66-.3-.47A10.46 10.46 0 0 1 16.03 5.47Zm-4.1 4.93c-.24 0-.62.09-.94.44-.32.36-1.24 1.21-1.24 2.95 0 1.73 1.27 3.41 1.44 3.64.18.24 2.45 3.91 6.03 5.32 2.98 1.17 3.59.94 4.23.88.65-.06 2.1-.86 2.4-1.69.29-.83.29-1.54.2-1.69-.09-.14-.32-.23-.68-.41-.35-.17-2.09-1.03-2.42-1.15-.32-.12-.56-.18-.8.18-.23.35-.91 1.15-1.12 1.38-.2.24-.41.27-.76.09-.36-.18-1.5-.55-2.85-1.76-1.05-.94-1.76-2.1-1.97-2.45-.2-.36-.02-.55.16-.72.16-.16.35-.41.53-.62.18-.2.24-.35.36-.59.12-.23.06-.44-.03-.62-.09-.18-.8-1.93-1.09-2.64-.29-.69-.58-.6-.8-.61h-.69Z"/></svg> Falar sobre esse pacote';
-      card.appendChild(cta);
-
-      grid.appendChild(card);
-    });
-
-    container.appendChild(grid);
+    var cta = document.createElement('a');
+    cta.className = 'btn btn-primary btn-md';
+    cta.target = '_blank';
+    cta.rel = 'noopener noreferrer';
+    cta.href = waLink(groupLabel, result.chosen);
+    cta.innerHTML = '<svg width="17" height="17" viewBox="0 0 32 32" fill="currentColor" style="flex-shrink:0"><path d="M16.03 3.2A12.74 12.74 0 0 0 5.2 22.62L3.6 28.8l6.32-1.55A12.72 12.72 0 1 0 16.03 3.2Zm0 2.27a10.45 10.45 0 0 1 8.86 16.01 10.43 10.43 0 0 1-13.83 3.41l-.45-.27-3.75.92.95-3.66-.3-.47A10.46 10.46 0 0 1 16.03 5.47Zm-4.1 4.93c-.24 0-.62.09-.94.44-.32.36-1.24 1.21-1.24 2.95 0 1.73 1.27 3.41 1.44 3.64.18.24 2.45 3.91 6.03 5.32 2.98 1.17 3.59.94 4.23.88.65-.06 2.1-.86 2.4-1.69.29-.83.29-1.54.2-1.69-.09-.14-.32-.23-.68-.41-.35-.17-2.09-1.03-2.42-1.15-.32-.12-.56-.18-.8.18-.23.35-.91 1.15-1.12 1.38-.2.24-.41.27-.76.09-.36-.18-1.5-.55-2.85-1.76-1.05-.94-1.76-2.1-1.97-2.45-.2-.36-.02-.55.16-.72.16-.16.35-.41.53-.62.18-.2.24-.35.36-.59.12-.23.06-.44-.03-.62-.09-.18-.8-1.93-1.09-2.64-.29-.69-.58-.6-.8-.61h-.69Z"/></svg> Falar sobre esse orçamento';
+    container.appendChild(cta);
   }
 
   function renderAll() {
-    var count = Object.keys(selected).filter(function (id) { return selected[id]; }).length;
-    document.getElementById('summaryCount').innerHTML = '<strong>' + count + '</strong> ' + (count === 1 ? 'item selecionado' : 'itens selecionados');
-    renderResults(document.getElementById('resultRecurring'), RECURRING, 'Mensal recorrente');
-    renderResults(document.getElementById('resultOnetime'), ONETIME, 'Investimento único');
+    refreshTierStates();
+
+    var recurringTotal = computeTotal(RECURRING);
+    var onetimeTotal = computeTotal(ONETIME);
+    document.getElementById('summaryRecurring').innerHTML = revealed
+      ? fmtBRL(recurringTotal.sum)
+      : 'R$ •••';
+    document.getElementById('summaryOnetime').innerHTML = revealed
+      ? fmtBRL(onetimeTotal.sum) + (onetimeTotal.hasConsulta ? ' +' : '')
+      : 'R$ •••';
+
+    renderResult(document.getElementById('resultRecurring'), RECURRING, 'Mensal recorrente');
+    renderResult(document.getElementById('resultOnetime'), ONETIME, 'Investimento único');
   }
 
-  renderList(document.getElementById('listRecurring'), RECURRING);
-  renderList(document.getElementById('listOnetime'), ONETIME);
+  renderTable(document.getElementById('listRecurring'), RECURRING);
+  renderTable(document.getElementById('listOnetime'), ONETIME);
   renderAll();
 })();
 </script>
