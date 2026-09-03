@@ -2,5 +2,9 @@ User-agent: *
 Allow: /
 Disallow: /ata/
 Disallow: /proposta/
+Disallow: /assinatura/
+Disallow: /site-briefing/
+Disallow: /anuncios-saas/
+Disallow: /cadastro/
 
 Sitemap: https://viskoo.com.br/sitemap.xml
