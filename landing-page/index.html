@@ -122,6 +122,7 @@ src="https://www.facebook.com/tr?id=612024205136097&ev=PageView&noscript=1"
     </div>
   </section>
 
+  <script src="/assets/js/planos-gate.js"></script>
   <script>
     var PRICES = [
       { monthly: 'R$ 220/mês', single: 'R$ 900',   subMonthly: 'Mínimo 3 meses', subSingle: 'Pagamento único' },
@@ -129,7 +130,7 @@ src="https://www.facebook.com/tr?id=612024205136097&ev=PageView&noscript=1"
       { monthly: 'R$ 600/mês', single: 'R$ 2.500', subMonthly: 'Mínimo 3 meses', subSingle: 'Pagamento único' }
     ];
 
-    var revealed = new URLSearchParams(location.search).has('planos');
+    var revealed = PlanosGate.isRevealed();
     var pricingMode = 'monthly';
 
     if (revealed) {
