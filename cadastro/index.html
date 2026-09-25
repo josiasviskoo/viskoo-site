@@ -435,7 +435,7 @@ src="https://www.facebook.com/tr?id=612024205136097&ev=PageView&noscript=1"
     selectParcelamento.replaceWith(inputParcelamento);
   }
 
-  // Envio do formulário para o webhook
+  // Envio do formulário por e-mail (FormSubmit)
   document.getElementById('form-cadastro').addEventListener('submit', async function (e) {
     e.preventDefault();
 
@@ -443,35 +443,41 @@ src="https://www.facebook.com/tr?id=612024205136097&ev=PageView&noscript=1"
     btn.disabled = true;
     btn.textContent = 'Enviando…';
 
+    const nome = document.getElementById('nome').value;
+
     const data = {
-      nome:          document.getElementById('nome').value,
-      email:         document.getElementById('email').value,
-      whatsapp:      document.getElementById('whatsapp').value,
-      empresa:       document.getElementById('empresa').value,
-      documento:     document.getElementById('documento').value,
-      rua:           document.getElementById('rua').value,
-      numero:        document.getElementById('numero').value,
-      bairro:        document.getElementById('bairro').value,
-      cep:           document.getElementById('cep').value,
-      cidade:        document.getElementById('cidade').value,
-      dia_pagamento: document.querySelector('input[name="dia_pagamento"]:checked')?.value || '',
-      descricao:     document.getElementById('descricao').value,
-      valor:         document.getElementById('valor').value,
-      parcelamento:  document.getElementById('parcelamento').value,
+      _subject:           'Novo cadastro — ' + nome,
+      _template:          'table',
+      'Nome':             nome,
+      'E-mail':           document.getElementById('email').value,
+      'WhatsApp':         document.getElementById('whatsapp').value,
+      'Empresa':          document.getElementById('empresa').value,
+      'CNPJ/CPF':         document.getElementById('documento').value,
+      'Rua':              document.getElementById('rua').value,
+      'Número':           document.getElementById('numero').value,
+      'Bairro':           document.getElementById('bairro').value,
+      'CEP':              document.getElementById('cep').value,
+      'Cidade':           document.getElementById('cidade').value,
+      'Dia de pagamento': document.querySelector('input[name="dia_pagamento"]:checked')?.value || '',
+      'Descrição':        document.getElementById('descricao').value,
+      'Valor':            document.getElementById('valor').value,
+      'Parcelamento':     document.getElementById('parcelamento').value,
+      _replyto:           document.getElementById('email').value,
     };
 
     try {
-      const res = await fetch('https://webhook.viskoo.com.br/webhook/cadastro', {
+      const res = await fetch('https://formsubmit.co/ajax/josiasviskoo@gmail.com', {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
+        headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
         body: JSON.stringify(data),
       });
+      const json = await res.json();
 
-      if (res.ok) {
+      if (res.ok && String(json.success) === 'true') {
         btn.textContent = 'Cadastro enviado!';
         btn.style.background = '#30d158';
       } else {
-        throw new Error('Resposta inesperada: ' + res.status);
+        throw new Error(json.message || 'Resposta inesperada: ' + res.status);
       }
     } catch (err) {
       btn.disabled = false;
