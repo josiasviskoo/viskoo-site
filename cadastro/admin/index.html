@@ -12,6 +12,7 @@
   <link rel="stylesheet" href="../../index.css" />
 
   <style>
+    [hidden] { display: none !important; }
     .admin { max-width: 1100px; margin: 0 auto; padding: var(--space-8) var(--space-4); }
 
     .admin-top {
@@ -174,8 +175,8 @@
       const { token: t } = await api('POST', { acao: 'login', email: $('login-email').value, senha: $('login-senha').value });
       token.set(t);
       iniciar();
-    } catch {
-      $('login-erro').textContent = 'E-mail ou senha incorretos.';
+    } catch (err) {
+      $('login-erro').textContent = err.message.includes('senha') ? 'E-mail ou senha incorretos.' : 'Erro ao entrar: ' + err.message;
     }
   });
 

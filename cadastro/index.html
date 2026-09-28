@@ -241,6 +241,26 @@ src="https://www.facebook.com/tr?id=612024205136097&ev=PageView&noscript=1"
       background: var(--border);
       margin: var(--space-3) 0 var(--space-6);
     }
+    /* Tela de cadastro enviado */
+    [hidden] { display: none !important; }
+    .cadastro-sucesso {
+      text-align: center;
+      padding: var(--space-6) 0;
+    }
+    .cadastro-sucesso .icone {
+      width: 64px; height: 64px; margin: 0 auto var(--space-5);
+      display: flex; align-items: center; justify-content: center;
+      border-radius: 50%; background: rgba(48,209,88,0.12); color: #30d158;
+      font-size: 30px; font-weight: 700;
+    }
+    .cadastro-sucesso h2 {
+      font-size: 28px; font-weight: 700; letter-spacing: -0.03em;
+      margin-bottom: var(--space-3);
+    }
+    .cadastro-sucesso p {
+      color: var(--text-secondary); font-size: 15px; line-height: 1.6;
+      max-width: 420px; margin: 0 auto var(--space-6);
+    }
   </style>
 </head>
 
@@ -390,6 +410,14 @@ src="https://www.facebook.com/tr?id=612024205136097&ev=PageView&noscript=1"
 
       </form>
 
+      <!-- Tela exibida após o envio -->
+      <div class="cadastro-sucesso" id="cadastro-sucesso" hidden>
+        <div class="icone">✓</div>
+        <h2>Cadastro enviado!</h2>
+        <p>Recebemos seus dados. Em breve você receberá a documentação para concluir a contratação com a VISKOO.</p>
+        <button type="button" class="btn-cadastrar" id="btn-voltar">VOLTAR</button>
+      </div>
+
     </div>
   </div>
 
@@ -472,8 +500,11 @@ src="https://www.facebook.com/tr?id=612024205136097&ev=PageView&noscript=1"
 
       // Se só o Asaas falhou, o cadastro já está salvo e é resolvido pelo admin.
       if (res.ok && json.id) {
-        btn.textContent = 'Cadastro enviado!';
-        btn.style.background = '#30d158';
+        // Esconde o formulário e mostra só a mensagem de sucesso
+        document.querySelector('.cadastro-header').hidden = true;
+        this.hidden = true;
+        document.getElementById('cadastro-sucesso').hidden = false;
+        window.scrollTo({ top: 0, behavior: 'smooth' });
       } else {
         throw new Error(json.error || 'Resposta inesperada: ' + res.status);
       }
@@ -484,6 +515,9 @@ src="https://www.facebook.com/tr?id=612024205136097&ev=PageView&noscript=1"
       console.error(err);
     }
   });
+
+  // Volta para o formulário limpo (recarrega para reaplicar os dados da URL)
+  document.getElementById('btn-voltar').addEventListener('click', () => location.reload());
 </script>
 
 </body>
