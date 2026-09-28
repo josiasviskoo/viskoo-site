@@ -435,7 +435,7 @@ src="https://www.facebook.com/tr?id=612024205136097&ev=PageView&noscript=1"
     selectParcelamento.replaceWith(inputParcelamento);
   }
 
-  // Envio do formulário por e-mail (FormSubmit)
+  // Envio do formulário para a API (api.viskoo.com.br), que salva e cria o cliente no Asaas
   document.getElementById('form-cadastro').addEventListener('submit', async function (e) {
     e.preventDefault();
 
@@ -443,41 +443,39 @@ src="https://www.facebook.com/tr?id=612024205136097&ev=PageView&noscript=1"
     btn.disabled = true;
     btn.textContent = 'Enviando…';
 
-    const nome = document.getElementById('nome').value;
+    const campo = (id) => document.getElementById(id).value;
 
     const data = {
-      _subject:           'Novo cadastro — ' + nome,
-      _template:          'table',
-      'Nome':             nome,
-      'E-mail':           document.getElementById('email').value,
-      'WhatsApp':         document.getElementById('whatsapp').value,
-      'Empresa':          document.getElementById('empresa').value,
-      'CNPJ/CPF':         document.getElementById('documento').value,
-      'Rua':              document.getElementById('rua').value,
-      'Número':           document.getElementById('numero').value,
-      'Bairro':           document.getElementById('bairro').value,
-      'CEP':              document.getElementById('cep').value,
-      'Cidade':           document.getElementById('cidade').value,
-      'Dia de pagamento': document.querySelector('input[name="dia_pagamento"]:checked')?.value || '',
-      'Descrição':        document.getElementById('descricao').value,
-      'Valor':            document.getElementById('valor').value,
-      'Parcelamento':     document.getElementById('parcelamento').value,
-      _replyto:           document.getElementById('email').value,
+      nome:          campo('nome'),
+      email:         campo('email'),
+      whatsapp:      campo('whatsapp'),
+      empresa:       campo('empresa'),
+      documento:     campo('documento'),
+      rua:           campo('rua'),
+      numero:        campo('numero'),
+      bairro:        campo('bairro'),
+      cep:           campo('cep'),
+      cidade:        campo('cidade'),
+      dia_pagamento: document.querySelector('input[name="dia_pagamento"]:checked')?.value || '',
+      descricao:     campo('descricao'),
+      valor:         campo('valor'),
+      parcelamento:  campo('parcelamento'),
     };
 
     try {
-      const res = await fetch('https://formsubmit.co/ajax/josiasviskoo@gmail.com', {
+      const res = await fetch('https://api.viskoo.com.br/cadastro.php', {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+        headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(data),
       });
       const json = await res.json();
 
-      if (res.ok && String(json.success) === 'true') {
+      // Se só o Asaas falhou, o cadastro já está salvo e é resolvido pelo admin.
+      if (res.ok && json.id) {
         btn.textContent = 'Cadastro enviado!';
         btn.style.background = '#30d158';
       } else {
-        throw new Error(json.message || 'Resposta inesperada: ' + res.status);
+        throw new Error(json.error || 'Resposta inesperada: ' + res.status);
       }
     } catch (err) {
       btn.disabled = false;

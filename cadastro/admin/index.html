@@ -1,0 +1,287 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Cadastros — Viskoo</title>
+  <meta name="robots" content="noindex, nofollow" />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,600;9..40,700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="../../index.css" />
+
+  <style>
+    .admin { max-width: 1100px; margin: 0 auto; padding: var(--space-8) var(--space-4); }
+
+    .admin-top {
+      display: flex; align-items: center; justify-content: space-between;
+      gap: var(--space-4); flex-wrap: wrap; margin-bottom: var(--space-6);
+    }
+    .admin-top h1 { font-size: 28px; font-weight: 700; letter-spacing: -0.03em; }
+    .admin-top .acoes { display: flex; gap: var(--space-2); align-items: center; flex-wrap: wrap; }
+
+    .login { max-width: 360px; margin: 12vh auto 0; display: flex; flex-direction: column; gap: var(--space-3); }
+    .login h1 { font-size: 24px; font-weight: 700; margin-bottom: var(--space-2); }
+    .msg-erro { color: #ff453a; font-size: 13px; min-height: 18px; }
+
+    .filtros { display: flex; gap: var(--space-2); flex-wrap: wrap; }
+    .filtro {
+      height: 32px; padding: 0 14px; border-radius: var(--r-full);
+      border: 1px solid var(--border); background: transparent;
+      color: var(--text-secondary); font: 500 12px var(--font-body); cursor: pointer;
+    }
+    .filtro.ativo { border-color: var(--accent); color: var(--accent); background: var(--accent-dim); }
+
+    .lista { border: 1px solid var(--border); border-radius: var(--r-md); overflow: hidden; }
+    .linha {
+      display: grid; grid-template-columns: 110px 1.4fr 1.2fr 110px 120px;
+      gap: var(--space-3); align-items: center;
+      padding: 14px var(--space-4); border-bottom: 1px solid var(--border);
+      cursor: pointer; font-size: 14px;
+    }
+    .linha:last-child { border-bottom: none; }
+    .linha:hover { background: var(--bg-surface); }
+    .linha.cabecalho {
+      cursor: default; background: var(--bg-surface);
+      font-size: 11px; font-weight: 600; letter-spacing: 0.08em;
+      text-transform: uppercase; color: var(--text-muted);
+    }
+    .linha .sub { color: var(--text-muted); font-size: 12px; }
+    .linha .data, .linha .valor { font-family: var(--font-mono); font-size: 13px; color: var(--text-secondary); }
+    .vazio { padding: var(--space-8); text-align: center; color: var(--text-muted); }
+
+    @media (max-width: 720px) {
+      .linha { grid-template-columns: 1fr auto; }
+      .linha .data, .linha .col-empresa, .linha .valor { display: none; }
+      .linha.cabecalho { display: none; }
+    }
+
+    .status {
+      display: inline-flex; align-items: center; gap: 6px;
+      font-size: 12px; font-weight: 600; padding: 4px 10px; border-radius: var(--r-full);
+    }
+    .status::before { content: ''; width: 6px; height: 6px; border-radius: 50%; background: currentColor; }
+    .status.sincronizado { color: #30d158; background: rgba(48,209,88,0.12); }
+    .status.erro         { color: #ff453a; background: rgba(255,69,58,0.12); }
+    .status.pendente     { color: #ffd60a; background: rgba(255,214,10,0.12); }
+
+    /* Painel de detalhe */
+    .fundo { position: fixed; inset: 0; background: rgba(0,0,0,0.6); display: none; z-index: 50; }
+    .fundo.aberto { display: block; }
+    .painel {
+      position: fixed; top: 0; right: 0; bottom: 0; width: min(520px, 100%);
+      background: var(--bg-surface); border-left: 1px solid var(--border);
+      overflow-y: auto; padding: var(--space-6) var(--space-5);
+      transform: translateX(100%); transition: transform var(--duration-base) var(--ease-out); z-index: 51;
+    }
+    .painel.aberto { transform: none; }
+    .painel-top { display: flex; justify-content: space-between; align-items: flex-start; gap: var(--space-3); margin-bottom: var(--space-5); }
+    .painel-top h2 { font-size: 22px; font-weight: 700; letter-spacing: -0.02em; }
+    .painel-top .sub { color: var(--text-muted); font-size: 13px; margin-top: 4px; }
+    .fechar { background: none; border: none; color: var(--text-secondary); font-size: 24px; cursor: pointer; line-height: 1; }
+
+    .secao { margin-bottom: var(--space-5); }
+    .secao h3 {
+      font-size: 11px; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase;
+      color: var(--text-muted); padding-bottom: var(--space-2); margin-bottom: var(--space-3);
+      border-bottom: 1px solid var(--border);
+    }
+    .campos { display: grid; grid-template-columns: 130px 1fr; gap: 8px var(--space-3); font-size: 14px; }
+    .campos dt { color: var(--text-muted); }
+    .campos dd { margin: 0; word-break: break-word; white-space: pre-wrap; }
+    .caixa-erro {
+      background: rgba(255,69,58,0.08); border: 1px solid rgba(255,69,58,0.3);
+      color: #ff8a80; border-radius: var(--r-sm); padding: var(--space-3); font-size: 13px; margin-bottom: var(--space-3);
+    }
+  </style>
+</head>
+<body>
+
+<!-- Login -->
+<form class="login" id="tela-login" hidden>
+  <h1>Cadastros</h1>
+  <input class="input" type="email" id="login-email" placeholder="E-mail" required autocomplete="username" />
+  <input class="input" type="password" id="login-senha" placeholder="Senha" required autocomplete="current-password" />
+  <button class="btn btn-primary btn-md" type="submit">Entrar</button>
+  <div class="msg-erro" id="login-erro"></div>
+</form>
+
+<!-- Lista -->
+<div class="admin" id="tela-lista" hidden>
+  <div class="admin-top">
+    <h1>Cadastros</h1>
+    <div class="acoes">
+      <div class="filtros" id="filtros">
+        <button class="filtro ativo" data-status="">Todos</button>
+        <button class="filtro" data-status="sincronizado">Sincronizados</button>
+        <button class="filtro" data-status="erro">Com erro</button>
+        <button class="filtro" data-status="pendente">Pendentes</button>
+      </div>
+      <button class="btn btn-ghost btn-sm" id="btn-atualizar">Atualizar</button>
+      <button class="btn btn-ghost btn-sm" id="btn-sair">Sair</button>
+    </div>
+  </div>
+  <div class="lista" id="lista"></div>
+</div>
+
+<!-- Detalhe -->
+<div class="fundo" id="fundo"></div>
+<aside class="painel" id="painel"></aside>
+
+<script>
+  const API = 'https://api.viskoo.com.br/admin.php';
+  const $ = (id) => document.getElementById(id);
+
+  // Token do admin fica no navegador por até 12h (validade definida pela API).
+  const token = {
+    get: () => { try { return localStorage.getItem('cadastros-token'); } catch { return null; } },
+    set: (t) => { try { t ? localStorage.setItem('cadastros-token', t) : localStorage.removeItem('cadastros-token'); } catch {} },
+  };
+
+  async function api(metodo, body) {
+    const res = await fetch(API, {
+      method: metodo,
+      headers: { 'Content-Type': 'application/json', 'Authorization': 'Bearer ' + (token.get() || '') },
+      body: body ? JSON.stringify(body) : undefined,
+    });
+    const json = await res.json().catch(() => ({}));
+    if (res.status === 401 && body?.acao !== 'login') { token.set(null); iniciar(); }
+    if (!res.ok) throw new Error(json.error || 'Erro ' + res.status);
+    return json;
+  }
+
+  let cadastros = [];
+  let filtro = '';
+
+  const esc = (s) => String(s ?? '').replace(/[&<>"']/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
+  const dataHora = (iso) => iso ? new Date(String(iso).replace(' ', 'T')).toLocaleString('pt-BR', { dateStyle: 'short', timeStyle: 'short' }) : '—';
+  const rotulo = { sincronizado: 'Sincronizado', erro: 'Erro', pendente: 'Pendente' };
+  const badge = (s) => `<span class="status ${esc(s)}">${rotulo[s] || esc(s)}</span>`;
+
+  // ---------- Sessão ----------
+  function iniciar() {
+    const logado = !!token.get();
+    $('tela-login').hidden = logado;
+    $('tela-lista').hidden = !logado;
+    if (logado) carregar();
+  }
+
+  $('tela-login').addEventListener('submit', async (e) => {
+    e.preventDefault();
+    $('login-erro').textContent = '';
+    try {
+      const { token: t } = await api('POST', { acao: 'login', email: $('login-email').value, senha: $('login-senha').value });
+      token.set(t);
+      iniciar();
+    } catch {
+      $('login-erro').textContent = 'E-mail ou senha incorretos.';
+    }
+  });
+
+  $('btn-sair').addEventListener('click', () => { token.set(null); iniciar(); });
+  $('btn-atualizar').addEventListener('click', () => carregar());
+
+  // ---------- Lista ----------
+  async function carregar() {
+    $('lista').innerHTML = '<div class="vazio">Carregando…</div>';
+    try {
+      cadastros = await api('GET');
+    } catch (err) {
+      $('lista').innerHTML = `<div class="vazio">Erro ao carregar: ${esc(err.message)}</div>`;
+      return;
+    }
+    renderLista();
+  }
+
+  function renderLista() {
+    const itens = filtro ? cadastros.filter((c) => c.status === filtro) : cadastros;
+    if (!itens.length) { $('lista').innerHTML = '<div class="vazio">Nenhum cadastro.</div>'; return; }
+    $('lista').innerHTML =
+      `<div class="linha cabecalho"><div>Data</div><div>Cliente</div><div>Empresa</div><div>Valor</div><div>Asaas</div></div>` +
+      itens.map((c) => `
+        <div class="linha" data-id="${esc(c.id)}">
+          <div class="data">${dataHora(c.created_at)}</div>
+          <div><div>${esc(c.nome)}</div><div class="sub">${esc(c.email)}</div></div>
+          <div class="col-empresa">${esc(c.empresa)}</div>
+          <div class="valor">${esc(c.valor)}</div>
+          <div>${badge(c.status)}</div>
+        </div>`).join('');
+  }
+
+  $('lista').addEventListener('click', (e) => {
+    const linha = e.target.closest('.linha[data-id]');
+    if (linha) abrir(linha.dataset.id);
+  });
+
+  $('filtros').addEventListener('click', (e) => {
+    const b = e.target.closest('.filtro');
+    if (!b) return;
+    filtro = b.dataset.status;
+    document.querySelectorAll('.filtro').forEach((f) => f.classList.toggle('ativo', f === b));
+    renderLista();
+  });
+
+  // ---------- Detalhe ----------
+  const secao = (titulo, pares) => `
+    <div class="secao"><h3>${titulo}</h3><dl class="campos">
+      ${pares.map(([k, v]) => `<dt>${k}</dt><dd>${esc(v) || '—'}</dd>`).join('')}
+    </dl></div>`;
+
+  function abrir(id) {
+    const c = cadastros.find((x) => String(x.id) === String(id));
+    if (!c) return;
+
+    $('painel').innerHTML = `
+      <div class="painel-top">
+        <div><h2>${esc(c.nome)}</h2><div class="sub">Enviado em ${dataHora(c.created_at)}</div></div>
+        <button class="fechar" id="btn-fechar" aria-label="Fechar">×</button>
+      </div>
+
+      <div class="secao">
+        <h3>Asaas</h3>
+        ${c.status === 'erro' ? `<div class="caixa-erro">${esc(c.erro)}</div>` : ''}
+        <dl class="campos">
+          <dt>Status</dt><dd>${badge(c.status)}</dd>
+          <dt>ID do cliente</dt><dd>${esc(c.asaas_id) || '—'}</dd>
+          <dt>Sincronizado em</dt><dd>${dataHora(c.sincronizado_em)}</dd>
+        </dl>
+        ${c.status !== 'sincronizado' ? `<button class="btn btn-primary btn-md" id="btn-retry" style="margin-top: var(--space-4);">Tentar de novo</button>` : ''}
+      </div>
+
+      ${secao('Dados pessoais', [['Nome', c.nome], ['E-mail', c.email], ['WhatsApp', c.whatsapp]])}
+      ${secao('Empresa', [['Empresa', c.empresa], ['CNPJ/CPF', c.documento]])}
+      ${secao('Endereço', [['Rua', c.rua], ['Número', c.numero], ['Bairro', c.bairro], ['CEP', c.cep], ['Cidade', c.cidade]])}
+      ${secao('Dados comerciais', [['Dia de pagamento', c.dia_pagamento], ['Descrição', c.descricao], ['Valor', c.valor], ['Parcelamento', c.parcelamento]])}
+    `;
+
+    $('btn-fechar').addEventListener('click', fechar);
+    $('btn-retry')?.addEventListener('click', () => tentarDeNovo(c.id));
+    $('fundo').classList.add('aberto');
+    $('painel').classList.add('aberto');
+  }
+
+  function fechar() {
+    $('fundo').classList.remove('aberto');
+    $('painel').classList.remove('aberto');
+  }
+  $('fundo').addEventListener('click', fechar);
+  document.addEventListener('keydown', (e) => { if (e.key === 'Escape') fechar(); });
+
+  async function tentarDeNovo(id) {
+    const btn = $('btn-retry');
+    btn.disabled = true;
+    btn.textContent = 'Enviando ao Asaas…';
+    try {
+      await api('POST', { acao: 'retry', id });
+    } catch (err) {
+      alert('Falha ao chamar a API: ' + err.message);
+    }
+    await carregar();
+    abrir(id);
+  }
+
+  iniciar();
+</script>
+</body>
+</html>

@@ -1,0 +1,7 @@
+# Só cadastro.php e admin.php são acessíveis pela web.
+<FilesMatch "^(config|config\.example|lib)\.php$|\.sql$">
+  Require all denied
+</FilesMatch>
+
+# Alguns servidores (PHP-FPM/CGI) descartam o header Authorization; repassa para o PHP.
+SetEnvIf Authorization "(.*)" HTTP_AUTHORIZATION=$1
