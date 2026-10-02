@@ -11,7 +11,7 @@ return [
     'asaas_api_key'  => '',
 
     // Login do /cadastro/admin/. Gere o hash com: php -r "echo password_hash('SENHA', PASSWORD_DEFAULT);"
-    'admin_email'      => 'josiasviskoo@gmail.com',
+    'admin_email'      => 'josias@viskoo.com.br',
     'admin_senha_hash' => '',
 
     // Segredo aleatório para assinar o token do admin: php -r "echo bin2hex(random_bytes(32));"
